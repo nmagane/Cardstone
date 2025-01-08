@@ -1,0 +1,14 @@
+Classic Hearthstone remake
+Vanilla + Naxx + GvG + BRM
+
+First demo goal:
+Vanilla Zoo mirror.
+players in que counter in menu
+
+todo: 
+Multiplayer server connection
+	Turn based input between two players.
+	Probably look up some tutorial.
+
+	
+message order system
