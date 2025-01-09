@@ -8,7 +8,6 @@ using UnityEngine;
 
 public partial class Board : MonoBehaviour
 {
-
     public Riptide.Client client = new Riptide.Client();
 
     public ulong playerID = 100;
@@ -16,6 +15,8 @@ public partial class Board : MonoBehaviour
 
     public Hand currHand;
     public bool currTurn = false;
+    public MinionBoard currMinions;
+    public MinionBoard enemyMinions;
     public int currMana = 1;
     public int maxMana = 1;
 
@@ -108,7 +109,8 @@ public partial class Board : MonoBehaviour
     void StartGame(bool isTurn)
     {
         //TODO: Get rid of mulligan screen
-        
+        currMinions = new MinionBoard();
+        enemyMinions = new MinionBoard();
         /*if (isTurn)
         {
             currTurn = true;
@@ -145,10 +147,31 @@ public partial class Board : MonoBehaviour
     }
     public void DrawCard(Card.Cardname card)
     {
+        //todo: anim draw
         Debug.Log("Drawn " + card);
         currHand.Add(card);
+    }
+
+    public void PlayCard(HandCard card)//Character target
+    {
+        if (card.played) return;
+    }
+
+    public void SummonMinion()
+    {
+        
+    }
+    public void DestroyMinion()
+    {
 
     }
+    public void ConfirmPlayCard(int index)
+    {
+        currHand.RemoveAt(index);
+        int manaCost = 9;
+        currMana -= manaCost;
+    }
+
     void Update()
     {
         

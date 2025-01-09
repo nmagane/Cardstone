@@ -1,29 +1,30 @@
 ﻿using System;
+using Unity.Collections.LowLevel.Unsafe;
 
 public partial class Board
 {
     [Serializable]
-    public class HandCard
+    public class Minion
     {
-        public int index = 0;
-        public int manaCost = 1;
         public Card.Cardname card;
 
-        public bool TARGETED = false;
-        public bool SPELL = false;
-        public bool MINION = false;
+        public int index;
 
-        public bool played = false;
+        public int damage;
+        public int health;
+
         public void Set(Card.Cardname name, int ind)
         {
             card = name;
             index = ind;
             //manaCost
         }
-
-        public HandCard(Card.Cardname name, int ind)
+        public Minion(Card.Cardname c, int ind)
         {
-            Set(name, ind);
+            card = c;
+            health = 1;
+            damage = 1;
+            index = ind;
         }
         public override string ToString()
         {

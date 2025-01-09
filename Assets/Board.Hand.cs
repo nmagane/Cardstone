@@ -29,10 +29,27 @@ public partial class Board
         public void Add(Card.Cardname x,int ind=-1)
         {
             cards.Add(new HandCard(x,ind==-1? Count():ind));
+            OrderInds();
         }
         public void RemoveAt(int x)
         {
             cards.RemoveAt(x);
+            OrderInds();
+        }
+
+        public void Remove(HandCard c)
+        {
+            cards.Remove(c);
+            OrderInds();
+        }
+
+        public void OrderInds()
+        {
+            int i = 0;
+            foreach (var c in cards)
+            {
+                c.index = i++;
+            }
         }
         public int Count()
         {

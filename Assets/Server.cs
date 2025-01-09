@@ -28,6 +28,9 @@ public partial class Server : MonoBehaviour
 
         DrawCards,
         DrawHand,
+
+        SummonMinion,
+        DestroyMinion,
         Attack,
 
 
@@ -285,12 +288,31 @@ public partial class Server : MonoBehaviour
 
     }
 
+    public void PlayCard(ulong matchID, ushort clientID, ulong playerID, int index) //todo: target
+    {
+        if (currentMatches.ContainsKey(matchID) == false) return;
+        Match match = currentMatches[matchID];
+        int p = (int)match.turn;
+        PlayerConnection player = match.players[p];
+        if (player.clientID != clientID || player.playerID != playerID) return;
+
+   
+        Board.HandCard card = match.hands[p][index];
+        match.boards[p].Add(card.card);
+        match.hands[p].RemoveAt(index);
+        
+        //TODO: ON PLAY EFFECTS (JUGGLER ETC)
+        //TODO: BATTLECRY
+
+    }
+    
+
     [Serializable]
     public class Match
     {
         public List<PlayerConnection> players = new List<PlayerConnection>();
         public ulong matchID;
-        public List<int> healths = new List<int>() { 20, 20 };
+        public List<int> healths = new List<int>() { 30, 30 };
 
         public List<int> maxMana = new List<int>() { 0, 0 };
         public List<int> currentMana = new List<int>() { 0, 0 };
@@ -302,7 +324,9 @@ public partial class Server : MonoBehaviour
         public List<Board.Hand> hands = new List<Board.Hand>() {  new Board.Hand(), new Board.Hand()};
 
         public List<bool> mulligans = new List<bool>() { false, false };
-        
+
+        public List<Board.MinionBoard> boards = new List<Board.MinionBoard>();
+
         //todo: on board minions
         //todo: secrets
         //todo: decks, graveyards
