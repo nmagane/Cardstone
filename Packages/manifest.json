@@ -5,6 +5,7 @@
     "com.unity.test-framework": "1.1.33",
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.timeline": "1.6.5",
+    "com.unity.toolchain.win-x86_64-linux-x86_64": "2.0.10",
     "com.unity.transport": "1.5.0",
     "com.unity.ugui": "1.0.0",
     "net.tomweiland.riptide": "https://github.com/RiptideNetworking/Riptide.git?path=/Packages/Core#2.2.0",

@@ -12,3 +12,6 @@ Multiplayer server connection
 
 	
 message order system
+
+player class with all info (hand, deck, board, etc)
+refrences to currplayer, enemyplayer, player1, and player2 in match class

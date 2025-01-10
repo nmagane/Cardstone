@@ -12,12 +12,15 @@ public partial class Board
         public bool TARGETED = false;
         public bool SPELL = false;
         public bool MINION = false;
+        public bool COMBO = false;
 
         public bool played = false;
+
         public void Set(Card.Cardname name, int ind)
         {
             card = name;
             index = ind;
+            MINION = true;
             //manaCost
         }
 

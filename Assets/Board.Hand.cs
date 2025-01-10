@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public partial class Board
 {
@@ -9,6 +10,11 @@ public partial class Board
     {
         //public List<Card.Cardname> cards;
         public List<HandCard> cards;
+
+        public bool server = false;
+        //public List<Card> cardObjects;
+        public Board board;
+        public Dictionary<HandCard, Card> cardObjects = new Dictionary<HandCard, Card>();
         public HandCard this[int index]
         {
             get
@@ -26,19 +32,52 @@ public partial class Board
         {
             return cards.GetEnumerator();
         }
-        public void Add(Card.Cardname x,int ind=-1)
+        public enum CardSource
         {
-            cards.Add(new HandCard(x,ind==-1? Count():ind));
+            Deck,
+            Board,
+        }
+        public void Add(Card.Cardname x,int ind=-1, CardSource source = CardSource.Deck)
+        {
+            int index = ind == -1 ? Count() : ind;
+            cards.Add(new HandCard(x,index));
+
+            if (server)
+            {
+                OrderInds();
+                return;
+            }
+
+            Card c = Instantiate(board.cardObject).GetComponent<Card>();
+            c.board = board;
+            c.Set(cards[index]);
+            cardObjects.Add(cards[index], c);
+            c.transform.parent = board.transform;
             OrderInds();
+
         }
         public void RemoveAt(int x)
         {
+            if (!server)
+            {
+                Card c = cardObjects[cards[x]];
+                cardObjects.Remove(cards[x]);
+                Destroy(c.gameObject);
+            }
+
             cards.RemoveAt(x);
+            
             OrderInds();
         }
 
         public void Remove(HandCard c)
         {
+            if (!server)
+            {
+                Card co = cardObjects[c];
+                cardObjects.Remove(c);
+                Destroy(co.gameObject);
+            }
             cards.Remove(c);
             OrderInds();
         }
@@ -49,6 +88,14 @@ public partial class Board
             foreach (var c in cards)
             {
                 c.index = i++;
+            }
+            if (server) return;
+
+            i = 0;
+            foreach (var kvp in cardObjects)
+            {
+                Card c = kvp.Value;
+                c.transform.localPosition = new Vector3(-15+4*(i++),-10,0);
             }
         }
         public int Count()

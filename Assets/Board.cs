@@ -8,22 +8,30 @@ using UnityEngine;
 
 public partial class Board : MonoBehaviour
 {
+    public GameObject cardObject;
+    public GameObject minionObject;
+
     public Riptide.Client client = new Riptide.Client();
 
     public ulong playerID = 100;
     public ulong currentMatchID;
 
-    public Hand currHand;
+    public Hand currHand = new Hand();
     public bool currTurn = false;
     public MinionBoard currMinions;
     public MinionBoard enemyMinions;
-    public int currMana = 1;
-    public int maxMana = 1;
+    public int currMana = 0;
+    public int maxMana = 0;
+
+    public int enemyMana = 0;
+    public int enemyMaxMana = 0;
 
     void Start()
     {
-        client.Connect("127.0.0.1:7777",5,0,null,false);
+        client.Connect("127.0.0.1:8888",5,0,null,false);
         client.MessageReceived += OnMessageReceived;
+        currHand.board = this;
+        currHand.server = false;
     }
     public void OnMessageReceived(object sender, MessageReceivedEventArgs eventArgs)
     {
@@ -47,6 +55,7 @@ public partial class Board : MonoBehaviour
                 break;
             case Server.MessageType.DrawCards:
                 Card.Cardname draw = (Card.Cardname)message.GetInt();
+                DrawCard(draw); 
                 break;
             case Server.MessageType.StartGame:
                 bool isTurn = message.GetBool();
@@ -57,6 +66,19 @@ public partial class Board : MonoBehaviour
                 break;
             case Server.MessageType.EndTurn:
                 EndTurn(message);
+                break;
+            case Server.MessageType.PlayCard:
+                bool playedFriendlySide = message.GetBool();
+                int playedIndex = message.GetInt();
+                int playedManaCost = message.GetInt();
+                Card.Cardname playedCard = (Card.Cardname)message.GetInt();
+                ConfirmPlayCard(playedFriendlySide, playedIndex, playedManaCost,playedCard);
+                break;
+            case Server.MessageType.SummonMinion:
+                bool summonedFriendlySide = message.GetBool();
+                Card.Cardname summonedMinion = (Card.Cardname)message.GetInt();
+                int summonedPos = message.GetInt();
+                SummonMinion(summonedFriendlySide,summonedMinion,summonedPos);
                 break;
         }
     }
@@ -69,7 +91,11 @@ public partial class Board : MonoBehaviour
     {
         //Debug.Log(jsonText);
         Hand hand = JsonUtility.FromJson<Hand>(jsonText);
-        currHand = hand;
+        foreach (var c in hand)
+        {
+            currHand.Add(c.card);
+        }
+        //currHand = hand;
         string s = "";
 
         foreach (HandCard c in hand)
@@ -99,11 +125,11 @@ public partial class Board : MonoBehaviour
 
     void ConfirmMulligan(string jsonText)
     {
-        Hand hand = JsonUtility.FromJson<Hand>(jsonText);
+        Hand newHand = JsonUtility.FromJson<Hand>(jsonText);
         foreach (int i in selectedMulligans)
         {
             //TODO: mull anim goes here
-            currHand[i].Set(hand[i].card, hand[i].index);
+            currHand[i].Set(newHand[i].card, newHand[i].index);
         }
     }
     void StartGame(bool isTurn)
@@ -152,24 +178,49 @@ public partial class Board : MonoBehaviour
         currHand.Add(card);
     }
 
-    public void PlayCard(HandCard card)//Character target
+    public void PlayCard(HandCard card,int target=-1,int position=-1)
     {
+        if (!currTurn) return;
         if (card.played) return;
+        Debug.Log("Playing card " + card.card);
+        //send message to server to play card index
+        Message message = Message.Create(MessageSendMode.Reliable, (ushort)Server.MessageType.PlayCard);
+        message.AddULong(currentMatchID);
+        message.AddULong(playerID);
+        message.AddInt(card.index);
+        message.AddInt(target);
+        message.AddInt(position);
+
+        client.Send(message);
+    }
+    public void ConfirmPlayCard(bool side, int index, int mana, Card.Cardname card)
+    {
+        if (side ==false)
+        {
+            //enemy played card
+            Debug.Log("Enemy played " + card);
+            return;
+        }
+
+        //ally played card
+        currHand.RemoveAt(index);
+        int manaCost = 9;
+        currMana -= manaCost;
     }
 
-    public void SummonMinion()
+    public void SummonMinion(bool friendlySide, Card.Cardname card, int position)
     {
-        
+        MinionBoard board = friendlySide ? currMinions : enemyMinions;
+        board.Add(card, position);
+
+
+        string s = "";
+        foreach (Minion m in board) s += m.ToString()+" ";
+        Debug.Log((friendlySide ? "Ally" : "Enemy") + " board: " + s);
     }
     public void DestroyMinion()
     {
 
-    }
-    public void ConfirmPlayCard(int index)
-    {
-        currHand.RemoveAt(index);
-        int manaCost = 9;
-        currMana -= manaCost;
     }
 
     void Update()
@@ -187,6 +238,10 @@ public partial class Board : MonoBehaviour
         {
             SubmitEndTurn();
         }
+        if (Input.GetKeyDown(KeyCode.R) && playerID==100)
+        {
+            PlayCard(currHand[0],-1,0);
+        }
 
         if (Input.GetKeyDown(KeyCode.W) && playerID==101)
         {
@@ -199,6 +254,15 @@ public partial class Board : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X) && playerID==101)
         {
             SubmitEndTurn();
+        }
+        if (Input.GetKeyDown(KeyCode.R) && playerID == 101)
+        {
+            PlayCard(currHand[0], -1, 0);
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.J) && playerID==101)
+        {
         }
         
         

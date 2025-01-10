@@ -6,8 +6,6 @@ using Riptide.Transports;
 using Riptide.Utils;
 using System.Linq;
 using UnityEngine;
-using UnityEditor.PackageManager;
-using UnityEditor;
 
 
 public partial class Server : MonoBehaviour
@@ -41,7 +39,7 @@ public partial class Server : MonoBehaviour
     void Start()
     {
         RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
-        ushort port = 7777;
+        ushort port = 8888;
         ushort maxPlayers = 65534; //ushort.max-1
         server.Start(port, maxPlayers,0,false);
         server.MessageReceived += OnMessageReceived;
@@ -76,6 +74,12 @@ public partial class Server : MonoBehaviour
                 Mulligan(mullInds, mullMatchID, mullPlayerID);
                 break;
             case MessageType.PlayCard:
+                ulong playMatchID = message.GetULong();
+                ulong playPlayerID = message.GetULong();
+                int playIndex = message.GetInt();
+                int playTarget = message.GetInt();
+                int playPosition = message.GetInt();
+                PlayCard(playMatchID, clientID, playPlayerID, playIndex, playTarget, playPosition);
                 break;
             case MessageType.EndTurn:
                 ulong endMatchID = message.GetULong();
@@ -287,25 +291,91 @@ public partial class Server : MonoBehaviour
         }
 
     }
-
-    public void PlayCard(ulong matchID, ushort clientID, ulong playerID, int index) //todo: target
+        
+    public void PlayCard(ulong matchID, ushort clientID, ulong playerID, int index, int target, int position)
     {
         if (currentMatches.ContainsKey(matchID) == false) return;
         Match match = currentMatches[matchID];
         int p = (int)match.turn;
         PlayerConnection player = match.players[p];
+        PlayerConnection opponent = match.players[match.Opponent(p)];
         if (player.clientID != clientID || player.playerID != playerID) return;
-
+        
    
         Board.HandCard card = match.hands[p][index];
-        match.boards[p].Add(card.card);
+
+        if (match.currentMana[p] < card.manaCost) return;
+        
         match.hands[p].RemoveAt(index);
         
-        //TODO: ON PLAY EFFECTS (JUGGLER ETC)
-        //TODO: BATTLECRY
+        //send confirm play message to both sides
+        Message confirmPlay = Message.Create(MessageSendMode.Reliable, (ushort)Server.MessageType.PlayCard);
+        Message confirmPlayOpponent = Message.Create(MessageSendMode.Reliable, (ushort)Server.MessageType.PlayCard);
+
+        confirmPlay.AddBool(true); confirmPlayOpponent.AddBool(false);
+        confirmPlay.AddInt(index); confirmPlayOpponent.AddInt(index);
+        confirmPlay.AddInt(card.manaCost); confirmPlayOpponent.AddInt(card.manaCost);
+        confirmPlay.AddInt((int)card.card); confirmPlayOpponent.AddInt((int)card.card);
+
+        server.Send(confirmPlay, player.clientID); 
+        server.Send(confirmPlayOpponent, opponent.clientID);
+        //summon minion or execute spell effects
+
+        if (card.SPELL)
+        {
+
+        }
+
+        if (card.MINION)
+        {
+            SummonMinion(match, match.turn, card.card, position);
+            //trigger event: ON PLAY MINION
+        }
+
+        //TODO: ON PLAY EFFECTS (JUGGLER, ANTONIDAS, ETC)
+
+        //TODO: BATTLECRY (if minion)
 
     }
     
+    public void SummonMinion(Match match, Turn side, Card.Cardname minion, int position=-1)
+    {
+        int p = (int)side;
+        int o = match.Opponent(p);
+        if (match.boards[p].Count() >= 7) return;
+        Debug.Log("adsafdsa");
+        match.boards[p].Add(minion, position);
+
+        Message message = Message.Create(MessageSendMode.Reliable, (ushort)Server.MessageType.SummonMinion);
+        message.AddBool(true);
+        message.AddInt((int)minion);
+        message.AddInt(position);
+        server.Send(message, match.players[p].clientID);
+        
+        Message messageOp = Message.Create(MessageSendMode.Reliable, (ushort)Server.MessageType.SummonMinion);
+        messageOp.AddBool(false);
+        messageOp.AddInt((int)minion);
+        messageOp.AddInt(position);
+        server.Send(messageOp, match.players[o].clientID);
+    }
+
+    [Serializable]
+    public class Player
+    {
+        public PlayerConnection connection = new PlayerConnection();
+
+        public int health = 30;
+        public int maxMana = 0;
+        public int currMana = 0;
+
+        public bool turn = false;
+        public List<Card.Cardname> deck = new List<Card.Cardname>();
+        public Board.Hand hand = new Board.Hand();
+        public Board.MinionBoard board = new Board.MinionBoard();
+
+        public bool mulligan = false;
+    }
+
 
     [Serializable]
     public class Match
@@ -325,7 +395,7 @@ public partial class Server : MonoBehaviour
 
         public List<bool> mulligans = new List<bool>() { false, false };
 
-        public List<Board.MinionBoard> boards = new List<Board.MinionBoard>();
+        public List<Board.MinionBoard> boards = new List<Board.MinionBoard>() { new Board.MinionBoard(), new Board.MinionBoard()};
 
         //todo: on board minions
         //todo: secrets
@@ -350,6 +420,9 @@ public partial class Server : MonoBehaviour
             turn = Board.RNG(50) ? Turn.player1 : Turn.player2;
 
             matchID = mID;
+
+            hands[0].server = true;
+            hands[1].server = true;
         }
 
         public static bool operator ==(Match x, ulong y)
@@ -367,6 +440,13 @@ public partial class Server : MonoBehaviour
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public int Opponent(int x)
+        {
+            if (x == 1) return 0;
+            else if (x == 0) return 1;
+            return 1;
         }
     }
     

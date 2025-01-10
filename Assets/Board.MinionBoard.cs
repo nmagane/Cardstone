@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public partial class Board
 {
@@ -7,6 +8,7 @@ public partial class Board
     public class MinionBoard
     {
         public List<Minion> minions;
+        
         public Minion this[int index]
         {
             get
@@ -24,9 +26,19 @@ public partial class Board
         {
             return minions.GetEnumerator();
         }
-        public void Add(Card.Cardname m, int ind = -1)
+        public void Add(Card.Cardname c, int ind = -1)
         {
-            minions.Add(new Minion(m, ind == -1 ? Count() : ind));
+            Debug.Log(Count() + " "+c+" "+ind);
+            //minions.Add(new Minion(m, ind == -1 ? Count() : ind));
+            if (Count() == 0)
+            {
+                minions.Add(new Minion(c, 0));
+            }
+            else if (Count() != 0 && ind>= Count())
+            {
+                minions.Add(new Minion(c, Count()));
+            }
+            else minions.Insert(ind, new Minion(c, ind));
             OrderInds();
         }
         public void RemoveAt(int x)
