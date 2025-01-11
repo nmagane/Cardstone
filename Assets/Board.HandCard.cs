@@ -9,9 +9,12 @@ public partial class Board
         public int manaCost = 1;
         public Card.Cardname card;
 
-        public bool TARGETED = false;
         public bool SPELL = false;
         public bool MINION = false;
+        public bool SECRET = false;
+        public bool WEAPON = false;
+
+        public bool TARGETED = false;
         public bool COMBO = false;
 
         public bool played = false;

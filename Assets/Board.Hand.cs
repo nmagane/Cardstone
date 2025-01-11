@@ -82,6 +82,11 @@ public partial class Board
             OrderInds();
         }
 
+        public void MulliganReplace(int index, Card.Cardname c)
+        {
+            cards[index].Set(c, index);
+            cardObjects[cards[index]].Set(cards[index]);
+        }
         public void OrderInds()
         {
             int i = 0;

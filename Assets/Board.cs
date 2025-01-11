@@ -8,6 +8,12 @@ using UnityEngine;
 
 public partial class Board : MonoBehaviour
 {
+    public Card hoveredCard = null;
+    public BoardSide hoveredSide = null;
+
+    public BoardSide friendlySide;
+    public BoardSide enemySide;
+
     public GameObject cardObject;
     public GameObject minionObject;
 
@@ -129,7 +135,8 @@ public partial class Board : MonoBehaviour
         foreach (int i in selectedMulligans)
         {
             //TODO: mull anim goes here
-            currHand[i].Set(newHand[i].card, newHand[i].index);
+            //currHand[i].Set(newHand[i].card, newHand[i].index);
+            currHand.MulliganReplace(i, newHand[i].card);
         }
     }
     void StartGame(bool isTurn)
@@ -137,6 +144,8 @@ public partial class Board : MonoBehaviour
         //TODO: Get rid of mulligan screen
         currMinions = new MinionBoard();
         enemyMinions = new MinionBoard();
+        enemyMinions.board = currMinions.board = this;
+        currMinions.server = enemyMinions.server = false;
         /*if (isTurn)
         {
             currTurn = true;
@@ -201,10 +210,9 @@ public partial class Board : MonoBehaviour
             Debug.Log("Enemy played " + card);
             return;
         }
-
         //ally played card
         currHand.RemoveAt(index);
-        int manaCost = 9;
+        int manaCost = mana;
         currMana -= manaCost;
     }
 

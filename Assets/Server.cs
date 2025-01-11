@@ -305,7 +305,15 @@ public partial class Server : MonoBehaviour
         Board.HandCard card = match.hands[p][index];
 
         if (match.currentMana[p] < card.manaCost) return;
-        
+
+        //check if play is legal
+        if (card.MINION && match.boards[p].Count()>=7)
+        {
+            return;
+        }
+
+        //====================
+        match.currentMana[p] -= card.manaCost;
         match.hands[p].RemoveAt(index);
         
         //send confirm play message to both sides
@@ -343,7 +351,7 @@ public partial class Server : MonoBehaviour
         int p = (int)side;
         int o = match.Opponent(p);
         if (match.boards[p].Count() >= 7) return;
-        Debug.Log("adsafdsa");
+        
         match.boards[p].Add(minion, position);
 
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)Server.MessageType.SummonMinion);
@@ -423,6 +431,9 @@ public partial class Server : MonoBehaviour
 
             hands[0].server = true;
             hands[1].server = true;
+
+            boards[0].server = true;
+            boards[1].server = true;
         }
 
         public static bool operator ==(Match x, ulong y)

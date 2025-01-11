@@ -38,9 +38,11 @@ public class Card : MonoBehaviour
         
     }
 
-    public void Set(Board.HandCard card)
+    public void Set(Board.HandCard c)
     {
-        name.text = card.card.ToString();
+        card = c;
+        name.text = c.card.ToString();
+
     }
     void Update()
     {
@@ -50,7 +52,13 @@ public class Card : MonoBehaviour
     {
         return (Camera.main.ScreenToWorldPoint(Input.mousePosition) - new Vector3(0, 0, Camera.main.ScreenToWorldPoint(Input.mousePosition).z));
     }
+    public Vector3 DragPos()
+    {
 
+        return GetMousePos() + offset;
+    }
+
+    Vector3 offset;
     Vector3 OP = new Vector3();
     private void OnMouseDown()
     {
@@ -65,13 +73,67 @@ public class Card : MonoBehaviour
 
     private void OnMouseUp()
     {
+        if (board.currTurn == false)
+        {
+            //ERROR: NOT YOUR TURN
+            transform.localPosition = OP;
+            return;
+        }
+
+
+        if (card.manaCost>board.currMana)
+        {
+            //ERROR: NOT ENOUGH MANA
+            transform.localPosition = OP;
+            return;
+        }
+
+        if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED == false)
+        {
+            //UNTARGETED NON-MINION
+        }
+
+        if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED == true)
+        {
+            //TARGETED NON-MINION
+        }
+
+
+        if (board.hoveredSide == board.enemySide)
+        {
+            transform.localPosition = OP;
+            return;
+        }
+
+        if (card.MINION && card.TARGETED==false)
+        {
+            //SIMPLE MINION SUMMON
+            if (board.currMinions.Count() >= 7)
+            {
+                transform.localPosition = OP;
+                return;
+            }
+
+            int position = 0;
+            board.PlayCard(card, -1, position);
+            return;
+        }
+
+        if (card.MINION && card.TARGETED==true)
+        {
+            //MINION WITH TARGET ABILITY
+            //place temporary minion and start targetining effect
+            if (board.currMinions.Count() >= 7)
+            {
+                transform.localPosition = OP;
+                return;
+            }
+        }
+
+
         transform.localPosition = OP;
+        return;
     }
 
-    Vector3 offset;
-    public Vector3 DragPos()
-    {
 
-        return GetMousePos() + offset;
-    }
 }
