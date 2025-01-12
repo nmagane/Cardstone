@@ -301,12 +301,12 @@ public partial class Server : MonoBehaviour
         PlayerConnection opponent = match.players[match.Opponent(p)];
         if (player.clientID != clientID || player.playerID != playerID) return;
         
-   
         Board.HandCard card = match.hands[p][index];
-
+        
+        //check if play is legal
         if (match.currentMana[p] < card.manaCost) return;
 
-        //check if play is legal
+        
         if (card.MINION && match.boards[p].Count()>=7)
         {
             return;

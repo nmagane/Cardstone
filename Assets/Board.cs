@@ -10,6 +10,8 @@ public partial class Board : MonoBehaviour
 {
     public Card hoveredCard = null;
     public BoardSide hoveredSide = null;
+    public Creature hoveredMinion = null;
+    public Hero hoveredHero = null;
 
     public BoardSide friendlySide;
     public BoardSide enemySide;
@@ -31,6 +33,8 @@ public partial class Board : MonoBehaviour
 
     public int enemyMana = 0;
     public int enemyMaxMana = 0;
+
+    public bool targeting = false;
 
     void Start()
     {
@@ -227,6 +231,16 @@ public partial class Board : MonoBehaviour
         Debug.Log((friendlySide ? "Ally" : "Enemy") + " board: " + s);
     }
     public void DestroyMinion()
+    {
+
+    }
+
+    public void StartTargeting(GameObject source)
+    {
+
+    }
+
+    public void EndTargeting()
     {
 
     }

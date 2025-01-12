@@ -13,6 +13,7 @@ public partial class Board
         public int damage;
         public int health;
 
+        public bool canAttack = false;
         public void Set(Card.Cardname name, int ind)
         {
             card = name;
@@ -30,6 +31,7 @@ public partial class Board
         {
             return card.ToString();
         }
+        
     }
 
 }

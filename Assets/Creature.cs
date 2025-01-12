@@ -27,4 +27,28 @@ public class Creature : MonoBehaviour
     {
         
     }
+
+    
+    private void OnMouseOver()
+    {
+        //timer for tooltip to show up
+    }
+    private void OnMouseEnter()
+    {
+        board.hoveredMinion = this;
+    }
+    private void OnMouseExit()
+    {
+        board.hoveredMinion = null;
+    }
+
+    private void OnMouseDown()
+    {
+        if (board.targeting)
+        {
+            //check if this is a valid target
+            //board.AttackMinion(board.attacker, this);
+        }
+        board.StartTargeting(this.gameObject);
+    }
 }
