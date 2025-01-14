@@ -2,22 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking.Types;
 
 public class Creature : MonoBehaviour
 {
     public TMP_Text testname;
-    public TMP_Text heatlh, damage;
+    public TMP_Text health, damage;
     public SpriteRenderer spriteRenderer;
 
     public Board board;
 
+    public Board.Minion minion;
+
     public void Set(Board.Minion c)
     {
+        minion = c;
         testname.text = c.card.ToString();
-        heatlh.text = c.health.ToString();
+        health.text = c.health.ToString();
         damage.text = c.damage.ToString();
     }
-
+    public bool IsFriendly()
+    {
+        if (board.enemyMinions.Contains(minion))
+            return false;
+        else
+            return true;
+    }
     void Start()
     {
         
@@ -25,7 +35,8 @@ public class Creature : MonoBehaviour
 
     void Update()
     {
-        
+        damage.text = minion.damage.ToString();
+        health.text = minion.health.ToString();
     }
 
     
@@ -47,8 +58,10 @@ public class Creature : MonoBehaviour
         if (board.targeting)
         {
             //check if this is a valid target
-            //board.AttackMinion(board.attacker, this);
+            board.AttackMinion(board.targetingMinion,this.minion);
+            return;
         }
-        board.StartTargeting(this.gameObject);
+        if (IsFriendly() == false) return;
+        board.StartTargetingAttack(minion);
     }
 }

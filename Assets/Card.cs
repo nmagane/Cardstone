@@ -114,7 +114,7 @@ public class Card : MonoBehaviour
                 return;
             }
 
-            int position = 0;
+            int position = -1;
             board.PlayCard(card, -1, position);
             return;
         }

@@ -14,6 +14,9 @@ public partial class Board
         public int health;
 
         public bool canAttack = false;
+
+        public bool TAUNT = false;
+
         public void Set(Card.Cardname name, int ind)
         {
             card = name;
@@ -23,7 +26,7 @@ public partial class Board
         public Minion(Card.Cardname c, int ind)
         {
             card = c;
-            health = 1;
+            health = 3;
             damage = 1;
             index = ind;
         }

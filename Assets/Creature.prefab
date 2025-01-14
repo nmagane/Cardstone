@@ -394,10 +394,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testname: {fileID: 645618781372868210}
-  heatlh: {fileID: 7404517308782075844}
-  damage: {fileID: 7404517308782075844}
+  health: {fileID: 7404517308782075844}
+  damage: {fileID: 6895042384093357638}
   spriteRenderer: {fileID: 1850431963990022828}
   board: {fileID: 0}
+  minion:
+    card: 0
+    index: 0
+    damage: 0
+    health: 0
+    canAttack: 0
+    TAUNT: 0
 --- !u!212 &1850431963990022828
 SpriteRenderer:
   m_ObjectHideFlags: 0

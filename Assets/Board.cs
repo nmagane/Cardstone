@@ -4,6 +4,7 @@ using System.Linq;
 using Riptide;
 using Riptide.Utils;
 using Unity.Collections.LowLevel.Unsafe;
+using UnityEditor;
 using UnityEngine;
 
 public partial class Board : MonoBehaviour
@@ -35,6 +36,31 @@ public partial class Board : MonoBehaviour
     public int enemyMaxMana = 0;
 
     public bool targeting = false;
+    public TargetMode targetMode = TargetMode.None;
+    public EligibleTargets eligibleTargets = EligibleTargets.AllCharacters;
+    //public int targetSourceIndex = 0;
+    //public int targetIndex = 0;
+    public Minion targetingMinion = null;
+    public HandCard targetingCard = null;
+
+    public enum TargetMode
+    {
+        None,
+        Attack,
+        Spell,
+        HeroPower,
+        Weapon,
+    }
+    public enum EligibleTargets
+    {
+        AllCharacters,
+
+        EnemyCharacters,
+        EnemyMinions,
+
+        FriendlyCharacters,
+        FriendlyMinions,
+    }
 
     void Start()
     {
@@ -89,6 +115,11 @@ public partial class Board : MonoBehaviour
                 Card.Cardname summonedMinion = (Card.Cardname)message.GetInt();
                 int summonedPos = message.GetInt();
                 SummonMinion(summonedFriendlySide,summonedMinion,summonedPos);
+                break;
+            case Server.MessageType.UpdateMinion:
+                string minionUpdateJson = message.GetString();
+                bool minionUpdateFriendly = message.GetBool();
+                UpdateMinion(minionUpdateJson, minionUpdateFriendly);
                 break;
         }
     }
@@ -235,16 +266,104 @@ public partial class Board : MonoBehaviour
 
     }
 
-    public void StartTargeting(GameObject source)
+    public void AttackMinion(Minion attacker, Minion target)
     {
 
+        int attackerInd = attacker.index;
+        int targetInd = target.index;
+        bool enemyTaunting = false;
+
+
+
+        if (CheckTargetEligibility(target) == false)
+        {
+            //invalid target
+            Debug.Log("Invalid target");
+            return;
+        }
+
+        foreach (Minion m in enemyMinions)
+        {
+            if (m.TAUNT) enemyTaunting = true;
+        }
+        if (enemyTaunting && target.TAUNT==false)
+        {
+            //can't attack non taunter
+            Debug.Log("Taunt in the way");
+            return;
+        }
+
+        EndTargeting();
+
+        Message message = Message.Create(MessageSendMode.Reliable, (int)Server.MessageType.AttackMinion);
+        message.AddULong(currentMatchID);
+        message.AddULong(playerID);
+        message.AddInt(attackerInd);
+        message.AddInt(targetInd);
+        client.Send(message);
+    }
+
+    public void UpdateMinion(string minionJson,bool friendly)
+    {
+        Minion updatedMinion = JsonUtility.FromJson<Minion>(minionJson);
+        Minion minion = friendly ? currMinions[updatedMinion.index] : enemyMinions[updatedMinion.index];
+
+        minion.health = updatedMinion.health;
+        minion.damage = updatedMinion.damage;
+
+        //auras (buffs/debuffs) update
+    }
+
+    public void StartTargetingAttack(Minion source)
+    {
+        targeting = true;
+        targetMode = TargetMode.Attack;
+        eligibleTargets = EligibleTargets.EnemyCharacters;
+        targetingMinion = source;
+        //TODO: target anim arrows
     }
 
     public void EndTargeting()
     {
-
+        targeting = false;
+        targetMode = TargetMode.None;
+        eligibleTargets = EligibleTargets.AllCharacters;
+        //targetSourceIndex = 0;
+        //targetIndex = 0;
+        targetingMinion = null;
+        targetingCard = null;
     }
 
+    public bool CheckTargetEligibility(Minion m)
+    {
+        if (eligibleTargets == EligibleTargets.AllCharacters)
+        {
+            return true;
+        }
+        if (eligibleTargets == EligibleTargets.EnemyMinions || eligibleTargets==EligibleTargets.EnemyCharacters)
+        {
+            if (IsFriendly(m)) return false;
+            else return true;
+        }
+        if (eligibleTargets == EligibleTargets.FriendlyMinions || eligibleTargets==EligibleTargets.FriendlyCharacters)
+        {
+            if (IsFriendly(m)) return true;
+            else return false;
+        }
+        return true;
+    }
+
+    public bool IsFriendly(Minion m)
+    {
+        if (currMinions.Contains(m)) return true;
+        return false;
+    }    
+
+    public bool IsFriendly(Hero h)
+    {
+        
+        return false;
+    }
     void Update()
     {
         

@@ -6,6 +6,7 @@ using Riptide.Transports;
 using Riptide.Utils;
 using System.Linq;
 using UnityEngine;
+using static Server;
 
 
 public partial class Server : MonoBehaviour
@@ -29,8 +30,14 @@ public partial class Server : MonoBehaviour
 
         SummonMinion,
         DestroyMinion,
-        Attack,
 
+        AttackMinion,
+        AttackFace,
+        SwingMinion,
+        SwingFace,
+
+        UpdateMinion,
+        Trigger,
 
         Concede,
     }
@@ -85,6 +92,13 @@ public partial class Server : MonoBehaviour
                 ulong endMatchID = message.GetULong();
                 ulong endPlayerID = message.GetULong();
                 EndTurn(endMatchID, clientID, endPlayerID);
+                break;
+            case MessageType.AttackMinion:
+                ulong attackMatchID = message.GetULong();
+                ulong attackPlayerID = message.GetULong();
+                int attackerInd = message.GetInt();
+                int targetMinionInd = message.GetInt();
+                AttackMinion(attackMatchID, clientID, attackPlayerID, attackerInd, targetMinionInd);
                 break;
         }
         
@@ -367,6 +381,57 @@ public partial class Server : MonoBehaviour
         server.Send(messageOp, match.players[o].clientID);
     }
 
+    public void AttackMinion(ulong matchID, ushort clientID, ulong playerID, int attackerInd, int targetInd)
+    {
+        if (currentMatches.ContainsKey(matchID) == false) return;
+        Match match = currentMatches[matchID];
+        int p = (int)match.turn;
+        PlayerConnection player = match.players[p];
+        PlayerConnection enemy = match.players[match.Opponent(p)];
+        if (player.clientID != clientID || player.playerID != playerID) return;
+
+        Board.Minion attacker = match.boards[p][attackerInd];
+        Board.Minion target = match.boards[match.Opponent(p)][targetInd];
+
+        Debug.Log("Attack " + attacker.ToString() + " " + target.ToString());
+
+        //TODO: onattack triggers
+
+        attacker.health -= target.damage;
+        target.health -= attacker.damage;
+
+        UpdateMinion(match, attacker, player, enemy);
+        UpdateMinion(match, target, enemy,player);
+
+        //todo: on damage triggers. this should be a damage() func
+
+        if (attacker.health <= 0)
+            DestroyMinion(match,attacker,player);
+        if (target.health <= 0)
+            DestroyMinion(match, attacker, enemy);
+    }
+    public void UpdateMinion(Match match, Board.Minion minion,PlayerConnection owner, PlayerConnection opponent)
+    {
+        Message messageOwner = Message.Create(MessageSendMode.Reliable, (int)MessageType.UpdateMinion);
+        Message messageOpponent = Message.Create(MessageSendMode.Reliable, (int)MessageType.UpdateMinion);
+
+        string jsonText = JsonUtility.ToJson(minion);
+        messageOwner.AddString(jsonText);
+        messageOpponent.AddString(jsonText);
+
+        messageOwner.AddBool(true);
+        messageOpponent.AddBool(false);
+
+        server.Send(messageOwner, owner.clientID);
+        server.Send(messageOpponent, opponent.clientID);
+    }
+
+    public void DestroyMinion(Match match, Board.Minion minion, PlayerConnection owner)
+    {
+        //figure out which is owner. send message to both players. destroy minion
+
+        //TODO: ondestroy effects, deathrattles?
+    }
     [Serializable]
     public class Player
     {

@@ -32,6 +32,11 @@ public partial class Board
         }
         public void Add(Card.Cardname c, int ind = -1)
         {
+
+            if (ind == -1)
+            {
+                ind = Count();
+            }
             if (Count() == 0)
             {
                 minions.Add(new Minion(c, 0));
@@ -47,7 +52,6 @@ public partial class Board
                 OrderInds();
                 return;
             }
-
             Creature creature = Instantiate(board.minionObject).GetComponent<Creature>();
             creature.board = board;
             creature.Set(minions[ind]);
@@ -93,12 +97,16 @@ public partial class Board
             foreach (var kvp in minionObjects)
             {
                 Creature c = kvp.Value;
-                c.transform.localPosition = new Vector3(-9 + 4.5f * (i++), this==board.currMinions?-2.75f:3, 0);
+                c.transform.localPosition = new Vector3(-9 + 4.5f * (kvp.Key.index), this==board.currMinions?-2.75f:3, 0);
             }
         }
         public int Count()
         {
             return minions.Count;
+        }
+        public bool Contains(Minion m)
+        {
+            return minions.Contains(m);
         }
         public MinionBoard()
         {

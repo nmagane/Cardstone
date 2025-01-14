@@ -100,7 +100,7 @@ public partial class Board
             foreach (var kvp in cardObjects)
             {
                 Card c = kvp.Value;
-                c.transform.localPosition = new Vector3(-15+4*(i++),-10,0);
+                c.transform.localPosition = new Vector3(-15+4*(c.card.index),-10,0);
             }
         }
         public int Count()
