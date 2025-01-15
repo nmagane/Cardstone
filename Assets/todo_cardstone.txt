@@ -15,3 +15,36 @@ message order system
 
 player class with all info (hand, deck, board, etc)
 refrences to currplayer, enemyplayer, player1, and player2 in match class
+
+attack confirm msg to both players
+mulligan screen
+
+note: minion and spell cards look different.
+
+class Trigger
+{
+enum TriggerType
+enum TriggerEffect
+
+ActivateTrigger(TriggerType x){
+invoke(triggerEffect)
+}
+
+}
+
+===TODO CARDS=== :
+SOULFIRE
+ABUSIVE SERGEANT
+ARGENT SQUIRE
+FLAME IMP
+SHIELD BEARER
+VOIDWALKER
+YOUNG PRIESTESS
+AMANI BERSERKER
+DIRE WOLF ALPHA
+KNIFE JUGGLER
+HARVEST GOLEM
+SHATTERED SUN CLERIC
+DARK IRON DWARF
+DEFENDER OF ARGUS
+DOOMGUARD

@@ -15,6 +15,8 @@ public partial class Board
         //public List<Card> cardObjects;
         public Board board;
         public Dictionary<HandCard, Card> cardObjects = new Dictionary<HandCard, Card>();
+
+        public bool mulliganMode = true;
         public HandCard this[int index]
         {
             get
@@ -86,6 +88,12 @@ public partial class Board
         {
             cards[index].Set(c, index);
             cardObjects[cards[index]].Set(cards[index]);
+            cardObjects[cards[index]].mulliganMark.enabled = false;
+        }
+        public void EndMulligan()
+        {
+            mulliganMode = false;
+            OrderInds();
         }
         public void OrderInds()
         {
@@ -96,10 +104,25 @@ public partial class Board
             }
             if (server) return;
 
-            i = 0;
+            if (mulliganMode)
+            {
+                float count = cardObjects.Count;
+                float dist = 5;
+                Vector3 offset = new Vector3(-((count-1)/2f * dist), 0);
+                foreach (var kvp in cardObjects)
+                {
+                    Card c = kvp.Value;
+                    c.transform.localScale = Vector3.one*1.5f;
+                    c.transform.localPosition = offset +new Vector3(dist * (c.card.index), 0, 0);
+                }
+                return;
+            }
+
+            
             foreach (var kvp in cardObjects)
             {
                 Card c = kvp.Value;
+                c.transform.localScale = Vector3.one;
                 c.transform.localPosition = new Vector3(-15+4*(c.card.index),-10,0);
             }
         }

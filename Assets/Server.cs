@@ -32,9 +32,16 @@ public partial class Server : MonoBehaviour
         DestroyMinion,
 
         AttackMinion,
+        ConfirmAttackMinion,
+
         AttackFace,
+        ConfirmAttackFace,
+
         SwingMinion,
+        ConfirmSwingMinion,
+
         SwingFace,
+        ConfirmSwingFace,
 
         UpdateMinion,
         Trigger,

@@ -9,6 +9,9 @@ using UnityEngine;
 
 public partial class Board : MonoBehaviour
 {
+
+    public UIButton mulliganButton;
+
     public Card hoveredCard = null;
     public BoardSide hoveredSide = null;
     public Creature hoveredMinion = null;
@@ -64,6 +67,7 @@ public partial class Board : MonoBehaviour
 
     void Start()
     {
+        Application.targetFrameRate = 60;
         client.Connect("127.0.0.1:8888",5,0,null,false);
         client.MessageReceived += OnMessageReceived;
         currHand.board = this;
@@ -144,9 +148,10 @@ public partial class Board : MonoBehaviour
             s += c.ToString()+" ";
         }
         Debug.Log(playerID+" Hand: " + s);
+        mulliganButton.transform.localScale = Vector3.one;
     }
 
-    void StartMatchmaking()
+    public void StartMatchmaking()
     {
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)Server.MessageType.Matchmaking);
         message.AddULong(playerID);
@@ -154,11 +159,11 @@ public partial class Board : MonoBehaviour
         message.AddString(deck);
         client.Send(message);
     }
-    int[] selectedMulligans = { 0, 2 };
-    void SubmitMulligan()
+    public List<int> selectedMulligans = new List<int>(){};
+    public void SubmitMulligan()
     {
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)Server.MessageType.SubmitMulligan);
-        message.AddInts(selectedMulligans,true);
+        message.AddInts(selectedMulligans.ToArray(),true);
         message.AddULong(currentMatchID);
         message.AddULong(playerID);
         client.Send(message);
@@ -170,9 +175,10 @@ public partial class Board : MonoBehaviour
         foreach (int i in selectedMulligans)
         {
             //TODO: mull anim goes here
-            //currHand[i].Set(newHand[i].card, newHand[i].index);
             currHand.MulliganReplace(i, newHand[i].card);
         }
+        currHand.EndMulligan();
+        mulliganButton.transform.localPosition += new Vector3(0, -10);
     }
     void StartGame(bool isTurn)
     {

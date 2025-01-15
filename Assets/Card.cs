@@ -14,6 +14,7 @@ public class Card : MonoBehaviour
     public TMP_Text text;
     public TMP_Text manaCost;
     public SpriteRenderer icon;
+    public SpriteRenderer mulliganMark;
     public enum Cardname
     {
         F0,
@@ -62,17 +63,41 @@ public class Card : MonoBehaviour
     Vector3 OP = new Vector3();
     private void OnMouseDown()
     {
+        if (board.currHand.mulliganMode)
+        {
+            if (board.selectedMulligans.Contains(card.index))
+            {
+
+                mulliganMark.enabled = false;
+                board.selectedMulligans.Remove(card.index);
+            }
+            else
+            {
+                mulliganMark.enabled = true;
+                board.selectedMulligans.Add(card.index);
+            }
+            return;
+        }
         OP = transform.localPosition;
         offset = this.transform.position - GetMousePos();
     }
 
     private void OnMouseDrag()
     {
+        if (board.currHand.mulliganMode)
+        {
+            return;
+        }
         transform.position = DragPos();
     }
 
     private void OnMouseUp()
     {
+        
+        if (board.currHand.mulliganMode)
+        {
+            return;
+        }
         if (board.currTurn == false)
         {
             //ERROR: NOT YOUR TURN
@@ -114,7 +139,7 @@ public class Card : MonoBehaviour
                 return;
             }
 
-            int position = -1;
+            int position = -1   ;
             board.PlayCard(card, -1, position);
             return;
         }
