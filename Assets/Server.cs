@@ -6,7 +6,6 @@ using Riptide.Transports;
 using Riptide.Utils;
 using System.Linq;
 using UnityEngine;
-using static Server;
 
 
 public partial class Server : MonoBehaviour
