@@ -15,8 +15,14 @@ public partial class Board
         //public List<Card> cardObjects;
         public Board board;
         public Dictionary<HandCard, Card> cardObjects = new Dictionary<HandCard, Card>();
-
-        public bool mulliganMode = true;
+        public enum MulliganState
+        {
+            None,
+            Waiting,
+            Done,
+        }
+        public MulliganState mulliganMode = MulliganState.None;
+        public bool enemyHand = false;
         public HandCard this[int index]
         {
             get
@@ -38,6 +44,7 @@ public partial class Board
         {
             Deck,
             Board,
+            EnemyDeck,
         }
         public void Add(Card.Cardname x,int ind=-1, CardSource source = CardSource.Deck)
         {
@@ -92,7 +99,12 @@ public partial class Board
         }
         public void EndMulligan()
         {
-            mulliganMode = false;
+            mulliganMode = MulliganState.Waiting;
+            OrderInds();
+        }
+        public void ConfirmBothMulligans()
+        {
+            mulliganMode = MulliganState.Done;
             OrderInds();
         }
         public void OrderInds()
@@ -104,7 +116,7 @@ public partial class Board
             }
             if (server) return;
 
-            if (mulliganMode)
+            if (mulliganMode!=MulliganState.Done)
             {
                 float count = cardObjects.Count;
                 float dist = 5;
@@ -123,7 +135,7 @@ public partial class Board
             {
                 Card c = kvp.Value;
                 c.transform.localScale = Vector3.one;
-                c.transform.localPosition = new Vector3(-15+4*(c.card.index),-10,0);
+                c.transform.localPosition = new Vector3(-15+4*(c.card.index),enemyHand?10:-10,0);
             }
         }
         public int Count()

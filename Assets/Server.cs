@@ -6,6 +6,8 @@ using Riptide.Transports;
 using Riptide.Utils;
 using System.Linq;
 using UnityEngine;
+using UnityEditor;
+using static Server;
 
 
 public partial class Server : MonoBehaviour
@@ -17,6 +19,7 @@ public partial class Server : MonoBehaviour
 
         SubmitMulligan,
         ConfirmMulligan,
+        EnemyMulligan,
 
         PlayCard,
 
@@ -26,6 +29,7 @@ public partial class Server : MonoBehaviour
 
         DrawCards,
         DrawHand,
+        DrawEnemy,
 
         SummonMinion,
         DestroyMinion,
@@ -173,13 +177,13 @@ public partial class Server : MonoBehaviour
 
         for (int i=0;i< p1cards; i++)
         {
-            m.hands[0].Add(m.decks[0][0]);
-            m.decks[0].RemoveAt(0);
+            m.players[0].hand.Add(m.players[0].deck[0]);
+            m.players[0].deck.RemoveAt(0);
         }
         for (int i=0;i< p2cards; i++)
         {
-            m.hands[1].Add(m.decks[1][0]);
-            m.decks[1].RemoveAt(0);
+            m.players[1].hand.Add(m.players[1].deck[0]);
+            m.players[1].deck.RemoveAt(0);
         }
         if (m.turn==Turn.player1)
         {
@@ -191,35 +195,37 @@ public partial class Server : MonoBehaviour
         }
 
         Message m1 = Message.Create(MessageSendMode.Reliable, (ushort)Server.MessageType.DrawHand);
-        string jsonText = JsonUtility.ToJson(m.hands[0]);
+        string jsonText = JsonUtility.ToJson(m.players[0].hand);
         m1.AddString(jsonText);
-        server.Send(m1, m.players[0].clientID);
+        m1.AddInt(m.players[1].hand.Count());
+        server.Send(m1, m.players[0].connection.clientID);
 
         Message m2 = Message.Create(MessageSendMode.Reliable, (ushort)Server.MessageType.DrawHand);
-        jsonText = JsonUtility.ToJson(m.hands[1]);
+        jsonText = JsonUtility.ToJson(m.players[1].hand);
         m2.AddString(jsonText);
-        server.Send(m2, m.players[1].clientID);
+        m2.AddInt(m.players[0].hand.Count());
+        server.Send(m2, m.players[1].connection.clientID);
     }
 
     public void Mulligan(int[] inds, ulong matchID, ulong playerID)
     {
         if (currentMatches.ContainsKey(matchID) == false) return;
         Match match = currentMatches[matchID];
-        Board.Hand hand= match.hands[0];
+        Board.Hand hand= match.players[0].hand;
         int player = 0;
-        if (playerID == match.players[0].playerID)
+        if (playerID == match.players[0].connection.playerID)
         {
             player = 0;
         }
-        else if (playerID == match.players[1].playerID)
+        else if (playerID == match.players[1].connection.playerID)
         {
             player = 1;
         }
         else return;
 
-        if (match.mulligans[player]) return; //already mulliganed this player
+        if (match.players[player].mulligan) return; //already mulliganed this player
 
-        hand = match.hands[player];
+        hand = match.players[player].hand;
         List<Card.Cardname> returningCards = new List<Card.Cardname>();
 
         foreach (int i in inds)
@@ -227,20 +233,24 @@ public partial class Server : MonoBehaviour
             if (i >= hand.Count())
                 continue;
             returningCards.Add(hand[i].card);
-            Card.Cardname newCard = match.decks[player][0];
-            match.decks[player].RemoveAt(0);
+            Card.Cardname newCard = match.players[player].deck[0];
+            match.players[player].deck.RemoveAt(0);
             hand[i] = new Board.HandCard(newCard, i);
         }
-        match.decks[player].AddRange(returningCards);
-        match.decks[player] = Board.Shuffle(match.decks[player]);
-        match.mulligans[player] = true;
+        match.players[player].deck.AddRange(returningCards);
+        match.players[player].deck = Board.Shuffle(match.players[player].deck);
+        match.players[player].mulligan = true;
 
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)Server.MessageType.ConfirmMulligan);
-        string jsonText = JsonUtility.ToJson(match.hands[player]);
+        string jsonText = JsonUtility.ToJson(match.players[player].hand);
         message.AddString(jsonText);
-        server.Send(message, match.players[player].clientID);
+        server.Send(message, match.players[player].connection.clientID);
 
-        if (match.mulligans[0] && match.mulligans[1])
+        Message enemyMullMessage = Message.Create(MessageSendMode.Reliable, (int)MessageType.EnemyMulligan);
+        enemyMullMessage.AddInts(inds);
+        server.Send(enemyMullMessage, match.OtherPlayer(match.players[player]).connection.clientID);
+
+        if (match.players[0].mulligan && match.players[1].mulligan)
         {
             StartGame(match);
             Debug.Log("both mulls complete");
@@ -256,8 +266,8 @@ public partial class Server : MonoBehaviour
         messageSecond.AddBool(false);
         int f = match.turn == Turn.player1 ? 0 : 1;
         int s = match.turn == Turn.player1 ? 1 : 0;
-        server.Send(messageFirst, match.players[f].clientID);
-        server.Send(messageSecond, match.players[s].clientID);
+        server.Send(messageFirst, match.players[f].connection.clientID);
+        server.Send(messageSecond, match.players[s].connection.clientID);
 
         StartTurn(match);
     }
@@ -265,28 +275,34 @@ public partial class Server : MonoBehaviour
     public void StartTurn(Match match)
     {
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)Server.MessageType.StartTurn);
-        int p = (int)match.turn;
+        //int p = (int)match.turn;
 
-        match.maxMana[p] = Mathf.Min(match.maxMana[p] + 1, 10);
-        match.currentMana[p] = match.maxMana[p];
-
+        match.currPlayer.maxMana = Mathf.Min(match.currPlayer.maxMana + 1, 10);
+        match.currPlayer.currMana = match.currPlayer.maxMana;
+        foreach (var m in match.currPlayer.board)
+        {
+            m.canAttack = true;
+        }
         //TODO: start of turn effects
 
-        message.Add(match.maxMana[p]);
-        message.Add(match.currentMana[p]);
+        message.Add(match.currPlayer.maxMana);
+        message.Add(match.currPlayer.currMana);
 
-        server.Send(message, match.players[p].clientID);
+        server.Send(message, match.currPlayer.connection.clientID);
 
         DrawCards(match, match.turn, 1);
     }
     public void EndTurn(ulong matchID, ushort clientID, ulong playerID)
     {
         Match m = currentMatches[matchID];
-        PlayerConnection player = m.players[(int)m.turn];
+        PlayerConnection player = m.players[(int)m.turn].connection;
         if (player.clientID != clientID || player.playerID != playerID) return;
 
         //TODO: end of turn effects
         m.turn = m.turn == Turn.player1 ? Turn.player2 : Turn.player1;
+
+        m.currPlayer = m.players[(int)m.turn];
+        m.enemyPlayer = m.players[m.Opponent((int)m.turn)];
 
         Message msg = Message.Create(MessageSendMode.Reliable, (ushort)Server.MessageType.EndTurn);
         server.Send(msg, player.clientID);
@@ -299,15 +315,18 @@ public partial class Server : MonoBehaviour
         List<Card.Cardname> drawnCards = new List<Card.Cardname>();
         for (int i = 0; i < count; i++)
         {
-            Card.Cardname top = match.decks[p][0];
-            match.decks[p].RemoveAt(0);
-            match.hands[p].Add(top);
+            Card.Cardname top = match.players[p].deck[0];
+            match.players[p].deck.RemoveAt(0);
+            match.players[p].hand.Add(top);
             drawnCards.Add(top);
 
             Message message = Message.Create(MessageSendMode.Reliable, (ushort)Server.MessageType.DrawCards);
             message.AddInt((int)top);
-            server.Send(message, match.players[p].clientID);
-            
+            server.Send(message, match.players[p].connection.clientID);
+        
+            Message messageOpp = Message.Create(MessageSendMode.Reliable, (ushort)Server.MessageType.DrawEnemy);
+            messageOpp.AddInt(1);
+            server.Send(messageOpp, match.OtherPlayer(match.players[p]).connection.clientID);
         }
 
     }
@@ -317,24 +336,24 @@ public partial class Server : MonoBehaviour
         if (currentMatches.ContainsKey(matchID) == false) return;
         Match match = currentMatches[matchID];
         int p = (int)match.turn;
-        PlayerConnection player = match.players[p];
-        PlayerConnection opponent = match.players[match.Opponent(p)];
+        PlayerConnection player = match.players[p].connection;
+        PlayerConnection opponent = match.players[match.Opponent(p)].connection;
         if (player.clientID != clientID || player.playerID != playerID) return;
         
-        Board.HandCard card = match.hands[p][index];
+        Board.HandCard card = match.players[p].hand[index];
         
         //check if play is legal
-        if (match.currentMana[p] < card.manaCost) return;
+        if (match.players[p].currMana < card.manaCost) return;
 
-        
-        if (card.MINION && match.boards[p].Count()>=7)
+
+        if (card.MINION && match.players[p].board.Count()>=7)
         {
             return;
         }
 
         //====================
-        match.currentMana[p] -= card.manaCost;
-        match.hands[p].RemoveAt(index);
+        match.players[p].currMana -= card.manaCost;
+        match.players[p].hand.RemoveAt(index);
         
         //send confirm play message to both sides
         Message confirmPlay = Message.Create(MessageSendMode.Reliable, (ushort)Server.MessageType.PlayCard);
@@ -351,7 +370,7 @@ public partial class Server : MonoBehaviour
 
         if (card.SPELL)
         {
-
+            //trigger event: ON PLAY SPELL
         }
 
         if (card.MINION)
@@ -370,38 +389,43 @@ public partial class Server : MonoBehaviour
     {
         int p = (int)side;
         int o = match.Opponent(p);
-        if (match.boards[p].Count() >= 7) return;
-        
-        match.boards[p].Add(minion, position);
+        if (match.players[p].board.Count() >= 7) return;
+
+        match.players[p].board.Add(minion, position);
 
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)Server.MessageType.SummonMinion);
         message.AddBool(true);
         message.AddInt((int)minion);
         message.AddInt(position);
-        server.Send(message, match.players[p].clientID);
+        server.Send(message, match.players[p].connection.clientID);
         
         Message messageOp = Message.Create(MessageSendMode.Reliable, (ushort)Server.MessageType.SummonMinion);
         messageOp.AddBool(false);
         messageOp.AddInt((int)minion);
         messageOp.AddInt(position);
-        server.Send(messageOp, match.players[o].clientID);
+        server.Send(messageOp, match.players[o].connection.clientID);
     }
 
     public void AttackMinion(ulong matchID, ushort clientID, ulong playerID, int attackerInd, int targetInd)
     {
         if (currentMatches.ContainsKey(matchID) == false) return;
         Match match = currentMatches[matchID];
-        int p = (int)match.turn;
-        PlayerConnection player = match.players[p];
-        PlayerConnection enemy = match.players[match.Opponent(p)];
+
+        PlayerConnection player = match.currPlayer.connection;
+        PlayerConnection enemy = match.enemyPlayer.connection;
         if (player.clientID != clientID || player.playerID != playerID) return;
 
-        Board.Minion attacker = match.boards[p][attackerInd];
-        Board.Minion target = match.boards[match.Opponent(p)][targetInd];
+        Board.Minion attacker = match.currPlayer.board[attackerInd];
+        Board.Minion target = match.enemyPlayer.board[targetInd];
+        if (ValidAttackMinion(match, attackerInd, targetInd) == false) return;
 
+        ConfirmAttackMinion(match, attackerInd, targetInd);
         Debug.Log("Attack " + attacker.ToString() + " " + target.ToString());
 
         //TODO: onattack triggers
+
+        if (attacker.WINDFURY) attacker.WINDFURY = false;
+        else attacker.canAttack = false;
 
         attacker.health -= target.damage;
         target.health -= attacker.damage;
@@ -459,31 +483,18 @@ public partial class Server : MonoBehaviour
     [Serializable]
     public class Match
     {
-        public List<PlayerConnection> players = new List<PlayerConnection>();
+        public List<Player> players = new List<Player>() { new Player(), new Player() };
         public ulong matchID;
-        public List<int> healths = new List<int>() { 30, 30 };
-
-        public List<int> maxMana = new List<int>() { 0, 0 };
-        public List<int> currentMana = new List<int>() { 0, 0 };
-
         public Turn turn = Turn.player1;
-
-        public List<List<Card.Cardname>> decks = new List<List<Card.Cardname>>() { new List<Card.Cardname>(), new List<Card.Cardname>()};
-
-        public List<Board.Hand> hands = new List<Board.Hand>() {  new Board.Hand(), new Board.Hand()};
-
-        public List<bool> mulligans = new List<bool>() { false, false };
-
-        public List<Board.MinionBoard> boards = new List<Board.MinionBoard>() { new Board.MinionBoard(), new Board.MinionBoard()};
-
-        //todo: on board minions
+        public Player currPlayer;
+        public Player enemyPlayer;
         //todo: secrets
-        //todo: decks, graveyards
-        
+        //todo: graveyards
+
         public void InitMatch(PlayerConnection p1, PlayerConnection p2, ulong mID)
         {
-            players.Add(p1);
-            players.Add(p2);
+            players[0].connection=p1;
+            players[1].connection=p2;
             List<Card.Cardname> sampleTestDeck = new List<Card.Cardname>();
 
             for (int i=0;i<15;i++)
@@ -493,18 +504,20 @@ public partial class Server : MonoBehaviour
             }
             //decks = new List<List<Card.Cardname>>();
             
-            decks[0] = new List<Card.Cardname>(Board.Shuffle(sampleTestDeck));
-            decks[1] = new List<Card.Cardname>(Board.Shuffle(sampleTestDeck));
+            players[0].deck = new List<Card.Cardname>(Board.Shuffle(sampleTestDeck));
+            players[1].deck = new List<Card.Cardname>(Board.Shuffle(sampleTestDeck));
 
             turn = Board.RNG(50) ? Turn.player1 : Turn.player2;
-
+            currPlayer = players[(int)turn];
+            enemyPlayer = players[Opponent((int)turn)];
+            
             matchID = mID;
 
-            hands[0].server = true;
-            hands[1].server = true;
+            players[0].hand.server = true;
+            players[1].hand.server = true;
 
-            boards[0].server = true;
-            boards[1].server = true;
+            players[0].board.server = true;
+            players[1].board.server = true;
         }
 
         public static bool operator ==(Match x, ulong y)
@@ -529,6 +542,13 @@ public partial class Server : MonoBehaviour
             if (x == 1) return 0;
             else if (x == 0) return 1;
             return 1;
+        }
+        public Player OtherPlayer(Player p)
+        {
+            if (p == players[0]) return players[1];
+            if (p == players[1]) return players[0];
+
+            return players[0];
         }
     }
     

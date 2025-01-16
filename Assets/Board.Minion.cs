@@ -16,6 +16,8 @@ public partial class Board
         public bool canAttack = false;
 
         public bool TAUNT = false;
+        public bool STEALTH = false;
+        public bool WINDFURY = false;
 
         public void Set(Card.Cardname name, int ind)
         {

@@ -13,8 +13,11 @@ public class Card : MonoBehaviour
     public new TMP_Text name;
     public TMP_Text text;
     public TMP_Text manaCost;
+    public TMP_Text health;
+    public TMP_Text damage;
     public SpriteRenderer icon;
     public SpriteRenderer mulliganMark;
+    public Sprite cardback;
     public enum Cardname
     {
         F0,
@@ -33,6 +36,7 @@ public class Card : MonoBehaviour
         F13,
         F14,
         F15,
+        Cardback,
     }
     void Start()
     {
@@ -42,6 +46,16 @@ public class Card : MonoBehaviour
     public void Set(Board.HandCard c)
     {
         card = c;
+        if (c.card == Cardname.Cardback)
+        {
+            icon.sprite = cardback;
+            name.text = "";
+            text.text = "";
+            manaCost.text = "";
+            damage.text = "";
+            health.text = "";
+            return;
+        }
         name.text = c.card.ToString();
 
     }
@@ -63,7 +77,8 @@ public class Card : MonoBehaviour
     Vector3 OP = new Vector3();
     private void OnMouseDown()
     {
-        if (board.currHand.mulliganMode)
+        if (card.card == Cardname.Cardback) return;
+        if (board.currHand.mulliganMode==Board.Hand.MulliganState.None)
         {
             if (board.selectedMulligans.Contains(card.index))
             {
@@ -84,7 +99,8 @@ public class Card : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        if (board.currHand.mulliganMode)
+        if (card.card == Cardname.Cardback) return;
+        if (board.currHand.mulliganMode!=Board.Hand.MulliganState.Done)
         {
             return;
         }
@@ -93,8 +109,9 @@ public class Card : MonoBehaviour
 
     private void OnMouseUp()
     {
-        
-        if (board.currHand.mulliganMode)
+
+        if (card.card == Cardname.Cardback) return;
+        if (board.currHand.mulliganMode!=Board.Hand.MulliganState.Done)
         {
             return;
         }

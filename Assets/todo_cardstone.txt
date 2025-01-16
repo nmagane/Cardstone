@@ -17,10 +17,20 @@ player class with all info (hand, deck, board, etc)
 refrences to currplayer, enemyplayer, player1, and player2 in match class
 
 attack confirm msg to both players
-mulligan screen
+start and end turn confirms to opponent players? //probably not needed
 
 note: minion and spell cards look different.
 
+
+
+mulligan waiting for opponent screen.
+
+
+
+
+
+
+===========================================
 class Trigger
 {
 enum TriggerType

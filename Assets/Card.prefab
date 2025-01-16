@@ -833,10 +833,13 @@ MonoBehaviour:
     COMBO: 0
     played: 0
   name: {fileID: 8764927573253110649}
-  text: {fileID: 0}
-  manaCost: {fileID: 0}
-  icon: {fileID: 0}
+  text: {fileID: 7809844254190655317}
+  manaCost: {fileID: 5503984478277702751}
+  health: {fileID: 292622952303506602}
+  damage: {fileID: 477049995625680310}
+  icon: {fileID: 7187123306332122834}
   mulliganMark: {fileID: 1743571273208037112}
+  cardback: {fileID: 21300000, guid: 69ae6a1d6da941e4e85b23bf151a611b, type: 3}
 --- !u!61 &6001180810905503547
 BoxCollider2D:
   m_ObjectHideFlags: 0

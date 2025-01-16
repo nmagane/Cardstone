@@ -42,6 +42,13 @@ public class Creature : MonoBehaviour
     
     private void OnMouseOver()
     {
+        if (board.targeting)
+        {
+            if (Input.GetMouseButtonUp(0))
+            {
+
+            }
+        }
         //timer for tooltip to show up
     }
     private void OnMouseEnter()
@@ -62,6 +69,7 @@ public class Creature : MonoBehaviour
             return;
         }
         if (IsFriendly() == false) return;
+        if (minion.canAttack == false) return;
         board.StartTargetingAttack(minion);
     }
 }

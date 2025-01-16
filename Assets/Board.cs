@@ -9,8 +9,8 @@ using UnityEngine;
 
 public partial class Board : MonoBehaviour
 {
-
     public UIButton mulliganButton;
+    public GameObject waitingEnemyMulliganMessage;
 
     public Card hoveredCard = null;
     public BoardSide hoveredSide = null;
@@ -29,6 +29,7 @@ public partial class Board : MonoBehaviour
     public ulong currentMatchID;
 
     public Hand currHand = new Hand();
+    public Hand enemyHand = new Hand();
     public bool currTurn = false;
     public MinionBoard currMinions;
     public MinionBoard enemyMinions;
@@ -37,33 +38,6 @@ public partial class Board : MonoBehaviour
 
     public int enemyMana = 0;
     public int enemyMaxMana = 0;
-
-    public bool targeting = false;
-    public TargetMode targetMode = TargetMode.None;
-    public EligibleTargets eligibleTargets = EligibleTargets.AllCharacters;
-    //public int targetSourceIndex = 0;
-    //public int targetIndex = 0;
-    public Minion targetingMinion = null;
-    public HandCard targetingCard = null;
-
-    public enum TargetMode
-    {
-        None,
-        Attack,
-        Spell,
-        HeroPower,
-        Weapon,
-    }
-    public enum EligibleTargets
-    {
-        AllCharacters,
-
-        EnemyCharacters,
-        EnemyMinions,
-
-        FriendlyCharacters,
-        FriendlyMinions,
-    }
 
     void Start()
     {
@@ -87,15 +61,24 @@ public partial class Board : MonoBehaviour
                 break;
             case Server.MessageType.DrawHand:
                 string handJson = message.GetString();
-                InitHand(handJson);
+                int enemyCardCount = message.GetInt();
+                InitHand(handJson, enemyCardCount);
                 break;
             case Server.MessageType.ConfirmMulligan:
                 string mulliganJson = message.GetString();
                 ConfirmMulligan(mulliganJson);
                 break;
+            case Server.MessageType.EnemyMulligan:
+                int[] enemyMulligan = message.GetInts();
+                ConfirmEnemyMulligan(enemyMulligan);
+                break;
             case Server.MessageType.DrawCards:
                 Card.Cardname draw = (Card.Cardname)message.GetInt();
                 DrawCard(draw); 
+                break;
+            case Server.MessageType.DrawEnemy:
+                int enemyDraws = message.GetInt();
+                DrawEnemy(enemyDraws);
                 break;
             case Server.MessageType.StartGame:
                 bool isTurn = message.GetBool();
@@ -125,6 +108,9 @@ public partial class Board : MonoBehaviour
                 bool minionUpdateFriendly = message.GetBool();
                 UpdateMinion(minionUpdateJson, minionUpdateFriendly);
                 break;
+            case Server.MessageType.ConfirmAttackMinion:
+                ConfirmAttackMinion(message);
+                break;
         }
     }
     public void InitGame(ulong matchID)
@@ -132,7 +118,7 @@ public partial class Board : MonoBehaviour
         Debug.Log("Player " + playerID + " entered game " + matchID);
         currentMatchID = matchID;
     }
-    public void InitHand(string jsonText)
+    public void InitHand(string jsonText, int enemyCards=4)
     {
         //Debug.Log(jsonText);
         Hand hand = JsonUtility.FromJson<Hand>(jsonText);
@@ -147,7 +133,16 @@ public partial class Board : MonoBehaviour
         {
             s += c.ToString()+" ";
         }
+
+        enemyHand.enemyHand = true;
+        enemyHand.board = this;
+        enemyHand.mulliganMode = Hand.MulliganState.Done;
+        enemyHand.server = false;
+        for (int i=0;i<enemyCards;i++)
+            enemyHand.Add(Card.Cardname.Cardback);
+
         Debug.Log(playerID+" Hand: " + s);
+        hand.mulliganMode = Hand.MulliganState.None;
         mulliganButton.transform.localScale = Vector3.one;
     }
 
@@ -178,11 +173,23 @@ public partial class Board : MonoBehaviour
             currHand.MulliganReplace(i, newHand[i].card);
         }
         currHand.EndMulligan();
+        waitingEnemyMulliganMessage.transform.localScale = Vector3.one;
         mulliganButton.transform.localPosition += new Vector3(0, -10);
+    }
+    void ConfirmEnemyMulligan(int[] inds)
+    {
+        foreach(int i in inds)
+        {
+            //TODO: enemy mull anim
+            //enemyHand.cardObjects[enemyHand[i]].mulliganMark.enabled = true;
+        }
     }
     void StartGame(bool isTurn)
     {
         //TODO: Get rid of mulligan screen
+        waitingEnemyMulliganMessage.transform.localScale = Vector3.zero;
+        currHand.ConfirmBothMulligans();
+        currHand.OrderInds();
         currMinions = new MinionBoard();
         enemyMinions = new MinionBoard();
         enemyMinions.board = currMinions.board = this;
@@ -219,6 +226,11 @@ public partial class Board : MonoBehaviour
         maxMana = max;
         currMana = cur;
 
+        foreach (Minion m in currMinions)
+        {
+            m.canAttack = true;
+        }
+
         Debug.Log(playerID + "'s turn. - Mana: " +currMana+"/"+maxMana );
     }
     public void DrawCard(Card.Cardname card)
@@ -226,6 +238,11 @@ public partial class Board : MonoBehaviour
         //todo: anim draw
         Debug.Log("Drawn " + card);
         currHand.Add(card);
+    }
+    public void DrawEnemy(int x)
+    {
+        for (int i = 0; i < x; i++)
+            enemyHand.Add(Card.Cardname.Cardback);
     }
 
     public void PlayCard(HandCard card,int target=-1,int position=-1)
@@ -247,8 +264,8 @@ public partial class Board : MonoBehaviour
     {
         if (side ==false)
         {
-            //enemy played card
-            Debug.Log("Enemy played " + card);
+            enemyHand.RemoveAt(index);
+            Debug.Log("TODO: Enemy played " + card);
             return;
         }
         //ally played card
@@ -283,7 +300,7 @@ public partial class Board : MonoBehaviour
 
         if (CheckTargetEligibility(target) == false)
         {
-            //invalid target
+            //invalid target todo:check these on server
             Debug.Log("Invalid target");
             return;
         }
@@ -318,45 +335,6 @@ public partial class Board : MonoBehaviour
         minion.damage = updatedMinion.damage;
 
         //auras (buffs/debuffs) update
-    }
-
-    public void StartTargetingAttack(Minion source)
-    {
-        targeting = true;
-        targetMode = TargetMode.Attack;
-        eligibleTargets = EligibleTargets.EnemyCharacters;
-        targetingMinion = source;
-        //TODO: target anim arrows
-    }
-
-    public void EndTargeting()
-    {
-        targeting = false;
-        targetMode = TargetMode.None;
-        eligibleTargets = EligibleTargets.AllCharacters;
-        //targetSourceIndex = 0;
-        //targetIndex = 0;
-        targetingMinion = null;
-        targetingCard = null;
-    }
-
-    public bool CheckTargetEligibility(Minion m)
-    {
-        if (eligibleTargets == EligibleTargets.AllCharacters)
-        {
-            return true;
-        }
-        if (eligibleTargets == EligibleTargets.EnemyMinions || eligibleTargets==EligibleTargets.EnemyCharacters)
-        {
-            if (IsFriendly(m)) return false;
-            else return true;
-        }
-        if (eligibleTargets == EligibleTargets.FriendlyMinions || eligibleTargets==EligibleTargets.FriendlyCharacters)
-        {
-            if (IsFriendly(m)) return true;
-            else return false;
-        }
-        return true;
     }
 
     public bool IsFriendly(Minion m)
