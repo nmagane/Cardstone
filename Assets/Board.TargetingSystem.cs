@@ -7,6 +7,7 @@
     //public int targetIndex = 0;
     public Minion targetingMinion = null;
     public HandCard targetingCard = null;
+    public bool dragTargeting = false;
 
     public enum TargetMode
     {
@@ -27,11 +28,12 @@
         FriendlyMinions,
     }
 
-    public void TargetMinion(Minion m)
+    public void TargetMinion(Minion minion)
     {
         switch (targetMode)
         {
             case TargetMode.Attack:
+                AttackMinion(targetingMinion, minion);
                 break;
             case TargetMode.Spell:
                 break;
@@ -62,6 +64,7 @@
         //targetIndex = 0;
         targetingMinion = null;
         targetingCard = null;
+        dragTargeting = false;
     }
 
     public bool CheckTargetEligibility(Minion m)

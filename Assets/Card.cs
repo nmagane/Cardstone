@@ -63,7 +63,7 @@ public class Card : MonoBehaviour
     {
         
     }
-    public Vector3 GetMousePos()
+    public static Vector3 GetMousePos()
     {
         return (Camera.main.ScreenToWorldPoint(Input.mousePosition) - new Vector3(0, 0, Camera.main.ScreenToWorldPoint(Input.mousePosition).z));
     }

@@ -39,17 +39,23 @@ public class Creature : MonoBehaviour
         health.text = minion.health.ToString();
     }
 
-    
+
     private void OnMouseOver()
     {
-        if (board.targeting)
+        if (board.targeting && board.dragTargeting)
         {
             if (Input.GetMouseButtonUp(0))
             {
-
+                if (board.targetingMinion == minion)
+                {
+                    //cancel by releasing on self
+                    board.EndTargeting();
+                    return;
+                }
+                board.TargetMinion(minion);
             }
         }
-        //timer for tooltip to show up
+        //TODO: timer for tooltip to show up
     }
     private void OnMouseEnter()
     {
@@ -60,16 +66,52 @@ public class Creature : MonoBehaviour
         board.hoveredMinion = null;
     }
 
+    int dragCounter = 0;
+    int dragTime = 5;
+    private void OnMouseDrag()
+    {
+        if (board.targetingMinion==minion)
+        {
+            if (dragCounter < dragTime) dragCounter++;
+            if (dragCounter >= dragTime)
+            {
+                if (Vector3.Distance(Card.GetMousePos(), clickPos) > 0.2f)
+                {
+                    board.dragTargeting = true;
+                    Debug.Log("drag");
+                }
+            }
+        }
+
+    }
+    private void OnMouseUp()
+    {
+        dragCounter = 0;
+        if (board.dragTargeting && board.targetingMinion==minion)
+        {
+            if (board.hoveredMinion==null && board.hoveredHero==null) 
+                board.EndTargeting();
+        }
+    }
+    Vector3 clickPos = Vector3.zero;
     private void OnMouseDown()
     {
         if (board.targeting)
         {
-            //check if this is a valid target
-            board.AttackMinion(board.targetingMinion,this.minion);
+            if (board.targetingMinion == minion)
+            {
+                //cancel by clicking on self
+                board.EndTargeting();
+                return;
+            }
+
+            board.TargetMinion(minion);
             return;
         }
+
         if (IsFriendly() == false) return;
         if (minion.canAttack == false) return;
         board.StartTargetingAttack(minion);
+        clickPos = Card.GetMousePos();
     }
 }
