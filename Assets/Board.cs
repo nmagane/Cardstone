@@ -22,6 +22,7 @@ public partial class Board : MonoBehaviour
 
     public GameObject cardObject;
     public GameObject minionObject;
+    public GameObject UISprite;
 
     public Riptide.Client client = new Riptide.Client();
 
@@ -110,6 +111,9 @@ public partial class Board : MonoBehaviour
                 break;
             case Server.MessageType.ConfirmAttackMinion:
                 ConfirmAttackMinion(message);
+                break;
+            case Server.MessageType.DestroyMinion:
+                DestroyMinion(message);
                 break;
         }
     }
@@ -284,9 +288,18 @@ public partial class Board : MonoBehaviour
         foreach (Minion m in board) s += m.ToString()+" ";
         Debug.Log((friendlySide ? "Ally" : "Enemy") + " board: " + s);
     }
-    public void DestroyMinion()
+    public void DestroyMinion(Message m)
     {
-
+        int ind = m.GetInt();
+        bool friendlySide = m.GetBool();
+        if (friendlySide)
+        {
+            currMinions.RemoveAt(ind);
+        }
+        else
+        {
+            enemyMinions.RemoveAt(ind);
+        }
     }
 
     public void AttackMinion(Minion attacker, Minion target)

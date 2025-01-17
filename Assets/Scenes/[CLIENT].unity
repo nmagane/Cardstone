@@ -575,6 +575,12 @@ MonoBehaviour:
     TARGETED: 0
     COMBO: 0
     played: 0
+  playingCard: {fileID: 0}
+  dragTargeting: 0
+  activeTargetingAnim: 0
+  ArrowSprites:
+  - {fileID: 21300000, guid: a281a50f596057c4bb7c990ba102dbdb, type: 3}
+  - {fileID: 21300000, guid: cf97d73a06d246449927f881e1a27cf2, type: 3}
 --- !u!114 &768848211 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3682426844166967699, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
@@ -1674,6 +1680,10 @@ MonoBehaviour:
     TARGETED: 0
     COMBO: 0
     played: 0
+  playingCard: {fileID: 0}
+  dragTargeting: 0
+  activeTargetingAnim: 0
+  ArrowSprites: []
 --- !u!4 &1733639531
 Transform:
   m_ObjectHideFlags: 0

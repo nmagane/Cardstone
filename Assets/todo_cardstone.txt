@@ -6,24 +6,14 @@ Vanilla Zoo mirror.
 players in que counter in menu
 
 todo: 
-Multiplayer server connection
-	Turn based input between two players.
-	Probably look up some tutorial.
-
 	
 message order system
 
-player class with all info (hand, deck, board, etc)
-refrences to currplayer, enemyplayer, player1, and player2 in match class
 
-attack confirm msg to both players
 start and end turn confirms to opponent players? //probably not needed
 
 note: minion and spell cards look different.
 
-
-
-mulligan waiting for opponent screen.
 
 
 
@@ -42,6 +32,7 @@ invoke(triggerEffect)
 
 }
 
+
 ===TODO CARDS=== :
 SOULFIRE
 ABUSIVE SERGEANT
@@ -51,6 +42,7 @@ SHIELD BEARER
 VOIDWALKER
 YOUNG PRIESTESS
 AMANI BERSERKER
+IRONBEAK OWL
 DIRE WOLF ALPHA
 KNIFE JUGGLER
 HARVEST GOLEM

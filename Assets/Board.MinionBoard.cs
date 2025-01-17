@@ -65,7 +65,7 @@ public partial class Board
             if (!server)
             {
                 Creature c = minionObjects[minions[x]];
-                minions.Remove(minions[x]);
+                minionObjects.Remove(minions[x]);
                 Destroy(c.gameObject);
             }
             minions.RemoveAt(x);

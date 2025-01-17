@@ -78,7 +78,7 @@ public class Creature : MonoBehaviour
                 if (Vector3.Distance(Card.GetMousePos(), clickPos) > 0.2f)
                 {
                     board.dragTargeting = true;
-                    Debug.Log("drag");
+                    //Debug.Log("drag");
                 }
             }
         }

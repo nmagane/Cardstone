@@ -8,9 +8,9 @@ public partial class Board
         bool allyAttack = message.GetBool();
         int attackerIndex = message.GetInt();
         int targetIndex = message.GetInt();
-
+        
         Minion attacker = allyAttack ? currMinions[attackerIndex] : enemyMinions[attackerIndex];
-        Minion target = allyAttack ? enemyMinions[targetIndex] : currMinions[attackerIndex];
+        Minion target = allyAttack ? enemyMinions[targetIndex] : currMinions[targetIndex];
 
         if (allyAttack)
         {

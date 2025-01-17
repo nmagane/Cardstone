@@ -8,6 +8,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEditor;
 using static Server;
+using System.ComponentModel;
 
 
 public partial class Server : MonoBehaviour
@@ -436,9 +437,9 @@ public partial class Server : MonoBehaviour
         //todo: on damage triggers. this should be a damage() func
 
         if (attacker.health <= 0)
-            DestroyMinion(match,attacker,player);
+            DestroyMinion(match,attacker);
         if (target.health <= 0)
-            DestroyMinion(match, attacker, enemy);
+            DestroyMinion(match, target);
     }
     public void UpdateMinion(Match match, Board.Minion minion,PlayerConnection owner, PlayerConnection opponent)
     {
@@ -456,11 +457,26 @@ public partial class Server : MonoBehaviour
         server.Send(messageOpponent, opponent.clientID);
     }
 
-    public void DestroyMinion(Match match, Board.Minion minion, PlayerConnection owner)
+    public void DestroyMinion(Match match, Board.Minion minion)
     {
-        //figure out which is owner. send message to both players. destroy minion
+        Player owner = match.FindOwner(minion);
+        Player opponent = match.OtherPlayer(owner);
 
-        //TODO: ondestroy effects, deathrattles?
+        int ind = minion.index;
+
+        owner.board.RemoveAt(ind);
+        Message messageOwner = Message.Create(MessageSendMode.Reliable, (int)MessageType.DestroyMinion);
+        Message messageOpponent = Message.Create(MessageSendMode.Reliable, (int)MessageType.DestroyMinion);
+
+        messageOwner.AddInt(ind);
+        messageOpponent.AddInt(ind);
+
+        messageOwner.AddBool(true);
+        messageOpponent.AddBool(false);
+
+        server.Send(messageOwner, owner.connection.clientID);
+        server.Send(messageOpponent, opponent.connection.clientID);
+
     }
     [Serializable]
     public class Player
@@ -549,6 +565,18 @@ public partial class Server : MonoBehaviour
             if (p == players[1]) return players[0];
 
             return players[0];
+        }
+        public Player FindOwner(Board.Minion minion)
+        {
+            if (players[0].board.Contains(minion))
+                return players[0];
+            if (players[1].board.Contains(minion))
+                return players[1];
+            return players[0];
+        }
+        public Player FindOpponent(Board.Minion minion)
+        {
+            return OtherPlayer(FindOwner(minion));
         }
     }
     
