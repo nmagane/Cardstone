@@ -11,6 +11,7 @@ public partial class Server
 {
     public bool ValidAttackMinion(Match m, int attackerInd, int targetInd)
     {
+        //TODO: reuse this function in board code
         Board.Minion attacker = m.currPlayer.board[attackerInd];
         Board.Minion target = m.enemyPlayer.board[targetInd];
 

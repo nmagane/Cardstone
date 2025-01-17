@@ -10,6 +10,7 @@ public partial class Board
     //public int targetSourceIndex = 0;
     //public int targetIndex = 0;
     public Minion targetingMinion = null;
+    public Hero targetingHero = null;
     public HandCard targetingCard = null;
 
     public Card playingCard = null;
@@ -28,12 +29,17 @@ public partial class Board
     public enum EligibleTargets
     {
         AllCharacters,
+        AllMinions,
+        AllHeroes,
 
         EnemyCharacters,
         EnemyMinions,
 
         FriendlyCharacters,
         FriendlyMinions,
+
+        FriendlyHero,
+        EnemyHero,
     }
 
     public void TargetMinion(Minion minion)
@@ -42,6 +48,23 @@ public partial class Board
         {
             case TargetMode.Attack:
                 AttackMinion(targetingMinion, minion);
+                break;
+            case TargetMode.Spell:
+                break;
+            case TargetMode.HeroPower:
+                break;
+            case TargetMode.Weapon:
+                break;
+            case TargetMode.None:
+                EndTargeting();
+                break;
+        }
+    }
+    public void TargetHero(Hero hero)
+    {
+        switch (targetMode)
+        {
+            case TargetMode.Attack:
                 break;
             case TargetMode.Spell:
                 break;
@@ -80,7 +103,7 @@ public partial class Board
 
     public bool CheckTargetEligibility(Minion m)
     {
-        if (eligibleTargets == EligibleTargets.AllCharacters)
+        if (eligibleTargets == EligibleTargets.AllCharacters || eligibleTargets==EligibleTargets.AllMinions)
         {
             return true;
         }
@@ -94,11 +117,38 @@ public partial class Board
             if (IsFriendly(m)) return true;
             else return false;
         }
-        return true;
+        if (eligibleTargets == EligibleTargets.AllHeroes || eligibleTargets == EligibleTargets.FriendlyHero || eligibleTargets == EligibleTargets.EnemyHero)
+        {
+            return false;
+        }
+        return false;
+
     }
     public bool CheckTargetEligibility(Hero h)
     {
-        return true;
+        if (eligibleTargets == EligibleTargets.AllCharacters)
+        {
+            return true;
+        }
+        if (eligibleTargets == EligibleTargets.EnemyCharacters)
+        {
+            if (IsFriendly(h)) return false;
+            else return true;
+        }
+        if (eligibleTargets == EligibleTargets.FriendlyCharacters)
+        {
+            if (IsFriendly(h)) return true;
+            else return false;
+        }
+        if (eligibleTargets == EligibleTargets.AllHeroes)
+            return true;
+        if (eligibleTargets == EligibleTargets.FriendlyHero)
+            return IsFriendly(h);
+        if (eligibleTargets == EligibleTargets.EnemyHero)
+            return !IsFriendly(h);
+        if (eligibleTargets == EligibleTargets.FriendlyMinions || eligibleTargets == EligibleTargets.EnemyMinions || eligibleTargets == EligibleTargets.AllMinions)
+            return false;
+        return false;
     }
 
     public void StartPlayingCard(Card c)
@@ -134,7 +184,8 @@ public partial class Board
         {
             Arrow.Add(Instantiate(UISprite));
             Arrow[i].GetComponent<SpriteRenderer>().sprite = i == DOT_COUNT ? ArrowSprites[0] : ArrowSprites[1];
-            Arrow[i].GetComponent<SpriteRenderer>().sortingLayerName = "top1";
+            if (i==DOT_COUNT) Arrow[i].GetComponent<SpriteRenderer>().sortingOrder = 1;
+            Arrow[i].GetComponent<SpriteRenderer>().sortingLayerName = "ui0";
         }
 
         while (activeTargetingAnim)

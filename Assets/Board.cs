@@ -5,7 +5,9 @@ using Riptide;
 using Riptide.Utils;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public partial class Board : MonoBehaviour
 {
@@ -348,6 +350,39 @@ public partial class Board : MonoBehaviour
         minion.damage = updatedMinion.damage;
 
         //auras (buffs/debuffs) update
+    }
+
+    public void AttackFace(Minion minion, Hero h)
+    {
+
+        int attackerInd = minion.index;
+        bool enemyTaunting = false;
+
+        if (CheckTargetEligibility(h) == false)
+        {
+            //invalid target todo:check these on server
+            Debug.Log("Invalid target");
+            return;
+        }
+
+        foreach (Minion m in enemyMinions)
+        {
+            if (m.TAUNT) enemyTaunting = true;
+        }
+        if (enemyTaunting)
+        {
+            //can't attack non taunter
+            Debug.Log("Taunt in the way");
+            return;
+        }
+
+        EndTargeting();
+
+        Message message = Message.Create(MessageSendMode.Reliable, (int)Server.MessageType.AttackFace);
+        message.AddULong(currentMatchID);
+        message.AddULong(playerID);
+        message.AddInt(attackerInd);
+        client.Send(message);
     }
 
     public bool IsFriendly(Minion m)
