@@ -93,13 +93,51 @@ public partial class Board
             }
             if (server) return;
 
+            previewing = false;
+            currPreview = -1;
             i = 0;
+            float count = minionObjects.Count;
+            float dist = 4.5f;
+            float offset = -((count - 1) / 2f * dist);
             foreach (var kvp in minionObjects)
             {
                 Creature c = kvp.Value;
-                c.transform.localPosition = new Vector3(-9 + 4.5f * (kvp.Key.index), this==board.currMinions?-2.75f:3, 0);
+                c.transform.localPosition = new Vector3(offset + dist * (kvp.Key.index), this==board.currMinions?-2.75f:3, 0);
             }
         }
+
+        public bool previewing = false;
+        public int currPreview = -1;
+        public void PreviewGap(int gapIndex)
+        {
+            if (previewing)
+            {
+                if (currPreview==gapIndex)
+                    return;
+            }
+            previewing = true;
+            currPreview = gapIndex;
+            float count = minionObjects.Count+1;
+            float dist = 4.5f;
+            float offset = -((count - 1) / 2f * dist);
+            foreach (var kvp in minionObjects)
+            {
+                Creature c = kvp.Value;
+                int ind = kvp.Key.index;
+                if (ind >= gapIndex) ind++;
+                c.transform.localPosition = new Vector3(offset + dist * (ind), this == board.currMinions ? -2.75f : 3, 0);
+            }
+        }
+        public void EndPreview()
+        {
+            if (previewing == false)
+                return;
+            previewing = false;
+            currPreview = -1;
+            OrderInds();
+        }
+        //public void End
+
         public int Count()
         {
             return minions.Count;

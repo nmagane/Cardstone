@@ -6,9 +6,16 @@ using Riptide.Transports;
 using Riptide.Utils;
 using System.Linq;
 using UnityEngine;
+using UnityEditor.Experimental.GraphView;
 
 public partial class Server
 {
+    public void ConsumeAttackCharge(Board.Minion m)
+    {
+        if (m.WINDFURY) m.WINDFURY = false;
+        else m.canAttack = false;
+    }
+
     public bool ValidAttackMinion(Match m, int attackerInd, int targetInd)
     {
         //TODO: reuse this function in board code
@@ -26,7 +33,19 @@ public partial class Server
 
         return true;
     }
+    public bool ValidAttackFace(Match match,Player attacker,Player defender, int attackerInd)
+    {
 
+        if (attacker.board[attackerInd].canAttack == false) return false;
+        foreach (var minion in defender.board)
+        {
+            if (minion.TAUNT) 
+            {
+                return false;
+            }
+        }
+        return true;
+    }
     public void ConfirmAttackMinion(Match match, int attackerInd, int targetInd)
     {
         Message mOwner = Message.Create(MessageSendMode.Reliable, (int)MessageType.ConfirmAttackMinion);
@@ -43,9 +62,18 @@ public partial class Server
         server.Send(mOwner, match.currPlayer.connection.clientID);
         server.Send(mOpp, match.enemyPlayer.connection.clientID);
     }
-    public void ConfirmAttackFace()
+    public void ConfirmAttackFace(Match match, int attackerInd)
     {
+        Message mOwner = Message.Create(MessageSendMode.Reliable, (int)MessageType.ConfirmAttackFace);
+        Message mOpp = Message.Create(MessageSendMode.Reliable, (int)MessageType.ConfirmAttackFace);
+        mOwner.AddBool(true);
+        mOpp.AddBool(false);
 
+        mOwner.AddInt(attackerInd);
+        mOpp.AddInt(attackerInd);
+
+        server.Send(mOwner, match.currPlayer.connection.clientID);
+        server.Send(mOpp, match.enemyPlayer.connection.clientID);
     }
     public void ConfirmSwingMinion()
     {

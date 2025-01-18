@@ -9,6 +9,9 @@ using UnityEngine;
 using UnityEditor;
 using static Server;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
+using UnityEditor.PackageManager;
+using static Board;
 
 
 public partial class Server : MonoBehaviour
@@ -48,6 +51,7 @@ public partial class Server : MonoBehaviour
         ConfirmSwingFace,
 
         UpdateMinion,
+        UpdateHero,
         Trigger,
 
         Concede,
@@ -110,6 +114,9 @@ public partial class Server : MonoBehaviour
                 int attackerInd = message.GetInt();
                 int targetMinionInd = message.GetInt();
                 AttackMinion(attackMatchID, clientID, attackPlayerID, attackerInd, targetMinionInd);
+                break;
+            case MessageType.AttackFace:
+                AttackFace(message, clientID);
                 break;
         }
         
@@ -425,8 +432,7 @@ public partial class Server : MonoBehaviour
 
         //TODO: onattack triggers
 
-        if (attacker.WINDFURY) attacker.WINDFURY = false;
-        else attacker.canAttack = false;
+        ConsumeAttackCharge(attacker);
 
         attacker.health -= target.damage;
         target.health -= attacker.damage;
@@ -478,6 +484,48 @@ public partial class Server : MonoBehaviour
         server.Send(messageOpponent, opponent.connection.clientID);
 
     }
+
+    public void AttackFace(Message message, ushort clientID)
+    {
+        ulong matchID = message.GetULong();
+        ulong playerID = message.GetULong();
+        
+        int attackerInd = message.GetInt();
+
+        if (currentMatches.ContainsKey(matchID) == false) return;
+        Match match = currentMatches[matchID];
+
+        PlayerConnection player = match.currPlayer.connection;
+        PlayerConnection enemy = match.enemyPlayer.connection;
+        if (player.clientID != clientID || player.playerID != playerID) return;
+
+        Board.Minion attacker = match.currPlayer.board[attackerInd];
+        
+        if (ValidAttackFace(match,match.currPlayer,match.enemyPlayer,attackerInd) == false) return;
+        ConfirmAttackFace(match,attackerInd);
+        ConsumeAttackCharge(attacker);
+        //TODO: ON ATTACK TRIGGERS
+
+        match.enemyPlayer.health -= attacker.damage;
+        UpdateHero(match, match.enemyPlayer);
+        //TODO: ON HERO DAMAGE TRIGGERS
+    }
+
+    public void UpdateHero(Match match, Player player)
+    {
+        Message messageOwner = Message.Create(MessageSendMode.Reliable, (int)MessageType.UpdateHero);
+        Message messageOpponent = Message.Create(MessageSendMode.Reliable, (int)MessageType.UpdateHero);
+
+        messageOwner.AddInt(player.health);
+        messageOpponent.AddInt(player.health);
+
+        messageOwner.AddBool(true);
+        messageOpponent.AddBool(false);
+
+        server.Send(messageOwner, player.connection.clientID);
+        server.Send(messageOpponent, match.OtherPlayer(player).connection.clientID);
+    }
+
     [Serializable]
     public class Player
     {

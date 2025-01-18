@@ -67,7 +67,7 @@ public class Creature : MonoBehaviour
     }
 
     int dragCounter = 0;
-    int dragTime = 5;
+    int dragTime = 8;
     private void OnMouseDrag()
     {
         if (board.targetingMinion==minion)

@@ -65,6 +65,7 @@ public partial class Board
         switch (targetMode)
         {
             case TargetMode.Attack:
+                AttackFace(targetingMinion, hero);
                 break;
             case TargetMode.Spell:
                 break;

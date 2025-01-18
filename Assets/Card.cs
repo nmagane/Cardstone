@@ -83,6 +83,7 @@ public class Card : MonoBehaviour
         transform.localPosition = OP;
         EndDrag();
         board.EndPlayingCard();
+        board.currMinions.EndPreview();
     }
     public void PlayCard()
     {
@@ -118,8 +119,7 @@ public class Card : MonoBehaviour
                 return;
             }
 
-            int position = -1;
-            //TODO: FindMinionPosition() fucntion
+            int position = FindMinionPosition();
             board.PlayCard(card, -1, position);
             //EndPlay();
             return;
@@ -138,6 +138,19 @@ public class Card : MonoBehaviour
 
     }
 
+    int FindMinionPosition()
+    {
+        float mPos = this.transform.position.x;
+        int ind = 0;
+        
+        foreach (var kvp in board.currMinions.minionObjects)
+        {
+            float x = kvp.Value.transform.position.x;
+            if (mPos > x) ind++;
+        }
+        //Debug.Log(ind);
+        return ind;
+    }
     public static Vector3 GetMousePos()
     {
         return (Camera.main.ScreenToWorldPoint(Input.mousePosition) - new Vector3(0, 0, Camera.main.ScreenToWorldPoint(Input.mousePosition).z));
@@ -221,6 +234,26 @@ public class Card : MonoBehaviour
     {
         StopAllCoroutines();
     }
+
+    bool preview = false;
+
+    public void PreviewPlay()
+    {
+
+        if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED == true)
+        {
+            if (preview) return;
+            //PlayCard();
+            //preview spell/target
+        }
+        if ((card.MINION) == true)
+        {
+            board.currMinions.PreviewGap(FindMinionPosition());
+        }
+
+        preview = true;
+    }
+
     public IEnumerator dragger()
     {
         yield return null;
@@ -228,11 +261,16 @@ public class Card : MonoBehaviour
         {
             transform.position = DragPos();
 
-            if (transform.localPosition.y <= -6.5f)
+            if (transform.localPosition.y > -6.5f)
             {
                 if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED == true)
                 {
-                    PlayCard();
+                    //PlayCard();
+                    //preview spell/target
+                }
+                if ((card.MINION) == true)
+                {
+                    board.currMinions.PreviewGap(FindMinionPosition());
                 }
             }
             if (board.dragTargeting)

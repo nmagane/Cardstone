@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using Riptide;
+using UnityEditor.Experimental.GraphView;
+using static UnityEngine.GraphicsBuffer;
 
 public partial class Board
 {
@@ -20,5 +22,21 @@ public partial class Board
 
         Debug.Log(playerID + ": " + (allyAttack ? "ally " : "enemy ") + attacker.ToString() + " hits " + target.ToString());
         //TODO: attack animation
+    }
+
+    void ConfirmAttackFace(Message message)
+    {
+        bool allyAttack = message.GetBool();
+        int attackerIndex = message.GetInt();
+
+        Minion attacker = allyAttack ? currMinions[attackerIndex] : enemyMinions[attackerIndex];
+
+        if (allyAttack)
+        {
+            if (attacker.WINDFURY) attacker.WINDFURY = false;
+            else attacker.canAttack = false;
+        }
+        Debug.Log(playerID + ": " + (allyAttack ? "ally " : "enemy ") + attacker.ToString() + " hits face");
+        //todo: attack face animation
     }
 }

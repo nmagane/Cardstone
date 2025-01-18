@@ -36,6 +36,8 @@ public partial class Board : MonoBehaviour
     public bool currTurn = false;
     public MinionBoard currMinions;
     public MinionBoard enemyMinions;
+    public Hero currHero;
+    public Hero enemyHero; 
     public int currMana = 0;
     public int maxMana = 0;
 
@@ -114,8 +116,14 @@ public partial class Board : MonoBehaviour
             case Server.MessageType.ConfirmAttackMinion:
                 ConfirmAttackMinion(message);
                 break;
+            case Server.MessageType.ConfirmAttackFace:
+                ConfirmAttackFace(message);
+                break;
             case Server.MessageType.DestroyMinion:
                 DestroyMinion(message);
+                break;
+            case Server.MessageType.UpdateHero:
+                UpdateHero(message);
                 break;
         }
     }
@@ -383,6 +391,15 @@ public partial class Board : MonoBehaviour
         message.AddULong(playerID);
         message.AddInt(attackerInd);
         client.Send(message);
+    }
+
+    public void UpdateHero(Message message)
+    {
+        int hp = message.GetInt();
+        bool friendly = message.GetBool();
+
+        if (friendly) currHero.SetHealth(hp);
+        else enemyHero.SetHealth(hp);
     }
 
     public bool IsFriendly(Minion m)

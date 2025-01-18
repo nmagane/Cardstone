@@ -31,7 +31,11 @@ public class Hero : MonoBehaviour
         health -= x;
         UpdateText();
     }
-
+    public void SetHealth(int x)
+    {
+        health = x;
+        UpdateText();
+    }
 
     private void UpdateText()
     {

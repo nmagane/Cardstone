@@ -50,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   board: {fileID: 0}
   spriteRenderer: {fileID: 1741553120168221907}
-  hpText: {fileID: 0}
+  hpText: {fileID: 8836683096817158229}
   health: 30
   maxHealth: 30
 --- !u!60 &1671318675257879375
