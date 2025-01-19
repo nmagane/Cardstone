@@ -37,12 +37,15 @@ public partial class Board : MonoBehaviour
     public MinionBoard currMinions;
     public MinionBoard enemyMinions;
     public Hero currHero;
-    public Hero enemyHero; 
+    public Hero enemyHero;
+
+    public ManaBar mana;
+    public ManaBar enemyMana;
+    public int currMana => mana.curr;
+    /*
     public int currMana = 0;
     public int maxMana = 0;
-
-    public int enemyMana = 0;
-    public int enemyMaxMana = 0;
+    */
 
     void Start()
     {
@@ -60,6 +63,9 @@ public partial class Board : MonoBehaviour
 
         switch ((Server.MessageType)messageID)
         {
+            case Server.MessageType._TEST:
+                Tester(message);
+                break;
             case Server.MessageType.ConfirmMatch:
                 ulong matchID = message.GetULong();
                 InitGame(matchID);
@@ -162,7 +168,7 @@ public partial class Board : MonoBehaviour
 
     public void StartMatchmaking()
     {
-        Message message = Message.Create(MessageSendMode.Reliable, (ushort)Server.MessageType.Matchmaking);
+        Message message = CreateMessage(Server.MessageType.Matchmaking);
         message.AddULong(playerID);
         string deck = "";
         message.AddString(deck);
@@ -171,7 +177,7 @@ public partial class Board : MonoBehaviour
     public List<int> selectedMulligans = new List<int>(){};
     public void SubmitMulligan()
     {
-        Message message = Message.Create(MessageSendMode.Reliable, (ushort)Server.MessageType.SubmitMulligan);
+        Message message = CreateMessage(Server.MessageType.SubmitMulligan);
         message.AddInts(selectedMulligans.ToArray(),true);
         message.AddULong(currentMatchID);
         message.AddULong(playerID);
@@ -218,7 +224,7 @@ public partial class Board : MonoBehaviour
     {
         if (!currTurn) return;
 
-        Message message = Message.Create(MessageSendMode.Reliable, (ushort)Server.MessageType.EndTurn);
+        Message message = CreateMessage(Server.MessageType.EndTurn);
         message.AddULong(currentMatchID);
         message.AddULong(playerID);
         client.Send(message);
@@ -231,21 +237,28 @@ public partial class Board : MonoBehaviour
     }
     public void StartTurn(Message message)
     {
+        bool allyTurn = message.GetBool();
+
+        int max = message.GetInt();
+        int cur = message.GetInt();
+        if (!allyTurn)
+        {
+            enemyMana.SetMax(max);
+            enemyMana.SetCurrent(cur);
+            return;
+        }
         if (currTurn) return;
 
         currTurn = true;
 
-        int max = message.GetInt();
-        int cur = message.GetInt();
-        maxMana = max;
-        currMana = cur;
-
+        mana.SetMax(max);
+        mana.SetCurrent(cur);
         foreach (Minion m in currMinions)
         {
             m.canAttack = true;
         }
 
-        Debug.Log(playerID + "'s turn. - Mana: " +currMana+"/"+maxMana );
+        Debug.Log(playerID + "'s turn.");
     }
     public void DrawCard(Card.Cardname card)
     {
@@ -259,33 +272,35 @@ public partial class Board : MonoBehaviour
             enemyHand.Add(Card.Cardname.Cardback);
     }
 
-    public void PlayCard(HandCard card,int target=-1,int position=-1)
+    public void PlayCard(HandCard card, int target = -1, int position = -1, bool friendlySide = false, bool isHero=false)
     {
         if (!currTurn) return;
         if (card.played) return;
         Debug.Log("Playing card " + card.card);
         //send message to server to play card index
-        Message message = Message.Create(MessageSendMode.Reliable, (ushort)Server.MessageType.PlayCard);
+        Message message = CreateMessage(Server.MessageType.PlayCard);
         message.AddULong(currentMatchID);
         message.AddULong(playerID);
         message.AddInt(card.index);
         message.AddInt(target);
         message.AddInt(position);
+        message.AddBool(friendlySide);
+        message.AddBool(isHero);
 
         client.Send(message);
     }
-    public void ConfirmPlayCard(bool side, int index, int mana, Card.Cardname card)
+    public void ConfirmPlayCard(bool side, int index, int manaCost, Card.Cardname card)
     {
         if (side ==false)
         {
             enemyHand.RemoveAt(index);
             Debug.Log("TODO: Enemy played " + card);
+            enemyMana.Spend(manaCost);
             return;
         }
         //ally played card
         currHand.RemoveAt(index);
-        int manaCost = mana;
-        currMana -= manaCost;
+        this.mana.Spend(manaCost);
     }
 
     public void SummonMinion(bool friendlySide, Card.Cardname card, int position)
@@ -320,14 +335,6 @@ public partial class Board : MonoBehaviour
         bool enemyTaunting = false;
 
 
-
-        if (CheckTargetEligibility(target) == false)
-        {
-            //invalid target todo:check these on server
-            Debug.Log("Invalid target");
-            return;
-        }
-
         foreach (Minion m in enemyMinions)
         {
             if (m.TAUNT) enemyTaunting = true;
@@ -341,7 +348,7 @@ public partial class Board : MonoBehaviour
 
         EndTargeting();
 
-        Message message = Message.Create(MessageSendMode.Reliable, (int)Server.MessageType.AttackMinion);
+        Message message = CreateMessage(Server.MessageType.AttackMinion);
         message.AddULong(currentMatchID);
         message.AddULong(playerID);
         message.AddInt(attackerInd);
@@ -386,7 +393,7 @@ public partial class Board : MonoBehaviour
 
         EndTargeting();
 
-        Message message = Message.Create(MessageSendMode.Reliable, (int)Server.MessageType.AttackFace);
+        Message message = CreateMessage(Server.MessageType.AttackFace);
         message.AddULong(currentMatchID);
         message.AddULong(playerID);
         message.AddInt(attackerInd);
@@ -453,9 +460,20 @@ public partial class Board : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.J) && playerID==101)
         {
+            Message m = Message.Create(MessageSendMode.Reliable, 1);
+
+            m.AddInt(123);
+            //m.AddInt(123);
+            
+            Debug.Log(m.GetInt());
         }
         
         
+    }
+    void Tester(Message m)
+    {
+     Debug.Log(m.GetUShort()+" "+m.GetInt()+" "+m.GetBool());
+     //Debug.Log(" "+m.GetInt()+" "+m.GetBool());
     }
     private void FixedUpdate()
     {

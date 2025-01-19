@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public partial class Board
 {
@@ -44,12 +45,20 @@ public partial class Board
 
     public void TargetMinion(Minion minion)
     {
+
+        if (CheckTargetEligibility(minion) == false)
+        {
+            //invalid target todo:check these on server
+            Debug.Log("Invalid target");
+            return;
+        }
         switch (targetMode)
         {
             case TargetMode.Attack:
                 AttackMinion(targetingMinion, minion);
                 break;
             case TargetMode.Spell:
+                PlayCard(targetingCard, minion.index, -1, IsFriendly(minion),false);
                 break;
             case TargetMode.HeroPower:
                 break;
@@ -62,6 +71,13 @@ public partial class Board
     }
     public void TargetHero(Hero hero)
     {
+        if (CheckTargetEligibility(hero) == false)
+        {
+            //invalid target todo:check these on server
+            Debug.Log("Invalid target");
+            return;
+        }
+
         switch (targetMode)
         {
             case TargetMode.Attack:
@@ -125,6 +141,7 @@ public partial class Board
         return false;
 
     }
+
     public bool CheckTargetEligibility(Hero h)
     {
         if (eligibleTargets == EligibleTargets.AllCharacters)

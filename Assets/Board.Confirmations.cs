@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using Riptide;
-using UnityEditor.Experimental.GraphView;
-using static UnityEngine.GraphicsBuffer;
 
 public partial class Board
 {
+    public static Message CreateMessage(Server.MessageType type)
+    {
+        return Message.Create(MessageSendMode.Reliable, (ushort)type);
+    }
     public void ConfirmAttackMinion(Message message)
     {
         bool allyAttack = message.GetBool();

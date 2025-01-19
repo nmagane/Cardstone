@@ -39,6 +39,7 @@ public class Card : MonoBehaviour
         F13,
         F14,
         F15,
+        Mortal_Coil,
         Cardback,
     }
     void Start()
@@ -61,6 +62,18 @@ public class Card : MonoBehaviour
         }
         gameObject.name = c.card.ToString();
         name.text = c.card.ToString();
+        manaCost.text = c.manaCost.ToString(); ;
+        if (c.MINION)
+        {
+            damage.text = c.damage.ToString();
+            health.text = c.health.ToString();
+        }
+        if (c.SPELL)
+        {
+            damage.text = "";
+            health.text = "";
+        }
+
 
     }
     void ToggleMulligan()
@@ -83,7 +96,7 @@ public class Card : MonoBehaviour
         transform.localPosition = OP;
         EndDrag();
         board.EndPlayingCard();
-        board.currMinions.EndPreview();
+        if (preview) EndPreview();
     }
     public void PlayCard()
     {
@@ -239,6 +252,18 @@ public class Card : MonoBehaviour
 
     public void PreviewPlay()
     {
+        if (board.currMana < card.manaCost)
+        {
+            EndPlay();
+            //TODO: Not enough mana popup
+            return;
+        }
+        if (board.currTurn==false)
+        {
+            EndPlay();
+            //TODO: Not your turn popup
+            return;
+        }
 
         if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED == true)
         {
@@ -246,12 +271,27 @@ public class Card : MonoBehaviour
             //PlayCard();
             //preview spell/target
         }
+
         if ((card.MINION) == true)
         {
             board.currMinions.PreviewGap(FindMinionPosition());
         }
 
         preview = true;
+    }
+
+    public void EndPreview()
+    {
+        if (preview == false) return;
+        preview = false;
+        if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED == true)
+        {
+            //preview spell/target
+        }
+        if ((card.MINION) == true)
+        {
+            board.currMinions.EndPreview();
+        }
     }
 
     public IEnumerator dragger()
@@ -261,18 +301,16 @@ public class Card : MonoBehaviour
         {
             transform.position = DragPos();
 
-            if (transform.localPosition.y > -6.5f)
+            if (transform.localPosition.y >= -6.5f)
             {
-                if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED == true)
-                {
-                    //PlayCard();
-                    //preview spell/target
-                }
-                if ((card.MINION) == true)
-                {
-                    board.currMinions.PreviewGap(FindMinionPosition());
-                }
+                PreviewPlay();
             }
+            if (transform.localPosition.y < -6.5f && preview==true)
+            {
+                EndPreview();
+            }
+
+
             if (board.dragTargeting)
             {
                 if (Input.GetMouseButtonUp(0))

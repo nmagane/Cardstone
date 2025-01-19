@@ -130,12 +130,14 @@ public partial class Board
                 return;
             }
 
-            
+            float count2 = cardObjects.Count;
+            float dist2 = 3.5f;
+            float offset2 = -((count2 - 1) / 2f * dist2);
             foreach (var kvp in cardObjects)
             {
                 Card c = kvp.Value;
                 c.transform.localScale = Vector3.one;
-                c.transform.localPosition = new Vector3(-15+4*(c.card.index),enemyHand?10:-10,0);
+                c.transform.localPosition = new Vector3(offset2+dist2*(c.card.index),enemyHand?10:-10,0);
             }
         }
         public int Count()

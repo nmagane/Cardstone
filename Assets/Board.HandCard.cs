@@ -7,6 +7,8 @@ public partial class Board
     {
         public int index = 0;
         public int manaCost = 1;
+        public int health = 3;
+        public int damage = 1;
         public Card.Cardname card;
 
         public bool SPELL = false;
@@ -25,6 +27,12 @@ public partial class Board
             index = ind;
             MINION = true;
             //manaCost
+            if (name==Card.Cardname.Mortal_Coil)
+            {
+                MINION = false;
+                SPELL = true;
+                TARGETED = true;
+            }
         }
 
         public HandCard(Card.Cardname name, int ind)

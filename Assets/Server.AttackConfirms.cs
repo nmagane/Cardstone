@@ -10,12 +10,6 @@ using UnityEditor.Experimental.GraphView;
 
 public partial class Server
 {
-    public void ConsumeAttackCharge(Board.Minion m)
-    {
-        if (m.WINDFURY) m.WINDFURY = false;
-        else m.canAttack = false;
-    }
-
     public bool ValidAttackMinion(Match m, int attackerInd, int targetInd)
     {
         //TODO: reuse this function in board code
@@ -48,8 +42,8 @@ public partial class Server
     }
     public void ConfirmAttackMinion(Match match, int attackerInd, int targetInd)
     {
-        Message mOwner = Message.Create(MessageSendMode.Reliable, (int)MessageType.ConfirmAttackMinion);
-        Message mOpp = Message.Create(MessageSendMode.Reliable, (int)MessageType.ConfirmAttackMinion);
+        Message mOwner = CreateMessage(MessageType.ConfirmAttackMinion);
+        Message mOpp = CreateMessage(MessageType.ConfirmAttackMinion);
         mOwner.AddBool(true);
         mOpp.AddBool(false);
 
@@ -64,8 +58,8 @@ public partial class Server
     }
     public void ConfirmAttackFace(Match match, int attackerInd)
     {
-        Message mOwner = Message.Create(MessageSendMode.Reliable, (int)MessageType.ConfirmAttackFace);
-        Message mOpp = Message.Create(MessageSendMode.Reliable, (int)MessageType.ConfirmAttackFace);
+        Message mOwner = CreateMessage(MessageType.ConfirmAttackFace);
+        Message mOpp = CreateMessage(MessageType.ConfirmAttackFace);
         mOwner.AddBool(true);
         mOpp.AddBool(false);
 
