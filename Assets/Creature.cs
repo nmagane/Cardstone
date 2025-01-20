@@ -13,7 +13,8 @@ public class Creature : MonoBehaviour
     public Board board;
 
     public Board.Minion minion;
-
+    public int index => minion.index;
+    public bool preview = false;
     public void Set(Board.Minion c)
     {
         minion = c;
@@ -42,6 +43,7 @@ public class Creature : MonoBehaviour
 
     private void OnMouseOver()
     {
+        if (preview) return;
         if (board.targeting && board.dragTargeting)
         {
             if (Input.GetMouseButtonUp(0))
@@ -70,6 +72,7 @@ public class Creature : MonoBehaviour
     int dragTime = 8;
     private void OnMouseDrag()
     {
+        if (preview) return;
         if (board.targetingMinion==minion)
         {
             if (dragCounter < dragTime) dragCounter++;
@@ -86,6 +89,7 @@ public class Creature : MonoBehaviour
     }
     private void OnMouseUp()
     {
+        if (preview) return;
         dragCounter = 0;
         if (board.dragTargeting && board.targetingMinion==minion)
         {
@@ -98,6 +102,7 @@ public class Creature : MonoBehaviour
     Vector3 clickPos = Vector3.zero;
     private void OnMouseDown()
     {
+        if (preview) return;
         if (board.targeting)
         {
             if (board.targetingMinion == minion)

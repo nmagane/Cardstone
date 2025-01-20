@@ -59,11 +59,14 @@ public partial class Board
         }
         switch (targetMode)
         {
+            case TargetMode.Battlecry:
+                PlayCard(targetingCard, minion.index, currMinions.previewMinion.index, IsFriendly(minion));
+                break;
             case TargetMode.Attack:
                 AttackMinion(targetingMinion, minion);
                 break;
             case TargetMode.Spell:
-                PlayCard(targetingCard, minion.index, -1, IsFriendly(minion),false);
+                PlayCard(targetingCard, minion.index, -1, IsFriendly(minion));
                 break;
             case TargetMode.HeroPower:
                 break;
@@ -85,6 +88,9 @@ public partial class Board
 
         switch (targetMode)
         {
+            case TargetMode.Battlecry:
+                PlayCard(targetingCard, -1, currMinions.previewMinion.index, IsFriendly(hero));
+                break;
             case TargetMode.Attack:
                 AttackFace(targetingMinion, hero);
                 break;
@@ -101,7 +107,13 @@ public partial class Board
         }
 
     }
-
+    public void StartMinionPreview(Card card, int position)
+    {
+        currMinions.SpawnPreviewMinion(card.card.card, position);
+        playingCard = card;
+        StartTargetingCard(card.card,currMinions.previewMinion);
+        targetMode = TargetMode.Battlecry;
+    }
     public void StartTargetingAttack(Minion source)
     {
         targeting = true;
@@ -112,14 +124,14 @@ public partial class Board
         StartTargetingAnim(currMinions.minionObjects[source]);
     }
 
-    public void StartTargetingCard(HandCard source)
+    public void StartTargetingCard(HandCard source, MonoBehaviour customPos=null)
     {
         targeting = true;
         targetMode = TargetMode.Spell;
         eligibleTargets = source.eligibleTargets;
         targetingCard = source;
 
-        StartTargetingAnim(currHero);
+        StartTargetingAnim(customPos!=null? customPos : currHero);
     }
 
     public void EndTargeting(bool cancel=false)

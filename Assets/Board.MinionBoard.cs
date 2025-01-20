@@ -14,6 +14,7 @@ public partial class Board
         public Board board;
         public Dictionary<Minion, Creature> minionObjects = new Dictionary<Minion, Creature>();
         public bool server = false;
+        public Creature previewMinion = null;
         public Minion this[int index]
         {
             get
@@ -86,6 +87,11 @@ public partial class Board
 
         public void OrderInds()
         {
+            if (previewMinion!=null)
+            {
+                Destroy(previewMinion.gameObject);
+                previewMinion = null;
+            }
             int i = 0;
             foreach (var c in minions)
             {
@@ -134,9 +140,30 @@ public partial class Board
                 return;
             previewing = false;
             currPreview = -1;
+            if (previewMinion!=null)
+            {
+                Destroy(previewMinion.gameObject);
+                previewMinion = null;
+            }
             OrderInds();
         }
-        //public void End
+
+        public void SpawnPreviewMinion(Card.Cardname card, int pos)
+        {
+            Creature creature = Instantiate(board.minionObject).GetComponent<Creature>();
+            creature.board = board;
+            Minion prev = new Minion(card, pos);
+            creature.Set(prev);
+            previewMinion = creature;
+            creature.transform.parent = board.transform;
+            creature.preview = true;
+            float count = minionObjects.Count + 1;
+            float dist = 4.5f;
+            float offset = -((count - 1) / 2f * dist);
+ 
+            creature.transform.localPosition = new Vector3(offset + dist * (pos), this == board.currMinions ? -2.75f : 3, 0);
+            
+        }
 
         public int Count()
         {
@@ -150,6 +177,7 @@ public partial class Board
         {
             minions = new List<Minion>();
         }
+
     }
 
 }

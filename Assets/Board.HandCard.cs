@@ -41,6 +41,15 @@ public partial class Board
                 SPELL = true;
                 TARGETED = false;
             }
+            if (name==Card.Cardname.ShatteredSunCleric)
+            {
+                MINION = true;
+                TARGETED = true;
+                BATTLECRY = true;
+                health = 2;
+                damage = 3;
+                eligibleTargets = EligibleTargets.FriendlyMinions;
+            }
         }
 
         public HandCard(Card.Cardname name, int ind)

@@ -37,6 +37,7 @@ public class Card : MonoBehaviour
         ArcInt,
         ArcExplosion,
         Cardback,
+        ShatteredSunCleric
     }
     void Start()
     {
@@ -155,7 +156,20 @@ public class Card : MonoBehaviour
             if (board.currMinions.Count() >= 7)
             {
                 EndPlay();
+                return;
             }
+
+            int position = FindMinionPosition();
+            //TODO: VALID TARGET EXISTS CHECK
+            bool validTargetsExist = true;
+            if (validTargetsExist)
+            {
+                //EndPreview();
+                HideCard();
+                board.StartMinionPreview(this, position);
+            }
+            else
+                board.PlayCard(card, -1, position);
         }
 
 

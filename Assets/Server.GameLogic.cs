@@ -37,7 +37,7 @@ public partial class Server
         }
     }
 
-    class CastInfo
+    public class CastInfo
     {
         public Match match;
         public Player player;
@@ -56,9 +56,8 @@ public partial class Server
             isHero = hero;
         }
     }
-    public void CastSpell(Match match, Player player, Card.Cardname card, int target,bool isFriendly, bool isHero)
+    public void CastSpell(CastInfo spell)
     {
-        CastInfo spell = new CastInfo(match,player,card,target,isFriendly,isHero);
         switch(spell.card)
         {
             case Card.Cardname.Ping:
@@ -66,6 +65,9 @@ public partial class Server
                 break;
             case Card.Cardname.ArcExplosion:
                 Arcane_Explosion(spell);
+                break;
+            case Card.Cardname.ShatteredSunCleric:
+                ShatteredSunCleric(spell);
                 break;
         }
     }
@@ -104,4 +106,12 @@ public partial class Server
         foreach (var m in minions)
             DamageMinion(spell.match, m, damage);
     }
+    void ShatteredSunCleric(CastInfo spell)
+    {
+        Player p = spell.player;
+        Match m = spell.match;
+        //TODO: SILENCABLE AURAS
+        Debug.Log("Cleric battlecyr");
+    }
+
 }

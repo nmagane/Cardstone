@@ -8,7 +8,7 @@ using UnityEngine;
 public partial class Server : MonoBehaviour
 {
 
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() {Card.Cardname.ArcExplosion, Card.Cardname.ArcInt };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.ShatteredSunCleric };
     public static Message CreateMessage(MessageType type)
     {
         return Message.Create(MessageSendMode.Reliable, (ushort)type);
@@ -403,10 +403,11 @@ public partial class Server : MonoBehaviour
         server.Send(confirmPlayOpponent, opponent.clientID);
         //summon minion or execute spell effects
 
+        CastInfo spell = new CastInfo(match, match.players[p], card.card, target, friendlySide, isHero);
         if (card.SPELL)
         {
             //trigger event: ON PLAY SPELL (antonidas)
-            CastSpell(match, match.players[p], card.card, target, friendlySide, isHero);
+            CastSpell(spell);
         }
 
         if (card.MINION)
@@ -415,7 +416,10 @@ public partial class Server : MonoBehaviour
             //trigger event: ON PLAY MINION (juggler)
         }
 
-
+        if  (card.BATTLECRY)
+        {
+            CastSpell(spell);
+        }
         //TODO: BATTLECRY (if minion) Trigger(Battlecry(Target X) - passed in the target spot of this func)
 
     }
