@@ -89,10 +89,12 @@ public class Creature : MonoBehaviour
         dragCounter = 0;
         if (board.dragTargeting && board.targetingMinion==minion)
         {
+            //LETTING GO OVER NOTHING
             if (board.hoveredMinion==null && board.hoveredHero==null) 
                 board.EndTargeting();
         }
     }
+
     Vector3 clickPos = Vector3.zero;
     private void OnMouseDown()
     {

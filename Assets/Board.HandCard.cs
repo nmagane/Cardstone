@@ -10,6 +10,7 @@ public partial class Board
         public int health = 3;
         public int damage = 1;
         public Card.Cardname card;
+        public Board.EligibleTargets eligibleTargets = EligibleTargets.AllCharacters;
 
         public bool SPELL = false;
         public bool MINION = false;
@@ -18,6 +19,7 @@ public partial class Board
 
         public bool TARGETED = false;
         public bool COMBO = false;
+        public bool BATTLECRY = false;
 
         public bool played = false;
 
@@ -27,11 +29,17 @@ public partial class Board
             index = ind;
             MINION = true;
             //manaCost
-            if (name==Card.Cardname.Mortal_Coil)
+            if (name==Card.Cardname.Ping)
             {
                 MINION = false;
                 SPELL = true;
                 TARGETED = true;
+            }
+            if (name==Card.Cardname.ArcExplosion)
+            {
+                MINION = false;
+                SPELL = true;
+                TARGETED = false;
             }
         }
 

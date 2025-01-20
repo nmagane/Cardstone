@@ -1,12 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Runtime.Serialization;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Device;
-using static Board;
 
 public class Card : MonoBehaviour
 {
@@ -39,7 +33,9 @@ public class Card : MonoBehaviour
         F13,
         F14,
         F15,
-        Mortal_Coil,
+        Ping,
+        ArcInt,
+        ArcExplosion,
         Cardback,
     }
     void Start()
@@ -90,14 +86,26 @@ public class Card : MonoBehaviour
             board.selectedMulligans.Add(card.index);
         }
     }
-
-    void EndPlay()
+    bool hidden = false;
+    public void HideCard()
     {
+        hidden = true;
+        EndDrag();
+        transform.localScale = Vector3.zero;
+    }
+
+    public void EndPlay()
+    {
+        if (hidden)
+        {
+            transform.localScale = Vector3.one;
+        }
         transform.localPosition = OP;
         EndDrag();
         board.EndPlayingCard();
         if (preview) EndPreview();
     }
+
     public void PlayCard()
     {
         if (transform.localPosition.y <= -6.5f)
@@ -112,9 +120,11 @@ public class Card : MonoBehaviour
             return;
         }
         
+
         if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED == false)
         {
             //UNTARGETED NON-MINION
+            board.PlayCard(card);
         }
 
         if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED == true)
@@ -269,7 +279,9 @@ public class Card : MonoBehaviour
         {
             if (preview) return;
             //PlayCard();
-            //preview spell/target
+            board.StartTargetingCard(card);
+            //EndPlay();
+            HideCard();
         }
 
         if ((card.MINION) == true)

@@ -1,21 +1,14 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Riptide;
-using Riptide.Transports;
 using Riptide.Utils;
-using System.Linq;
 using UnityEngine;
-using UnityEditor;
-using static Server;
-using System.ComponentModel;
-using System.Text.RegularExpressions;
-using UnityEditor.PackageManager;
-using static Board;
 
 
 public partial class Server : MonoBehaviour
 {
+
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() {Card.Cardname.ArcExplosion, Card.Cardname.ArcInt };
     public static Message CreateMessage(MessageType type)
     {
         return Message.Create(MessageSendMode.Reliable, (ushort)type);
@@ -204,8 +197,6 @@ public partial class Server : MonoBehaviour
         player2,
     }
 
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Mortal_Coil};
-
     public void DrawStarterHands(Match m)
     {
         int p1cards = m.turn == Turn.player1 ? 3 : 4;
@@ -286,7 +277,7 @@ public partial class Server : MonoBehaviour
 
         Message enemyMullMessage = CreateMessage(MessageType.EnemyMulligan);
         enemyMullMessage.AddInts(inds);
-        server.Send(enemyMullMessage, match.OtherPlayer(match.players[player]).connection.clientID);
+        server.Send(enemyMullMessage, match.Opponent(match.players[player]).connection.clientID);
 
         if (match.players[0].mulligan && match.players[1].mulligan)
         {
@@ -370,7 +361,7 @@ public partial class Server : MonoBehaviour
         
             Message messageOpp = CreateMessage(Server.MessageType.DrawEnemy);
             messageOpp.AddInt(1);
-            server.Send(messageOpp, match.OtherPlayer(match.players[p]).connection.clientID);
+            server.Send(messageOpp, match.Opponent(match.players[p]).connection.clientID);
         }
 
     }
@@ -415,11 +406,12 @@ public partial class Server : MonoBehaviour
         if (card.SPELL)
         {
             //trigger event: ON PLAY SPELL (antonidas)
+            CastSpell(match, match.players[p], card.card, target, friendlySide, isHero);
         }
 
         if (card.MINION)
         {
-            SummonMinion(match, match.turn, card.card, position);
+            SummonMinion(match, match.players[p], card.card, position);
             //trigger event: ON PLAY MINION (juggler)
         }
 
@@ -428,25 +420,25 @@ public partial class Server : MonoBehaviour
 
     }
     
-    public void SummonMinion(Match match, Turn side, Card.Cardname minion, int position=-1)
+    public void SummonMinion(Match match, Player player, Card.Cardname minion, int position=-1)
     {
-        int p = (int)side;
-        int o = match.Opponent(p);
-        if (match.players[p].board.Count() >= 7) return;
 
-        match.players[p].board.Add(minion, position);
+        Player opponent = match.Opponent(player);
+        if (player.board.Count() >= 7) return;
+
+        player.board.Add(minion, position);
 
         Message message = CreateMessage(Server.MessageType.SummonMinion);
         message.AddBool(true);
         message.AddInt((int)minion);
         message.AddInt(position);
-        server.Send(message, match.players[p].connection.clientID);
+        server.Send(message, player.connection.clientID);
         
         Message messageOp = CreateMessage(Server.MessageType.SummonMinion);
         messageOp.AddBool(false);
         messageOp.AddInt((int)minion);
         messageOp.AddInt(position);
-        server.Send(messageOp, match.players[o].connection.clientID);
+        server.Send(messageOp, opponent.connection.clientID);
     }
 
     public void SummonToken(Match match, Turn side, Card.Cardname minion, int position = -1)
@@ -500,7 +492,7 @@ public partial class Server : MonoBehaviour
     public void DestroyMinion(Match match, Board.Minion minion)
     {
         Player owner = match.FindOwner(minion);
-        Player opponent = match.OtherPlayer(owner);
+        Player opponent = match.Opponent(owner);
 
         int ind = minion.index;
 
@@ -558,7 +550,7 @@ public partial class Server : MonoBehaviour
         messageOpponent.AddBool(false);
 
         server.Send(messageOwner, player.connection.clientID);
-        server.Send(messageOpponent, match.OtherPlayer(player).connection.clientID);
+        server.Send(messageOpponent, match.Opponent(player).connection.clientID);
     }
 
     public void DiscardCard(Match m, Player p, int index)
@@ -651,7 +643,7 @@ public partial class Server : MonoBehaviour
             else if (x == 0) return 1;
             return 1;
         }
-        public Player OtherPlayer(Player p)
+        public Player Opponent(Player p)
         {
             if (p == players[0]) return players[1];
             if (p == players[1]) return players[0];
@@ -668,7 +660,7 @@ public partial class Server : MonoBehaviour
         }
         public Player FindOpponent(Board.Minion minion)
         {
-            return OtherPlayer(FindOwner(minion));
+            return Opponent(FindOwner(minion));
         }
     }
     

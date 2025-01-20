@@ -7,6 +7,7 @@ using Unity.Collections.LowLevel.Unsafe;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static UnityEngine.GraphicsBuffer;
 
 public partial class Board : MonoBehaviour
@@ -276,6 +277,7 @@ public partial class Board : MonoBehaviour
     {
         if (!currTurn) return;
         if (card.played) return;
+        EndTargeting();
         Debug.Log("Playing card " + card.card);
         //send message to server to play card index
         Message message = CreateMessage(Server.MessageType.PlayCard);
@@ -417,8 +419,7 @@ public partial class Board : MonoBehaviour
 
     public bool IsFriendly(Hero h)
     {
-        
-        return false;
+        return h == currHero;
     }
     void Update()
     {
@@ -468,6 +469,10 @@ public partial class Board : MonoBehaviour
             Debug.Log(m.GetInt());
         }
         
+        if (Input.GetKey(KeyCode.BackQuote))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
         
     }
     void Tester(Message m)

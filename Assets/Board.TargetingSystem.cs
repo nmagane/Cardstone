@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Board;
 using static UnityEngine.GraphicsBuffer;
 
 public partial class Board
@@ -41,6 +42,10 @@ public partial class Board
 
         FriendlyHero,
         EnemyHero,
+
+        DamagedMinion,
+        HealthyMinion,
+        Mech,
     }
 
     public void TargetMinion(Minion minion)
@@ -84,6 +89,7 @@ public partial class Board
                 AttackFace(targetingMinion, hero);
                 break;
             case TargetMode.Spell:
+                PlayCard(targetingCard, -1, -1, IsFriendly(hero), true);
                 break;
             case TargetMode.HeroPower:
                 break;
@@ -93,6 +99,7 @@ public partial class Board
                 EndTargeting();
                 break;
         }
+
     }
 
     public void StartTargetingAttack(Minion source)
@@ -104,8 +111,20 @@ public partial class Board
 
         StartTargetingAnim(currMinions.minionObjects[source]);
     }
-    public void EndTargeting()
+
+    public void StartTargetingCard(HandCard source)
     {
+        targeting = true;
+        targetMode = TargetMode.Spell;
+        eligibleTargets = source.eligibleTargets;
+        targetingCard = source;
+
+        StartTargetingAnim(currHero);
+    }
+
+    public void EndTargeting(bool cancel=false)
+    {
+        Debug.Log("endtarget");
         targeting = false;
         targetMode = TargetMode.None;
         eligibleTargets = EligibleTargets.AllCharacters;
@@ -115,6 +134,13 @@ public partial class Board
         targetingCard = null;
         dragTargeting = false;
 
+        if (cancel)
+        {
+            if (playingCard!=null)
+            {
+                playingCard.EndPlay();
+            }
+        }
         EndTargetingAnim();
     }
 
@@ -233,11 +259,11 @@ public partial class Board
 
             if (Input.GetMouseButtonDown(1))
             {
-                EndTargeting();
+                EndTargeting(true);
             }
-            if (Card.GetMousePos().y < -6)
+            if (Card.GetMousePos().y < -7f)
             {
-                EndTargeting();
+                EndTargeting(true);
             }
             yield return null;
         }
