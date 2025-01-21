@@ -37,7 +37,11 @@ public class Card : MonoBehaviour
         ArcInt,
         ArcExplosion,
         Cardback,
-        ShatteredSunCleric
+        ShatteredSunCleric,
+        IronbeakOwl,
+        RulesMan,
+        Equality,
+
     }
     void Start()
     {

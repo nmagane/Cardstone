@@ -96,6 +96,7 @@ public partial class Board
             foreach (var c in minions)
             {
                 c.index = i++;
+                c.previewIndex = -1;
             }
             if (server) return;
 
@@ -131,6 +132,7 @@ public partial class Board
                 Creature c = kvp.Value;
                 int ind = kvp.Key.index;
                 if (ind >= gapIndex) ind++;
+                kvp.Key.previewIndex = ind;
                 c.transform.localPosition = new Vector3(offset + dist * (ind), this == board.currMinions ? -2.75f : 3, 0);
             }
         }

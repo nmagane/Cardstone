@@ -176,12 +176,13 @@ public partial class Server : MonoBehaviour
     public void StartMatch(PlayerConnection p1, PlayerConnection p2)
     {
         Match match = new Match();
+        match.server = this;
 
         Message m1 = CreateMessage(MessageType.ConfirmMatch);
         m1.AddULong(currMatchID);
         server.Send(m1,p1.clientID);
 
-        Message m2 = CreateMessage(Server.MessageType.ConfirmMatch);
+        Message m2 = CreateMessage(MessageType.ConfirmMatch);
         m2.AddULong(currMatchID);
         server.Send(m2,p2.clientID);
 
@@ -223,6 +224,7 @@ public partial class Server : MonoBehaviour
 
         foreach (var v in TESTCARDS) m.players[0].hand.Add(v);
 
+        //TODO: THIS MESSAGE SIZE MIGHT GET TOO LARGE TO SEND, CHANGE TO ARRAY OF ENUMS ONLY?
         Message m1 = CreateMessage(Server.MessageType.DrawHand);
         string jsonText = JsonUtility.ToJson(m.players[0].hand);
         m1.AddString(jsonText);
@@ -403,7 +405,7 @@ public partial class Server : MonoBehaviour
         server.Send(confirmPlayOpponent, opponent.clientID);
         //summon minion or execute spell effects
 
-        CastInfo spell = new CastInfo(match, match.players[p], card.card, target, friendlySide, isHero);
+        CastInfo spell = new CastInfo(match, match.players[p], card, target,position, friendlySide, isHero);
         if (card.SPELL)
         {
             //trigger event: ON PLAY SPELL (antonidas)
@@ -423,7 +425,6 @@ public partial class Server : MonoBehaviour
         //TODO: BATTLECRY (if minion) Trigger(Battlecry(Target X) - passed in the target spot of this func)
 
     }
-    
     public void SummonMinion(Match match, Player player, Card.Cardname minion, int position=-1)
     {
 
@@ -581,17 +582,20 @@ public partial class Server : MonoBehaviour
         public Board.MinionBoard board = new Board.MinionBoard();
 
         public bool mulligan = false;
+
+        public Player opponent;
     }
 
 
     [Serializable]
-    public class Match
+    public partial class Match
     {
         public List<Player> players = new List<Player>() { new Player(), new Player() };
         public ulong matchID;
         public Turn turn = Turn.player1;
         public Player currPlayer;
         public Player enemyPlayer;
+        public Server server;
         //todo: secrets
         //todo: graveyards
 
@@ -599,6 +603,8 @@ public partial class Server : MonoBehaviour
         {
             players[0].connection=p1;
             players[1].connection=p2;
+            players[0].opponent = players[1];
+            players[1].opponent = players[0];
             List<Card.Cardname> sampleTestDeck = new List<Card.Cardname>();
 
             for (int i=0;i<15;i++)

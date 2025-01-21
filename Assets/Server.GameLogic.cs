@@ -41,12 +41,13 @@ public partial class Server
     {
         public Match match;
         public Player player;
-        public Card.Cardname card;
+        public Board.HandCard card;
         public int target;
+        public int position;
         public bool isFriendly;
         public bool isHero;
 
-        public CastInfo(Match m, Player p,Card.Cardname name,int t, bool fri, bool hero)
+        public CastInfo(Match m, Player p,Board.HandCard name,int t, int s, bool fri, bool hero)
         {
             match = m;
             player = p;
@@ -54,11 +55,12 @@ public partial class Server
             target = t;
             isFriendly = fri;
             isHero = hero;
+            position = s;
         }
     }
     public void CastSpell(CastInfo spell)
     {
-        switch(spell.card)
+        switch(spell.card.card)
         {
             case Card.Cardname.Ping:
                 Ping(spell);
@@ -111,7 +113,9 @@ public partial class Server
         Player p = spell.player;
         Match m = spell.match;
         //TODO: SILENCABLE AURAS
-        Debug.Log("Cleric battlecyr");
+
+        p.board[spell.target].AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Health, 1));
+        p.board[spell.target].AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 1));
     }
 
 }

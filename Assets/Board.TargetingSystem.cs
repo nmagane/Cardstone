@@ -60,7 +60,7 @@ public partial class Board
         switch (targetMode)
         {
             case TargetMode.Battlecry:
-                PlayCard(targetingCard, minion.index, currMinions.previewMinion.index, IsFriendly(minion));
+                PlayCard(targetingCard, minion.previewIndex, currMinions.previewMinion.index, IsFriendly(minion));
                 break;
             case TargetMode.Attack:
                 AttackMinion(targetingMinion, minion);
