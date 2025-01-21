@@ -18,23 +18,24 @@ public partial class Server
 
         //TODO: trigger ON DAMAGE (acolyte)
         //todo: triggier MINION DAMAGE (frothing)
+        /*
         if (minion.health<=0)
         {
             DestroyMinion(match, minion);
-        }
+        }*/
     }
     public void DamageFace(Match match, Player target, int damage)
     {
         target.health -= damage;
-        UpdateHero(match,target);
+        //UpdateHero(match,target);
 
         //TODO: trigger ON DAMAGE FACE
-
+        /*
         if (target.health<=0)
         {
             //TODO: GAME END
             Debug.Log("Game over");
-        }
+        }*/
     }
 
     public class CastInfo

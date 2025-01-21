@@ -8,7 +8,7 @@ using UnityEngine;
 public partial class Server : MonoBehaviour
 {
 
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.ShatteredSunCleric };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.ArcExplosion,Card.Cardname.ShatteredSunCleric };
     public static Message CreateMessage(MessageType type)
     {
         return Message.Create(MessageSendMode.Reliable, (ushort)type);
@@ -409,21 +409,14 @@ public partial class Server : MonoBehaviour
         if (card.SPELL)
         {
             //trigger event: ON PLAY SPELL (antonidas)
-            CastSpell(spell);
+            match.StartSequencePlaySpell(spell);
         }
 
         if (card.MINION)
         {
-            SummonMinion(match, match.players[p], card.card, position);
-            //trigger event: ON PLAY MINION (juggler)
+            //SummonMinion(match, match.players[p], card.card, position);
+            match.StartSequencePlayMinion(spell);
         }
-
-        if  (card.BATTLECRY)
-        {
-            CastSpell(spell);
-        }
-        //TODO: BATTLECRY (if minion) Trigger(Battlecry(Target X) - passed in the target spot of this func)
-
     }
     public void SummonMinion(Match match, Player player, Card.Cardname minion, int position=-1)
     {
@@ -449,7 +442,7 @@ public partial class Server : MonoBehaviour
     public void SummonToken(Match match, Turn side, Card.Cardname minion, int position = -1)
     {
         //TODO: Summon token
-        //TRIGGER: ON MINION SUMMON
+        //StartSequenceSummonMinion(spell); - different sequence than play minion
     }
 
     public void AttackMinion(ulong matchID, ushort clientID, ulong playerID, int attackerInd, int targetInd)
@@ -473,7 +466,7 @@ public partial class Server : MonoBehaviour
         ConsumeAttackCharge(attacker);
 
         DamageMinion(match, attacker, target.damage);
-        DamageMinion(match, target, target.damage);
+        DamageMinion(match, target, attacker.damage);
 
     }
     public void UpdateMinion(Match match, Board.Minion minion)

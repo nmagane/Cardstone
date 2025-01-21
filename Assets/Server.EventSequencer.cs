@@ -18,26 +18,46 @@ public partial class Server
 
             OnPlaySpell,
             OnCastSpell,
-            AfterSpell,
+            AfterPlaySpell,
 
             BeforeAttack,
             Attack,
             AfterAttack,
         }
-        public void StartSequencePlayMinion(CastInfo cast)
+
+        public void StartSequenceAttack(CastInfo spell)
         {
-            server.SummonMinion(this, cast.player, cast.card.card, cast.position);
+            StartPhase(Phase.OnPlayCard, ref spell);
 
-            StartPhase(Phase.OnPlayCard, ref cast);
-            StartPhase(Phase.OnPlayMinion, ref cast);
+            //TODO: attack function call
+            
+            StartPhase(Phase.AfterPlaySpell, ref spell);
+        }
+        public void StartSequencePlaySpell(CastInfo spell)
+        {
+            StartPhase(Phase.OnPlayCard, ref spell);
+            StartPhase(Phase.OnPlaySpell, ref spell);
 
-            if (cast.card.BATTLECRY)
+            server.CastSpell(spell);
+            
+            StartPhase(Phase.AfterPlayCard, ref spell);
+            StartPhase(Phase.AfterPlaySpell, ref spell);
+        }
+
+        public void StartSequencePlayMinion(CastInfo spell)
+        {
+            server.SummonMinion(this, spell.player, spell.card.card, spell.position);
+
+            StartPhase(Phase.OnPlayCard, ref spell);
+            StartPhase(Phase.OnPlayMinion, ref spell);
+
+            if (spell.card.BATTLECRY)
             {
-                    
+                server.CastSpell(spell);
             }
 
-            StartPhase(Phase.AfterPlayCard, ref cast);
-            StartPhase(Phase.AfterSummonMinion, ref cast);
+            StartPhase(Phase.AfterPlayCard, ref spell);
+            StartPhase(Phase.AfterSummonMinion, ref spell);
         }
         
         public CastInfo StartPhase(Phase phase, ref CastInfo spell)
@@ -92,16 +112,23 @@ public partial class Server
                 //Process Auras
             }
 
+            List<Board.Minion> destroyList = new List<Board.Minion>();
             foreach (Board.Minion minion in players[0].board)
             {
                 server.UpdateMinion(this, minion);
-                if (minion.health <= 0) server.DestroyMinion(this, minion);
+                if (minion.health <= 0) destroyList.Add(minion);
             }
             foreach (Board.Minion minion in players[1].board)
             {
                 server.UpdateMinion(this, minion);
-                if (minion.health <= 0) server.DestroyMinion(this, minion);
+                if (minion.health <= 0) destroyList.Add(minion);
             }
+
+            foreach (var m in destroyList) server.DestroyMinion(this, m);
+
+            //TODO: update and check hero health for game over
+            server.UpdateHero(this, players[0]);
+            server.UpdateHero(this, players[1]);
         }
     }
 }
