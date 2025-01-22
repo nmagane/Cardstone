@@ -11,7 +11,7 @@ using static UnityEngine.GraphicsBuffer;
 public partial class Server : MonoBehaviour
 {
 
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.ArcExplosion,Card.Cardname.ShatteredSunCleric, Card.Cardname.Ping };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.DireWolf,Card.Cardname.ShatteredSunCleric, Card.Cardname.SWChamp, Card.Cardname.Ping };
     public static Message CreateMessage(MessageType type)
     {
         return Message.Create(MessageSendMode.Reliable, (ushort)type);
@@ -292,9 +292,13 @@ public partial class Server : MonoBehaviour
         match.players[player].deck = Board.Shuffle(match.players[player].deck);
         match.players[player].mulligan = true;
 
+        List<ushort> newhand = new List<ushort>();
+        foreach (var c in match.players[player].hand)
+        {
+            newhand.Add((ushort)c.card);
+        }
         Message message = CreateMessage(Server.MessageType.ConfirmMulligan);
-        string jsonText = JsonUtility.ToJson(match.players[player].hand);
-        message.AddString(jsonText);
+        message.AddUShorts(newhand.ToArray());
         server.Send(message, match.players[player].connection.clientID);
 
         Message enemyMullMessage = CreateMessage(MessageType.EnemyMulligan);

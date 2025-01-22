@@ -14,12 +14,7 @@ start and end turn confirms to opponent players? //probably not needed
 
 note: minion and spell cards look different.
 
-TODO: confirmations for PREATTACK and POSTATTACK
-
-
-
-
-
+separate buffs and auras? seems uneeded right now
 
 ===========================================
 class Trigger

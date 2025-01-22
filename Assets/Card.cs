@@ -41,6 +41,8 @@ public class Card : MonoBehaviour
         IronbeakOwl,
         RulesMan,
         Equality,
+        SWChamp,
+        DireWolf,
 
     }
     void Start()

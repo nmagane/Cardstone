@@ -77,8 +77,8 @@ public partial class Board : MonoBehaviour
                 InitHand(hand, enemyCardCount);
                 break;
             case Server.MessageType.ConfirmMulligan:
-                string mulliganJson = message.GetString();
-                ConfirmMulligan(mulliganJson);
+                ushort[] mulliganNewHand = message.GetUShorts();
+                ConfirmMulligan(mulliganNewHand);
                 break;
             case Server.MessageType.EnemyMulligan:
                 int[] enemyMulligan = message.GetInts();
@@ -186,13 +186,12 @@ public partial class Board : MonoBehaviour
         client.Send(message);
     }
 
-    void ConfirmMulligan(string jsonText)
+    void ConfirmMulligan(ushort[] cards)
     {
-        Hand newHand = JsonUtility.FromJson<Hand>(jsonText);
         foreach (int i in selectedMulligans)
         {
             //TODO: mull anim goes here
-            currHand.MulliganReplace(i, newHand[i].card);
+            currHand.MulliganReplace(i, (Card.Cardname)cards[i]);
         }
         currHand.EndMulligan();
         waitingEnemyMulliganMessage.transform.localScale = Vector3.one;

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.UIElements;
+using UnityEngine;
 
 public partial class Server
 {
@@ -9,6 +9,8 @@ public partial class Server
     {
         public enum Phase
         {
+            NONE,
+
             OnPlayCard,
             AfterPlayCard,
 
@@ -100,8 +102,6 @@ public partial class Server
 
             ResolveTriggerQueue(ref spell);
 
-            UpdateAuras();
-
             return spell;
         }
 
@@ -124,19 +124,13 @@ public partial class Server
                 //triggerQueue[0].Activate();
                 triggerQueue.Remove(triggerQueue[0]);
             }
+
+            UpdateAuras();
         }
 
         void UpdateAuras()
         {
-            foreach (Board.Minion minion in players[0].board)
-            {
-                //Process Auras
-            }
-            foreach (Board.Minion minion in players[1].board)
-            {
-                //Process Auras
-            }
-
+            //MINION DEATHS
             List<Board.Minion> destroyList = new List<Board.Minion>();
             foreach (Board.Minion minion in players[0].board)
             {
@@ -148,12 +142,51 @@ public partial class Server
                 server.UpdateMinion(this, minion);
                 if (minion.health <= 0) destroyList.Add(minion);
             }
+            foreach (var m in destroyList)
+            {
+                Debug.Log("kill " + m.card);
+                server.DestroyMinion(this, m);
+            }
 
-            foreach (var m in destroyList) server.DestroyMinion(this, m);
+            //Aura activation
+            foreach (Board.Minion minion in players[0].board)
+            {
+                foreach (var aura in minion.auras)
+                    aura.ActivateAura(this);
+            }
+            foreach (Board.Minion minion in players[1].board)
+            {
+                foreach (var aura in minion.auras)
+                    aura.ActivateAura(this);
+            }
 
+            //Remove foreign effects if no longer refreshed
+            foreach (Board.Minion minion in players[0].board)
+            {
+                minion.RefreshForeignAuras();
+            }
+            foreach (Board.Minion minion in players[1].board)
+            {
+                minion.RefreshForeignAuras();
+            }
+
+            //TODO: HAND CARD AURAS
+            //============================
+
+
+            //update minions
+            foreach (Board.Minion minion in players[0].board)
+            {
+                server.UpdateMinion(this, minion);
+            }
+            foreach (Board.Minion minion in players[1].board)
+            {
+                server.UpdateMinion(this, minion);
+            }
             //TODO: update and check hero health for game over
             server.UpdateHero(this, players[0]);
             server.UpdateHero(this, players[1]);
         }
     }
 }
+    

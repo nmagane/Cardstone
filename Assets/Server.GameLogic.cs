@@ -133,6 +133,7 @@ public partial class Server
     }
     public void CastSpell(CastInfo spell)
     {
+        //TODO: check for target survival/validity after prespell phase. fizzle if invalid.
         switch(spell.card.card)
         {
             case Card.Cardname.Ping:

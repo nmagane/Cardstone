@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Unity.Collections.LowLevel.Unsafe;
+using UnityEngine;
 
 public partial class Board
 {
     [Serializable]
-    public class Minion
+    public partial class Minion
     {
         public Card.Cardname card;
 
@@ -29,6 +29,7 @@ public partial class Board
         public List<Aura> auras = new List<Aura>();
 
         public int previewIndex = -1;
+        public int playOrder = 0;
 
         public void Set(Card.Cardname name, int ind)
         {
@@ -47,6 +48,15 @@ public partial class Board
             maxHealth = health;
             baseHealth = maxHealth;
             baseDamage = damage;
+
+            if (c==Card.Cardname.SWChamp)
+            {
+               AddAura(new Aura(Aura.Type.StormwindChampion));
+            }
+            if (c==Card.Cardname.DireWolf)
+            {
+               AddAura(new Aura(Aura.Type.DireWolfAlpha));
+            }
         }
         public override string ToString()
         {
@@ -55,6 +65,31 @@ public partial class Board
         
         public void AddAura(Aura a)
         {
+            Aura finder = FindAura(a.type);
+            if (finder != null)
+            {
+                if (finder.stackable == false)
+                    return;
+            }
+
+            finder = FindForeignAura(a);
+            if (finder != null)
+            {
+                if (finder.foreignSource && finder.source == a.source)
+                {
+                    //Refresh and don't re-add.
+                    Debug.Log("refreshed");
+                    finder.refreshed = true;
+                    return;
+                }
+            }
+
+            if (finder == null && a.foreignSource)
+            {
+                //First time application of foreign aura. Add and considered it refreshed.
+                a.refreshed = true;
+            }
+            
             a.minion = this;
             a.InitAura();
             auras.Add(a);
@@ -72,6 +107,59 @@ public partial class Board
             }
             return null;
         }
+        
+        public Aura FindForeignAura(Aura a)
+        {
+            if (a.foreignSource == false) return null;
+
+            foreach (Aura x in auras)
+            {
+                if (a.type == x.type && x.foreignSource && a.source==x.source) 
+                    return x;
+            }
+            return null;
+        }
+
+        public void RemoveAura(Aura a)
+        {
+            auras.Remove(a);
+            Debug.Log("removing aura " + a.type);
+            switch(a.type)
+            {
+                case Aura.Type.Health:
+                    maxHealth -= a.value;
+                    if (health > maxHealth)
+                        health = maxHealth;
+                    break;
+                case Aura.Type.Damage:
+                    damage -= a.value;
+                    break;
+            }
+        }
+
+        public void RemoveAura(Aura.Type t)
+        {
+            while (FindAura(t)!=null)
+            {
+                RemoveAura(FindAura(t));
+            }
+        }
+
+        public void RefreshForeignAuras()
+        {
+            List<Aura> removeList = new List<Aura>();
+            foreach (var aura in auras)
+            {
+                if (aura.foreignSource && aura.refreshed == false)
+                    removeList.Add(aura);
+                else if (aura.foreignSource && aura.refreshed == true)
+                {
+                    aura.refreshed = false;
+                }
+            }
+            foreach (var aura in removeList)
+                RemoveAura(aura);
+        }
 
         public class Aura
         {
@@ -85,14 +173,19 @@ public partial class Board
                 Windfury,
                 NoAttack,
                 
+                StormwindChampion,
+                DireWolfAlpha,
             }
 
             public Type type = Type.Health;
             public bool temporary = false;
+            public bool foreignSource = false;
             public bool trigger = false;
             public bool stackable = false;
             public int value = 0;
             public Minion minion;
+            public Minion source;
+            public bool refreshed = false;
             
             public void InitAura()
             {
@@ -100,6 +193,7 @@ public partial class Board
                 {
                     case Type.Health:
                         minion.health += value;
+                        minion.maxHealth += value;
                         break;
                     case Type.Damage:
                         minion.damage += value;
@@ -110,12 +204,26 @@ public partial class Board
                 }
             }
 
+            public void ActivateAura(Server.Match match)
+            {
+                switch (type)
+                {
+                    case Type.StormwindChampion:
+                        Server.AuraEffects.StormwindChampion(match,this.minion);
+                        break;
+                    case Type.DireWolfAlpha:
+                        Server.AuraEffects.DireWolfAlpha(match,this.minion);
+                        break;
+                }
+            }
 
-            public Aura(Type t,int val, bool temp=false)
+            public Aura(Type t, int val=0, bool temp = false, bool foreign = false, Minion provider = null)
             {
                 type = t;
                 value = val;
                 temporary = temp;
+                foreignSource = foreign;
+                source = provider;
 
                 switch (type)
                 {
