@@ -24,6 +24,8 @@ public partial class Board
         public bool STEALTH = false;
         public bool WINDFURY = false;
 
+        public bool DEAD = false;
+
         public List<Aura> auras = new List<Aura>();
 
         public int previewIndex = -1;

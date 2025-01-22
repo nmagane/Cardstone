@@ -13,25 +13,50 @@ public partial class Server
             AfterPlayCard,
 
             OnPlayMinion,
-            OnSummonMinion,
+            OnSummonMinion, //Tokens
             AfterSummonMinion,
 
             OnPlaySpell,
-            OnCastSpell,
             AfterPlaySpell,
 
             BeforeAttack,
-            Attack,
             AfterAttack,
+
+            BeforeAttackFace,
+            AfterAttackFace,
+
+            StartTurn,
+            EndTurn,
+            CardDraw,
         }
 
-        public void StartSequenceAttack(CastInfo spell)
+        public void StartSequenceAttackMinion(CastInfo spell)
         {
-            StartPhase(Phase.OnPlayCard, ref spell);
+            StartPhase(Phase.BeforeAttack, ref spell);
 
-            //TODO: attack function call
-            
-            StartPhase(Phase.AfterPlaySpell, ref spell);
+            bool successfulAttack = server.ExecuteAttack(ref spell);
+
+            if (successfulAttack == false)
+            {
+                ResolveTriggerQueue(ref spell);
+                return;
+            }
+
+            StartPhase(Phase.AfterAttack, ref spell);
+        }
+        public void StartSequenceAttackFace(CastInfo spell)
+        {
+            StartPhase(Phase.BeforeAttackFace, ref spell);
+
+            bool successfulAttack = server.ExecuteAttack(ref spell);
+
+            if (successfulAttack == false)
+            {
+                ResolveTriggerQueue(ref spell);
+                return;
+            }
+
+            StartPhase(Phase.AfterAttackFace, ref spell);
         }
         public void StartSequencePlaySpell(CastInfo spell)
         {

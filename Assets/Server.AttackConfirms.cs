@@ -40,7 +40,39 @@ public partial class Server
         }
         return true;
     }
-    public void ConfirmAttackMinion(Match match, int attackerInd, int targetInd)
+
+    public void ConfirmAttackGeneral(CastInfo action)
+    {
+        Match match = action.match;
+        AttackInfo attack = action.attack;
+
+        if (attack.faceAttack)
+        {
+            if (attack.weaponSwing)
+            {
+                //Face to face
+            }
+            else
+            {
+                //Minion to face
+                ConfirmAttackFace(match, attack.attacker.index, attack.friendlyFire);
+            }
+        }
+        else
+        {
+            if (attack.weaponSwing)
+            {
+                //Face to minion
+            }
+            else
+            {
+                //Minion to minion
+                ConfirmAttackMinion(match, attack.attacker.index, attack.target.index, attack.friendlyFire);
+            }
+        }
+    }
+
+    public void ConfirmAttackMinion(Match match, int attackerInd, int targetInd, bool friendlyFire)
     {
         Message mOwner = CreateMessage(MessageType.ConfirmAttackMinion);
         Message mOpp = CreateMessage(MessageType.ConfirmAttackMinion);
@@ -56,7 +88,7 @@ public partial class Server
         server.Send(mOwner, match.currPlayer.connection.clientID);
         server.Send(mOpp, match.enemyPlayer.connection.clientID);
     }
-    public void ConfirmAttackFace(Match match, int attackerInd)
+    public void ConfirmAttackFace(Match match, int attackerInd,bool friendlyFire)
     {
         Message mOwner = CreateMessage(MessageType.ConfirmAttackFace);
         Message mOpp = CreateMessage(MessageType.ConfirmAttackFace);

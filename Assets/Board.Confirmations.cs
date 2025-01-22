@@ -7,6 +7,13 @@ public partial class Board
     {
         return Message.Create(MessageSendMode.Reliable, (ushort)type);
     }
+    public void ConfirmPreAttackMinion(Message message)
+    {
+        //TODO: preattack animation
+        bool allyAttack = message.GetBool();
+        int attackerIndex = message.GetInt();
+        int targetIndex = message.GetInt();
+    }
     public void ConfirmAttackMinion(Message message)
     {
         bool allyAttack = message.GetBool();
@@ -18,14 +25,19 @@ public partial class Board
 
         if (allyAttack)
         {
-            if (attacker.WINDFURY) attacker.WINDFURY = false;
-            else attacker.canAttack = false;
+            Server.ConsumeAttackCharge(attacker);
         }
 
         Debug.Log(playerID + ": " + (allyAttack ? "ally " : "enemy ") + attacker.ToString() + " hits " + target.ToString());
         //TODO: attack animation
     }
 
+    public void ConfirmPreAttackFace(Message message)
+    {
+        //TODO: preattack animation
+        bool allyAttack = message.GetBool();
+        int attackerIndex = message.GetInt();
+    }
     void ConfirmAttackFace(Message message)
     {
         bool allyAttack = message.GetBool();
@@ -35,8 +47,7 @@ public partial class Board
 
         if (allyAttack)
         {
-            if (attacker.WINDFURY) attacker.WINDFURY = false;
-            else attacker.canAttack = false;
+            Server.ConsumeAttackCharge(attacker);
         }
         Debug.Log(playerID + ": " + (allyAttack ? "ally " : "enemy ") + attacker.ToString() + " hits face");
         //todo: attack face animation

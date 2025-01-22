@@ -1,14 +1,17 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Riptide;
 using Riptide.Utils;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 
 public partial class Server : MonoBehaviour
 {
 
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.ArcExplosion,Card.Cardname.ShatteredSunCleric };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.ArcExplosion,Card.Cardname.ShatteredSunCleric, Card.Cardname.Ping };
     public static Message CreateMessage(MessageType type)
     {
         return Message.Create(MessageSendMode.Reliable, (ushort)type);
@@ -36,15 +39,19 @@ public partial class Server : MonoBehaviour
         DestroyMinion,
 
         AttackMinion,
+        ConfirmPreAttackMinion,
         ConfirmAttackMinion,
 
         AttackFace,
+        ConfirmPreAttackFace,
         ConfirmAttackFace,
 
         SwingMinion,
+        ConfirmPreSwingMinion,
         ConfirmSwingMinion,
 
         SwingFace,
+        ConfirmPreSwingFace,
         ConfirmSwingFace,
 
         UpdateMinion,
@@ -225,15 +232,28 @@ public partial class Server : MonoBehaviour
         foreach (var v in TESTCARDS) m.players[0].hand.Add(v);
 
         //TODO: THIS MESSAGE SIZE MIGHT GET TOO LARGE TO SEND, CHANGE TO ARRAY OF ENUMS ONLY?
+        List<ushort> hand1 = new List<ushort>();
+        List<ushort> hand2 = new List<ushort>();
+        foreach(var v in m.players[0].hand)
+        {
+            hand1.Add((ushort)v.card);
+        }
+        
+        foreach(var v in m.players[1].hand)
+        {
+            hand2.Add((ushort)v.card);
+        }
         Message m1 = CreateMessage(Server.MessageType.DrawHand);
-        string jsonText = JsonUtility.ToJson(m.players[0].hand);
-        m1.AddString(jsonText);
+        //string jsonText = JsonUtility.ToJson(m.players[0].hand);
+        //m1.AddString(jsonText);
+        m1.AddUShorts(hand1.ToArray());
         m1.AddInt(m.players[1].hand.Count());
         server.Send(m1, m.players[0].connection.clientID);
 
         Message m2 = CreateMessage(Server.MessageType.DrawHand);
-        jsonText = JsonUtility.ToJson(m.players[1].hand);
-        m2.AddString(jsonText);
+        //jsonText = JsonUtility.ToJson(m.players[1].hand);
+        //m2.AddString(jsonText);
+        m2.AddUShorts(hand2.ToArray());
         m2.AddInt(m.players[0].hand.Count());
         server.Send(m2, m.players[1].connection.clientID);
     }
@@ -405,16 +425,16 @@ public partial class Server : MonoBehaviour
         server.Send(confirmPlayOpponent, opponent.clientID);
         //summon minion or execute spell effects
 
+        match.playOrder++;
+
         CastInfo spell = new CastInfo(match, match.players[p], card, target,position, friendlySide, isHero);
         if (card.SPELL)
         {
-            //trigger event: ON PLAY SPELL (antonidas)
             match.StartSequencePlaySpell(spell);
         }
 
         if (card.MINION)
         {
-            //SummonMinion(match, match.players[p], card.card, position);
             match.StartSequencePlayMinion(spell);
         }
     }
@@ -424,7 +444,7 @@ public partial class Server : MonoBehaviour
         Player opponent = match.Opponent(player);
         if (player.board.Count() >= 7) return;
 
-        player.board.Add(minion, position);
+        player.board.Add(minion, position,match.playOrder);
 
         Message message = CreateMessage(Server.MessageType.SummonMinion);
         message.AddBool(true);
@@ -458,15 +478,15 @@ public partial class Server : MonoBehaviour
         Board.Minion target = match.enemyPlayer.board[targetInd];
         if (ValidAttackMinion(match, attackerInd, targetInd) == false) return;
 
-        ConfirmAttackMinion(match, attackerInd, targetInd);
+        //ConfirmAttackMinion(match, attackerInd, targetInd);
         Debug.Log("Attack " + attacker.ToString() + " " + target.ToString());
 
         //TODO: onattack triggers
 
-        ConsumeAttackCharge(attacker);
+        AttackInfo attackInfo = new AttackInfo(match.currPlayer, attacker, target, false, false, false);
+        CastInfo attackAction = new CastInfo(match, attackInfo);
 
-        DamageMinion(match, attacker, target.damage);
-        DamageMinion(match, target, attacker.damage);
+        match.StartSequenceAttackMinion(attackAction);
 
     }
     public void UpdateMinion(Match match, Board.Minion minion)
@@ -489,6 +509,7 @@ public partial class Server : MonoBehaviour
     }
     public void DestroyMinion(Match match, Board.Minion minion)
     {
+        minion.DEAD = true;
         Player owner = match.FindOwner(minion);
         Player opponent = match.Opponent(owner);
 
@@ -528,13 +549,13 @@ public partial class Server : MonoBehaviour
         Board.Minion attacker = match.currPlayer.board[attackerInd];
         
         if (ValidAttackFace(match,match.currPlayer,match.enemyPlayer,attackerInd) == false) return;
-        ConfirmAttackFace(match,attackerInd);
-        ConsumeAttackCharge(attacker);
 
-        //TODO: ON ATTACK TRIGGERS
-
-        DamageFace(match, match.enemyPlayer, attacker.damage);
+        AttackInfo attackInfo = new AttackInfo(match.currPlayer, attacker, null, false, true, false);
+        CastInfo attackAction = new CastInfo(match, attackInfo);
+        match.StartSequenceAttackFace(attackAction);
     }
+
+
 
     public void UpdateHero(Match match, Player player)
     {
@@ -589,6 +610,7 @@ public partial class Server : MonoBehaviour
         public Player currPlayer;
         public Player enemyPlayer;
         public Server server;
+        public int playOrder = 0;
         //todo: secrets
         //todo: graveyards
 

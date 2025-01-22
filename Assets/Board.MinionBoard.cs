@@ -31,7 +31,7 @@ public partial class Board
         {
             return minions.GetEnumerator();
         }
-        public void Add(Card.Cardname c, int ind = -1)
+        public void Add(Card.Cardname c, int ind = -1, int playOrder=0)
         {
 
             if (ind == -1)

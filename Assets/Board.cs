@@ -72,9 +72,9 @@ public partial class Board : MonoBehaviour
                 InitGame(matchID);
                 break;
             case Server.MessageType.DrawHand:
-                string handJson = message.GetString();
+                ushort[] hand = message.GetUShorts();
                 int enemyCardCount = message.GetInt();
-                InitHand(handJson, enemyCardCount);
+                InitHand(hand, enemyCardCount);
                 break;
             case Server.MessageType.ConfirmMulligan:
                 string mulliganJson = message.GetString();
@@ -139,20 +139,21 @@ public partial class Board : MonoBehaviour
         Debug.Log("Player " + playerID + " entered game " + matchID);
         currentMatchID = matchID;
     }
-    public void InitHand(string jsonText, int enemyCards=4)
+    public void InitHand(ushort[] hand, int enemyCards=4)
     {
         //Debug.Log(jsonText);
-        Hand hand = JsonUtility.FromJson<Hand>(jsonText);
+        //Hand hand = JsonUtility.FromJson<Hand>(jsonText);
+
         foreach (var c in hand)
         {
-            currHand.Add(c.card);
+            currHand.Add(((Card.Cardname)c));
         }
         //currHand = hand;
         string s = "";
 
-        foreach (HandCard c in hand)
+        foreach (var c in hand)
         {
-            s += c.ToString()+" ";
+            s += ((Card.Cardname)c).ToString()+" ";
         }
 
         enemyHand.enemyHand = true;
@@ -163,7 +164,7 @@ public partial class Board : MonoBehaviour
             enemyHand.Add(Card.Cardname.Cardback);
 
         Debug.Log(playerID+" Hand: " + s);
-        hand.mulliganMode = Hand.MulliganState.None;
+        currHand.mulliganMode = Hand.MulliganState.None;
         mulliganButton.transform.localScale = Vector3.one;
     }
 
