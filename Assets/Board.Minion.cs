@@ -63,6 +63,10 @@ public partial class Board
                 AddTrigger(new Trigger(Trigger.Type.AfterSummonMinion, Trigger.Side.Friendly, Trigger.Ability.KnifeJuggler,this,playOrder));
                 AddTrigger(new Trigger(Trigger.Type.AfterPlayMinion, Trigger.Side.Friendly, Trigger.Ability.KnifeJuggler,this,playOrder));
             }
+            if (c==Card.Cardname.Acolyte)
+            {
+                AddTrigger(new Trigger(Trigger.Type.OnDamageTaken, Trigger.Side.Both, Trigger.Ability.AcolyteOfPain,this,playOrder));
+            }
         }
         public override string ToString()
         {

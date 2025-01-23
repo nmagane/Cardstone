@@ -44,6 +44,7 @@ public class Card : MonoBehaviour
         SWChamp,
         DireWolf,
         KnifeJuggler,
+        Acolyte,
     }
     void Start()
     {

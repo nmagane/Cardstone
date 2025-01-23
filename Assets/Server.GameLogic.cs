@@ -8,23 +8,29 @@ public partial class Server
         if (m.WINDFURY) m.WINDFURY = false;
         else m.canAttack = false;
     }
-
+    public void DamageMinionsAOE()
+    {
+        //TODO: AOE EFFECTS DONT ACTIVATE TRIGGERS UNTIL ALL UNITS TAKE DAMAGE
+    }
     public void DamageMinion(Match match, Board.Minion minion, int damage)
     {
         minion.health -= damage;
-        UpdateMinion(match, minion);
 
         //TODO: trigger ON DAMAGE (acolyte)
         //todo: triggier MINION DAMAGE (frothing)
-
+        match.TriggerMinion(Board.Trigger.Type.OnDamageTaken,minion);
+        match.AddTrigger(Board.Trigger.Type.OnMinionDamage, null, minion);
+        UpdateMinion(match, minion);
     }
+
+
     public void DamageFace(Match match, Player target, int damage)
     {
         target.health -= damage;
         //UpdateHero(match,target);
 
+        UpdateHero(match, target);
         //TODO: trigger ON DAMAGE FACE
- 
     }
     public class AttackInfo
     {

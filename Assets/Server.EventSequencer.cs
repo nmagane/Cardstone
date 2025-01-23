@@ -33,15 +33,20 @@ public partial class Server
             CardDraw,
         }
 
+        public void StartSequenceDrawCard(CastInfo spell)
+        {
+
+        }
+
         public void StartSequenceAttackMinion(CastInfo spell)
         {
             StartPhase(Phase.BeforeAttack, ref spell);
 
             bool successfulAttack = server.ExecuteAttack(ref spell);
+            ResolveTriggerQueue(ref spell);
 
             if (successfulAttack == false)
             {
-                ResolveTriggerQueue(ref spell);
                 return;
             }
 
@@ -52,10 +57,10 @@ public partial class Server
             StartPhase(Phase.BeforeAttackFace, ref spell);
 
             bool successfulAttack = server.ExecuteAttack(ref spell);
+            ResolveTriggerQueue(ref spell);
 
             if (successfulAttack == false)
             {
-                ResolveTriggerQueue(ref spell);
                 return;
             }
 
@@ -67,7 +72,8 @@ public partial class Server
             StartPhase(Phase.OnPlaySpell, ref spell);
 
             server.CastSpell(spell);
-            
+            ResolveTriggerQueue(ref spell);
+
             StartPhase(Phase.AfterPlayCard, ref spell);
             StartPhase(Phase.AfterPlaySpell, ref spell);
         }
@@ -84,11 +90,18 @@ public partial class Server
             if (spell.card.BATTLECRY)
             {
                 server.CastSpell(spell);
+                ResolveTriggerQueue(ref spell);
             }
 
             StartPhase(Phase.AfterPlayCard, ref spell);
             StartPhase(Phase.AfterPlayMinion, ref spell);
         }
+
+        public void TriggerMinion(Board.Trigger.Type type,Board.Minion target)
+        {
+            triggerBuffer.AddRange(target.CheckTriggers(type, Board.Trigger.Side.Both, null));
+        }
+
         public void AddTrigger(Board.Trigger.Type type, CastInfo spell = null, Board.Minion source = null)
         {
             //todo: check secrets for triggers
@@ -157,7 +170,7 @@ public partial class Server
         public void ResolveTriggerQueue(ref CastInfo spell)
         {
             ReadTriggerBuffer();
-            while (triggerQueue.Count>0)
+            while (triggerQueue.Count>0 || triggerBuffer.Count>0)
             {
                 ReadTriggerBuffer();
 
@@ -182,6 +195,22 @@ public partial class Server
         }
         void UpdateAuras()
         {
+            //Initial visual update
+
+            //update minions
+            foreach (Board.Minion minion in players[0].board)
+            {
+                server.UpdateMinion(this, minion);
+            }
+            foreach (Board.Minion minion in players[1].board)
+            {
+                server.UpdateMinion(this, minion);
+            }
+            //TODO: update and check hero health for game over
+            server.UpdateHero(this, players[0]);
+            server.UpdateHero(this, players[1]);
+
+            //=====================================
             //MINION DEATHS
             List<Board.Minion> destroyList = new List<Board.Minion>();
             foreach (Board.Minion minion in players[0].board)
@@ -200,6 +229,7 @@ public partial class Server
                 server.DestroyMinion(this, m);
             }
 
+            //=====================================
             //Aura activation
             foreach (Board.Minion minion in players[0].board)
             {
@@ -223,10 +253,11 @@ public partial class Server
             }
 
             //TODO: HAND CARD AURAS
-            //============================
+            //=====================================
 
 
-            //update minions
+            //=====================================
+            //update minions after aura recalculation and deaths
             foreach (Board.Minion minion in players[0].board)
             {
                 server.UpdateMinion(this, minion);

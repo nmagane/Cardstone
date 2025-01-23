@@ -81,6 +81,11 @@ public partial class Board
                     //Does not trigger on self
                     if (minion == spell.minion) return false;
                     break;
+                    /*
+                case Type.OnDamageTaken:
+                    if (minion == spell.minion) return true;
+                    break;
+                    */
             }
             return (side == Side.Both || s == side);
         }
@@ -93,6 +98,7 @@ public partial class Board
                     TriggerEffects.KnifeJuggler(match, minion);
                     break;
                 case Ability.AcolyteOfPain:
+                    TriggerEffects.AcolyteOfPain(match, minion);
                     break;
             }
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
-using static Board;
 
 public class Hero : MonoBehaviour
 {
