@@ -16,6 +16,7 @@ public partial class Server
 
             OnPlayMinion,
             OnSummonMinion, //Tokens
+            AfterPlayMinion,
             AfterSummonMinion,
 
             OnPlaySpell,
@@ -73,7 +74,9 @@ public partial class Server
 
         public void StartSequencePlayMinion(CastInfo spell)
         {
-            server.SummonMinion(this, spell.player, spell.card.card, spell.position);
+            Board.Minion m = server.SummonMinion(this, spell.player, spell.card.card, spell.position);
+            if (m == null) return;
+            spell.minion = m;
 
             StartPhase(Phase.OnPlayCard, ref spell);
             StartPhase(Phase.OnPlayMinion, ref spell);
@@ -84,20 +87,63 @@ public partial class Server
             }
 
             StartPhase(Phase.AfterPlayCard, ref spell);
-            StartPhase(Phase.AfterSummonMinion, ref spell);
+            StartPhase(Phase.AfterPlayMinion, ref spell);
         }
-        
-        public CastInfo StartPhase(Phase phase, ref CastInfo spell)
+        public void AddTrigger(Board.Trigger.Type type, CastInfo spell = null, Board.Minion source = null)
         {
-            List<Board.Minion> triggeredMinions = new List<Board.Minion>();
-            //todo: secrets
+            //todo: check secrets for triggers
+            Player owner = FindOwner(source);
+            Board.Trigger.Side p0Side = owner == players[0] ? Board.Trigger.Side.Friendly : Board.Trigger.Side.Enemy;
+            Board.Trigger.Side p1Side = owner == players[1] ? Board.Trigger.Side.Friendly : Board.Trigger.Side.Enemy;
+
+            if (spell==null) spell = new CastInfo();
+            spell.minion = source;
+            spell.player = owner;
+
             foreach (Board.Minion minion in players[0].board)
             {
-                //TODO: CHECK FOR TRIGGERS
+                triggerBuffer.AddRange(minion.CheckTriggers(type, p0Side,spell));
             }
             foreach (Board.Minion minion in players[1].board)
             {
-                //TODO: TRIGGERS
+                triggerBuffer.AddRange(minion.CheckTriggers(type, p0Side,spell));
+            }
+        }
+        public void AddTrigger(Board.Trigger.Type type, CastInfo spell = null, Player source=null)
+        {            
+            //todo: check secrets for triggers
+            Board.Trigger.Side p0Side = source == players[0] ? Board.Trigger.Side.Friendly : Board.Trigger.Side.Enemy;
+            Board.Trigger.Side p1Side = source == players[1] ? Board.Trigger.Side.Friendly : Board.Trigger.Side.Enemy;
+
+            if (spell==null) spell = new CastInfo();
+            spell.player = source;
+
+            foreach (Board.Minion minion in players[0].board)
+            {
+                triggerBuffer.AddRange(minion.CheckTriggers(type, p0Side,spell));
+            }
+            foreach (Board.Minion minion in players[1].board)
+            {
+                triggerBuffer.AddRange(minion.CheckTriggers(type, p0Side,spell));
+            }
+        }
+        public CastInfo StartPhase(Phase phase, ref CastInfo spell)
+        {
+            Board.Trigger.Type phaseTrigger = Board.Trigger.GetPhaseTrigger(phase);
+            List<Board.Minion> triggeredMinions = new List<Board.Minion>();
+
+            //todo: check secrets for triggers
+            //todo: make this a call to addtrigger(type,player)? ^func above this
+            Board.Trigger.Side p0Side = spell.player == players[0] ? Board.Trigger.Side.Friendly : Board.Trigger.Side.Enemy;
+            Board.Trigger.Side p1Side = spell.player == players[1] ? Board.Trigger.Side.Friendly : Board.Trigger.Side.Enemy;
+            
+            foreach (Board.Minion minion in players[0].board)
+            {
+                triggerBuffer.AddRange(minion.CheckTriggers(phaseTrigger, p0Side,spell));
+            }
+            foreach (Board.Minion minion in players[1].board)
+            {
+                triggerBuffer.AddRange(minion.CheckTriggers(phaseTrigger, p0Side,spell));
             }
 
             ResolveTriggerQueue(ref spell);
@@ -105,29 +151,35 @@ public partial class Server
             return spell;
         }
 
+
         public List<Board.Trigger> triggerQueue = new List<Board.Trigger>();
         public List<Board.Trigger> triggerBuffer = new List<Board.Trigger>();
         public void ResolveTriggerQueue(ref CastInfo spell)
         {
+            ReadTriggerBuffer();
             while (triggerQueue.Count>0)
             {
-                if (triggerBuffer.Count>0)
-                {
-                    //Sort by playorder and add to resolve queue
-                    triggerBuffer.Sort((x, y) => y.PlayOrder.CompareTo(x.PlayOrder));
-                    foreach (var t in triggerBuffer)
-                    {
-                        triggerBuffer.Insert(0, t);
-                    }
-                }
+                ReadTriggerBuffer();
 
-                //triggerQueue[0].Activate();
+                triggerQueue[0].ActivateTrigger(this,ref spell);
                 triggerQueue.Remove(triggerQueue[0]);
             }
 
             UpdateAuras();
         }
-
+        void ReadTriggerBuffer()
+        {
+            if (triggerBuffer.Count > 0)
+            {
+                //Sort by playorder and add to resolve queue
+                triggerBuffer.Sort((x, y) => y.playOrder.CompareTo(x.playOrder));
+                foreach (var t in triggerBuffer)
+                {
+                    triggerQueue.Insert(0, t);
+                }
+                triggerBuffer.Clear();
+            }
+        }
         void UpdateAuras()
         {
             //MINION DEATHS

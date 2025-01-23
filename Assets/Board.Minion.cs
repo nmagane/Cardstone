@@ -27,6 +27,7 @@ public partial class Board
         public bool DEAD = false;
 
         public List<Aura> auras = new List<Aura>();
+        public List<Trigger> triggers = new List<Trigger>();
 
         public int previewIndex = -1;
         public int playOrder = 0;
@@ -57,12 +58,30 @@ public partial class Board
             {
                AddAura(new Aura(Aura.Type.DireWolfAlpha));
             }
+            if (c==Card.Cardname.KnifeJuggler)
+            {
+                AddTrigger(new Trigger(Trigger.Type.AfterSummonMinion, Trigger.Side.Friendly, Trigger.Ability.KnifeJuggler,this,playOrder));
+                AddTrigger(new Trigger(Trigger.Type.AfterPlayMinion, Trigger.Side.Friendly, Trigger.Ability.KnifeJuggler,this,playOrder));
+            }
         }
         public override string ToString()
         {
             return card.ToString();
         }
         
+        public List<Trigger> CheckTriggers(Trigger.Type type, Trigger.Side side, Server.CastInfo spell)
+        {
+            List<Trigger> result = new List<Trigger>();
+            foreach (Trigger t in triggers)
+            {
+                if (t.CheckTrigger(type,side,spell)) result.Add(t);
+            }
+            return result;
+        }
+        public void AddTrigger(Trigger a)
+        {
+            triggers.Add(a);
+        }
         public void AddAura(Aura a)
         {
             Aura finder = FindAura(a.type);
@@ -78,7 +97,6 @@ public partial class Board
                 if (finder.foreignSource && finder.source == a.source)
                 {
                     //Refresh and don't re-add.
-                    Debug.Log("refreshed");
                     finder.refreshed = true;
                     return;
                 }
@@ -209,10 +227,10 @@ public partial class Board
                 switch (type)
                 {
                     case Type.StormwindChampion:
-                        Server.AuraEffects.StormwindChampion(match,this.minion);
+                        AuraEffects.StormwindChampion(match,this.minion);
                         break;
                     case Type.DireWolfAlpha:
-                        Server.AuraEffects.DireWolfAlpha(match,this.minion);
+                        AuraEffects.DireWolfAlpha(match,this.minion);
                         break;
                 }
             }

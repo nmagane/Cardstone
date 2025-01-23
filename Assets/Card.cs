@@ -43,7 +43,7 @@ public class Card : MonoBehaviour
         Equality,
         SWChamp,
         DireWolf,
-
+        KnifeJuggler,
     }
     void Start()
     {

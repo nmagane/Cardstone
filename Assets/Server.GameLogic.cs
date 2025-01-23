@@ -55,6 +55,7 @@ public partial class Server
         public bool isFriendly;
         public bool isHero;
         public AttackInfo attack=null;
+        public Board.Minion minion;
 
         public CastInfo(Match m, Player p,Board.HandCard name,int t, int s, bool fri, bool hero)
         {
@@ -70,6 +71,11 @@ public partial class Server
         {
             match = m;
             attack = a;
+            player = a.player;
+        }
+        public CastInfo()
+        {
+
         }
     }
 

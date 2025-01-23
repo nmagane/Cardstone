@@ -31,27 +31,32 @@ public partial class Board
         {
             return minions.GetEnumerator();
         }
-        public void Add(Card.Cardname c, int ind = -1, int playOrder=0)
+        public Minion Add(Card.Cardname c, int ind = -1, int playOrder=0)
         {
-
+            Minion newMinion=null;
             if (ind == -1)
             {
                 ind = Count();
             }
             if (Count() == 0)
             {
-                minions.Add(new Minion(c, 0));
+                newMinion = new Minion(c, 0);
+                minions.Add(newMinion);
             }
-            else if (Count() != 0 && ind>= Count())
+            else if (Count() != 0 && ind >= Count())
             {
-                minions.Add(new Minion(c, Count()));
+                newMinion = new Minion(c, Count());
+                minions.Add(newMinion);
             }
-            else minions.Insert(ind, new Minion(c, ind));
-
+            else
+            {
+                newMinion = new Minion(c, ind);
+                minions.Insert(ind, newMinion);
+            }
             if (server)
             {
                 OrderInds();
-                return;
+                return newMinion;
             }
             Creature creature = Instantiate(board.minionObject).GetComponent<Creature>();
             creature.board = board;
@@ -60,6 +65,7 @@ public partial class Board
             creature.transform.parent = board.transform;
 
             OrderInds();
+            return newMinion;
         }
         public void RemoveAt(int x)
         {

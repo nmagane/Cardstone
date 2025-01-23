@@ -11,7 +11,7 @@ using static UnityEngine.GraphicsBuffer;
 public partial class Server : MonoBehaviour
 {
 
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.DireWolf,Card.Cardname.ShatteredSunCleric, Card.Cardname.SWChamp, Card.Cardname.Ping };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.DireWolf,Card.Cardname.KnifeJuggler, Card.Cardname.Ping };
     public static Message CreateMessage(MessageType type)
     {
         return Message.Create(MessageSendMode.Reliable, (ushort)type);
@@ -442,13 +442,13 @@ public partial class Server : MonoBehaviour
             match.StartSequencePlayMinion(spell);
         }
     }
-    public void SummonMinion(Match match, Player player, Card.Cardname minion, int position=-1)
+    public Board.Minion SummonMinion(Match match, Player player, Card.Cardname minion, int position=-1)
     {
 
         Player opponent = match.Opponent(player);
-        if (player.board.Count() >= 7) return;
+        if (player.board.Count() >= 7) return null;
 
-        player.board.Add(minion, position,match.playOrder);
+        Board.Minion m = player.board.Add(minion, position,match.playOrder);
 
         Message message = CreateMessage(Server.MessageType.SummonMinion);
         message.AddBool(true);
@@ -461,6 +461,8 @@ public partial class Server : MonoBehaviour
         messageOp.AddInt((int)minion);
         messageOp.AddInt(position);
         server.Send(messageOp, opponent.connection.clientID);
+
+        return m;
     }
 
     public void SummonToken(Match match, Turn side, Card.Cardname minion, int position = -1)
@@ -535,7 +537,6 @@ public partial class Server : MonoBehaviour
         //TODO: ON MINION DEATH TRIGGERS
         //TODO: DEATHRATTLE TRIGGERS
     }
-
     public void AttackFace(Message message, ushort clientID)
     {
         ulong matchID = message.GetULong();

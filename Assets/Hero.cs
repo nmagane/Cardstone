@@ -88,4 +88,8 @@ public class Hero : MonoBehaviour
     {
         board.hoveredHero = null;
     }
+    public Hero()
+    {
+
+    }
 }

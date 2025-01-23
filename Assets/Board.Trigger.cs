@@ -1,18 +1,28 @@
-﻿using System.Diagnostics;
+﻿using UnityEngine;
 
 public partial class Board
 {
     public class Trigger
     {
+        public static Type GetPhaseTrigger(Server.Match.Phase phase)
+        {
+            if ((int)phase >= (int)Type._PHASELIMIT || phase.ToString() != ((Type)(int)phase).ToString())
+            {
+                throw new System.Exception("NO TRIGGER FOUND FOR REQUESTED PHASE");
+            }
+            return (Type)(int)(phase);
+        }
         public enum Type
         {
             //=============PHASES
+            NONE,
 
             OnPlayCard,
             AfterPlayCard,
 
             OnPlayMinion,
             OnSummonMinion, //Tokens
+            AfterPlayMinion,
             AfterSummonMinion,
 
             OnPlaySpell,
@@ -32,21 +42,69 @@ public partial class Board
             _PHASELIMIT,
             //=============SPECIAL EVENTS
             OnDamageTaken,
-            OnFriendlyMinionDamage,
-            OnAnyMinionDamage,
+            OnMinionDamage,
 
             Deathrattle,
         }
 
-        public static Type GetPhaseTrigger(Server.Match.Phase phase)
+        public enum Ability
         {
-            if ((int)phase>=(int)Type._PHASELIMIT)
-            {
-                throw new System.Exception("NO TRIGGER FOUND FOR REQUESTED PHASE");
-            }
-            return (Type)(int)(phase);
+            KnifeJuggler,
+            AcolyteOfPain,
         }
-        public int PlayOrder = 0;
+        public enum Side
+        {
+            Friendly,
+            Enemy,
+            Both,
+        }
+        public int playOrder = 0;
+        public Type type;
+        public Ability ability;
+        public Side side;
+        public Minion minion;
 
+        public bool CheckTrigger(Type t,Side s, Server.CastInfo spell)
+        {
+            if (type != t) return false;
+
+            switch(t)
+            {
+                case Type.OnPlayCard:
+                case Type.OnPlaySpell:
+                case Type.OnPlayMinion:
+                case Type.OnSummonMinion:
+                case Type.AfterPlayCard:
+                case Type.AfterPlayMinion:
+                case Type.AfterSummonMinion:
+                case Type.AfterPlaySpell:
+                    //Does not trigger on self
+                    if (minion == spell.minion) return false;
+                    break;
+            }
+            return (side == Side.Both || s == side);
+        }
+        public void ActivateTrigger(Server.Match match, ref Server.CastInfo spell)
+        {
+            Debug.Log("Trigger Activated");
+            switch (ability)
+            {
+                case Ability.KnifeJuggler:
+                    TriggerEffects.KnifeJuggler(match, minion);
+                    break;
+                case Ability.AcolyteOfPain:
+                    break;
+            }
+
+        }
+
+        public Trigger(Type typ,Side s, Ability abil, Minion owner, int order=0)
+        {
+            type = typ;
+            side = s;
+            ability = abil;
+            minion = owner;
+            playOrder = order;
+        }
     }
 }
