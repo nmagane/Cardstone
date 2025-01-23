@@ -67,6 +67,10 @@ public partial class Board
             {
                 AddTrigger(new Trigger(Trigger.Type.OnDamageTaken, Trigger.Side.Both, Trigger.Ability.AcolyteOfPain,this,playOrder));
             }
+            if (c==Card.Cardname.YoungPri)
+            {
+                AddTrigger(new Trigger(Trigger.Type.EndTurn, Trigger.Side.Friendly, Trigger.Ability.YoungPriestess,this,playOrder));
+            }
         }
         public override string ToString()
         {

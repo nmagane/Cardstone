@@ -23,4 +23,18 @@ public class TriggerEffects
     {
         minion.AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 2));
     }
+
+    public static void YoungPriestess(Server.Match match, Board.Minion minion)
+    {
+        Server.Player p = match.FindOwner(minion);
+
+        //Skip trigger if no targets available
+        if (p.board.Count() == 1 && p.board[0] == minion) return;
+
+        Board.Minion m = p.board[Random.Range(0, p.board.Count())];
+        //Cant target self
+        while (m == minion) m = p.board[Random.Range(0, p.board.Count())];
+
+        m.AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Health, 1));
+    }
 }

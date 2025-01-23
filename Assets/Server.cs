@@ -11,7 +11,7 @@ using static UnityEngine.GraphicsBuffer;
 public partial class Server : MonoBehaviour
 {
 
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Acolyte,Card.Cardname.DireWolf,Card.Cardname.KnifeJuggler, Card.Cardname.Ping };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.YoungPri,Card.Cardname.Acolyte,Card.Cardname.DireWolf,Card.Cardname.KnifeJuggler, Card.Cardname.Ping };
     public static Message CreateMessage(MessageType type)
     {
         return Message.Create(MessageSendMode.Reliable, (ushort)type);
@@ -329,8 +329,8 @@ public partial class Server : MonoBehaviour
 
     public void StartTurn(Match match)
     {
-        Message message = CreateMessage(Server.MessageType.StartTurn);
-        Message messageEnemy = CreateMessage(Server.MessageType.StartTurn);
+        Message message = CreateMessage(MessageType.StartTurn);
+        Message messageEnemy = CreateMessage(MessageType.StartTurn);
         //int p = (int)match.turn;
 
         match.currPlayer.maxMana = Mathf.Min(match.currPlayer.maxMana + 1, 10);
@@ -351,7 +351,9 @@ public partial class Server : MonoBehaviour
         server.Send(message, match.currPlayer.connection.clientID);
         server.Send(messageEnemy, match.enemyPlayer.connection.clientID);
 
-        DrawCards(match, match.turn, 1);
+        CastInfo startTurnInfo = new CastInfo(match, match.currPlayer, null, -1, -1, false, false);
+        match.StartSequenceStartTurn(startTurnInfo);
+        //DrawCard(match, match.currPlayer);
     }
     public void EndTurn(ulong matchID, ushort clientID, ulong playerID)
     {
@@ -359,7 +361,11 @@ public partial class Server : MonoBehaviour
         PlayerConnection player = m.players[(int)m.turn].connection;
         if (player.clientID != clientID || player.playerID != playerID) return;
 
-        //TODO: end of turn effects
+        //SEQUENCE
+        CastInfo startTurnInfo = new CastInfo(m, m.currPlayer, null, -1, -1, false, false);
+        m.StartSequenceEndTurn(startTurnInfo);
+
+        //====LOGIC
         m.turn = m.turn == Turn.player1 ? Turn.player2 : Turn.player1;
 
         m.currPlayer = m.players[(int)m.turn];
@@ -367,28 +373,28 @@ public partial class Server : MonoBehaviour
 
         Message msg = CreateMessage(Server.MessageType.EndTurn);
         server.Send(msg, player.clientID);
-
+        //=========
         StartTurn(m);
     }
-    public void DrawCards(Match match, Turn player, int count = 1)
+    public Board.HandCard DrawCard(Match match, Player player)
     {
-        int p = (int)player;
+        //int p = (int)player;
         List<Card.Cardname> drawnCards = new List<Card.Cardname>();
-        for (int i = 0; i < count; i++)
-        {
-            Card.Cardname top = match.players[p].deck[0];
-            match.players[p].deck.RemoveAt(0);
-            match.players[p].hand.Add(top);
-            drawnCards.Add(top);
 
-            Message message = CreateMessage(Server.MessageType.DrawCards);
-            message.AddInt((int)top);
-            server.Send(message, match.players[p].connection.clientID);
+        Card.Cardname top = player.deck[0];
+        player.deck.RemoveAt(0);
+        Board.HandCard drawnCard = player.hand.Add(top);
+        drawnCards.Add(top);
+
+        Message message = CreateMessage(Server.MessageType.DrawCards);
+        message.AddInt((int)top);
+        server.Send(message, player.connection.clientID);
         
-            Message messageOpp = CreateMessage(Server.MessageType.DrawEnemy);
-            messageOpp.AddInt(1);
-            server.Send(messageOpp, match.Opponent(match.players[p]).connection.clientID);
-        }
+        Message messageOpp = CreateMessage(Server.MessageType.DrawEnemy);
+        messageOpp.AddInt(1);
+        server.Send(messageOpp, player.opponent.connection.clientID);
+
+        return drawnCard;
 
     }
         

@@ -46,15 +46,16 @@ public partial class Board
             Board,
             EnemyDeck,
         }
-        public void Add(Card.Cardname x,int ind=-1, CardSource source = CardSource.Deck)
+        public HandCard Add(Card.Cardname x,int ind=-1, CardSource source = CardSource.Deck)
         {
             int index = ind == -1 ? Count() : ind;
-            cards.Add(new HandCard(x,index));
+            HandCard newCard = new HandCard(x, index);
+            cards.Add(newCard);
 
             if (server)
             {
                 OrderInds();
-                return;
+                return newCard;
             }
 
             Card c = Instantiate(board.cardObject).GetComponent<Card>();
@@ -63,6 +64,8 @@ public partial class Board
             cardObjects.Add(cards[index], c);
             c.transform.parent = board.transform;
             OrderInds();
+
+            return newCard;
 
         }
         public void RemoveAt(int x)

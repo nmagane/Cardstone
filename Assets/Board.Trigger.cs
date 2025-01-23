@@ -51,6 +51,7 @@ public partial class Board
         {
             KnifeJuggler,
             AcolyteOfPain,
+            YoungPriestess,
         }
         public enum Side
         {
@@ -63,7 +64,7 @@ public partial class Board
         public Ability ability;
         public Side side;
         public Minion minion;
-
+    
         public bool CheckTrigger(Type t,Side s, Server.CastInfo spell)
         {
             if (type != t) return false;
@@ -99,6 +100,9 @@ public partial class Board
                     break;
                 case Ability.AcolyteOfPain:
                     TriggerEffects.AcolyteOfPain(match, minion);
+                    break;
+                case Ability.YoungPriestess:
+                    TriggerEffects.YoungPriestess(match, minion);
                     break;
             }
 

@@ -33,9 +33,27 @@ public partial class Server
             CardDraw,
         }
 
+        public void StartSequenceEndTurn(CastInfo spell)
+        {
+            StartPhase(Phase.EndTurn, ref spell);
+
+        }
+        public void StartSequenceStartTurn(CastInfo spell)
+        {
+            StartPhase(Phase.StartTurn, ref spell);
+            StartSequenceDrawCard(spell);
+        }
+
         public void StartSequenceDrawCard(CastInfo spell)
         {
-
+            if (spell.player.deck.Count == 0)
+            {
+                //TODO: FatiguePlayer(spell.player)
+                return;
+            }
+            Board.HandCard card = server.DrawCard(spell.match, spell.player);
+            spell.card = card;
+            StartPhase(Phase.CardDraw, ref spell);
         }
 
         public void StartSequenceAttackMinion(CastInfo spell)

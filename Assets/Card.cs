@@ -45,6 +45,7 @@ public class Card : MonoBehaviour
         DireWolf,
         KnifeJuggler,
         Acolyte,
+        YoungPri,
     }
     void Start()
     {
