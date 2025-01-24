@@ -48,5 +48,5 @@ KNIFE JUGGLER              - DONE
 HARVEST GOLEM              - DONE
 SHATTERED SUN CLERIC       - DONE
 DARK IRON DWARF            - NOT DONE
-DEFENDER OF ARGUS          - DONE
+DEFENDER OF ARGUS          - DONE? (need aura confirmations)
 DOOMGUARD                  - NOT DONE

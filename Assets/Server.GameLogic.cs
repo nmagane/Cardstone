@@ -10,9 +10,15 @@ public partial class Server
     public void DamageMinionsAOE()
     {
         //TODO: AOE EFFECTS DONT ACTIVATE TRIGGERS UNTIL ALL UNITS TAKE DAMAGE
+
     }
     public void DamageMinion(Match match, Board.Minion minion, int damage)
     {
+        if (minion.HasAura(Board.Minion.Aura.Type.Shield))
+        {
+            minion.RemoveAura(Board.Minion.Aura.Type.Shield);
+            return;
+        }
         minion.health -= damage;
 
         //TODO: trigger ON DAMAGE (acolyte)
@@ -159,6 +165,9 @@ public partial class Server
             case Card.Cardname.Argus:
                 Argus(spell);
                 break;
+            case Card.Cardname.Abusive:
+                Abusive(spell);
+                break;
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);
                 break;
@@ -207,6 +216,14 @@ public partial class Server
 
         p.board[spell.target].AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Health, 1));
         p.board[spell.target].AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 1));
+    }
+    void Abusive(CastInfo spell)
+    {
+        Player p = spell.player;
+        Match m = spell.match;
+        if (spell.isFriendly == false) p = p.opponent;
+        //TODO: SILENCABLE AURAS
+        p.board[spell.target].AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 2,true));
     }
     void Argus(CastInfo spell)
     {

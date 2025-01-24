@@ -50,6 +50,15 @@ public partial class Board
                 damage = 3;
                 eligibleTargets = EligibleTargets.FriendlyMinions;
             }
+            if (name==Card.Cardname.Abusive)
+            {
+                MINION = true;
+                TARGETED = true;
+                BATTLECRY = true;
+                health = 2;
+                damage = 3;
+                eligibleTargets = EligibleTargets.AllMinions;
+            }
             if (name==Card.Cardname.Argus)
             {
                 MINION = true;

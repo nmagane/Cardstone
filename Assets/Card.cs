@@ -50,6 +50,7 @@ public class Card : MonoBehaviour
         DamagedGolem,
         ShieldBearer,
         Argus,
+        Abusive,
     }
     void Start()
     {

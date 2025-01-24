@@ -37,7 +37,26 @@ public partial class Server
         {
             StartPhase(Phase.EndTurn, ref spell);
 
+            BetweenTurnEvents(spell);
         }
+
+        public void BetweenTurnEvents(CastInfo spell)
+        {
+            Player player = spell.player;
+            Player opponent = player.opponent;
+
+            foreach(var m in player.board)
+            {
+                m.RemoveTemporaryAuras();
+            }
+            foreach(var m in opponent.board)
+            {
+                m.RemoveTemporaryAuras();
+            }
+
+            ResolveTriggerQueue(ref spell);
+        }
+
         public void StartSequenceStartTurn(CastInfo spell)
         {
             StartPhase(Phase.StartTurn, ref spell);

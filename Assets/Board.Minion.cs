@@ -209,13 +209,25 @@ public partial class Board
             foreach (var aura in removeList)
                 RemoveAura(aura);
         }
+        public void RemoveTemporaryAuras()
+        {
+            List<Aura> removeList = new List<Aura>();
+            foreach (var aura in auras)
+            {
+                if (aura.temporary)
+                    removeList.Add(aura);
 
+            }
+            foreach (var aura in removeList)
+                RemoveAura(aura);
+        }
         public class Aura
         {
             public enum Type
             {
                 Health,
                 Damage,
+                Charge,
                 Taunt,
                 Shield,
                 Stealth,
@@ -231,7 +243,7 @@ public partial class Board
             public bool foreignSource = false;
             public bool trigger = false;
             public bool stackable = false;
-            public int value = 0;
+            public ushort value = 0;
             public Minion minion;
             public Minion source;
             public bool refreshed = false;
@@ -275,7 +287,7 @@ public partial class Board
                 }
             }
 
-            public Aura(Type t, int val=0, bool temp = false, bool foreign = false, Minion provider = null)
+            public Aura(Type t, ushort val=0, bool temp = false, bool foreign = false, Minion provider = null)
             {
                 type = t;
                 value = val;
