@@ -65,11 +65,16 @@ public partial class Board
             }
             if (c==Card.Cardname.Acolyte)
             {
-                AddTrigger(Trigger.Type.OnDamageTaken, Trigger.Side.Both, Trigger.Ability.AcolyteOfPain);
+                AddTrigger(Trigger.Type.OnMinionDeath, Trigger.Side.Both, Trigger.Ability.AcolyteOfPain);
             }
             if (c==Card.Cardname.YoungPri)
             {
-                AddTrigger(Trigger.Type.EndTurn, Trigger.Side.Friendly, Trigger.Ability.YoungPriestess);
+                AddTrigger(Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.YoungPriestess);
+            }
+
+            if (c==Card.Cardname.HarvestGolem)
+            {
+                AddTrigger(Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.HarvestGolem);
             }
         }
         public override string ToString()

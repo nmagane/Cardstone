@@ -13,7 +13,7 @@ using static UnityEngine.GraphicsBuffer;
 public partial class Server : MonoBehaviour
 {
 
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.YoungPri,Card.Cardname.Acolyte,Card.Cardname.DireWolf,Card.Cardname.KnifeJuggler, Card.Cardname.Ping };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.HarvestGolem,Card.Cardname.Acolyte,Card.Cardname.DireWolf,Card.Cardname.KnifeJuggler, Card.Cardname.Ping };
     public static Message CreateMessage(MessageType type)
     {
         Message m = Message.Create(MessageSendMode.Reliable, (ushort)type);
@@ -521,10 +521,9 @@ public partial class Server : MonoBehaviour
     }
     public Board.Minion SummonMinion(Match match, Player player, Card.Cardname minion, int position=-1)
     {
-
-        Player opponent = match.Opponent(player);
         if (player.board.Count() >= 7) return null;
 
+        Player opponent = match.Opponent(player);
         Board.Minion m = player.board.Add(minion, position,match.playOrder);
 
         Message message = CreateMessage(Server.MessageType.SummonMinion);
@@ -544,10 +543,10 @@ public partial class Server : MonoBehaviour
         return m;
     }
 
-    public void SummonToken(Match match, Turn side, Card.Cardname minion, int position = -1)
+    public void SummonToken(Match match, Player player, Card.Cardname minion, int position = -1)
     {
-        //TODO: Summon token
-        //StartSequenceSummonMinion(spell); - different sequence than play minion
+        CastInfo summonCast = new CastInfo(match, player, null, -1, position,false,false);
+        match.StartSequenceSummonMinion(summonCast, minion);
     }
 
     public void AttackMinion(ulong matchID, ushort clientID, ulong playerID, int attackerInd, int targetInd)

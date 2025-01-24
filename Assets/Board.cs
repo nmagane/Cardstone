@@ -228,7 +228,7 @@ public partial class Board : MonoBehaviour
         string deck = "";
         message.AddString(deck);
         //client.Send(message);
-        SendMessage(message);
+        SendMessage(message,true);
     }
     public List<int> selectedMulligans = new List<int>(){};
     public void SubmitMulligan()
@@ -238,7 +238,7 @@ public partial class Board : MonoBehaviour
         message.AddInts(selectedMulligans.ToArray(),true);
         message.AddULong(playerID);
         //client.Send(message);
-        SendMessage(message);
+        SendMessage(message,true);
     }
 
     void ConfirmMulligan(ushort[] cards)

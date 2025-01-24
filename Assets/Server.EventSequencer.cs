@@ -114,6 +114,17 @@ public partial class Server
             StartPhase(Phase.AfterPlayCard, ref spell);
             StartPhase(Phase.AfterPlayMinion, ref spell);
         }
+        public void StartSequenceSummonMinion(CastInfo spell, Card.Cardname card)
+        {
+
+            Board.Minion m = server.SummonMinion(this, spell.player, card, spell.position);
+            if (m == null) return;
+            spell.minion = m;
+
+            StartPhase(Phase.OnSummonMinion, ref spell);
+
+            StartPhase(Phase.AfterSummonMinion, ref spell);
+        }
 
         public void TriggerMinion(Board.Trigger.Type type,Board.Minion target)
         {
@@ -192,8 +203,9 @@ public partial class Server
             {
                 ReadTriggerBuffer();
 
-                triggerQueue[0].ActivateTrigger(this,ref spell);
-                triggerQueue.Remove(triggerQueue[0]);
+                Board.Trigger t = triggerQueue[0];
+                triggerQueue.Remove(t);
+                t.ActivateTrigger(this,ref spell);
             }
 
             UpdateAuras();
@@ -246,9 +258,19 @@ public partial class Server
             foreach (var m in destroyList)
             {
                 Debug.Log("kill " + m.card);
-                TriggerMinion(Board.Trigger.Type.Deathrattle, m);
                 AddTrigger(Board.Trigger.Type.OnMinionDeath, null, m);
                 server.DestroyMinion(this, m);
+            }
+            if (triggerBuffer.Count > 0 || triggerQueue.Count > 0)
+            {
+                CastInfo deathResolution = new CastInfo();
+                ResolveTriggerQueue(ref deathResolution);
+            }
+
+            //deathrattles happen after "on deaths"
+            foreach (var m in destroyList)
+            {
+                TriggerMinion(Board.Trigger.Type.Deathrattle, m);
             }
             if (triggerBuffer.Count > 0 || triggerQueue.Count > 0)
             {

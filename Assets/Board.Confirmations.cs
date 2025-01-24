@@ -10,10 +10,13 @@ public partial class Board
         m.ReserveBits(16);
         return m;
     }
-    public void SendMessage(Message message)
+    public void SendMessage(Message message, bool UNORDERED=false)
     {
-        message.SetBits(matchMessageOrder++, 16, 28);
+        message.SetBits(matchMessageOrder, 16, 28);
         client.Send(message);
+
+        if (UNORDERED == false)
+            matchMessageOrder++;
     }
     public Server.CustomMessage CopyMessage(Message message, Server.MessageType type)
     {

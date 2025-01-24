@@ -54,6 +54,7 @@ public partial class Board
             KnifeJuggler,
             AcolyteOfPain,
             YoungPriestess,
+            HarvestGolem,
         }
         public enum Side
         {
@@ -110,6 +111,9 @@ public partial class Board
                     break;
                 case Ability.YoungPriestess:
                     TriggerEffects.YoungPriestess(match, minion);
+                    break;
+                case Ability.HarvestGolem:
+                    TriggerEffects.HarvestGolem(match, minion);
                     break;
             }
 

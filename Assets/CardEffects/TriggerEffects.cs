@@ -38,4 +38,9 @@ public class TriggerEffects
         m.AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Health, 1));
         //TODO: CONFIRM TRIGGER MESSAGE TO PLAYERS?
     }
+
+    public static void HarvestGolem(Server.Match match, Board.Minion minion)
+    {
+        match.server.SummonToken(match, match.FindOwner(minion), Card.Cardname.DamagedGolem, minion.index);
+    }
 }

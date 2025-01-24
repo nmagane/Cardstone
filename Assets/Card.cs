@@ -46,6 +46,8 @@ public class Card : MonoBehaviour
         KnifeJuggler,
         Acolyte,
         YoungPri,
+        HarvestGolem,
+        DamagedGolem,
     }
     void Start()
     {
