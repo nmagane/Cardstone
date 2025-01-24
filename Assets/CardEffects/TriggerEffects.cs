@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TriggerEffects
@@ -21,7 +19,7 @@ public class TriggerEffects
 
     public static void AcolyteOfPain(Server.Match match,Board.Minion minion)
     {
-        minion.AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 2));
+        match.server.AddAura(match, minion, new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 2));
     }
 
     public static void YoungPriestess(Server.Match match, Board.Minion minion)
@@ -35,7 +33,7 @@ public class TriggerEffects
         //Cant target self
         while (m == minion) m = p.board[Random.Range(0, p.board.Count())];
 
-        m.AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Health, 1));
+        match.server.AddAura(match, m, new Board.Minion.Aura(Board.Minion.Aura.Type.Health, 1));
         //TODO: CONFIRM TRIGGER MESSAGE TO PLAYERS?
     }
 

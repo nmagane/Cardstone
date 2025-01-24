@@ -53,6 +53,10 @@ public partial class Board
             baseHealth = maxHealth;
             baseDamage = damage;
 
+            if (c==Card.Cardname.Squire)
+            {
+               AddAura(new Aura(Aura.Type.Shield));
+            }
             if (c==Card.Cardname.ShieldBearer)
             {
                AddAura(new Aura(Aura.Type.Taunt));
@@ -183,6 +187,12 @@ public partial class Board
                         board.minionObjects[this].DisableTaunt();
                     }
                     break;
+                case Aura.Type.Shield:
+                    if (board.server == false)
+                    {
+                        board.minionObjects[this].DisableShield();
+                    }
+                    break;
             }
         }
 
@@ -191,6 +201,35 @@ public partial class Board
             while (FindAura(t)!=null)
             {
                 RemoveAura(FindAura(t));
+            }
+        }
+
+        /*
+         *             public Type type = Type.Health;
+            public bool temporary = false;
+            public bool foreignSource = false;
+            public bool trigger = false;
+            public bool stackable = false;
+            public ushort value = 0;
+            public Minion minion;
+            public Minion source;*/
+        public void RemoveMatchingAura(Aura a)
+        {
+            List<Aura> removers = new List<Aura>();
+            foreach (Aura aura in auras)
+            {
+                if (  a.type == aura.type
+                   && a.temporary == aura.temporary
+                   && a.value == aura.value
+                   && a.foreignSource == aura.foreignSource
+                   && a.source == aura.source)
+                {
+                    removers.Add(aura);
+                }
+            }
+            foreach(Aura aura in removers)
+            {
+                RemoveAura(a);
             }
         }
 
@@ -268,6 +307,15 @@ public partial class Board
                             if (minion.board.minionObjects.ContainsKey(minion))
                             {
                                 minion.board.minionObjects[minion].EnableTaunt();
+                            }
+                        }
+                        break;
+                    case Type.Shield:
+                        if (minion.board.server==false)
+                        {
+                            if (minion.board.minionObjects.ContainsKey(minion))
+                            {
+                                minion.board.minionObjects[minion].EnableShield();
                             }
                         }
                         break;

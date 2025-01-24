@@ -10,6 +10,7 @@ public class Creature : MonoBehaviour
     public TMP_Text health, damage;
     public SpriteRenderer spriteRenderer;
     public SpriteRenderer tauntSprite;
+    public SpriteRenderer shieldSprite;
 
     public Board board;
 
@@ -24,6 +25,8 @@ public class Creature : MonoBehaviour
         damage.text = c.damage.ToString();
         if (minion.HasAura(Board.Minion.Aura.Type.Taunt))
             EnableTaunt();
+        if (minion.HasAura(Board.Minion.Aura.Type.Shield))
+            EnableShield();
     }
     public bool IsFriendly()
     {
@@ -50,6 +53,14 @@ public class Creature : MonoBehaviour
     public void DisableTaunt()
     {
         tauntSprite.enabled = false;
+    }
+    public void EnableShield()
+    {
+        shieldSprite.enabled = true;
+    }
+    public void DisableShield()
+    {
+        shieldSprite.enabled = false;
     }
 
     private void OnMouseOver()

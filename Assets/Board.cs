@@ -182,6 +182,24 @@ public partial class Board : MonoBehaviour
                 bool UpdateHeroFriendly = message.GetBool();
                 UpdateHero(UpdateHeroHP,UpdateHeroFriendly);
                 break;
+            case Server.MessageType.AddAura:
+            case Server.MessageType.RemoveAura:
+                int addAuraMinionIndex = message.GetInt();
+                bool addAuraFriendly = message.GetBool();
+                ushort addAuraType = message.GetUShort();
+                ushort addAuraValue = message.GetUShort();
+                bool addAuraTemp = message.GetBool();
+                bool addAuraForeign = message.GetBool();
+                int addAuraSourceInd = message.GetInt();
+                bool addAuraSourceFriendly = message.GetBool();
+
+                if (messageID==Server.MessageType.RemoveAura)
+                {
+                    RemoveAura(addAuraMinionIndex, addAuraFriendly, addAuraType, addAuraValue, addAuraTemp, addAuraForeign, addAuraSourceInd, addAuraSourceFriendly);
+                    break;
+                }
+                AddAura(addAuraMinionIndex, addAuraFriendly, addAuraType, addAuraValue, addAuraTemp, addAuraForeign, addAuraSourceInd, addAuraSourceFriendly);
+                break;
             default:
                 Debug.LogError("UNKNOWN MESSAGE TYPE");
                 break;
@@ -464,7 +482,19 @@ public partial class Board : MonoBehaviour
         if (friendly) currHero.SetHealth(hp);
         else enemyHero.SetHealth(hp);
     }
-
+    public void AddAura(int minionIndex,bool friendly, ushort auraType, ushort value, bool temp, bool foreign,int sourceInd, bool sourceFriendly)
+    {
+        Minion target = friendly? currMinions[minionIndex] : enemyMinions[minionIndex];
+        Minion source = sourceInd == -1 ? null : (sourceFriendly ? currMinions[sourceInd] : enemyMinions[sourceInd]);
+        target.AddAura(new Minion.Aura((Minion.Aura.Type)auraType, value, temp, foreign, source));
+        
+    }
+    public void RemoveAura(int minionIndex,bool friendly, ushort auraType, ushort value, bool temp, bool foreign,int sourceInd, bool sourceFriendly)
+    {
+        Minion target = friendly? currMinions[minionIndex] : enemyMinions[minionIndex];
+        Minion source = sourceInd == -1 ? null : (sourceFriendly ? currMinions[sourceInd] : enemyMinions[sourceInd]);
+        target.RemoveMatchingAura(new Minion.Aura((Minion.Aura.Type)auraType, value, temp, foreign, source));
+    }
     public bool IsFriendly(Minion m)
     {
         if (currMinions.Contains(m)) return true;

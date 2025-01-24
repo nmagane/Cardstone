@@ -16,7 +16,7 @@ public partial class Server
     {
         if (minion.HasAura(Board.Minion.Aura.Type.Shield))
         {
-            minion.RemoveAura(Board.Minion.Aura.Type.Shield);
+            match.server.RemoveAura(match,minion,minion.FindAura(Board.Minion.Aura.Type.Shield));
             return;
         }
         minion.health -= damage;
@@ -212,29 +212,38 @@ public partial class Server
     {
         Player p = spell.player;
         Match m = spell.match;
+        Board.Minion tar = p.board[spell.target];
         //TODO: SILENCABLE AURAS
-
-        p.board[spell.target].AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Health, 1));
-        p.board[spell.target].AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 1));
+        m.server.AddAura(m, tar, new Board.Minion.Aura(Board.Minion.Aura.Type.Health, 1));
+        m.server.AddAura(m, tar, new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 1));
+        //p.board[spell.target].AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 1));
     }
     void Abusive(CastInfo spell)
     {
         Player p = spell.player;
         Match m = spell.match;
         if (spell.isFriendly == false) p = p.opponent;
+
+        Board.Minion tar = p.board[spell.target];
         //TODO: SILENCABLE AURAS
-        p.board[spell.target].AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 2,true));
+        m.server.AddAura(m, tar, new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 2, true));
+        //p.board[spell.target].AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 2,true));
     }
     void Argus(CastInfo spell)
     {
         Player p = spell.player;
+        Match match = spell.match;
         foreach(var m in spell.player.board)
         {
             if (m.index == spell.position-1 || m.index == spell.position+1)
             {
-                m.AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Taunt));
-                m.AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Health, 1));
-                m.AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 1));
+
+                match.server.AddAura(match, m, new Board.Minion.Aura(Board.Minion.Aura.Type.Health, 1));
+                match.server.AddAura(match, m, new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 1));
+                match.server.AddAura(match, m, new Board.Minion.Aura(Board.Minion.Aura.Type.Taunt));
+                //m.AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Taunt));
+                //m.AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Health, 1));
+                //m.AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 1));
             }
         }
     }

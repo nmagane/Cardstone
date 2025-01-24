@@ -13,8 +13,8 @@ public static class AuraEffects
             {
                 continue;
             }
-            m.AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Health, 2, false, true, sourceMinion));
-            m.AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 2, false, true, sourceMinion));
+            match.server.AddAura(match,m,new Board.Minion.Aura(Board.Minion.Aura.Type.Health, 2, false, true, sourceMinion));
+            match.server.AddAura(match,m,new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 2, false, true, sourceMinion));
         }
     }
     public static void DireWolfAlpha(Server.Match match, Board.Minion sourceMinion)
@@ -23,7 +23,7 @@ public static class AuraEffects
         foreach (var m in owner.board)
         {
             if (m.index == sourceMinion.index - 1 || m.index == sourceMinion.index + 1)
-                m.AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 1, false, true, sourceMinion));
+                match.server.AddAura(match, m, new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 1, false, true, sourceMinion));
         }
     }
 }

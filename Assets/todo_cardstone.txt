@@ -20,6 +20,8 @@ separate buffs and auras? seems uneeded right now
 
 todo: hand limit + discarding + milling.
 todo: aura communication.
+todo: valid target exist check for abusive/shattered sun so you can play them with no targets, etc...
+
 ===========================================
 class Trigger
 {
@@ -35,8 +37,8 @@ invoke(triggerEffect)
 
 ===TODO CARDS=== :
 SOULFIRE                   - NOT DONE
-ABUSIVE SERGEANT           - NOT DONE
-ARGENT SQUIRE              - NOT DONE
+ABUSIVE SERGEANT           - DONE
+ARGENT SQUIRE              - DONE? (need aura confirmations)
 FLAME IMP                  - DONE
 SHIELD BEARER              - DONE
 VOIDWALKER                 - DONE
@@ -47,6 +49,6 @@ DIRE WOLF ALPHA            - DONE
 KNIFE JUGGLER              - DONE
 HARVEST GOLEM              - DONE
 SHATTERED SUN CLERIC       - DONE
-DARK IRON DWARF            - NOT DONE
+DARK IRON DWARF            - DONE
 DEFENDER OF ARGUS          - DONE? (need aura confirmations)
 DOOMGUARD                  - NOT DONE

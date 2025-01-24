@@ -51,6 +51,7 @@ public class Card : MonoBehaviour
         ShieldBearer,
         Argus,
         Abusive,
+        Squire,
     }
     void Start()
     {

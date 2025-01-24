@@ -13,7 +13,7 @@ using static UnityEngine.GraphicsBuffer;
 public partial class Server : MonoBehaviour
 {
 
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.HarvestGolem,Card.Cardname.Argus,Card.Cardname.Abusive,Card.Cardname.DireWolf, Card.Cardname.Ping };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.HarvestGolem,Card.Cardname.Argus,Card.Cardname.Abusive,Card.Cardname.Squire, Card.Cardname.Ping };
     public static Message CreateMessage(MessageType type)
     {
         Message m = Message.Create(MessageSendMode.Reliable, (ushort)type);
@@ -70,6 +70,9 @@ public partial class Server : MonoBehaviour
 
         DiscardCard,
         MillCard,
+
+        AddAura,
+        RemoveAura,
 
         Concede,
 
@@ -663,6 +666,57 @@ public partial class Server : MonoBehaviour
         SendMessage(messageOwner, player);
         //server.Send(messageOpponent, match.Opponent(player).connection.clientID);
         SendMessage(messageOpponent, player.opponent);
+    }
+
+    public void RemoveAura(Match match, Board.Minion minion, Board.Minion.Aura aura)
+    {
+        AddAura(match, minion, aura, true);
+    }
+    public void AddAura(Match match, Board.Minion minion, Board.Minion.Aura aura, bool REMOVE=false)
+    {
+        if (REMOVE) minion.RemoveAura(aura);
+        else minion.AddAura(aura);
+
+        Message messageOwner = CreateMessage(REMOVE? MessageType.RemoveAura : MessageType.AddAura);
+        Message messageOpponent = CreateMessage(REMOVE? MessageType.RemoveAura : MessageType.AddAura);
+
+        Player owner = match.FindOwner(minion);
+        Player opponent = owner.opponent;
+
+        messageOwner.Add(minion.index);
+        messageOpponent.Add(minion.index);
+
+        messageOwner.AddBool(true);
+        messageOpponent.AddBool(false);
+
+        messageOwner.AddUShort((ushort)aura.type);
+        messageOwner.AddUShort(aura.value);
+        messageOwner.AddBool(aura.temporary);
+        messageOwner.AddBool(aura.foreignSource);
+
+        messageOpponent.AddUShort((ushort)aura.type);
+        messageOpponent.AddUShort(aura.value);
+        messageOpponent.AddBool(aura.temporary);
+        messageOpponent.AddBool(aura.foreignSource);
+
+        if (aura.source==null)
+        {
+            messageOwner.AddInt(-1);
+            messageOwner.AddBool(false);
+
+            messageOpponent.AddInt(-1);
+            messageOpponent.AddBool(false);
+        }
+        else
+        {
+            messageOwner.AddInt(aura.source.index);
+            messageOwner.AddBool(owner.board.Contains(aura.source));
+
+            messageOpponent.AddInt(aura.source.index);
+            messageOpponent.AddBool(opponent.board.Contains(aura.source));
+        }
+        SendMessage(messageOwner, owner);
+        SendMessage(messageOpponent, opponent);
     }
 
     public void DiscardCard(Match m, Player p, int index)

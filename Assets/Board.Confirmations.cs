@@ -134,6 +134,25 @@ public partial class Board
                 result.AddInt(UpdateHeroHP);
                 result.AddBool(UpdateHeroFriendly);
                 break;
+            case Server.MessageType.AddAura:
+            case Server.MessageType.RemoveAura:
+                int addAuraMinionIndex = message.GetInt();
+                bool addAuraFriendly = message.GetBool();
+                ushort addAuraType = message.GetUShort();
+                ushort addAuraValue= message.GetUShort();
+                bool addAuraTemp = message.GetBool();
+                bool addAuraForeign = message.GetBool();
+                int addAuraSourceInd = message.GetInt();
+                bool addAuraSourceFriendly = message.GetBool();
+                result.AddInt(addAuraMinionIndex);
+                result.AddBool(addAuraFriendly);
+                result.AddUShort(addAuraType);
+                result.AddUShort(addAuraValue);
+                result.AddBool(addAuraTemp);
+                result.AddBool(addAuraForeign);
+                result.AddInt(addAuraSourceInd);
+                result.AddBool(addAuraSourceFriendly);
+                break;
             default:
                 Debug.LogError("UNKNOWN MESSAGE TYPE");
                 break;
