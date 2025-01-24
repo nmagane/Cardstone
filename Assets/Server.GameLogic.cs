@@ -104,7 +104,7 @@ public partial class Server
             {
                 //Face to face
                 //Check for failed attack
-                if (attack.player.health==0)
+                if (attack.player.health<=0)
                 {
                     return false;
                 }

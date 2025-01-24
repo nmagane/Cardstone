@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Microsoft.Win32.SafeHandles;
+using UnityEngine;
 
 public partial class Board
 {
@@ -45,6 +46,7 @@ public partial class Board
             OnMinionDamage,
 
             Deathrattle,
+            OnMinionDeath,
         }
 
         public enum Ability
@@ -64,10 +66,13 @@ public partial class Board
         public Ability ability;
         public Side side;
         public Minion minion;
-    
+        
         public bool CheckTrigger(Type t,Side s, Server.CastInfo spell)
         {
             if (type != t) return false;
+
+            //DEAD MINIONS CAN'T TRIGGER
+            if (minion.DEAD && t !=Type.Deathrattle) return false;
 
             switch(t)
             {
@@ -79,6 +84,8 @@ public partial class Board
                 case Type.AfterPlayMinion:
                 case Type.AfterSummonMinion:
                 case Type.AfterPlaySpell:
+
+                case Type.OnMinionDeath:
                     //Does not trigger on self
                     if (minion == spell.minion) return false;
                     break;

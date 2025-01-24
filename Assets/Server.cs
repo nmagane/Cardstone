@@ -566,13 +566,13 @@ public partial class Server : MonoBehaviour
         Board.Minion target = match.enemyPlayer.board[targetInd];
         if (ValidAttackMinion(match, attackerInd, targetInd) == false) return;
 
-        //ConfirmAttackMinion(match, attackerInd, targetInd);
         Debug.Log("Attack " + attacker.ToString() + " " + target.ToString());
-
-        //TODO: onattack triggers
 
         AttackInfo attackInfo = new AttackInfo(match.currPlayer, attacker, target, false, false, false);
         CastInfo attackAction = new CastInfo(match, attackInfo);
+
+        //preattack confirmation -> start sequence
+        ConfirmAttackGeneral(attackAction, true);
 
         match.StartSequenceAttackMinion(attackAction);
 
@@ -639,6 +639,10 @@ public partial class Server : MonoBehaviour
 
         AttackInfo attackInfo = new AttackInfo(match.currPlayer, attacker, null, false, true, false);
         CastInfo attackAction = new CastInfo(match, attackInfo);
+
+        //preattack confirmation -> start sequence
+        ConfirmAttackGeneral(attackAction, true);
+
         match.StartSequenceAttackFace(attackAction);
     }
 

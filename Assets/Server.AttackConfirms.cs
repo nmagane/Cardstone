@@ -41,7 +41,7 @@ public partial class Server
         return true;
     }
 
-    public void ConfirmAttackGeneral(CastInfo action)
+    public void ConfirmAttackGeneral(CastInfo action, bool preattack=false)
     {
         Match match = action.match;
         AttackInfo attack = action.attack;
@@ -55,7 +55,7 @@ public partial class Server
             else
             {
                 //Minion to face
-                ConfirmAttackFace(match, attack.attacker.index, attack.friendlyFire);
+                ConfirmAttackFace(match, attack.attacker.index, attack.friendlyFire,preattack);
             }
         }
         else
@@ -67,15 +67,16 @@ public partial class Server
             else
             {
                 //Minion to minion
-                ConfirmAttackMinion(match, attack.attacker.index, attack.target.index, attack.friendlyFire);
+                ConfirmAttackMinion(match, attack.attacker.index, attack.target.index, attack.friendlyFire,preattack);
             }
         }
     }
 
-    public void ConfirmAttackMinion(Match match, int attackerInd, int targetInd, bool friendlyFire)
+    public void ConfirmAttackMinion(Match match, int attackerInd, int targetInd, bool friendlyFire, bool PREATTACK)
     {
-        Message mOwner = CreateMessage(MessageType.ConfirmAttackMinion);
-        Message mOpp = CreateMessage(MessageType.ConfirmAttackMinion);
+        MessageType phase = PREATTACK ? MessageType.ConfirmPreAttackMinion : MessageType.ConfirmAttackMinion;
+        Message mOwner = CreateMessage(phase);
+        Message mOpp = CreateMessage(phase);
         mOwner.AddBool(true);
         mOpp.AddBool(false);
 
@@ -90,8 +91,9 @@ public partial class Server
         //server.Send(mOpp, match.enemyPlayer.connection.clientID);
         SendMessage(mOpp, match.enemyPlayer);
     }
-    public void ConfirmAttackFace(Match match, int attackerInd,bool friendlyFire)
+    public void ConfirmAttackFace(Match match, int attackerInd,bool friendlyFire, bool PREATTACK)
     {
+        MessageType phase = PREATTACK ? MessageType.ConfirmPreAttackFace : MessageType.ConfirmAttackFace;
         Message mOwner = CreateMessage(MessageType.ConfirmAttackFace);
         Message mOpp = CreateMessage(MessageType.ConfirmAttackFace);
         mOwner.AddBool(true);

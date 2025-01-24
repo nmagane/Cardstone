@@ -241,12 +241,20 @@ public partial class Server
                 server.UpdateMinion(this, minion);
                 if (minion.health <= 0) destroyList.Add(minion);
             }
+
+            //death resolution phase
             foreach (var m in destroyList)
             {
                 Debug.Log("kill " + m.card);
+                TriggerMinion(Board.Trigger.Type.Deathrattle, m);
+                AddTrigger(Board.Trigger.Type.OnMinionDeath, null, m);
                 server.DestroyMinion(this, m);
             }
-
+            if (triggerBuffer.Count > 0 || triggerQueue.Count > 0)
+            {
+                CastInfo deathResolution = new CastInfo();
+                ResolveTriggerQueue(ref deathResolution);
+            }
             //=====================================
             //Aura activation
             foreach (Board.Minion minion in players[0].board)

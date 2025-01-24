@@ -60,16 +60,16 @@ public partial class Board
             }
             if (c==Card.Cardname.KnifeJuggler)
             {
-                AddTrigger(new Trigger(Trigger.Type.AfterSummonMinion, Trigger.Side.Friendly, Trigger.Ability.KnifeJuggler,this,playOrder));
-                AddTrigger(new Trigger(Trigger.Type.AfterPlayMinion, Trigger.Side.Friendly, Trigger.Ability.KnifeJuggler,this,playOrder));
+                AddTrigger(Trigger.Type.AfterSummonMinion, Trigger.Side.Friendly, Trigger.Ability.KnifeJuggler);
+                AddTrigger(Trigger.Type.AfterPlayMinion, Trigger.Side.Friendly, Trigger.Ability.KnifeJuggler);
             }
             if (c==Card.Cardname.Acolyte)
             {
-                AddTrigger(new Trigger(Trigger.Type.OnDamageTaken, Trigger.Side.Both, Trigger.Ability.AcolyteOfPain,this,playOrder));
+                AddTrigger(Trigger.Type.OnDamageTaken, Trigger.Side.Both, Trigger.Ability.AcolyteOfPain);
             }
             if (c==Card.Cardname.YoungPri)
             {
-                AddTrigger(new Trigger(Trigger.Type.EndTurn, Trigger.Side.Friendly, Trigger.Ability.YoungPriestess,this,playOrder));
+                AddTrigger(Trigger.Type.EndTurn, Trigger.Side.Friendly, Trigger.Ability.YoungPriestess);
             }
         }
         public override string ToString()
@@ -86,9 +86,14 @@ public partial class Board
             }
             return result;
         }
-        public void AddTrigger(Trigger a)
+        public void AddTrigger(Trigger.Type type, Trigger.Side side, Trigger.Ability ability)
         {
-            triggers.Add(a);
+            Trigger t = new Trigger(type, side, ability, this, playOrder);
+            triggers.Add(t);
+        }
+        public void RemoveTrigger(Trigger t)
+        {
+            triggers.Remove(t);
         }
         public void AddAura(Aura a)
         {
