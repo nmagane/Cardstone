@@ -40,17 +40,17 @@ public partial class Board
             }
             if (Count() == 0)
             {
-                newMinion = new Minion(c, 0);
+                newMinion = new Minion(c, 0,this);
                 minions.Add(newMinion);
             }
             else if (Count() != 0 && ind >= Count())
             {
-                newMinion = new Minion(c, Count());
+                newMinion = new Minion(c, Count(),this);
                 minions.Add(newMinion);
             }
             else
             {
-                newMinion = new Minion(c, ind);
+                newMinion = new Minion(c, ind,this);
                 minions.Insert(ind, newMinion);
             }
             if (server)
@@ -160,7 +160,7 @@ public partial class Board
         {
             Creature creature = Instantiate(board.minionObject).GetComponent<Creature>();
             creature.board = board;
-            Minion prev = new Minion(card, pos);
+            Minion prev = new Minion(card, pos,this);
             creature.Set(prev);
             previewMinion = creature;
             creature.transform.parent = board.transform;

@@ -48,6 +48,8 @@ public class Card : MonoBehaviour
         YoungPri,
         HarvestGolem,
         DamagedGolem,
+        ShieldBearer,
+        Argus,
     }
     void Start()
     {

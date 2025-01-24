@@ -1,6 +1,5 @@
-﻿
-using System.Collections.Generic;
-
+﻿using System.Collections.Generic;
+using UnityEngine;
 public partial class Server
 {
     public static void ConsumeAttackCharge(Board.Minion m)
@@ -157,6 +156,12 @@ public partial class Server
             case Card.Cardname.ShatteredSunCleric:
                 ShatteredSunCleric(spell);
                 break;
+            case Card.Cardname.Argus:
+                Argus(spell);
+                break;
+            default:
+                Debug.LogError("MISSING SPELL " + spell.card.card);
+                break;
         }
     }
 
@@ -203,5 +208,17 @@ public partial class Server
         p.board[spell.target].AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Health, 1));
         p.board[spell.target].AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 1));
     }
-
+    void Argus(CastInfo spell)
+    {
+        Player p = spell.player;
+        foreach(var m in spell.player.board)
+        {
+            if (m.index == spell.position-1 || m.index == spell.position+1)
+            {
+                m.AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Taunt));
+                m.AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Health, 1));
+                m.AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 1));
+            }
+        }
+    }
 }

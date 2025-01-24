@@ -390,11 +390,12 @@ public partial class Board : MonoBehaviour
         bool enemyTaunting = false;
 
 
+        //todo: valid attack function
         foreach (Minion m in enemyMinions)
         {
-            if (m.TAUNT) enemyTaunting = true;
+            if (m.HasAura(Minion.Aura.Type.Taunt)) enemyTaunting = true;
         }
-        if (enemyTaunting && target.TAUNT==false)
+        if (enemyTaunting && target.HasAura(Minion.Aura.Type.Taunt)==false)
         {
             //can't attack non taunter
             Debug.Log("Taunt in the way");
@@ -438,7 +439,7 @@ public partial class Board : MonoBehaviour
 
         foreach (Minion m in enemyMinions)
         {
-            if (m.TAUNT) enemyTaunting = true;
+            if (m.HasAura(Minion.Aura.Type.Taunt)) enemyTaunting = true;
         }
         if (enemyTaunting)
         {
@@ -525,6 +526,15 @@ public partial class Board : MonoBehaviour
         if (Input.GetKey(KeyCode.BackQuote))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Camera.main.transform.localPosition = new Vector3(0,0,-10);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            Camera.main.transform.localPosition = new Vector3(50,0,-10);
         }
         
     }

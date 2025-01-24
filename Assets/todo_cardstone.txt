@@ -18,6 +18,8 @@ note: minion and spell cards look different.
 
 separate buffs and auras? seems uneeded right now
 
+todo: hand limit + discarding + milling.
+todo: aura communication.
 ===========================================
 class Trigger
 {
@@ -36,15 +38,15 @@ SOULFIRE                   - NOT DONE
 ABUSIVE SERGEANT           - NOT DONE
 ARGENT SQUIRE              - NOT DONE
 FLAME IMP                  - DONE
-SHIELD BEARER              - NOT DONE
-VOIDWALKER                 - NOT DONE
+SHIELD BEARER              - DONE
+VOIDWALKER                 - DONE
 YOUNG PRIESTESS            - DONE
 AMANI BERSERKER            - NOT DONE
 IRONBEAK OWL               - NOT DONE
 DIRE WOLF ALPHA            - DONE
 KNIFE JUGGLER              - DONE
-HARVEST GOLEM              - NOT DONE
+HARVEST GOLEM              - DONE
 SHATTERED SUN CLERIC       - DONE
 DARK IRON DWARF            - NOT DONE
-DEFENDER OF ARGUS          - NOT DONE
+DEFENDER OF ARGUS          - DONE
 DOOMGUARD                  - NOT DONE

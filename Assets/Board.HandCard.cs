@@ -50,6 +50,14 @@ public partial class Board
                 damage = 3;
                 eligibleTargets = EligibleTargets.FriendlyMinions;
             }
+            if (name==Card.Cardname.Argus)
+            {
+                MINION = true;
+                TARGETED = false;
+                BATTLECRY = true;
+                health = 1;
+                damage = 3;
+            }
         }
 
         public HandCard(Card.Cardname name, int ind)

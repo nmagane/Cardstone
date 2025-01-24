@@ -1,12 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Riptide;
-using Riptide.Transports;
-using Riptide.Utils;
-using System.Linq;
-using UnityEngine;
-using UnityEditor.Experimental.GraphView;
 
 public partial class Server
 {
@@ -21,9 +13,9 @@ public partial class Server
         bool enemyTaunting = false;
         foreach (var minion in m.enemyPlayer.board)
         {
-            if (minion.TAUNT) { enemyTaunting = true; break; }
+            if (minion.HasAura(Board.Minion.Aura.Type.Taunt)) { enemyTaunting = true; break; }
         }
-        if (target.TAUNT == false && enemyTaunting) return false;
+        if (target.HasAura(Board.Minion.Aura.Type.Taunt) == false && enemyTaunting) return false;
 
         return true;
     }
@@ -33,7 +25,7 @@ public partial class Server
         if (attacker.board[attackerInd].canAttack == false) return false;
         foreach (var minion in defender.board)
         {
-            if (minion.TAUNT) 
+            if (minion.HasAura(Board.Minion.Aura.Type.Taunt)) 
             {
                 return false;
             }

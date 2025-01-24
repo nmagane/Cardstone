@@ -20,7 +20,6 @@ public partial class Board
 
         public bool canAttack = false;
 
-        public bool TAUNT = false;
         public bool STEALTH = false;
         public bool WINDFURY = false;
 
@@ -32,6 +31,9 @@ public partial class Board
         public int previewIndex = -1;
         public int playOrder = 0;
 
+        [System.NonSerialized]
+        public MinionBoard board;
+
         public void Set(Card.Cardname name, int ind)
         {
             //transform into another minion
@@ -39,8 +41,9 @@ public partial class Board
             index = ind;
             //manaCost
         }
-        public Minion(Card.Cardname c, int ind)
+        public Minion(Card.Cardname c, int ind,MinionBoard _board)
         {
+            board = _board;
             card = c;
             health = 3;
             damage = 1;
@@ -50,6 +53,10 @@ public partial class Board
             baseHealth = maxHealth;
             baseDamage = damage;
 
+            if (c==Card.Cardname.ShieldBearer)
+            {
+               AddAura(new Aura(Aura.Type.Taunt));
+            }        
             if (c==Card.Cardname.SWChamp)
             {
                AddAura(new Aura(Aura.Type.StormwindChampion));
@@ -170,6 +177,12 @@ public partial class Board
                 case Aura.Type.Damage:
                     damage -= a.value;
                     break;
+                case Aura.Type.Taunt:
+                    if (board.server == false)
+                    {
+                        board.minionObjects[this].DisableTaunt();
+                    }
+                    break;
             }
         }
 
@@ -236,6 +249,15 @@ public partial class Board
                         break;
                     case Type.NoAttack:
                         minion.canAttack = false;
+                        break;
+                    case Type.Taunt:
+                        if (minion.board.server==false)
+                        {
+                            if (minion.board.minionObjects.ContainsKey(minion))
+                            {
+                                minion.board.minionObjects[minion].EnableTaunt();
+                            }
+                        }
                         break;
                 }
             }

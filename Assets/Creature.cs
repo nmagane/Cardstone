@@ -9,6 +9,7 @@ public class Creature : MonoBehaviour
     public TMP_Text testname;
     public TMP_Text health, damage;
     public SpriteRenderer spriteRenderer;
+    public SpriteRenderer tauntSprite;
 
     public Board board;
 
@@ -21,6 +22,8 @@ public class Creature : MonoBehaviour
         testname.text = c.card.ToString();
         health.text = c.health.ToString();
         damage.text = c.damage.ToString();
+        if (minion.HasAura(Board.Minion.Aura.Type.Taunt))
+            EnableTaunt();
     }
     public bool IsFriendly()
     {
@@ -40,6 +43,14 @@ public class Creature : MonoBehaviour
         health.text = minion.health.ToString();
     }
 
+    public void EnableTaunt()
+    {
+        tauntSprite.enabled = true;
+    }
+    public void DisableTaunt()
+    {
+        tauntSprite.enabled = false;
+    }
 
     private void OnMouseOver()
     {
@@ -73,6 +84,7 @@ public class Creature : MonoBehaviour
     private void OnMouseDrag()
     {
         if (preview) return;
+        if (board.currTurn == false) return;
         if (board.targetingMinion==minion)
         {
             if (dragCounter < dragTime) dragCounter++;
@@ -89,7 +101,8 @@ public class Creature : MonoBehaviour
     }
     private void OnMouseUp()
     {
-        if (preview) return;
+        if (preview) return; 
+        if (board.currTurn == false) return;
         dragCounter = 0;
         if (board.dragTargeting && board.targetingMinion==minion)
         {
@@ -102,7 +115,8 @@ public class Creature : MonoBehaviour
     Vector3 clickPos = Vector3.zero;
     private void OnMouseDown()
     {
-        if (preview) return;
+        if (preview) return; 
+        if (board.currTurn == false) return;
         if (board.targeting)
         {
             if (board.targetingMinion == minion)

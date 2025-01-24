@@ -13,7 +13,7 @@ using static UnityEngine.GraphicsBuffer;
 public partial class Server : MonoBehaviour
 {
 
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.HarvestGolem,Card.Cardname.Acolyte,Card.Cardname.DireWolf,Card.Cardname.KnifeJuggler, Card.Cardname.Ping };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.HarvestGolem,Card.Cardname.Argus,Card.Cardname.DireWolf,Card.Cardname.KnifeJuggler, Card.Cardname.Ping };
     public static Message CreateMessage(MessageType type)
     {
         Message m = Message.Create(MessageSendMode.Reliable, (ushort)type);
