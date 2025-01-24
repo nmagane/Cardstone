@@ -36,5 +36,6 @@ public class TriggerEffects
         while (m == minion) m = p.board[Random.Range(0, p.board.Count())];
 
         m.AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Health, 1));
+        //TODO: CONFIRM TRIGGER MESSAGE TO PLAYERS?
     }
 }

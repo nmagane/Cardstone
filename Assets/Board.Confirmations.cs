@@ -1,24 +1,146 @@
 ﻿using UnityEngine;
 using Riptide;
+using System.Data;
 
 public partial class Board
 {
     public static Message CreateMessage(Server.MessageType type)
     {
-        return Message.Create(MessageSendMode.Reliable, (ushort)type);
+        Message m = Message.Create(MessageSendMode.Reliable, (ushort)type);
+        m.ReserveBits(16);
+        return m;
     }
-    public void ConfirmPreAttackMinion(Message message)
+    public void SendMessage(Message message)
+    {
+        message.SetBits(matchMessageOrder++, 16, 28);
+        client.Send(message);
+    }
+    public Server.CustomMessage CopyMessage(Message message, Server.MessageType type)
+    {
+        Server.CustomMessage result = new Server.CustomMessage();
+        switch (type)
+        {
+            case Server.MessageType._TEST:
+                break;
+            case Server.MessageType.ConfirmMatch:
+                ulong matchID = message.GetULong();
+                result.AddULong(matchID);
+                break;
+            case Server.MessageType.DrawHand:
+                ushort[] hand = message.GetUShorts();
+                int enemyCardCount = message.GetInt();
+                result.AddUShorts(hand);
+                result.AddInt(enemyCardCount);
+                break;
+            case Server.MessageType.ConfirmMulligan:
+                ushort[] mulliganNewHand = message.GetUShorts();
+                result.AddUShorts(mulliganNewHand);
+                break;
+            case Server.MessageType.EnemyMulligan:
+                int[] enemyMulligan = message.GetInts();
+                result.AddInts(enemyMulligan);
+                break;
+            case Server.MessageType.DrawCards:
+                int draw = message.GetInt();
+                result.AddInt(draw);
+                break;
+            case Server.MessageType.DrawEnemy:
+                int enemyDraws = message.GetInt();
+                result.AddInt(enemyDraws);
+                break;
+            case Server.MessageType.StartGame:
+                bool isTurn = message.GetBool();
+                result.AddBool(isTurn);
+                break;
+            case Server.MessageType.StartTurn:
+                bool startAllyTurn = message.GetBool();
+                int startMaxMana = message.GetInt();
+                int startCurrMana = message.GetInt();
+                ushort startMessageCount = message.GetUShort();
+                result.AddBool(startAllyTurn);
+                result.AddInt(startMaxMana);
+                result.AddInt(startCurrMana);
+                result.AddUShort(startMessageCount);
+                break;
+            case Server.MessageType.EndTurn:
+                break;
+            case Server.MessageType.PlayCard:
+                bool playedFriendlySide = message.GetBool();
+                int playedIndex = message.GetInt();
+                int playedManaCost = message.GetInt();
+                int playedCard = message.GetInt();
+                result.AddBool(playedFriendlySide);
+                result.AddInt(playedIndex);
+                result.AddInt(playedManaCost);
+                result.AddInt(playedCard);
+                break;
+            case Server.MessageType.SummonMinion:
+                bool summonedFriendlySide = message.GetBool();
+                int summonedMinion = message.GetInt();
+                int summonedPos = message.GetInt();
+                result.AddBool(summonedFriendlySide);
+                result.AddInt(summonedMinion);
+                result.AddInt(summonedPos);
+                break;
+            case Server.MessageType.UpdateMinion:
+                string minionUpdateJson = message.GetString();
+                bool minionUpdateFriendly = message.GetBool();
+                result.AddString(minionUpdateJson);
+                result.AddBool(minionUpdateFriendly);
+                break;
+            case Server.MessageType.ConfirmPreAttackMinion:
+                bool preminionAllyAttack = message.GetBool();
+                int preminionAttackerIndex = message.GetInt();
+                int preminionTargetIndex = message.GetInt();
+                result.AddBool(preminionAllyAttack);
+                result.AddInt(preminionAttackerIndex);
+                result.AddInt(preminionTargetIndex);
+                break;
+            case Server.MessageType.ConfirmAttackMinion:
+                bool minionAllyAttack = message.GetBool();
+                int minionAttackerIndex = message.GetInt();
+                int minionTargetIndex = message.GetInt();
+                result.AddBool(minionAllyAttack);
+                result.AddInt(minionAttackerIndex);
+                result.AddInt(minionTargetIndex);
+                break;
+            case Server.MessageType.ConfirmPreAttackFace:
+                bool preFaceAllyAttack = message.GetBool();
+                int preFaceAttackerIndex = message.GetInt();
+                result.AddBool(preFaceAllyAttack);
+                result.AddInt(preFaceAttackerIndex);
+                break;
+            case Server.MessageType.ConfirmAttackFace:
+                bool FaceAllyAttack = message.GetBool();
+                int FaceAttackerIndex = message.GetInt();
+                result.AddBool(FaceAllyAttack);
+                result.AddInt(FaceAttackerIndex);
+                break;
+            case Server.MessageType.DestroyMinion:
+                int DestroyInd = message.GetInt();
+                bool DestroyFriendly = message.GetBool();
+                result.AddInt(DestroyInd);
+                result.AddBool(DestroyFriendly);
+                break;
+            case Server.MessageType.UpdateHero:
+                int UpdateHeroHP = message.GetInt();
+                bool UpdateHeroFriendly = message.GetBool();
+                result.AddInt(UpdateHeroHP);
+                result.AddBool(UpdateHeroFriendly);
+                break;
+            default:
+                Debug.LogError("UNKNOWN MESSAGE TYPE");
+                break;
+        }
+
+        return result;
+    }
+    public void ConfirmPreAttackMinion(bool allyAttack, int attackerIndex, int targetIndex)
     {
         //TODO: preattack animation
-        bool allyAttack = message.GetBool();
-        int attackerIndex = message.GetInt();
-        int targetIndex = message.GetInt();
     }
-    public void ConfirmAttackMinion(Message message)
+    public void ConfirmAttackMinion(bool allyAttack, int attackerIndex, int targetIndex)
     {
-        bool allyAttack = message.GetBool();
-        int attackerIndex = message.GetInt();
-        int targetIndex = message.GetInt();
         
         Minion attacker = allyAttack ? currMinions[attackerIndex] : enemyMinions[attackerIndex];
         Minion target = allyAttack ? enemyMinions[targetIndex] : currMinions[targetIndex];
@@ -32,16 +154,12 @@ public partial class Board
         //TODO: attack animation
     }
 
-    public void ConfirmPreAttackFace(Message message)
+    public void ConfirmPreAttackFace(bool allyAttack, int attackerIndex)
     {
         //TODO: preattack animation
-        bool allyAttack = message.GetBool();
-        int attackerIndex = message.GetInt();
     }
-    void ConfirmAttackFace(Message message)
+    void ConfirmAttackFace(bool allyAttack, int attackerIndex)
     {
-        bool allyAttack = message.GetBool();
-        int attackerIndex = message.GetInt();
 
         Minion attacker = allyAttack ? currMinions[attackerIndex] : enemyMinions[attackerIndex];
 

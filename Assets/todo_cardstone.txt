@@ -8,9 +8,11 @@ players in que counter in menu
 todo: 
 	
 message order system
-
+if reached max bits for ushort, maybe add some sort of "cycle counter" in player class that rolls over every "prestige"
+TODO: if message fails (index out of range etc..) discard all following messages in que?.
 
 start and end turn confirms to opponent players? //probably not needed
+
 
 note: minion and spell cards look different.
 

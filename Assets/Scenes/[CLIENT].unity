@@ -144,7 +144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1347480465045635269, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.23
       objectReference: {fileID: 0}
     - target: {fileID: 1347480465045635269, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: m_LocalRotation.w
@@ -779,18 +779,22 @@ MonoBehaviour:
     minions: []
     board: {fileID: 716059625}
     server: 0
+    previewMinion: {fileID: 0}
     previewing: 0
     currPreview: -1
   enemyMinions:
     minions: []
     board: {fileID: 716059625}
     server: 0
+    previewMinion: {fileID: 0}
     previewing: 0
     currPreview: -1
   currHero: {fileID: 1895519031}
   enemyHero: {fileID: 869394657}
   mana: {fileID: 577793796}
   enemyMana: {fileID: 879526228}
+  matchMessageOrder: 0
+  messageReceivedOrder: 0
   selectedMulligans: 
   targeting: 0
   targetMode: 0
@@ -800,21 +804,31 @@ MonoBehaviour:
     index: 0
     damage: 0
     health: 0
+    maxHealth: 0
+    baseHealth: 0
+    baseDamage: 0
     canAttack: 0
     TAUNT: 0
     STEALTH: 0
     WINDFURY: 0
+    DEAD: 0
+    previewIndex: 0
+    playOrder: 0
   targetingHero: {fileID: 0}
   targetingCard:
     index: 0
     manaCost: 0
+    health: 0
+    damage: 0
     card: 0
+    eligibleTargets: 0
     SPELL: 0
     MINION: 0
     SECRET: 0
     WEAPON: 0
     TARGETED: 0
     COMBO: 0
+    BATTLECRY: 0
     played: 0
   playingCard: {fileID: 0}
   dragTargeting: 0
@@ -1820,7 +1834,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1347480465045635269, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.23
       objectReference: {fileID: 0}
     - target: {fileID: 1347480465045635269, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2234,18 +2248,22 @@ MonoBehaviour:
     minions: []
     board: {fileID: 1733639530}
     server: 0
+    previewMinion: {fileID: 0}
     previewing: 0
     currPreview: -1
   enemyMinions:
     minions: []
     board: {fileID: 1733639530}
     server: 0
+    previewMinion: {fileID: 0}
     previewing: 0
     currPreview: -1
   currHero: {fileID: 577202361}
   enemyHero: {fileID: 1337016205}
   mana: {fileID: 2017041644}
   enemyMana: {fileID: 1167039317}
+  matchMessageOrder: 0
+  messageReceivedOrder: 0
   selectedMulligans: 
   targeting: 0
   targetMode: 0
@@ -2255,21 +2273,31 @@ MonoBehaviour:
     index: 0
     damage: 0
     health: 0
+    maxHealth: 0
+    baseHealth: 0
+    baseDamage: 0
     canAttack: 0
     TAUNT: 0
     STEALTH: 0
     WINDFURY: 0
+    DEAD: 0
+    previewIndex: 0
+    playOrder: 0
   targetingHero: {fileID: 0}
   targetingCard:
     index: 0
     manaCost: 0
+    health: 0
+    damage: 0
     card: 0
+    eligibleTargets: 0
     SPELL: 0
     MINION: 0
     SECRET: 0
     WEAPON: 0
     TARGETED: 0
     COMBO: 0
+    BATTLECRY: 0
     played: 0
   playingCard: {fileID: 0}
   dragTargeting: 0

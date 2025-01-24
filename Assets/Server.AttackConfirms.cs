@@ -85,8 +85,10 @@ public partial class Server
         mOwner.AddInt(targetInd);
         mOpp.AddInt(targetInd);
 
-        server.Send(mOwner, match.currPlayer.connection.clientID);
-        server.Send(mOpp, match.enemyPlayer.connection.clientID);
+        //server.Send(mOwner, match.currPlayer.connection.clientID);
+        SendMessage(mOwner, match.currPlayer);
+        //server.Send(mOpp, match.enemyPlayer.connection.clientID);
+        SendMessage(mOpp, match.enemyPlayer);
     }
     public void ConfirmAttackFace(Match match, int attackerInd,bool friendlyFire)
     {
@@ -98,8 +100,10 @@ public partial class Server
         mOwner.AddInt(attackerInd);
         mOpp.AddInt(attackerInd);
 
-        server.Send(mOwner, match.currPlayer.connection.clientID);
-        server.Send(mOpp, match.enemyPlayer.connection.clientID);
+        //server.Send(mOwner, match.currPlayer.connection.clientID);
+        SendMessage(mOwner, match.currPlayer);
+        //server.Send(mOpp, match.enemyPlayer.connection.clientID);
+        SendMessage(mOpp, match.enemyPlayer);
     }
     public void ConfirmSwingMinion()
     {
