@@ -153,6 +153,19 @@ public partial class Board
                 result.AddInt(addAuraSourceInd);
                 result.AddBool(addAuraSourceFriendly);
                 break;
+            case Server.MessageType.AddTrigger:
+            case Server.MessageType.RemoveTrigger:
+                int addTriggerMinionIndex = message.GetInt();
+                bool addTriggerFriendly = message.GetBool();
+                ushort addTriggerType = message.GetUShort();
+                ushort addTriggerSide = message.GetUShort();
+                ushort addTriggerAbility = message.GetUShort();
+                result.AddInt(addTriggerMinionIndex);
+                result.AddBool(addTriggerFriendly);
+                result.AddUShort(addTriggerType);
+                result.AddUShort(addTriggerSide);
+                result.AddUShort(addTriggerAbility);
+                break;
             default:
                 Debug.LogError("UNKNOWN MESSAGE TYPE");
                 break;

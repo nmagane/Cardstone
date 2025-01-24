@@ -192,13 +192,26 @@ public partial class Board : MonoBehaviour
                 bool addAuraForeign = message.GetBool();
                 int addAuraSourceInd = message.GetInt();
                 bool addAuraSourceFriendly = message.GetBool();
-
                 if (messageID==Server.MessageType.RemoveAura)
                 {
                     RemoveAura(addAuraMinionIndex, addAuraFriendly, addAuraType, addAuraValue, addAuraTemp, addAuraForeign, addAuraSourceInd, addAuraSourceFriendly);
                     break;
                 }
                 AddAura(addAuraMinionIndex, addAuraFriendly, addAuraType, addAuraValue, addAuraTemp, addAuraForeign, addAuraSourceInd, addAuraSourceFriendly);
+                break;
+            case Server.MessageType.AddTrigger:
+            case Server.MessageType.RemoveTrigger:
+                int addTriggerMinionIndex = message.GetInt();
+                bool addTriggerFriendly = message.GetBool();
+                ushort addTriggerType = message.GetUShort();
+                ushort addTriggerSide = message.GetUShort();
+                ushort addTriggerAbility = message.GetUShort();
+                if (messageID == Server.MessageType.RemoveTrigger)
+                {
+                    RemoveTrigger(addTriggerMinionIndex, addTriggerFriendly, addTriggerType, addTriggerSide, addTriggerAbility);
+                    break;
+                }
+                AddTrigger(addTriggerMinionIndex, addTriggerFriendly, addTriggerType, addTriggerSide, addTriggerAbility);
                 break;
             default:
                 Debug.LogError("UNKNOWN MESSAGE TYPE");
@@ -494,6 +507,16 @@ public partial class Board : MonoBehaviour
         Minion target = friendly? currMinions[minionIndex] : enemyMinions[minionIndex];
         Minion source = sourceInd == -1 ? null : (sourceFriendly ? currMinions[sourceInd] : enemyMinions[sourceInd]);
         target.RemoveMatchingAura(new Minion.Aura((Minion.Aura.Type)auraType, value, temp, foreign, source));
+    }
+    public void RemoveTrigger(int minionIndex, bool friendly, ushort type, ushort side, ushort ability)
+    {
+        Minion target = friendly ? currMinions[minionIndex] : enemyMinions[minionIndex];
+        target.RemoveMatchingTrigger(new Trigger((Trigger.Type)type, (Trigger.Side)side, (Trigger.Ability)ability,target));
+    }
+    public void AddTrigger(int minionIndex, bool friendly, ushort type, ushort side, ushort ability)
+    {
+        Minion target = friendly ? currMinions[minionIndex] : enemyMinions[minionIndex];
+        target.AddTrigger((Trigger.Type)type, (Trigger.Side)side, (Trigger.Ability)ability);
     }
     public bool IsFriendly(Minion m)
     {

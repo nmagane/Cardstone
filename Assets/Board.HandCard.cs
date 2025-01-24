@@ -50,7 +50,7 @@ public partial class Board
                 damage = 3;
                 eligibleTargets = EligibleTargets.FriendlyMinions;
             }
-            if (name==Card.Cardname.Abusive)
+            if (name==Card.Cardname.Abusive || name==Card.Cardname.IronbeakOwl)
             {
                 MINION = true;
                 TARGETED = true;

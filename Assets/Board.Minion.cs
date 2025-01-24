@@ -111,6 +111,22 @@ public partial class Board
         {
             triggers.Remove(t);
         }
+        public void RemoveMatchingTrigger(Trigger g)
+        {
+            List<Trigger> remover = new List<Trigger>();
+            foreach (Trigger t in triggers)
+            {
+                if (t.ability == g.ability && t.side == g.side && t.type == g.type)
+                {
+                    remover.Add(t);
+                    break;
+                }
+            }
+            foreach (Trigger t in remover)
+            {
+                RemoveTrigger(t);
+            }
+        }
         public void AddAura(Aura a)
         {
             Aura finder = FindAura(a.type);
@@ -225,6 +241,7 @@ public partial class Board
                    && a.source == aura.source)
                 {
                     removers.Add(aura);
+                    break;
                 }
             }
             foreach(Aura aura in removers)

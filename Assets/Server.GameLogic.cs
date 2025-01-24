@@ -168,12 +168,32 @@ public partial class Server
             case Card.Cardname.Abusive:
                 Abusive(spell);
                 break;
+            case Card.Cardname.IronbeakOwl:
+                SilenceMinion(spell);
+                break;
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);
                 break;
         }
     }
 
+
+    public void SilenceMinion(CastInfo spell)
+    {
+        Player p = spell.player;
+        Match match = spell.match;
+        if (spell.isFriendly == false) p = p.opponent;
+        Board.Minion minion = p.board[spell.target];
+
+        while (minion.auras.Count>0)
+        {
+            match.server.RemoveAura(match, minion, minion.auras[0]);
+        }
+        while (minion.triggers.Count>0)
+        {
+            match.server.RemoveTrigger(match, minion, minion.triggers[0]);
+        }
+    }
     void Ping(CastInfo spell)
     {
         int damage = 1;

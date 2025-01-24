@@ -13,7 +13,7 @@ using static UnityEngine.GraphicsBuffer;
 public partial class Server : MonoBehaviour
 {
 
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.HarvestGolem,Card.Cardname.Argus,Card.Cardname.Abusive,Card.Cardname.Squire, Card.Cardname.Ping };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.KnifeJuggler,Card.Cardname.Argus,Card.Cardname.IronbeakOwl,Card.Cardname.Squire, Card.Cardname.IronbeakOwl };
     public static Message CreateMessage(MessageType type)
     {
         Message m = Message.Create(MessageSendMode.Reliable, (ushort)type);
@@ -73,6 +73,9 @@ public partial class Server : MonoBehaviour
 
         AddAura,
         RemoveAura,
+
+        AddTrigger,
+        RemoveTrigger,
 
         Concede,
 
@@ -667,7 +670,40 @@ public partial class Server : MonoBehaviour
         //server.Send(messageOpponent, match.Opponent(player).connection.clientID);
         SendMessage(messageOpponent, player.opponent);
     }
+    public void RemoveTrigger(Match match, Board.Minion minion, Board.Trigger trigger)
+    {
+        AddTrigger(match, minion, trigger.type, trigger.side, trigger.ability, true);
+    }
+    public void AddTrigger(Match match, Board.Minion minion,Board.Trigger.Type type, Board.Trigger.Side side, Board.Trigger.Ability ability, bool REMOVE = false)
+    {
+        Board.Trigger t = new Board.Trigger(type, side, ability, null);
+        if (REMOVE) minion.RemoveMatchingTrigger(t);
+        else minion.AddTrigger(type,side,ability);
 
+        Message messageOwner = CreateMessage(REMOVE ? MessageType.RemoveTrigger : MessageType.AddTrigger);
+        Message messageOpponent = CreateMessage(REMOVE ? MessageType.RemoveTrigger : MessageType.AddTrigger);
+
+        Player owner = match.FindOwner(minion);
+        Player opponent = owner.opponent;
+
+        messageOwner.Add(minion.index);
+        messageOpponent.Add(minion.index);
+
+        messageOwner.AddBool(true);
+        messageOpponent.AddBool(false);
+
+        messageOwner.AddUShort((ushort)type);
+        messageOpponent.AddUShort((ushort)type);
+
+        messageOwner.AddUShort((ushort)side);
+        messageOpponent.AddUShort((ushort)side);
+
+        messageOwner.AddUShort((ushort)ability);
+        messageOpponent.AddUShort((ushort)ability);
+
+        SendMessage(messageOwner, owner);
+        SendMessage(messageOpponent, opponent);
+    }
     public void RemoveAura(Match match, Board.Minion minion, Board.Minion.Aura aura)
     {
         AddAura(match, minion, aura, true);
