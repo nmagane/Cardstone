@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Riptide;
 using UnityEngine;
+using System.Linq;
 using UnityEngine.SceneManagement;
 
 public partial class Board : MonoBehaviour
@@ -41,6 +42,52 @@ public partial class Board : MonoBehaviour
     public int maxMana = 0;
     */
 
+    public Card CreateCard()
+    {
+        Card c = Instantiate(cardObject).GetComponent<Card>();
+        return c;
+    }
+    public Creature CreateCreature()
+    {
+        Creature c = Instantiate(minionObject).GetComponent<Creature>();
+        return c;
+    }
+    public void DestroyObject(MonoBehaviour o)
+    {
+        Destroy(o.gameObject);
+    }
+    public static bool RNG(float percent) //Two point precision. RNG(XX.XXf)
+    {
+        percent *= 100;
+        return (UnityEngine.Random.Range(0, 10000) <= percent);
+    }
+    public static T RandElem<T>(List<T> L)
+    {
+        return L[UnityEngine.Random.Range(0, L.Count)];
+    }
+    public static KeyValuePair<T, Q> RandElem<T, Q>(Dictionary<T, Q> L)
+    {
+        List<T> L2 = new List<T>(L.Keys);
+
+        T K2 = RandElem(L2);
+        Q V2 = L[K2];
+
+        KeyValuePair<T, Q> kvp = new KeyValuePair<T, Q>(K2, V2);
+
+        return kvp;
+    }
+    public static T RandElem<T>(T[] L)
+    {
+        return L[UnityEngine.Random.Range(0, L.Length)];
+    }
+    public static List<T> Shuffle<T>(List<T> l)
+    {
+        return l.OrderBy(x => UnityEngine.Random.value).ToList();
+    }
+    public static T[] Shuffle<T>(T[] l)
+    {
+        return l.OrderBy(x => UnityEngine.Random.value).ToArray();
+    }
     void Start()
     {
         Application.targetFrameRate = 60;
@@ -435,9 +482,9 @@ public partial class Board : MonoBehaviour
         //todo: valid attack function
         foreach (Minion m in enemyMinions)
         {
-            if (m.HasAura(Minion.Aura.Type.Taunt)) enemyTaunting = true;
+            if (m.HasAura(Aura.Type.Taunt)) enemyTaunting = true;
         }
-        if (enemyTaunting && target.HasAura(Minion.Aura.Type.Taunt)==false)
+        if (enemyTaunting && target.HasAura(Aura.Type.Taunt)==false)
         {
             //can't attack non taunter
             Debug.Log("Taunt in the way");
@@ -481,7 +528,7 @@ public partial class Board : MonoBehaviour
 
         foreach (Minion m in enemyMinions)
         {
-            if (m.HasAura(Minion.Aura.Type.Taunt)) enemyTaunting = true;
+            if (m.HasAura(Aura.Type.Taunt)) enemyTaunting = true;
         }
         if (enemyTaunting)
         {
@@ -510,14 +557,14 @@ public partial class Board : MonoBehaviour
     {
         Minion target = friendly? currMinions[minionIndex] : enemyMinions[minionIndex];
         Minion source = sourceInd == -1 ? null : (sourceFriendly ? currMinions[sourceInd] : enemyMinions[sourceInd]);
-        target.AddAura(new Minion.Aura((Minion.Aura.Type)auraType, value, temp, foreign, source));
+        target.AddAura(new Aura((Aura.Type)auraType, value, temp, foreign, source));
         
     }
     public void RemoveAura(int minionIndex,bool friendly, ushort auraType, ushort value, bool temp, bool foreign,int sourceInd, bool sourceFriendly)
     {
         Minion target = friendly? currMinions[minionIndex] : enemyMinions[minionIndex];
         Minion source = sourceInd == -1 ? null : (sourceFriendly ? currMinions[sourceInd] : enemyMinions[sourceInd]);
-        target.RemoveMatchingAura(new Minion.Aura((Minion.Aura.Type)auraType, value, temp, foreign, source));
+        target.RemoveMatchingAura(new Aura((Aura.Type)auraType, value, temp, foreign, source));
     }
     public void RemoveTrigger(int minionIndex, bool friendly, ushort type, ushort side, ushort ability)
     {

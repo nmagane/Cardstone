@@ -14,18 +14,18 @@ public class Creature : MonoBehaviour
 
     public Board board;
 
-    public Board.Minion minion;
+    public Minion minion;
     public int index => minion.index;
     public bool preview = false;
-    public void Set(Board.Minion c)
+    public void Set(Minion c)
     {
         minion = c;
         testname.text = c.card.ToString();
         health.text = c.health.ToString();
         damage.text = c.damage.ToString();
-        if (minion.HasAura(Board.Minion.Aura.Type.Taunt))
+        if (minion.HasAura(Aura.Type.Taunt))
             EnableTaunt();
-        if (minion.HasAura(Board.Minion.Aura.Type.Shield))
+        if (minion.HasAura(Aura.Type.Shield))
             EnableShield();
     }
     public bool IsFriendly()

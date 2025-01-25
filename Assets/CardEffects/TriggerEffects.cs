@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class TriggerEffects
 {
-    public static void KnifeJuggler(Server.Match match, Board.Minion minion)
+    public static void KnifeJuggler(Match match, Minion minion)
     {
         int damage = 1;
-        Server.Player opponent = match.FindOpponent(minion);
+        Player opponent = match.FindOpponent(minion);
         int tar = Random.Range(-1, opponent.board.Count());
         if (tar==-1)
         {
@@ -17,27 +17,27 @@ public class TriggerEffects
         match.server.DamageMinion(match, opponent.board[tar], damage);
     }
 
-    public static void AcolyteOfPain(Server.Match match,Board.Minion minion)
+    public static void AcolyteOfPain(Match match,Minion minion)
     {
-        match.server.AddAura(match, minion, new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 2));
+        match.server.AddAura(match, minion, new Aura(Aura.Type.Damage, 2));
     }
 
-    public static void YoungPriestess(Server.Match match, Board.Minion minion)
+    public static void YoungPriestess(Match match, Minion minion)
     {
-        Server.Player p = match.FindOwner(minion);
+        Player p = match.FindOwner(minion);
 
         //Skip trigger if no targets available
         if (p.board.Count() == 1 && p.board[0] == minion) return;
 
-        Board.Minion m = p.board[Random.Range(0, p.board.Count())];
+        Minion m = p.board[Random.Range(0, p.board.Count())];
         //Cant target self
         while (m == minion) m = p.board[Random.Range(0, p.board.Count())];
 
-        match.server.AddAura(match, m, new Board.Minion.Aura(Board.Minion.Aura.Type.Health, 1));
+        match.server.AddAura(match, m, new Aura(Aura.Type.Health, 1));
         //TODO: CONFIRM TRIGGER MESSAGE TO PLAYERS?
     }
 
-    public static void HarvestGolem(Server.Match match, Board.Minion minion)
+    public static void HarvestGolem(Match match, Minion minion)
     {
         match.server.SummonToken(match, match.FindOwner(minion), Card.Cardname.DamagedGolem, minion.index);
     }

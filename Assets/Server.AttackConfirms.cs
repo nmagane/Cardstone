@@ -5,17 +5,17 @@ public partial class Server
     public bool ValidAttackMinion(Match m, int attackerInd, int targetInd)
     {
         //TODO: reuse this function in board code
-        Board.Minion attacker = m.currPlayer.board[attackerInd];
-        Board.Minion target = m.enemyPlayer.board[targetInd];
+        Minion attacker = m.currPlayer.board[attackerInd];
+        Minion target = m.enemyPlayer.board[targetInd];
 
         if (attacker.canAttack == false) return false;
         if (target.STEALTH) return false;
         bool enemyTaunting = false;
         foreach (var minion in m.enemyPlayer.board)
         {
-            if (minion.HasAura(Board.Minion.Aura.Type.Taunt)) { enemyTaunting = true; break; }
+            if (minion.HasAura(Aura.Type.Taunt)) { enemyTaunting = true; break; }
         }
-        if (target.HasAura(Board.Minion.Aura.Type.Taunt) == false && enemyTaunting) return false;
+        if (target.HasAura(Aura.Type.Taunt) == false && enemyTaunting) return false;
 
         return true;
     }
@@ -25,7 +25,7 @@ public partial class Server
         if (attacker.board[attackerInd].canAttack == false) return false;
         foreach (var minion in defender.board)
         {
-            if (minion.HasAura(Board.Minion.Aura.Type.Taunt)) 
+            if (minion.HasAura(Aura.Type.Taunt)) 
             {
                 return false;
             }

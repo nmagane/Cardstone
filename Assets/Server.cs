@@ -317,7 +317,7 @@ public partial class Server : MonoBehaviour
     {
         if (currentMatches.ContainsKey(matchID) == false) return;
         Match match = currentMatches[matchID];
-        Board.Hand hand= match.players[0].hand;
+        Hand hand= match.players[0].hand;
         int player = 0;
         if (playerID == match.players[0].connection.playerID)
         {
@@ -341,7 +341,7 @@ public partial class Server : MonoBehaviour
             returningCards.Add(hand[i].card);
             Card.Cardname newCard = match.players[player].deck[0];
             match.players[player].deck.RemoveAt(0);
-            hand[i] = new Board.HandCard(newCard, i);
+            hand[i] = new HandCard(newCard, i);
         }
         match.players[player].deck.AddRange(returningCards);
         match.players[player].deck = Board.Shuffle(match.players[player].deck);
@@ -441,14 +441,14 @@ public partial class Server : MonoBehaviour
         //=========
         StartTurn(m);
     }
-    public Board.HandCard DrawCard(Match match, Player player)
+    public HandCard DrawCard(Match match, Player player)
     {
         //int p = (int)player;
         List<Card.Cardname> drawnCards = new List<Card.Cardname>();
 
         Card.Cardname top = player.deck[0];
         player.deck.RemoveAt(0);
-        Board.HandCard drawnCard = player.hand.Add(top);
+        HandCard drawnCard = player.hand.Add(top);
         drawnCards.Add(top);
 
         Message message = CreateMessage(Server.MessageType.DrawCards);
@@ -475,7 +475,7 @@ public partial class Server : MonoBehaviour
         if (player.clientID != clientID || player.playerID != playerID) return;
 
         if (index >= match.players[p].hand.Count()) return;
-        Board.HandCard card = match.players[p].hand[index];
+        HandCard card = match.players[p].hand[index];
         
         //check if play is legal
         if (match.players[p].currMana < card.manaCost) return;
@@ -519,12 +519,12 @@ public partial class Server : MonoBehaviour
             match.StartSequencePlayMinion(spell);
         }
     }
-    public Board.Minion SummonMinion(Match match, Player player, Card.Cardname minion, int position=-1)
+    public Minion SummonMinion(Match match, Player player, Card.Cardname minion, int position=-1)
     {
         if (player.board.Count() >= 7) return null;
 
         Player opponent = match.Opponent(player);
-        Board.Minion m = player.board.Add(minion, position,match.playOrder);
+        Minion m = player.board.Add(minion, position,match.playOrder);
 
         Message message = CreateMessage(Server.MessageType.SummonMinion);
         message.AddBool(true);
@@ -561,8 +561,8 @@ public partial class Server : MonoBehaviour
         if (attackerInd >= match.currPlayer.board.Count()) return;
         if (targetInd >= match.enemyPlayer.board.Count()) return;
 
-        Board.Minion attacker = match.currPlayer.board[attackerInd];
-        Board.Minion target = match.enemyPlayer.board[targetInd];
+        Minion attacker = match.currPlayer.board[attackerInd];
+        Minion target = match.enemyPlayer.board[targetInd];
         if (ValidAttackMinion(match, attackerInd, targetInd) == false) return;
 
         Debug.Log("Attack " + attacker.ToString() + " " + target.ToString());
@@ -577,7 +577,7 @@ public partial class Server : MonoBehaviour
 
     }
 
-    public void UpdateMinion(Match match, Board.Minion minion)
+    public void UpdateMinion(Match match, Minion minion)
     {
         Message messageOwner = CreateMessage(MessageType.UpdateMinion);
         Message messageOpponent = CreateMessage(MessageType.UpdateMinion);
@@ -597,7 +597,7 @@ public partial class Server : MonoBehaviour
         //server.Send(messageOpponent, opponent.clientID);
         SendMessage(messageOpponent, opponent);
     }
-    public void DestroyMinion(Match match, Board.Minion minion)
+    public void DestroyMinion(Match match, Minion minion)
     {
         minion.DEAD = true;
         Player owner = match.FindOwner(minion);
@@ -633,7 +633,7 @@ public partial class Server : MonoBehaviour
         if (player.clientID != clientID || player.playerID != playerID) return;
 
         if (attackerInd >= match.currPlayer.board.Count()) return;
-        Board.Minion attacker = match.currPlayer.board[attackerInd];
+        Minion attacker = match.currPlayer.board[attackerInd];
         
         if (ValidAttackFace(match,match.currPlayer,match.enemyPlayer,attackerInd) == false) return;
 
@@ -664,13 +664,13 @@ public partial class Server : MonoBehaviour
         //server.Send(messageOpponent, match.Opponent(player).connection.clientID);
         SendMessage(messageOpponent, player.opponent);
     }
-    public void RemoveTrigger(Match match, Board.Minion minion, Board.Trigger trigger)
+    public void RemoveTrigger(Match match, Minion minion, Trigger trigger)
     {
         AddTrigger(match, minion, trigger.type, trigger.side, trigger.ability, true);
     }
-    public void AddTrigger(Match match, Board.Minion minion,Board.Trigger.Type type, Board.Trigger.Side side, Board.Trigger.Ability ability, bool REMOVE = false)
+    public void AddTrigger(Match match, Minion minion,Trigger.Type type, Trigger.Side side, Trigger.Ability ability, bool REMOVE = false)
     {
-        Board.Trigger t = new Board.Trigger(type, side, ability, null);
+        Trigger t = new Trigger(type, side, ability, null);
         if (REMOVE) minion.RemoveMatchingTrigger(t);
         else minion.AddTrigger(type,side,ability);
 
@@ -698,11 +698,11 @@ public partial class Server : MonoBehaviour
         SendMessage(messageOwner, owner);
         SendMessage(messageOpponent, opponent);
     }
-    public void RemoveAura(Match match, Board.Minion minion, Board.Minion.Aura aura)
+    public void RemoveAura(Match match, Minion minion, Aura aura)
     {
         AddAura(match, minion, aura, true);
     }
-    public void AddAura(Match match, Board.Minion minion, Board.Minion.Aura aura, bool REMOVE=false)
+    public void AddAura(Match match, Minion minion, Aura aura, bool REMOVE=false)
     {
         if (REMOVE)
         {
@@ -791,149 +791,6 @@ public partial class Server : MonoBehaviour
 
         SendMessage(messageOwner, player);
         SendMessage(messageOpponent, player.opponent);
-    }
-
-    [Serializable]
-    public class Player
-    {
-        public PlayerConnection connection = new PlayerConnection();
-
-        public int health = 30;
-        public int maxMana = 0;
-        public int currMana = 0;
-
-        public bool turn = false;
-        public List<Card.Cardname> deck = new List<Card.Cardname>();
-        public Board.Hand hand = new Board.Hand();
-        public Board.MinionBoard board = new Board.MinionBoard();
-
-        public bool mulligan = false;
-
-        public Player opponent;
-
-        [System.NonSerialized]
-        public Match match;
-
-        public ushort messageCount = 0; //Server messages sent to player 
-    }
-
-
-    [Serializable]
-    public partial class Match
-    {
-        public List<Player> players = new List<Player>() { new Player(), new Player() };
-        public ulong matchID;
-        public Turn turn = Turn.player1;
-        public Player currPlayer;
-        public Player enemyPlayer;
-        public Server server;
-        public int playOrder = 0;
-        public bool started = false;
-        public ushort messageCount = 0;
-        List<(MessageType, ushort, CustomMessage, ushort)> messageQue = new();
-        //todo: secrets
-        //todo: graveyards
-
-        public void InitMatch(PlayerConnection p1, PlayerConnection p2, ulong mID)
-        {
-            players[0].connection=p1;
-            players[1].connection=p2;
-            players[0].match=this;
-            players[1].match=this;
-            players[0].opponent = players[1];
-            players[1].opponent = players[0];
-            List<Card.Cardname> sampleTestDeck = new List<Card.Cardname>();
-
-            for (int i=0;i<15;i++)
-            {
-                sampleTestDeck.Add((Card.Cardname)i);
-                sampleTestDeck.Add((Card.Cardname)i);
-            }
-            //decks = new List<List<Card.Cardname>>();
-            
-            players[0].deck = new List<Card.Cardname>(Board.Shuffle(sampleTestDeck));
-            players[1].deck = new List<Card.Cardname>(Board.Shuffle(sampleTestDeck));
-
-            turn = Board.RNG(50) ? Turn.player1 : Turn.player2;
-            currPlayer = players[(int)turn];
-            enemyPlayer = players[Opponent((int)turn)];
-            
-            matchID = mID;
-
-            players[0].hand.server = true;
-            players[1].hand.server = true;
-
-            players[0].board.server = true;
-            players[1].board.server = true;
-        }
-
-        public void ReceiveMessage(MessageType messageID,ushort clientID,CustomMessage message, ushort count)
-        {
-            if (count == messageCount)
-            {
-                messageCount++;
-                server.ParseMessage(messageID, clientID, message, matchID);
-            }
-            else
-            {
-                messageQue.Add((messageID, clientID, message, count));
-            }
-
-            for (int i=0;i<messageQue.Count;i++)
-            {
-                var v = messageQue[i];
-                if (v.Item4 == messageCount)
-                {
-                    Debug.Log("executing message " + messageCount);
-                    ReceiveMessage(v.Item1, v.Item2, v.Item3,v.Item4);
-                    messageQue.Remove(v);
-                    break;
-                }
-            }
-        }
-
-        public static bool operator ==(Match x, ulong y)
-        {
-            return (x.matchID == y);
-        }
-        public static bool operator !=(Match x, ulong y)
-        {
-            return (x.matchID != y);
-        }
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        public int Opponent(int x)
-        {
-            if (x == 1) return 0;
-            else if (x == 0) return 1;
-            return 1;
-        }
-        public Player Opponent(Player p)
-        {
-            if (p == players[0]) return players[1];
-            if (p == players[1]) return players[0];
-
-            return players[0];
-        }
-        public Player FindOwner(Board.Minion minion)
-        {
-            if (players[0].board.Contains(minion))
-                return players[0];
-            if (players[1].board.Contains(minion))
-                return players[1];
-            return players[0];
-        }
-        public Player FindOpponent(Board.Minion minion)
-        {
-            return Opponent(FindOwner(minion));
-        }
     }
 
     public CustomMessage CopyMessage(Message message, MessageType type)

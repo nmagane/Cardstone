@@ -3,11 +3,11 @@ using UnityEditor;
 using UnityEngine;
 public partial class Server
 {
-    public static void RefreshAttackCharge(Board.Minion m)
+    public static void RefreshAttackCharge(Minion m)
     {
         m.canAttack = true;
     }
-    public static void ConsumeAttackCharge(Board.Minion m)
+    public static void ConsumeAttackCharge(Minion m)
     {
         if (m.WINDFURY) m.WINDFURY = false;
         else m.canAttack = false;
@@ -18,7 +18,7 @@ public partial class Server
 
     }
 
-    public void HealMinion(Match match, Board.Minion minion, int heal)
+    public void HealMinion(Match match, Minion minion, int heal)
     {
         if (minion.health<minion.maxHealth)
         {
@@ -28,19 +28,19 @@ public partial class Server
         UpdateMinion(match, minion);
     }
 
-    public void DamageMinion(Match match, Board.Minion minion, int damage)
+    public void DamageMinion(Match match, Minion minion, int damage)
     {
-        if (minion.HasAura(Board.Minion.Aura.Type.Shield))
+        if (minion.HasAura(Aura.Type.Shield))
         {
-            match.server.RemoveAura(match,minion,minion.FindAura(Board.Minion.Aura.Type.Shield));
+            match.server.RemoveAura(match,minion,minion.FindAura(Aura.Type.Shield));
             return;
         }
         minion.health -= damage;
 
         //TODO: trigger ON DAMAGE (acolyte)
         //todo: triggier MINION DAMAGE (frothing)
-        match.TriggerMinion(Board.Trigger.Type.OnDamageTaken,minion);
-        match.AddTrigger(Board.Trigger.Type.OnMinionDamage, null, minion);
+        match.TriggerMinion(Trigger.Type.OnDamageTaken,minion);
+        match.AddTrigger(Trigger.Type.OnMinionDamage, null, minion);
         UpdateMinion(match, minion);
     }
 
@@ -52,62 +52,6 @@ public partial class Server
 
         UpdateHero(match, target);
         //TODO: trigger ON DAMAGE FACE
-    }
-    public class AttackInfo
-    {
-        public Player player;
-        public Board.Minion attacker;
-        public Board.Minion target;
-        public bool weaponSwing = false;
-        public bool faceAttack = false;
-        public bool friendlyFire = false;
-
-        public AttackInfo(Player p, Board.Minion atk, Board.Minion tar, bool swing, bool face, bool friendly)
-        {
-            player = p;
-            attacker = atk;
-            target = tar;
-            weaponSwing = swing;
-            faceAttack = face;
-            friendlyFire = friendly;
-        }
-    }
-    public class CastInfo
-    {
-        public Match match;
-        public Player player;
-        public Board.HandCard card;
-        public int target;
-        public int position;
-        public bool isFriendly;
-        public bool isHero;
-        public AttackInfo attack=null;
-        public Board.Minion minion;
-
-        public CastInfo(Match m, Player p,Board.HandCard name,int t, int s, bool fri, bool hero)
-        {
-            match = m;
-            player = p;
-            card = name;
-            target = t;
-            isFriendly = fri;
-            isHero = hero;
-            position = s;
-        }
-        public CastInfo(Match m, AttackInfo a)
-        {
-            match = m;
-            attack = a;
-            player = a.player;
-        }
-        public CastInfo()
-        {
-
-        }
-        public Board.Minion GetTargetMinion()
-        {
-            return isFriendly ? player.board[target] : player.opponent.board[target];
-        }
     }
 
     public bool ExecuteAttack(ref CastInfo action)
@@ -216,7 +160,7 @@ public partial class Server
             //HealFace(spell.match, player, damage);
             return;
         }
-        Board.Minion minion = spell.GetTargetMinion();
+        Minion minion = spell.GetTargetMinion();
         HealMinion(spell.match, minion, heal);
         //TODO: TRIGGER ANIMATION
     }
@@ -228,7 +172,7 @@ public partial class Server
             DamageFace(spell.match, player, damage);
             return;
         }
-        Board.Minion minion = spell.GetTargetMinion();
+        Minion minion = spell.GetTargetMinion();
         DamageMinion(spell.match, minion, damage);
         //TODO: TRIGGER ANIMATION
     }
@@ -246,10 +190,10 @@ public partial class Server
         Player p = spell.player;
         Match match = spell.match;
         if (spell.isFriendly == false) p = p.opponent;
-        Board.Minion minion = p.board[spell.target];
+        Minion minion = p.board[spell.target];
 
-        List<Board.Minion.Aura> auras = new List<Board.Minion.Aura>(minion.auras);
-        List<Board.Trigger> triggers = new List<Board.Trigger>(minion.triggers);
+        List<Aura> auras = new List<Aura>(minion.auras);
+        List<Trigger> triggers = new List<Trigger>(minion.triggers);
         foreach (var a in auras)
         {
             if (a.foreignSource && a.source != minion) continue;
@@ -285,7 +229,7 @@ public partial class Server
         int damage = 1;
 
         Player opp = spell.match.Opponent(spell.player);
-        List<Board.Minion> minions = new List<Board.Minion>();
+        List<Minion> minions = new List<Minion>();
         foreach (var m in opp.board)
         {
             minions.Add(m);
@@ -298,11 +242,11 @@ public partial class Server
     {
         Player p = spell.player;
         Match m = spell.match;
-        Board.Minion tar = p.board[spell.target];
+        Minion tar = p.board[spell.target];
         //TODO: SILENCABLE AURAS
-        m.server.AddAura(m, tar, new Board.Minion.Aura(Board.Minion.Aura.Type.Health, 1));
-        m.server.AddAura(m, tar, new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 1));
-        //p.board[spell.target].AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 1));
+        m.server.AddAura(m, tar, new Aura(Aura.Type.Health, 1));
+        m.server.AddAura(m, tar, new Aura(Aura.Type.Damage, 1));
+        //p.board[spell.target].AddAura(new Aura(Aura.Type.Damage, 1));
     }
     void Abusive(CastInfo spell)
     {
@@ -310,10 +254,10 @@ public partial class Server
         Match m = spell.match;
         if (spell.isFriendly == false) p = p.opponent;
 
-        Board.Minion tar = p.board[spell.target];
+        Minion tar = p.board[spell.target];
         //TODO: SILENCABLE AURAS
-        m.server.AddAura(m, tar, new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 2, true));
-        //p.board[spell.target].AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 2,true));
+        m.server.AddAura(m, tar, new Aura(Aura.Type.Damage, 2, true));
+        //p.board[spell.target].AddAura(new Aura(Aura.Type.Damage, 2,true));
     }
     void Argus(CastInfo spell)
     {
@@ -324,12 +268,12 @@ public partial class Server
             if (m.index == spell.position-1 || m.index == spell.position+1)
             {
 
-                match.server.AddAura(match, m, new Board.Minion.Aura(Board.Minion.Aura.Type.Health, 1));
-                match.server.AddAura(match, m, new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 1));
-                match.server.AddAura(match, m, new Board.Minion.Aura(Board.Minion.Aura.Type.Taunt));
-                //m.AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Taunt));
-                //m.AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Health, 1));
-                //m.AddAura(new Board.Minion.Aura(Board.Minion.Aura.Type.Damage, 1));
+                match.server.AddAura(match, m, new Aura(Aura.Type.Health, 1));
+                match.server.AddAura(match, m, new Aura(Aura.Type.Damage, 1));
+                match.server.AddAura(match, m, new Aura(Aura.Type.Taunt));
+                //m.AddAura(new Aura(Aura.Type.Taunt));
+                //m.AddAura(new Aura(Aura.Type.Health, 1));
+                //m.AddAura(new Aura(Aura.Type.Damage, 1));
             }
         }
     }

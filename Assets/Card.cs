@@ -5,7 +5,7 @@ using UnityEngine;
 public class Card : MonoBehaviour
 {
     public Board board;
-    public Board.HandCard card;
+    public HandCard card;
 
     public new TMP_Text name;
     public TMP_Text text;
@@ -62,7 +62,7 @@ public class Card : MonoBehaviour
         
     }
 
-    public void Set(Board.HandCard c)
+    public void Set(HandCard c)
     {
         card = c;
         if (c.card == Cardname.Cardback)
@@ -219,7 +219,7 @@ public class Card : MonoBehaviour
     {
         if (card.card == Cardname.Cardback) return;
         
-        if (board.currHand.mulliganMode==Board.Hand.MulliganState.None)
+        if (board.currHand.mulliganMode==Hand.MulliganState.None)
         {
             ToggleMulligan();
             return;
@@ -238,7 +238,7 @@ public class Card : MonoBehaviour
     private void OnMouseDrag()
     {
         if (card.card == Cardname.Cardback) return;
-        if (board.currHand.mulliganMode!=Board.Hand.MulliganState.Done)
+        if (board.currHand.mulliganMode!=Hand.MulliganState.Done)
         {
             return;
         }
@@ -261,7 +261,7 @@ public class Card : MonoBehaviour
     {
 
         if (card.card == Cardname.Cardback) return;
-        if (board.currHand.mulliganMode!=Board.Hand.MulliganState.Done)
+        if (board.currHand.mulliganMode!=Hand.MulliganState.Done)
         {
             return;
         }
