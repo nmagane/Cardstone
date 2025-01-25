@@ -29,7 +29,7 @@ public partial class Board
             index = ind;
             MINION = true;
             //manaCost
-            if (name==Card.Cardname.Ping)
+            if (name==Card.Cardname.Ping || name==Card.Cardname.Soulfire)
             {
                 MINION = false;
                 SPELL = true;
@@ -50,7 +50,7 @@ public partial class Board
                 damage = 3;
                 eligibleTargets = EligibleTargets.FriendlyMinions;
             }
-            if (name==Card.Cardname.Abusive || name==Card.Cardname.IronbeakOwl)
+            if (name==Card.Cardname.Abusive || name==Card.Cardname.IronbeakOwl || name==Card.Cardname.Doctor)
             {
                 MINION = true;
                 TARGETED = true;
@@ -59,7 +59,7 @@ public partial class Board
                 damage = 3;
                 eligibleTargets = EligibleTargets.AllMinions;
             }
-            if (name==Card.Cardname.Argus)
+            if (name==Card.Cardname.Argus || name==Card.Cardname.Doomguard)
             {
                 MINION = true;
                 TARGETED = false;

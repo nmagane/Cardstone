@@ -1,7 +1,12 @@
 ﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 public partial class Server
 {
+    public static void RefreshAttackCharge(Board.Minion m)
+    {
+        m.canAttack = true;
+    }
     public static void ConsumeAttackCharge(Board.Minion m)
     {
         if (m.WINDFURY) m.WINDFURY = false;
@@ -12,6 +17,17 @@ public partial class Server
         //TODO: AOE EFFECTS DONT ACTIVATE TRIGGERS UNTIL ALL UNITS TAKE DAMAGE
 
     }
+
+    public void HealMinion(Match match, Board.Minion minion, int heal)
+    {
+        if (minion.health<minion.maxHealth)
+        {
+            //HEAL TRIGGERS HERE
+        }
+        minion.health = Mathf.Min(minion.health+heal,minion.maxHealth);
+        UpdateMinion(match, minion);
+    }
+
     public void DamageMinion(Match match, Board.Minion minion, int damage)
     {
         if (minion.HasAura(Board.Minion.Aura.Type.Shield))
@@ -87,6 +103,10 @@ public partial class Server
         public CastInfo()
         {
 
+        }
+        public Board.Minion GetTargetMinion()
+        {
+            return isFriendly ? player.board[target] : player.opponent.board[target];
         }
     }
 
@@ -171,13 +191,56 @@ public partial class Server
             case Card.Cardname.IronbeakOwl:
                 SilenceMinion(spell);
                 break;
+            case Card.Cardname.Doctor:
+                Heal(spell, 2);
+                break;
+            case Card.Cardname.Soulfire:
+                Damage(spell, 4);
+                spell.match.ResolveTriggerQueue(ref spell);
+                Discard(spell, 1);
+                break;
+            case Card.Cardname.Doomguard:
+                Discard(spell, 2);
+                break;
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);
                 break;
         }
     }
 
-
+    public void Heal(CastInfo spell, int heal)
+    {
+        if (spell.isHero)
+        {
+            Player player = spell.isFriendly ? spell.player : spell.player.opponent;
+            //HealFace(spell.match, player, damage);
+            return;
+        }
+        Board.Minion minion = spell.GetTargetMinion();
+        HealMinion(spell.match, minion, heal);
+        //TODO: TRIGGER ANIMATION
+    }
+    public void Damage(CastInfo spell, int damage)
+    {
+        if (spell.isHero)
+        {
+            Player player = spell.isFriendly ? spell.player : spell.player.opponent;
+            DamageFace(spell.match, player, damage);
+            return;
+        }
+        Board.Minion minion = spell.GetTargetMinion();
+        DamageMinion(spell.match, minion, damage);
+        //TODO: TRIGGER ANIMATION
+    }
+    public void Discard(CastInfo spell, int count=1, bool enemyDiscard = false)
+    {
+        Player player = enemyDiscard ? spell.player.opponent : spell.player;   
+        for (int i=0;i<count;i++)
+        {
+            int rand = Random.Range(0, player.hand.Count());
+            spell.match.server.DiscardCard(spell.match, player, rand);
+        }
+    }
     public void SilenceMinion(CastInfo spell)
     {
         Player p = spell.player;
@@ -185,13 +248,16 @@ public partial class Server
         if (spell.isFriendly == false) p = p.opponent;
         Board.Minion minion = p.board[spell.target];
 
-        while (minion.auras.Count>0)
+        List<Board.Minion.Aura> auras = new List<Board.Minion.Aura>(minion.auras);
+        List<Board.Trigger> triggers = new List<Board.Trigger>(minion.triggers);
+        foreach (var a in auras)
         {
-            match.server.RemoveAura(match, minion, minion.auras[0]);
+            if (a.foreignSource && a.source != minion) continue;
+            match.server.RemoveAura(match, minion, a);
         }
-        while (minion.triggers.Count>0)
+        foreach (var t in triggers)
         {
-            match.server.RemoveTrigger(match, minion, minion.triggers[0]);
+            match.server.RemoveTrigger(match, minion, t);
         }
     }
     void Ping(CastInfo spell)

@@ -86,8 +86,8 @@ public partial class Server
     public void ConfirmAttackFace(Match match, int attackerInd,bool friendlyFire, bool PREATTACK)
     {
         MessageType phase = PREATTACK ? MessageType.ConfirmPreAttackFace : MessageType.ConfirmAttackFace;
-        Message mOwner = CreateMessage(MessageType.ConfirmAttackFace);
-        Message mOpp = CreateMessage(MessageType.ConfirmAttackFace);
+        Message mOwner = CreateMessage(phase);
+        Message mOpp = CreateMessage(phase);
         mOwner.AddBool(true);
         mOpp.AddBool(false);
 

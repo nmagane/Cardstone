@@ -52,6 +52,10 @@ public class Card : MonoBehaviour
         Argus,
         Abusive,
         Squire,
+        Doctor,
+        Amani,
+        Soulfire,
+        Doomguard,
     }
     void Start()
     {

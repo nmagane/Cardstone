@@ -45,7 +45,7 @@ FLAME IMP                  - DONE
 SHIELD BEARER              - DONE
 VOIDWALKER                 - DONE
 YOUNG PRIESTESS            - DONE
-AMANI BERSERKER            - NOT DONE
+AMANI BERSERKER            - DONE
 IRONBEAK OWL               - DONE
 DIRE WOLF ALPHA            - DONE
 KNIFE JUGGLER              - DONE

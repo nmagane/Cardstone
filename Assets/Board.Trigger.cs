@@ -37,7 +37,9 @@ public partial class Board
 
             StartTurn,
             EndTurn,
-            CardDraw,
+
+            OnDrawCard,
+            OnDiscardCard,
 
             //==============
             _PHASELIMIT,

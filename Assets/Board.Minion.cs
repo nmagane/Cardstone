@@ -53,6 +53,14 @@ public partial class Board
             baseHealth = maxHealth;
             baseDamage = damage;
 
+            if (c==Card.Cardname.Doomguard)
+            {
+               AddAura(new Aura(Aura.Type.Charge));
+            }
+            if (c==Card.Cardname.Amani)
+            {
+               AddAura(new Aura(Aura.Type.Amani));
+            }
             if (c==Card.Cardname.Squire)
             {
                AddAura(new Aura(Aura.Type.Shield));
@@ -130,10 +138,14 @@ public partial class Board
         public void AddAura(Aura a)
         {
             Aura finder = FindAura(a.type);
+            Debug.Log("starting add aura " + a.type);
             if (finder != null)
             {
                 if (finder.stackable == false)
+                {
+                    Debug.Log("cantstack " + a.type);
                     return;
+                }
             }
 
             finder = FindForeignAura(a);
@@ -142,6 +154,8 @@ public partial class Board
                 if (finder.foreignSource && finder.source == a.source)
                 {
                     //Refresh and don't re-add.
+
+                    Debug.Log("already on it " + a.type);
                     finder.refreshed = true;
                     return;
                 }
@@ -150,9 +164,12 @@ public partial class Board
             if (finder == null && a.foreignSource)
             {
                 //First time application of foreign aura. Add and considered it refreshed.
+
+                Debug.Log("first time" + a.type);
                 a.refreshed = true;
             }
-            
+
+            Debug.Log("adding aura " + a.type);
             a.minion = this;
             a.InitAura();
             auras.Add(a);
@@ -183,7 +200,7 @@ public partial class Board
             return null;
         }
 
-        public void RemoveAura(Aura a)
+        public bool RemoveAura(Aura a)
         {
             auras.Remove(a);
             Debug.Log("removing aura " + a.type);
@@ -210,6 +227,7 @@ public partial class Board
                     }
                     break;
             }
+            return true;
         }
 
         public void RemoveAura(Aura.Type t)
@@ -277,6 +295,7 @@ public partial class Board
             foreach (var aura in removeList)
                 RemoveAura(aura);
         }
+        [System.Serializable]
         public class Aura
         {
             public enum Type
@@ -289,7 +308,8 @@ public partial class Board
                 Stealth,
                 Windfury,
                 NoAttack,
-                
+                Amani,
+
                 StormwindChampion,
                 DireWolfAlpha,
             }
@@ -300,8 +320,11 @@ public partial class Board
             public bool trigger = false;
             public bool stackable = false;
             public ushort value = 0;
+            [System.NonSerialized]
             public Minion minion;
+            [System.NonSerialized]
             public Minion source;
+            public bool enrage = false;
             public bool refreshed = false;
             
             public void InitAura()
@@ -317,6 +340,9 @@ public partial class Board
                         break;
                     case Type.NoAttack:
                         minion.canAttack = false;
+                        break;
+                    case Type.Charge:
+                        minion.canAttack = true;
                         break;
                     case Type.Taunt:
                         if (minion.board.server==false)
@@ -336,11 +362,22 @@ public partial class Board
                             }
                         }
                         break;
+
+                    case Type.Amani: //ENRAGE AURAS GO HERE?
+                        enrage = true;
+                        break;
                 }
             }
 
             public void ActivateAura(Server.Match match)
             {
+                Debug.Log("active");
+                if (enrage==true && EnrageCheck() == false)
+                {
+                    Debug.Log("failenrage");
+                    return;
+                }
+
                 switch (type)
                 {
                     case Type.StormwindChampion:
@@ -349,7 +386,15 @@ public partial class Board
                     case Type.DireWolfAlpha:
                         AuraEffects.DireWolfAlpha(match,this.minion);
                         break;
+                    case Type.Amani:
+                        AuraEffects.Amani(match,this.minion);
+                        break;
                 }
+            }
+
+            bool EnrageCheck()
+            {
+                return minion.health < minion.maxHealth;
             }
 
             public Aura(Type t, ushort val=0, bool temp = false, bool foreign = false, Minion provider = null)

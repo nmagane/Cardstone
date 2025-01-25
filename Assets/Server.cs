@@ -1,19 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq.Expressions;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Riptide;
 using Riptide.Utils;
-using UnityEditor.Timeline.Actions;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
-
 
 public partial class Server : MonoBehaviour
 {
 
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.KnifeJuggler,Card.Cardname.Argus,Card.Cardname.IronbeakOwl,Card.Cardname.Squire, Card.Cardname.IronbeakOwl };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Doomguard, Card.Cardname.Soulfire };
     public static Message CreateMessage(MessageType type)
     {
         Message m = Message.Create(MessageSendMode.Reliable, (ushort)type);
@@ -710,7 +704,10 @@ public partial class Server : MonoBehaviour
     }
     public void AddAura(Match match, Board.Minion minion, Board.Minion.Aura aura, bool REMOVE=false)
     {
-        if (REMOVE) minion.RemoveAura(aura);
+        if (REMOVE)
+        {
+            if (minion.RemoveAura(aura) == false) return;
+        }
         else minion.AddAura(aura);
 
         Message messageOwner = CreateMessage(REMOVE? MessageType.RemoveAura : MessageType.AddAura);
@@ -755,13 +752,45 @@ public partial class Server : MonoBehaviour
         SendMessage(messageOpponent, opponent);
     }
 
-    public void DiscardCard(Match m, Player p, int index)
+    public void MillCard(Match match, Player player)
     {
+        Card.Cardname c = player.deck[0];
+        player.deck.RemoveAt(0);
         Message messageOwner = CreateMessage(MessageType.DiscardCard);
         Message messageOpponent = CreateMessage(MessageType.DiscardCard);
 
         messageOwner.AddBool(true);
         messageOpponent.AddBool(false);
+
+        messageOwner.AddInt((int)c);
+        messageOpponent.AddInt((int)c);
+
+        SendMessage(messageOwner, player);
+        SendMessage(messageOpponent, player.opponent);
+    }
+    public void DiscardCard(Match match, Player player, int index)
+    {
+        if (player.hand.Count() == 0 || index>=player.hand.Count()) return;
+
+
+        CastInfo discardAction = new CastInfo(match, player, player.hand[index], -1, -1, false, false);
+        player.hand.RemoveAt(index);
+        match.StartSequenceDiscardCard(discardAction);
+
+        Message messageOwner = CreateMessage(MessageType.DiscardCard);
+        Message messageOpponent = CreateMessage(MessageType.DiscardCard);
+
+        messageOwner.AddBool(true);
+        messageOpponent.AddBool(false);
+
+        messageOwner.AddInt(index);
+        messageOpponent.AddInt(index);
+
+        messageOwner.AddInt((int)discardAction.card.card);
+        messageOpponent.AddInt((int)discardAction.card.card);
+
+        SendMessage(messageOwner, player);
+        SendMessage(messageOpponent, player.opponent);
     }
 
     [Serializable]

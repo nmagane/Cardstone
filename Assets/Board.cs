@@ -213,6 +213,17 @@ public partial class Board : MonoBehaviour
                 }
                 AddTrigger(addTriggerMinionIndex, addTriggerFriendly, addTriggerType, addTriggerSide, addTriggerAbility);
                 break;
+            case Server.MessageType.DiscardCard:
+                bool discardFriendly = message.GetBool();
+                int discardCardInd = message.GetInt();
+                int discardCardName = message.GetInt();
+                DiscardCard(discardFriendly, discardCardInd, (Card.Cardname)discardCardName);
+                break;
+            case Server.MessageType.MillCard:
+                bool millFriendly = message.GetBool();
+                int millCardName = message.GetInt();
+                MillCard(millFriendly, (Card.Cardname)millCardName);
+                break;
             default:
                 Debug.LogError("UNKNOWN MESSAGE TYPE");
                 break;
@@ -517,6 +528,19 @@ public partial class Board : MonoBehaviour
     {
         Minion target = friendly ? currMinions[minionIndex] : enemyMinions[minionIndex];
         target.AddTrigger((Trigger.Type)type, (Trigger.Side)side, (Trigger.Ability)ability);
+    }
+
+    public void DiscardCard(bool friendly, int ind, Card.Cardname card)
+    {
+        Hand hand = friendly ? currHand : enemyHand;
+        HandCard c = hand[ind];
+        Debug.Log((friendly?"":"enemy ")+"discarded " + card);
+        hand.RemoveAt(ind);
+        //TODO: discard anim
+    }
+    public void MillCard(bool friendly, Card.Cardname card)
+    {
+        //todo: mill anim + reduce deck card counter
     }
     public bool IsFriendly(Minion m)
     {

@@ -30,7 +30,9 @@ public partial class Server
 
             StartTurn,
             EndTurn,
-            CardDraw,
+
+            OnDrawCard,
+            OnDiscardCard,
         }
 
         public void StartSequenceEndTurn(CastInfo spell)
@@ -72,7 +74,11 @@ public partial class Server
             }
             Board.HandCard card = server.DrawCard(spell.match, spell.player);
             spell.card = card;
-            StartPhase(Phase.CardDraw, ref spell);
+            StartPhase(Phase.OnDrawCard, ref spell);
+        }
+        public void StartSequenceDiscardCard(CastInfo spell)
+        {
+            StartPhase(Phase.OnDiscardCard, ref spell);
         }
 
         public void StartSequenceAttackMinion(CastInfo spell)
@@ -300,12 +306,14 @@ public partial class Server
             //Aura activation
             foreach (Board.Minion minion in players[0].board)
             {
-                foreach (var aura in minion.auras)
+                List<Board.Minion.Aura> auras = new List<Board.Minion.Aura>(minion.auras);
+                foreach (var aura in auras)
                     aura.ActivateAura(this);
             }
             foreach (Board.Minion minion in players[1].board)
             {
-                foreach (var aura in minion.auras)
+                List<Board.Minion.Aura> auras = new List<Board.Minion.Aura>(minion.auras);
+                foreach (var aura in auras)
                     aura.ActivateAura(this);
             }
 

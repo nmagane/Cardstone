@@ -166,6 +166,21 @@ public partial class Board
                 result.AddUShort(addTriggerSide);
                 result.AddUShort(addTriggerAbility);
                 break;
+            case Server.MessageType.DiscardCard:
+                bool discardFriendly = message.GetBool();
+                int discardCardInd = message.GetInt();
+                int discardCardName = message.GetInt();
+                result.AddBool(discardFriendly);
+                result.AddInt(discardCardInd);
+                result.AddInt(discardCardName);
+                break;
+            case Server.MessageType.MillCard:
+                bool millFriendly = message.GetBool();
+                int millCardName = message.GetInt();
+                result.AddBool(millFriendly);
+                result.AddInt(millCardName);
+                break;
+                
             default:
                 Debug.LogError("UNKNOWN MESSAGE TYPE");
                 break;
