@@ -30,6 +30,8 @@ public partial class Match
 
         OnDrawCard,
         OnDiscardCard,
+
+        AfterHeroPower,
     }
 
     public void StartSequenceEndTurn(CastInfo spell)
@@ -147,7 +149,11 @@ public partial class Match
 
         StartPhase(Phase.AfterSummonMinion, ref spell);
     }
-
+    public void StartSequenceHeroPower(CastInfo spell)
+    {
+        server.CastSpell(spell);
+        StartPhase(Phase.AfterHeroPower, ref spell);
+    }
     public void TriggerMinion(Trigger.Type type, Minion target)
     {
         triggerBuffer.AddRange(target.CheckTriggers(type, Trigger.Side.Both, null));

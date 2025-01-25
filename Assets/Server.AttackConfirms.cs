@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Riptide;
 
 public partial class Server
@@ -106,5 +107,10 @@ public partial class Server
     public void ConfirmSwingFace()
     {
 
+    }
+
+    public void ConfirmHeroPower(CastInfo spell)
+    {
+        throw new System.NotImplementedException();
     }
 }

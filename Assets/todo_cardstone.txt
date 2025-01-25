@@ -22,7 +22,7 @@ todo: hand limit + discarding + milling.
 todo: aura communication.
 todo: valid target exist check for abusive/shattered sun so you can play them with no targets, etc...
 
-todo: hero powers
+todo: hero power TARGETING.
 
 ===========================================
 class Trigger

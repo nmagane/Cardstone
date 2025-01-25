@@ -71,6 +71,9 @@ public partial class Server : MonoBehaviour
         AddTrigger,
         RemoveTrigger,
 
+        HeroPower,
+        ConfirmHeroPower,
+
         Concede,
 
         _TEST
@@ -194,10 +197,17 @@ public partial class Server : MonoBehaviour
                 int attackerIndFace = message.GetInt();
                 AttackFace(matchID, clientID,playerIDFace,attackerIndFace);
                 break;
+            case MessageType.HeroPower:
+                ulong heroPowerPlayerID = message.GetULong();
+                ushort heroPower = message.GetUShort();
+                int heroPowerTargetInd = message.GetInt();
+                bool heroPowerFriendly = message.GetBool();
+                bool heroIsHero = message.GetBool();
+                CastHeroPower(matchID,clientID,heroPowerPlayerID,heroPower, heroPowerTargetInd, heroPowerFriendly, heroIsHero);
+                break;
         }
         
     }
-    
 
     public struct PlayerConnection
     {
@@ -791,6 +801,22 @@ public partial class Server : MonoBehaviour
 
         SendMessage(messageOwner, player);
         SendMessage(messageOpponent, player.opponent);
+    }
+
+
+    private void CastHeroPower(ulong matchID,ushort clientID, ulong playerID, ushort heroPower, int target, bool isFriendly, bool isHero)
+    {
+
+        if (currentMatches.ContainsKey(matchID) == false) return;
+        Match match = currentMatches[matchID];
+        Player player = match.currPlayer;
+        PlayerConnection connection = player.connection;
+        if (connection.clientID != clientID || connection.playerID != playerID) return;
+
+        Card.Cardname ability = (Card.Cardname)heroPower;
+        CastInfo spell = new CastInfo(match, player, new HandCard(ability,0), target, -1, isFriendly, isHero);
+
+        match.StartSequenceHeroPower(spell);
     }
 
     public CustomMessage CopyMessage(Message message, MessageType type)
