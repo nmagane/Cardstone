@@ -628,7 +628,7 @@ public partial class Board : MonoBehaviour
     }
     void Update()
     {
-        
+#if (UNITY_EDITOR)
         if (Input.GetKeyDown(KeyCode.Q) && playerID==100)
         {
             StartMatchmaking();
@@ -690,7 +690,7 @@ public partial class Board : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.M))
         {
         }
-        
+#endif //END TESTING HOTKEYS
     }
     void Tester(Server.CustomMessage m)
     {

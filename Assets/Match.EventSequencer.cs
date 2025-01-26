@@ -156,7 +156,9 @@ public partial class Match
     }
     public void TriggerMinion(Trigger.Type type, Minion target)
     {
-        triggerBuffer.AddRange(target.CheckTriggers(type, Trigger.Side.Both, null));
+        CastInfo cast = new CastInfo();
+        cast.minion = target;
+        triggerBuffer.AddRange(target.CheckTriggers(type, Trigger.Side.Both, cast));
     }
 
     public void AddTrigger(Trigger.Type type, CastInfo spell = null, Minion source = null)
@@ -176,7 +178,7 @@ public partial class Match
         }
         foreach (Minion minion in players[1].board)
         {
-            triggerBuffer.AddRange(minion.CheckTriggers(type, p0Side, spell));
+            triggerBuffer.AddRange(minion.CheckTriggers(type, p1Side, spell));
         }
     }
     public void AddTrigger(Trigger.Type type, CastInfo spell = null, Player source = null)
@@ -194,7 +196,7 @@ public partial class Match
         }
         foreach (Minion minion in players[1].board)
         {
-            triggerBuffer.AddRange(minion.CheckTriggers(type, p0Side, spell));
+            triggerBuffer.AddRange(minion.CheckTriggers(type, p1Side, spell));
         }
     }
     public CastInfo StartPhase(Phase phase, ref CastInfo spell)
@@ -213,7 +215,7 @@ public partial class Match
         }
         foreach (Minion minion in players[1].board)
         {
-            triggerBuffer.AddRange(minion.CheckTriggers(phaseTrigger, p0Side, spell));
+            triggerBuffer.AddRange(minion.CheckTriggers(phaseTrigger, p1Side, spell));
         }
 
         ResolveTriggerQueue(ref spell);

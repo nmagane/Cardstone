@@ -17,13 +17,13 @@ public partial class Board
             return;
         message.SetBits(matchMessageOrder, 16, 28);
         client.Send(message);
-
         if (UNORDERED == false)
             matchMessageOrder++;
     }
     public Server.CustomMessage CopyMessage(Message message, Server.MessageType type)
     {
         Server.CustomMessage result = new Server.CustomMessage();
+        result.type = type;
         switch (type)
         {
             case Server.MessageType._TEST:

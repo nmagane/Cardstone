@@ -30,6 +30,6 @@ public static class AuraEffects
 
     public static void Amani(Match match, Minion sourceMinion)
     {
-        match.server.AddAura(match, sourceMinion, new Aura(Aura.Type.Damage, 2, false, true, sourceMinion));
+        match.server.AddAura(match, sourceMinion, new Aura(Aura.Type.Damage, 3, false, true, sourceMinion));
     }
 }

@@ -7,7 +7,7 @@ using UnityEngine;
 public partial class Server : MonoBehaviour
 {
 
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { };//{ Card.Cardname.Doomguard, Card.Cardname.Soulfire };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() {Card.Cardname.Harvest_Golem, Card.Cardname.Knife_Juggler };//{ Card.Cardname.Doomguard, Card.Cardname.Soulfire };
     public static Message CreateMessage(MessageType type)
     {
         Message m = Message.Create(MessageSendMode.Reliable, (ushort)type);
@@ -826,9 +826,11 @@ public partial class Server : MonoBehaviour
         ConfirmHeroPower(spell);
     }
 
-    public CustomMessage CopyMessage(Message message, MessageType type)
+    public static CustomMessage CopyMessage(Message message, MessageType type)
     {
         CustomMessage result = new CustomMessage();
+        result.type = type;
+        result.type = type;
         switch (type)
         {
             case MessageType.Matchmaking:

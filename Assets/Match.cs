@@ -26,13 +26,32 @@ public partial class Match
         players[1].match = this;
         players[0].opponent = players[1];
         players[1].opponent = players[0];
-        List<Card.Cardname> sampleTestDeck = new List<Card.Cardname>();
-
-        for (int i = 1; i < 16; i++)
+        List<Card.Cardname> zooDeck = new List<Card.Cardname>()
         {
-            sampleTestDeck.Add((Card.Cardname)i);
-            sampleTestDeck.Add((Card.Cardname)i);
-        }
+            Card.Cardname.Flame_Imp,
+            Card.Cardname.Voidwalker,
+            Card.Cardname.Soulfire,
+            Card.Cardname.Abusive_Sergeant,
+            Card.Cardname.Young_Priestess,
+            Card.Cardname.Ironbeak_Owl,
+            Card.Cardname.Argent_Squire,
+            Card.Cardname.Amani_Berserker,
+            Card.Cardname.Dire_Wolf_Alpha,
+            Card.Cardname.Knife_Juggler,
+            Card.Cardname.Shattered_Sun_Cleric,
+            Card.Cardname.Harvest_Golem,
+            Card.Cardname.Dark_Iron_Dwarf,
+            Card.Cardname.Defender_of_Argus,
+            Card.Cardname.Doomguard,
+
+        };
+
+        List<Card.Cardname> sampleTestDeck = new List<Card.Cardname>();
+        foreach (var c in zooDeck)
+        {
+            sampleTestDeck.Add(c);
+            sampleTestDeck.Add(c);
+        }    
         //decks = new List<List<Card.Cardname>>();
 
         players[0].deck = new List<Card.Cardname>(Board.Shuffle(sampleTestDeck));

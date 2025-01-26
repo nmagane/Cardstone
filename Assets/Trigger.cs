@@ -74,7 +74,6 @@ public class Trigger
 
         //DEAD MINIONS CAN'T TRIGGER
         if (minion.DEAD && t != Type.Deathrattle) return false;
-
         switch (t)
         {
             case Type.OnPlayCard:
@@ -85,16 +84,19 @@ public class Trigger
             case Type.AfterPlayMinion:
             case Type.AfterSummonMinion:
             case Type.AfterPlaySpell:
-
             case Type.OnMinionDeath:
                 //Does not trigger on self
                 if (minion == spell.minion) return false;
                 break;
+            case Type.Deathrattle:
+                if (minion == spell.minion) return true;
+                else return false;
                 /*
             case Type.OnDamageTaken:
                 if (minion == spell.minion) return true;
                 break;
                 */
+
         }
         return (side == Side.Both || s == side);
     }

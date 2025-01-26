@@ -7,6 +7,8 @@ public class UIButton : MonoBehaviour
 {
     public enum func
     {
+        StartMatchmaking,
+
         SubmitMulligan,
         EndTurn,
     }
@@ -63,8 +65,12 @@ public class UIButton : MonoBehaviour
         board.SubmitEndTurn();
     }
 
-
-
+    public void StartMatchmaking()
+    {
+        board.StartMatchmaking();
+        Destroy(this.gameObject);
+    }
+    
 
 
 
@@ -110,7 +116,22 @@ public class UIButton : MonoBehaviour
             //Camera.main.GetComponentInChildren<AudioManager>().PlayUI_Randomized(sounds[0], 1.7f, 1.9f);
             StartCoroutine(bigBouncer(0.25f));
         }
-        Invoke(f.ToString(), 0);
+        //Invoke(f.ToString(), 0);
+        switch (f)
+        {
+            case func.StartMatchmaking:
+                StartMatchmaking();
+                break;
+            case func.EndTurn:
+                EndTurn();
+                break;
+            case func.SubmitMulligan:
+                SubmitMulligan();
+                break;
+            default:
+                Debug.LogError("NO BUTTON FUNCTION");
+                break;
+        }
     }
 
 

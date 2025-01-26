@@ -3,8 +3,11 @@
 
 public partial class Server
 {
+    [System.Serializable]
     public class CustomMessage
     {
+        public MessageType type;
+        public ushort clientID;
         Queue<int> ints = new Queue<int>();
         Queue<ulong> ulongs = new Queue<ulong>();
         Queue<ushort> ushorts = new Queue<ushort>();

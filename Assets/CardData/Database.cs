@@ -317,7 +317,7 @@ public partial class Database
 
         c.MINION = true;
 
-        c.triggers.Add((Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.HarvestGolem));
+        c.triggers.Add((Trigger.Type.Deathrattle, Trigger.Side.Friendly, Trigger.Ability.HarvestGolem));
 
         return c;
     }
