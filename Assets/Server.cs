@@ -7,7 +7,7 @@ using UnityEngine;
 public partial class Server : MonoBehaviour
 {
 
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Doomguard, Card.Cardname.Soulfire };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { };//{ Card.Cardname.Doomguard, Card.Cardname.Soulfire };
     public static Message CreateMessage(MessageType type)
     {
         Message m = Message.Create(MessageSendMode.Reliable, (ushort)type);
@@ -814,9 +814,16 @@ public partial class Server : MonoBehaviour
         if (connection.clientID != clientID || connection.playerID != playerID) return;
 
         Card.Cardname ability = (Card.Cardname)heroPower;
-        CastInfo spell = new CastInfo(match, player, new HandCard(ability,0), target, -1, isFriendly, isHero);
+        HandCard card = new HandCard(ability, 0);
+
+        if (player.currMana < card.manaCost) return;
+
+        player.currMana -= card.manaCost;
+
+        CastInfo spell = new CastInfo(match, player, card, target, -1, isFriendly, isHero);
 
         match.StartSequenceHeroPower(spell);
+        ConfirmHeroPower(spell);
     }
 
     public CustomMessage CopyMessage(Message message, MessageType type)
@@ -870,6 +877,18 @@ public partial class Server : MonoBehaviour
                 int attackerIndFace = message.GetInt();
                 result.AddULong(playerIDFace);
                 result.AddInt(attackerIndFace);
+                break;
+            case MessageType.HeroPower:
+                ulong heroPowerPlayerID = message.GetULong();
+                ushort heroPower = message.GetUShort();
+                int heroPowerTargetInd = message.GetInt();
+                bool heroPowerFriendly = message.GetBool();
+                bool heroIsHero = message.GetBool();
+                result.AddULong(heroPowerPlayerID);
+                result.AddUShort(heroPower);
+                result.AddInt(heroPowerTargetInd);
+                result.AddBool(heroPowerFriendly);
+                result.AddBool(heroIsHero);
                 break;
             default:
                 Debug.LogError("MESSAGE TYPE UNRECOGNIZED");

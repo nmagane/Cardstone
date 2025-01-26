@@ -44,56 +44,26 @@ public partial class Minion
     {
         board = _board;
         card = c;
-        health = 3;
-        damage = 1;
         index = ind;
+
+        Database.CardInfo info = Database.GetCardData(c);
+        health = info.health;
+        damage = info.damage;
+
+        foreach (Aura.Type aura in info.auras)
+        {
+            AddAura(new Aura(aura));
+        }
+
+        foreach (var triggerInfo in info.triggers)
+        {
+            AddTrigger(triggerInfo.Item1, triggerInfo.Item2, triggerInfo.Item3);
+        }
 
         maxHealth = health;
         baseHealth = maxHealth;
         baseDamage = damage;
 
-        if (c == Card.Cardname.Doomguard)
-        {
-            AddAura(new Aura(Aura.Type.Charge));
-        }
-        if (c == Card.Cardname.Amani)
-        {
-            AddAura(new Aura(Aura.Type.Amani));
-        }
-        if (c == Card.Cardname.Squire)
-        {
-            AddAura(new Aura(Aura.Type.Shield));
-        }
-        if (c == Card.Cardname.ShieldBearer)
-        {
-            AddAura(new Aura(Aura.Type.Taunt));
-        }
-        if (c == Card.Cardname.SWChamp)
-        {
-            AddAura(new Aura(Aura.Type.StormwindChampion));
-        }
-        if (c == Card.Cardname.DireWolf)
-        {
-            AddAura(new Aura(Aura.Type.DireWolfAlpha));
-        }
-        if (c == Card.Cardname.KnifeJuggler)
-        {
-            AddTrigger(Trigger.Type.AfterSummonMinion, Trigger.Side.Friendly, Trigger.Ability.KnifeJuggler);
-            AddTrigger(Trigger.Type.AfterPlayMinion, Trigger.Side.Friendly, Trigger.Ability.KnifeJuggler);
-        }
-        if (c == Card.Cardname.Acolyte)
-        {
-            AddTrigger(Trigger.Type.OnMinionDeath, Trigger.Side.Both, Trigger.Ability.AcolyteOfPain);
-        }
-        if (c == Card.Cardname.YoungPri)
-        {
-            AddTrigger(Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.YoungPriestess);
-        }
-
-        if (c == Card.Cardname.HarvestGolem)
-        {
-            AddTrigger(Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.HarvestGolem);
-        }
     }
     public override string ToString()
     {

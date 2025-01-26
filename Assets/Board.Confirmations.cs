@@ -180,7 +180,12 @@ public partial class Board
                 result.AddBool(millFriendly);
                 result.AddInt(millCardName);
                 break;
-                
+            case Server.MessageType.ConfirmHeroPower:
+                bool heroPowerFriendly = message.GetBool();
+                int heroPowerManaCost = message.GetInt();
+                result.AddBool(heroPowerFriendly);
+                result.AddInt(heroPowerManaCost);
+                break;
             default:
                 Debug.LogError("UNKNOWN MESSAGE TYPE");
                 break;
@@ -222,5 +227,19 @@ public partial class Board
         }
         Debug.Log(playerID + ": " + (allyAttack ? "ally " : "enemy ") + attacker.ToString() + " hits face");
         //todo: attack face animation
+    }
+
+    void ConfirmHeroPower(bool ally, int manaCost)
+    {
+        if (ally)
+        {
+            heroPower.Disable();
+            mana.Spend(manaCost);
+        }
+        else
+        {
+            enemyHeroPower.Disable();
+            enemyMana.Spend(manaCost);
+        }
     }
 }

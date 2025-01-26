@@ -11,6 +11,9 @@ public class Player
     public int maxMana = 0;
     public int currMana = 0;
 
+    public Card.Cardname heroPower = Card.Cardname.Lifetap;
+    public int heroPowerCost = 2;
+
     public bool turn = false;
     public List<Card.Cardname> deck = new List<Card.Cardname>();
     public Hand hand = new Hand();

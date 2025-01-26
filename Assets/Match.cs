@@ -28,7 +28,7 @@ public partial class Match
         players[1].opponent = players[0];
         List<Card.Cardname> sampleTestDeck = new List<Card.Cardname>();
 
-        for (int i = 0; i < 15; i++)
+        for (int i = 1; i < 16; i++)
         {
             sampleTestDeck.Add((Card.Cardname)i);
             sampleTestDeck.Add((Card.Cardname)i);

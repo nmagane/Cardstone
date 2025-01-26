@@ -36,7 +36,11 @@ public partial class Board : MonoBehaviour
 
     public ManaBar mana;
     public ManaBar enemyMana;
+
+    public HeroPower heroPower;
+    public HeroPower enemyHeroPower;
     public int currMana => mana.curr;
+
     /*
     public int currMana = 0;
     public int maxMana = 0;
@@ -271,6 +275,11 @@ public partial class Board : MonoBehaviour
                 int millCardName = message.GetInt();
                 MillCard(millFriendly, (Card.Cardname)millCardName);
                 break;
+            case Server.MessageType.ConfirmHeroPower:
+                bool heroPowerFriendly = message.GetBool();
+                int heroPowerManaCost = message.GetInt();
+                ConfirmHeroPower(heroPowerFriendly, heroPowerManaCost);
+                break;
             default:
                 Debug.LogError("UNKNOWN MESSAGE TYPE");
                 break;
@@ -388,6 +397,7 @@ public partial class Board : MonoBehaviour
         {
             enemyMana.SetMax(maxMana);
             enemyMana.SetCurrent(currMana);
+            enemyHeroPower.Enable();
             return;
         }
         matchMessageOrder = messageCount;
@@ -397,6 +407,8 @@ public partial class Board : MonoBehaviour
 
         mana.SetMax(maxMana);
         mana.SetCurrent(currMana);
+
+        heroPower.Enable();
         foreach (Minion m in currMinions)
         {
             m.canAttack = true;
@@ -589,6 +601,21 @@ public partial class Board : MonoBehaviour
     {
         //todo: mill anim + reduce deck card counter
     }
+
+    public void CastHeroPower(Card.Cardname ability, int target, bool isFriendly, bool isHero)
+    {
+        Message message = CreateMessage(Server.MessageType.HeroPower);
+
+        message.AddULong(currentMatchID);
+        message.AddULong(playerID);
+        message.AddUShort((ushort)ability);
+        message.AddInt(target);
+        message.AddBool(isFriendly);
+        message.AddBool(isHero);
+
+        SendMessage(message);
+    }
+
     public bool IsFriendly(Minion m)
     {
         if (currMinions.Contains(m)) return true;
@@ -659,6 +686,9 @@ public partial class Board : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             Camera.main.transform.localPosition = new Vector3(50,0,-10);
+        }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
         }
         
     }

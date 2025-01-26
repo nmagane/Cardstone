@@ -79,9 +79,7 @@ public partial class Server
         mOwner.AddInt(targetInd);
         mOpp.AddInt(targetInd);
 
-        //server.Send(mOwner, match.currPlayer.connection.clientID);
         SendMessage(mOwner, match.currPlayer);
-        //server.Send(mOpp, match.enemyPlayer.connection.clientID);
         SendMessage(mOpp, match.enemyPlayer);
     }
     public void ConfirmAttackFace(Match match, int attackerInd,bool friendlyFire, bool PREATTACK)
@@ -95,9 +93,7 @@ public partial class Server
         mOwner.AddInt(attackerInd);
         mOpp.AddInt(attackerInd);
 
-        //server.Send(mOwner, match.currPlayer.connection.clientID);
         SendMessage(mOwner, match.currPlayer);
-        //server.Send(mOpp, match.enemyPlayer.connection.clientID);
         SendMessage(mOpp, match.enemyPlayer);
     }
     public void ConfirmSwingMinion()
@@ -111,6 +107,16 @@ public partial class Server
 
     public void ConfirmHeroPower(CastInfo spell)
     {
-        throw new System.NotImplementedException();
+        MessageType phase = MessageType.ConfirmHeroPower;
+        Message mOwner = CreateMessage(phase);
+        Message mOpp = CreateMessage(phase);
+        mOwner.AddBool(true);
+        mOpp.AddBool(false);
+
+        mOwner.AddInt(spell.card.manaCost);
+        mOpp.AddInt(spell.card.manaCost);
+
+        SendMessage(mOwner, spell.match.currPlayer);
+        SendMessage(mOpp, spell.match.enemyPlayer);
     }
 }

@@ -1,3 +1,5 @@
+
+using UnityEngine;
 [System.Serializable]
 public class HandCard
 {
@@ -21,48 +23,28 @@ public class HandCard
 
     public void Set(Card.Cardname name, int ind)
     {
+        Debug.Log("Setting ind " + ind+name);
         card = name;
         index = ind;
-        MINION = true;
-        //manaCost
-        if (name == Card.Cardname.Ping || name == Card.Cardname.Soulfire)
-        {
-            MINION = false;
-            SPELL = true;
-            TARGETED = true;
-        }
-        if (name == Card.Cardname.ArcExplosion)
-        {
-            MINION = false;
-            SPELL = true;
-            TARGETED = false;
-        }
-        if (name == Card.Cardname.ShatteredSunCleric)
-        {
-            MINION = true;
-            TARGETED = true;
-            BATTLECRY = true;
-            health = 2;
-            damage = 3;
-            eligibleTargets = Board.EligibleTargets.FriendlyMinions;
-        }
-        if (name == Card.Cardname.Abusive || name == Card.Cardname.IronbeakOwl || name == Card.Cardname.Doctor)
-        {
-            MINION = true;
-            TARGETED = true;
-            BATTLECRY = true;
-            health = 2;
-            damage = 3;
-            eligibleTargets = Board.EligibleTargets.AllMinions;
-        }
-        if (name == Card.Cardname.Argus || name == Card.Cardname.Doomguard)
-        {
-            MINION = true;
-            TARGETED = false;
-            BATTLECRY = true;
-            health = 1;
-            damage = 3;
-        }
+
+        if (name == Card.Cardname.Cardback) return;
+
+        Database.CardInfo cardInfo = Database.GetCardData(name);
+
+        manaCost = cardInfo.manaCost;
+        health = cardInfo.health;
+        damage = cardInfo.damage;
+
+        SPELL = cardInfo.SPELL;
+        MINION = cardInfo.MINION;
+        SECRET = cardInfo.SECRET;
+        WEAPON = cardInfo.WEAPON;
+
+        TARGETED = cardInfo.TARGETED;
+        BATTLECRY = cardInfo.BATTLECRY;
+        COMBO = cardInfo.COMBO;
+
+        eligibleTargets = cardInfo.eligibleTargets;
     }
 
     public HandCard(Card.Cardname name, int ind)

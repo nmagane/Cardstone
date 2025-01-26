@@ -221,6 +221,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   board: {fileID: 0}
   icon: {fileID: 7390567199027295290}
+  manaText: {fileID: 7390567197818395009}
+  activeSprite: {fileID: 21300000, guid: 93bd32be6d3237344a279a901fe5b57c, type: 3}
+  disabledSprite: {fileID: 21300000, guid: 0cd61ba9008eda5438f9206de93e39a7, type: 3}
+  ability: 21
+  manaCost: 2
+  enabled: 1
+  TARGETED: 0
 --- !u!212 &7390567199027295290
 SpriteRenderer:
   m_ObjectHideFlags: 0

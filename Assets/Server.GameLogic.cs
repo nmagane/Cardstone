@@ -120,22 +120,23 @@ public partial class Server
             case Card.Cardname.Ping:
                 Ping(spell);
                 break;
-            case Card.Cardname.ArcExplosion:
+            case Card.Cardname.Arcane_Explosion:
                 Arcane_Explosion(spell);
                 break;
-            case Card.Cardname.ShatteredSunCleric:
+            case Card.Cardname.Shattered_Sun_Cleric:
                 ShatteredSunCleric(spell);
                 break;
-            case Card.Cardname.Argus:
-                Argus(spell);
+            case Card.Cardname.Defender_of_Argus:
+                Defender_of_Argus(spell);
                 break;
-            case Card.Cardname.Abusive:
-                Abusive(spell);
+            case Card.Cardname.Abusive_Sergeant:
+            case Card.Cardname.Dark_Iron_Dwarf:
+                Abusive_Sergeant(spell);
                 break;
-            case Card.Cardname.IronbeakOwl:
+            case Card.Cardname.Ironbeak_Owl:
                 SilenceMinion(spell);
                 break;
-            case Card.Cardname.Doctor:
+            case Card.Cardname.Voodoo_Doctor:
                 Heal(spell, 2);
                 break;
             case Card.Cardname.Soulfire:
@@ -145,6 +146,16 @@ public partial class Server
                 break;
             case Card.Cardname.Doomguard:
                 Discard(spell, 2);
+                break;
+            case Card.Cardname.Lifetap:
+                Damage(spell, 2);
+                spell.match.ResolveTriggerQueue(ref spell);
+                Draw(spell, 1);
+                break;
+            case Card.Cardname.Flame_Imp:
+                spell.isFriendly = true;
+                spell.isHero = true;
+                Damage(spell, 3);
                 break;
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);
@@ -184,6 +195,11 @@ public partial class Server
             int rand = Random.Range(0, player.hand.Count());
             spell.match.server.DiscardCard(spell.match, player, rand);
         }
+    }
+    public void Draw(CastInfo spell, int count, bool enemyDraw=false)
+    {
+        for (int i=0;i<count;i++)
+            DrawCard(spell.match,enemyDraw? spell.player.opponent:spell.player);
     }
     public void SilenceMinion(CastInfo spell)
     {
@@ -248,7 +264,7 @@ public partial class Server
         m.server.AddAura(m, tar, new Aura(Aura.Type.Damage, 1));
         //p.board[spell.target].AddAura(new Aura(Aura.Type.Damage, 1));
     }
-    void Abusive(CastInfo spell)
+    void Abusive_Sergeant(CastInfo spell)
     {
         Player p = spell.player;
         Match m = spell.match;
@@ -259,7 +275,7 @@ public partial class Server
         m.server.AddAura(m, tar, new Aura(Aura.Type.Damage, 2, true));
         //p.board[spell.target].AddAura(new Aura(Aura.Type.Damage, 2,true));
     }
-    void Argus(CastInfo spell)
+    void Defender_of_Argus(CastInfo spell)
     {
         Player p = spell.player;
         Match match = spell.match;

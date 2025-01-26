@@ -38,6 +38,7 @@ public class Trigger
         OnDrawCard,
         OnDiscardCard,
 
+        AfterHeroPower,
         //==============
         _PHASELIMIT,
         //=============SPECIAL EVENTS

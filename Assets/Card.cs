@@ -17,45 +17,38 @@ public class Card : MonoBehaviour
     public Sprite cardback;
     public enum Cardname
     {
-        F0,
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        Ping,
-        ArcInt,
-        ArcExplosion,
+        //NONCARD (ENEMY HAND DISPLAY)
         Cardback,
-        ShatteredSunCleric,
-        IronbeakOwl,
-        RulesMan,
-        Equality,
-        SWChamp,
-        DireWolf,
-        KnifeJuggler,
-        Acolyte,
-        YoungPri,
-        HarvestGolem,
-        DamagedGolem,
-        ShieldBearer,
-        Argus,
-        Abusive,
-        Squire,
-        Doctor,
-        Amani,
+        
+        //NEUTRAL
+        Abusive_Sergeant,
+        Amani_Berserker,
+        Argent_Squire,
+        Dark_Iron_Dwarf,
+        Dire_Wolf_Alpha,
+        Defender_of_Argus,
+        Harvest_Golem,
+        Damaged_Golem,
+        Ironbeak_Owl,
+        Knife_Juggler,
+        Shattered_Sun_Cleric,
+        Shieldbearer,
+        Young_Priestess,
+
+        //WARLOCK
+        Lifetap,
+
         Soulfire,
+        Voidwalker,
+        Flame_Imp,
         Doomguard,
+
+        //Mage
+        Ping,
+        Arcane_Explosion,
+
+        //UNIMPLEMENTED
+        Voodoo_Doctor,
     }
     void Start()
     {
@@ -75,8 +68,11 @@ public class Card : MonoBehaviour
             health.text = "";
             return;
         }
+
         gameObject.name = c.card.ToString();
-        name.text = c.card.ToString();
+        Database.CardInfo cardInfo = Database.GetCardData(c.card);
+        name.text = cardInfo.name;
+        text.text = cardInfo.text;
         manaCost.text = c.manaCost.ToString(); ;
         if (c.MINION)
         {
@@ -88,8 +84,6 @@ public class Card : MonoBehaviour
             damage.text = "";
             health.text = "";
         }
-
-
     }
     void ToggleMulligan()
     {

@@ -464,7 +464,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.053, y: 1.794}
-  m_SizeDelta: {x: 20, y: 5}
+  m_SizeDelta: {x: 3, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &122233075964337583
 MeshRenderer:
@@ -558,9 +558,9 @@ MonoBehaviour:
   m_fontSize: 10
   m_fontSizeBase: 10
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 5
+  m_fontSizeMax: 10
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -824,13 +824,17 @@ MonoBehaviour:
   card:
     index: 0
     manaCost: 0
+    health: 0
+    damage: 0
     card: 0
+    eligibleTargets: 0
     SPELL: 0
     MINION: 0
     SECRET: 0
     WEAPON: 0
     TARGETED: 0
     COMBO: 0
+    BATTLECRY: 0
     played: 0
   name: {fileID: 8764927573253110649}
   text: {fileID: 7809844254190655317}
@@ -922,8 +926,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -1}
-  m_SizeDelta: {x: 3.7, y: 5}
+  m_AnchoredPosition: {x: 0, y: -0.9899}
+  m_SizeDelta: {x: 3.7, y: 2.0147}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &8174179713164967626
 MeshRenderer:
@@ -1017,9 +1021,9 @@ MonoBehaviour:
   m_fontSize: 10
   m_fontSizeBase: 10
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 4
+  m_fontSizeMax: 10
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512

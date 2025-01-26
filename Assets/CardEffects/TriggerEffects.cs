@@ -39,6 +39,6 @@ public class TriggerEffects
 
     public static void HarvestGolem(Match match, Minion minion)
     {
-        match.server.SummonToken(match, match.FindOwner(minion), Card.Cardname.DamagedGolem, minion.index);
+        match.server.SummonToken(match, match.FindOwner(minion), Card.Cardname.Damaged_Golem, minion.index);
     }
 }

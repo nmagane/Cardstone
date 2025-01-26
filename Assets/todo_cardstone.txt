@@ -22,7 +22,7 @@ todo: hand limit + discarding + milling.
 todo: aura communication.
 todo: valid target exist check for abusive/shattered sun so you can play them with no targets, etc...
 
-todo: hero power TARGETING.
+todo: hero power TARGETING and other hero powers (ping).
 
 ===========================================
 class Trigger
@@ -38,19 +38,19 @@ invoke(triggerEffect)
 
 
 ===TODO CARDS=== :
-SOULFIRE                   - NOT DONE
-ABUSIVE SERGEANT           - DONE
-ARGENT SQUIRE              - DONE
+SOULFIRE                   - DONE
+ABUSIVE SERGEANT     -      - DONE
+ARGENT SQUIRE        -      - DONE
 FLAME IMP                  - DONE
-SHIELD BEARER              - DONE
+SHIELD BEARER         -     - DONE
 VOIDWALKER                 - DONE
-YOUNG PRIESTESS            - DONE
+YOUNG PRIESTESS        -    - DONE
 AMANI BERSERKER            - DONE
-IRONBEAK OWL               - DONE
-DIRE WOLF ALPHA            - DONE
-KNIFE JUGGLER              - DONE
+IRONBEAK OWL         -      - DONE
+DIRE WOLF ALPHA       -     - DONE
+KNIFE JUGGLER         -     - DONE
 HARVEST GOLEM              - DONE
-SHATTERED SUN CLERIC       - DONE
-DARK IRON DWARF            - DONE
-DEFENDER OF ARGUS          - DONE
-DOOMGUARD                  - NOT DONE
+SHATTERED SUN CLERIC   -    - DONE
+DARK IRON DWARF         -   - DONE
+DEFENDER OF ARGUS       -   - DONE
+DOOMGUARD                  - DONE

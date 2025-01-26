@@ -20,7 +20,9 @@ public class Creature : MonoBehaviour
     public void Set(Minion c)
     {
         minion = c;
-        testname.text = c.card.ToString();
+        Database.CardInfo info = Database.GetCardData(c.card);
+        testname.text = info.name;
+        
         health.text = c.health.ToString();
         damage.text = c.damage.ToString();
         if (minion.HasAura(Aura.Type.Taunt))
