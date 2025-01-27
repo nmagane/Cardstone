@@ -30,6 +30,8 @@ public partial class Match
 
         OnDrawCard,
         OnDiscardCard,
+        OnMillCard,
+        OnFatigue,
 
         AfterHeroPower,
     }
@@ -68,7 +70,13 @@ public partial class Match
     {
         if (spell.player.deck.Count == 0)
         {
-            //TODO: FatiguePlayer(spell.player)
+            server.FatiguePlayer(spell.match, spell.player);
+            StartPhase(Phase.OnFatigue,ref spell);
+            return;
+        }
+        if (spell.player.hand.Count()>=10)
+        {
+            StartSequenceMillCard(spell);
             return;
         }
         HandCard card = server.DrawCard(spell.match, spell.player);
@@ -78,6 +86,11 @@ public partial class Match
     public void StartSequenceDiscardCard(CastInfo spell)
     {
         StartPhase(Phase.OnDiscardCard, ref spell);
+    }
+    public void StartSequenceMillCard(CastInfo spell)
+    {
+        server.MillCard(spell.match, spell.player);
+        StartPhase(Phase.OnMillCard, ref spell);
     }
 
     public void StartSequenceAttackMinion(CastInfo spell)
@@ -131,8 +144,11 @@ public partial class Match
 
         if (spell.card.BATTLECRY)
         {
-            server.CastSpell(spell);
-            ResolveTriggerQueue(ref spell);
+            if ((spell.card.TARGETED && spell.target == -1) == false)
+            {
+                server.CastSpell(spell);
+                ResolveTriggerQueue(ref spell);
+            }
         }
 
         StartPhase(Phase.AfterPlayCard, ref spell);

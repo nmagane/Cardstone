@@ -10,7 +10,7 @@ public partial class Server
         Minion target = m.enemyPlayer.board[targetInd];
 
         if (attacker.canAttack == false) return false;
-        if (target.STEALTH) return false;
+        //if (target.STEALTH) return false;
         bool enemyTaunting = false;
         foreach (var minion in m.enemyPlayer.board)
         {
@@ -68,8 +68,8 @@ public partial class Server
     public void ConfirmAttackMinion(Match match, int attackerInd, int targetInd, bool friendlyFire, bool PREATTACK)
     {
         MessageType phase = PREATTACK ? MessageType.ConfirmPreAttackMinion : MessageType.ConfirmAttackMinion;
-        Message mOwner = CreateMessage(phase);
-        Message mOpp = CreateMessage(phase);
+        CustomMessage mOwner = CreateMessage(phase);
+        CustomMessage mOpp = CreateMessage(phase);
         mOwner.AddBool(true);
         mOpp.AddBool(false);
 
@@ -85,8 +85,8 @@ public partial class Server
     public void ConfirmAttackFace(Match match, int attackerInd,bool friendlyFire, bool PREATTACK)
     {
         MessageType phase = PREATTACK ? MessageType.ConfirmPreAttackFace : MessageType.ConfirmAttackFace;
-        Message mOwner = CreateMessage(phase);
-        Message mOpp = CreateMessage(phase);
+        CustomMessage mOwner = CreateMessage(phase);
+        CustomMessage mOpp = CreateMessage(phase);
         mOwner.AddBool(true);
         mOpp.AddBool(false);
 
@@ -108,8 +108,8 @@ public partial class Server
     public void ConfirmHeroPower(CastInfo spell)
     {
         MessageType phase = MessageType.ConfirmHeroPower;
-        Message mOwner = CreateMessage(phase);
-        Message mOpp = CreateMessage(phase);
+        CustomMessage mOwner = CreateMessage(phase);
+        CustomMessage mOpp = CreateMessage(phase);
         mOwner.AddBool(true);
         mOpp.AddBool(false);
 

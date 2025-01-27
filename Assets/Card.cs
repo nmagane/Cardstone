@@ -21,6 +21,8 @@ public class Card : MonoBehaviour
         Cardback,
         
         //NEUTRAL
+        Coin,
+
         Abusive_Sergeant,
         Amani_Berserker,
         Argent_Squire,
@@ -173,7 +175,7 @@ public class Card : MonoBehaviour
 
             int position = FindMinionPosition();
             //TODO: VALID TARGET EXISTS CHECK
-            bool validTargetsExist = true;
+            bool validTargetsExist = board.ValidTargetsAvailable(card.eligibleTargets);
             if (validTargetsExist)
             {
                 //EndPreview();
@@ -304,6 +306,11 @@ public class Card : MonoBehaviour
         if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED == true)
         {
             if (preview) return;
+            if (board.ValidTargetsAvailable(card.eligibleTargets)==false)
+            {
+                EndPlay();
+                return;
+            }
             //PlayCard();
             board.StartTargetingCard(card);
             //EndPlay();

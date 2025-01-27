@@ -6,9 +6,10 @@ using UnityEngine;
 
 public partial class Server : MonoBehaviour
 {
+    public NetworkHandler mirror;
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() {Card.Cardname.Ping, Card.Cardname.Knife_Juggler };//{ Card.Cardname.Doomguard, Card.Cardname.Soulfire };
 
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() {Card.Cardname.Harvest_Golem, Card.Cardname.Knife_Juggler };//{ Card.Cardname.Doomguard, Card.Cardname.Soulfire };
-    public static Message CreateMessage(MessageType type)
+    /*public static Message CreateMessage(MessageType type)
     {
         Message m = Message.Create(MessageSendMode.Reliable, (ushort)type);
         m.ReserveBits(16);
@@ -18,6 +19,21 @@ public partial class Server : MonoBehaviour
     {
         message.SetBits(player.messageCount++, 16, 28);
         server.Send(message, player.connection.clientID);
+    }*/
+    public static CustomMessage CreateMessage(MessageType type)
+    {
+        //Message m = Message.Create(MessageSendMode.Reliable, (ushort)type);
+        //m.ReserveBits(16);
+        //return m;
+        CustomMessage m = new CustomMessage();
+        m.type = type;
+        return m;
+    }
+    public void SendMessage(CustomMessage message, Player player)
+    {
+        //message.SetBits(player.messageCount++, 16, 28);
+        //server.Send(message, player.connection.clientID);
+        mirror.SendServer(message, player);
     }
     public enum MessageType
     {
@@ -74,6 +90,8 @@ public partial class Server : MonoBehaviour
         HeroPower,
         ConfirmHeroPower,
 
+        AddCard,
+
         Concede,
 
         _TEST
@@ -83,10 +101,11 @@ public partial class Server : MonoBehaviour
     void Start()
     {
         RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
-        ushort port = 8888;
-        ushort maxPlayers = 65534; //ushort.max-1
-        server.Start(port, maxPlayers,0,false);
-        server.MessageReceived += OnMessageReceived;
+        //ushort port = 8888;
+        //ushort maxPlayers = 65534; //ushort.max-1
+        //server.Start(port, maxPlayers,0,false);
+        mirror.StartServer();
+        //server.MessageReceived += OnMessageReceived;
     }
 
     void Update()
@@ -98,41 +117,41 @@ public partial class Server : MonoBehaviour
     }
     void Tester()
     {
-        Message m = CreateMessage(MessageType._TEST);
-        m.ReserveBits(16);
+        CustomMessage m = CreateMessage(MessageType._TEST);
+        //m.ReserveBits(16);
         m.AddInt(8885444);
         m.AddBool(false);
-        ushort messageOrder = 1;
-        m.SetBits(messageOrder, 16, 28);
+        //ushort messageOrder = 1;
+        //m.SetBits(messageOrder, 16, 28);
         
         //server.Send(m, matchList[0].players[0].connection.clientID);
-        SendMessage(m, matchList[0].players[0]);
+        //SendMessage(m, matchList[0].players[0]);
     }
     private void FixedUpdate()
     {
         server.Update();
     }
 
-    public void OnMessageReceived(object sender, MessageReceivedEventArgs eventArgs)
+    public void OnMessageReceived(CustomMessage message)//public void OnMessageReceived(object sender, MessageReceivedEventArgs eventArgs)
     {
-        MessageType messageID = (MessageType)eventArgs.MessageId;
-        ushort clientID = eventArgs.FromConnection.Id;
-        Message originalMessage = eventArgs.Message;
-        ushort count = originalMessage.GetUShort();
-        CustomMessage message;
+        MessageType messageID = message.type;//(MessageType)eventArgs.MessageId;
+        int clientID = message.clientID;//eventArgs.FromConnection.Id;
+        //Message originalMessage = eventArgs.Message;
+        ushort count = message.order;//.GetUShort();
+        //CustomMessage message;
         bool orderedMessage = false;
         //UNORDERED MESSAGES, OUT OF GAME (NO MATCH ID ATTACHED)
         switch (messageID)
         {
             case MessageType.Matchmaking:
-                message = CopyMessage(originalMessage, messageID);
+                //message = CopyMessage(originalMessage, messageID);
                 ParseMessage(messageID, clientID, message, 0);
                 orderedMessage = false;
                 break;
 
             case MessageType.SubmitMulligan:
                 //ulong matchID = message.GetULong();
-                message = CopyMessage(originalMessage, messageID);
+                //message = CopyMessage(originalMessage, messageID);
                 ParseMessage(messageID, clientID, message, 0);
                 orderedMessage = false;
                 break;
@@ -140,18 +159,17 @@ public partial class Server : MonoBehaviour
             default:
                 orderedMessage = true;
                 break;
-        }
-        Debug.Log("SERVER RECEIVED MESSAGE: " + count);
+        };
         if (orderedMessage)
         {
-            ulong matchID = originalMessage.GetULong();
-            message = CopyMessage(originalMessage, messageID);
+            ulong matchID = message.GetULong();
+            //message = CopyMessage(originalMessage, messageID);
             if (currentMatches.ContainsKey(matchID) == false) return;
             currentMatches[matchID].ReceiveMessage(messageID, clientID, message, count);
         }
     }
 
-    public void ParseMessage(MessageType messageID, ushort clientID, CustomMessage message, ulong matchID)//(object sender, MessageReceivedEventArgs eventArgs, ulong matchID = 0)
+    public void ParseMessage(MessageType messageID, int clientID, CustomMessage message, ulong matchID)//(object sender, MessageReceivedEventArgs eventArgs, ulong matchID = 0)
     {
         //int messageID = eventArgs.MessageId;
         //ushort clientID = eventArgs.FromConnection.Id;
@@ -161,12 +179,12 @@ public partial class Server : MonoBehaviour
         {
             case MessageType.Matchmaking:
                 ulong queuePlayerID = message.GetULong();
-                ushort queueClientID = clientID;
+                int queueClientID = clientID;
                 AddToQueue(queueClientID, queuePlayerID);
                 break;
             case MessageType.SubmitMulligan:
                 ulong mullMatchID = message.GetULong();
-                int[] mullInds = message.GetInts();
+                List<int> mullInds = message.GetInts();
                 ulong mullPlayerID = message.GetULong();
                 Mulligan(mullInds, mullMatchID, mullPlayerID);
                 break;
@@ -209,9 +227,10 @@ public partial class Server : MonoBehaviour
         
     }
 
+    [Serializable]
     public struct PlayerConnection
     {
-        public ushort clientID;
+        public int clientID;
         public ulong playerID;
         public string deck;
     }
@@ -219,7 +238,7 @@ public partial class Server : MonoBehaviour
     List<PlayerConnection> playerQueue = new List<PlayerConnection>();
     public Dictionary<ulong, Match> currentMatches = new Dictionary<ulong, Match>();
     public List<Match> matchList = new List<Match>();
-    void AddToQueue(ushort clientID, ulong playerID, string deck="")
+    void AddToQueue(int clientID, ulong playerID, string deck="")
     {
         foreach (PlayerConnection p in playerQueue)
         {
@@ -237,7 +256,9 @@ public partial class Server : MonoBehaviour
         //matchmaking placeholder:
         if (playerQueue.Count>=2)
         {
-            StartMatch(playerQueue[0], playerQueue[1]);     
+            StartMatch(playerQueue[0], playerQueue[1]);
+            playerQueue.RemoveAt(0);
+            playerQueue.RemoveAt(0);
         }
     }
     public ulong currMatchID = 1000;
@@ -246,11 +267,11 @@ public partial class Server : MonoBehaviour
         Match match = new Match();
         match.server = this;
 
-        Message m1 = CreateMessage(MessageType.ConfirmMatch);
+        CustomMessage m1 = CreateMessage(MessageType.ConfirmMatch);
         m1.AddULong(currMatchID);
         //server.Send(m1,p1.clientID);
 
-        Message m2 = CreateMessage(MessageType.ConfirmMatch);
+        CustomMessage m2 = CreateMessage(MessageType.ConfirmMatch);
         m2.AddULong(currMatchID);
         //server.Send(m2,p2.clientID);
 
@@ -306,24 +327,24 @@ public partial class Server : MonoBehaviour
         {
             hand2.Add((ushort)v.card);
         }
-        Message m1 = CreateMessage(Server.MessageType.DrawHand);
+        CustomMessage m1 = CreateMessage(Server.MessageType.DrawHand);
         //string jsonText = JsonUtility.ToJson(m.players[0].hand);
         //m1.AddString(jsonText);
-        m1.AddUShorts(hand1.ToArray());
+        m1.AddUShorts(hand1);
         m1.AddInt(m.players[1].hand.Count());
         //server.Send(m1, m.players[0].connection.clientID);
         SendMessage(m1, m.players[0]);
 
-        Message m2 = CreateMessage(Server.MessageType.DrawHand);
+        CustomMessage m2 = CreateMessage(Server.MessageType.DrawHand);
         //jsonText = JsonUtility.ToJson(m.players[1].hand);
         //m2.AddString(jsonText);
-        m2.AddUShorts(hand2.ToArray());
+        m2.AddUShorts(hand2);
         m2.AddInt(m.players[0].hand.Count());
         //server.Send(m2, m.players[1].connection.clientID);
         SendMessage(m2, m.players[1]);
     }
 
-    public void Mulligan(int[] inds, ulong matchID, ulong playerID)
+    public void Mulligan(List<int> inds, ulong matchID, ulong playerID)
     {
         if (currentMatches.ContainsKey(matchID) == false) return;
         Match match = currentMatches[matchID];
@@ -362,12 +383,12 @@ public partial class Server : MonoBehaviour
         {
             newhand.Add((ushort)c.card);
         }
-        Message message = CreateMessage(Server.MessageType.ConfirmMulligan);
-        message.AddUShorts(newhand.ToArray());
+        CustomMessage message = CreateMessage(Server.MessageType.ConfirmMulligan);
+        message.AddUShorts(newhand);
         //server.Send(message, match.players[player].connection.clientID);
         SendMessage(message, match.players[player]);
 
-        Message enemyMullMessage = CreateMessage(MessageType.EnemyMulligan);
+        CustomMessage enemyMullMessage = CreateMessage(MessageType.EnemyMulligan);
         enemyMullMessage.AddInts(inds);
         //server.Send(enemyMullMessage, match.Opponent(match.players[player]).connection.clientID);
         SendMessage(enemyMullMessage, match.players[player].opponent);
@@ -375,15 +396,14 @@ public partial class Server : MonoBehaviour
         if (match.players[0].mulligan && match.players[1].mulligan)
         {
             StartGame(match);
-            Debug.Log("both mulls complete");
         }
     }
 
     public void StartGame(Match match)
     {
 
-        Message messageFirst = CreateMessage(Server.MessageType.StartGame);
-        Message messageSecond = CreateMessage(Server.MessageType.StartGame);
+        CustomMessage messageFirst = CreateMessage(Server.MessageType.StartGame);
+        CustomMessage messageSecond = CreateMessage(Server.MessageType.StartGame);
         messageFirst.AddBool(true);
         messageSecond.AddBool(false);
         int f = match.turn == Turn.player1 ? 0 : 1;
@@ -399,8 +419,8 @@ public partial class Server : MonoBehaviour
 
     public void StartTurn(Match match)
     {
-        Message message = CreateMessage(MessageType.StartTurn);
-        Message messageEnemy = CreateMessage(MessageType.StartTurn);
+        CustomMessage message = CreateMessage(MessageType.StartTurn);
+        CustomMessage messageEnemy = CreateMessage(MessageType.StartTurn);
         //int p = (int)match.turn;
 
         match.currPlayer.maxMana = Mathf.Min(match.currPlayer.maxMana + 1, 10);
@@ -410,13 +430,13 @@ public partial class Server : MonoBehaviour
             m.canAttack = true;
         }
         //TODO: start of turn effects
-        message.Add(true);
-        message.Add(match.currPlayer.maxMana);
-        message.Add(match.currPlayer.currMana);
+        message.AddBool(true);
+        message.AddInt(match.currPlayer.maxMana);
+        message.AddInt(match.currPlayer.currMana);
         message.AddUShort(match.messageCount);
-        messageEnemy.Add(false);
-        messageEnemy.Add(match.currPlayer.maxMana);
-        messageEnemy.Add(match.currPlayer.currMana);
+        messageEnemy.AddBool(false);
+        messageEnemy.AddInt(match.currPlayer.maxMana);
+        messageEnemy.AddInt(match.currPlayer.currMana);
         messageEnemy.AddUShort(match.messageCount);
 
         //server.Send(message, match.currPlayer.connection.clientID);
@@ -428,12 +448,15 @@ public partial class Server : MonoBehaviour
         match.StartSequenceStartTurn(startTurnInfo);
         //DrawCard(match, match.currPlayer);
     }
-    public void EndTurn(ulong matchID, ushort clientID, ulong playerID)
+    public void EndTurn(ulong matchID, int clientID, ulong playerID)
     {
         Match m = currentMatches[matchID];
         PlayerConnection player = m.players[(int)m.turn].connection;
         Player Ender = m.players[(int)m.turn];
-        if (player.clientID != clientID || player.playerID != playerID) return;
+        if (player.clientID != clientID || player.playerID != playerID)
+        {
+            return;
+        }
 
         //SEQUENCE
         CastInfo startTurnInfo = new CastInfo(m, m.currPlayer, null, -1, -1, false, false);
@@ -445,7 +468,7 @@ public partial class Server : MonoBehaviour
         m.currPlayer = m.players[(int)m.turn];
         m.enemyPlayer = m.players[m.Opponent((int)m.turn)];
 
-        Message msg = CreateMessage(Server.MessageType.EndTurn);
+        CustomMessage msg = CreateMessage(Server.MessageType.EndTurn);
         //server.Send(msg, player.clientID);
         SendMessage(msg, Ender);
         //=========
@@ -461,12 +484,12 @@ public partial class Server : MonoBehaviour
         HandCard drawnCard = player.hand.Add(top);
         drawnCards.Add(top);
 
-        Message message = CreateMessage(Server.MessageType.DrawCards);
+        CustomMessage message = CreateMessage(Server.MessageType.DrawCards);
         message.AddInt((int)top);
         //server.Send(message, player.connection.clientID);
         SendMessage(message, player);
-        
-        Message messageOpp = CreateMessage(Server.MessageType.DrawEnemy);
+
+        CustomMessage messageOpp = CreateMessage(Server.MessageType.DrawEnemy);
         messageOpp.AddInt(1);
         //server.Send(messageOpp, player.opponent.connection.clientID);
         SendMessage(messageOpp, player.opponent);
@@ -475,7 +498,7 @@ public partial class Server : MonoBehaviour
 
     }
         
-    public void PlayCard(ulong matchID, ushort clientID, ulong playerID, int index, int target, int position, bool friendlySide, bool isHero)
+    public void PlayCard(ulong matchID, int clientID, ulong playerID, int index, int target, int position, bool friendlySide, bool isHero)
     {
         if (currentMatches.ContainsKey(matchID) == false) return;
         Match match = currentMatches[matchID];
@@ -499,10 +522,10 @@ public partial class Server : MonoBehaviour
         //====================
         match.players[p].currMana -= card.manaCost;
         match.players[p].hand.RemoveAt(index);
-        
+
         //send confirm play message to both sides
-        Message confirmPlay = CreateMessage(Server.MessageType.PlayCard);
-        Message confirmPlayOpponent = CreateMessage(Server.MessageType.PlayCard);
+        CustomMessage confirmPlay = CreateMessage(Server.MessageType.PlayCard);
+        CustomMessage confirmPlayOpponent = CreateMessage(Server.MessageType.PlayCard);
 
         confirmPlay.AddBool(true); confirmPlayOpponent.AddBool(false);
         confirmPlay.AddInt(index); confirmPlayOpponent.AddInt(index);
@@ -535,15 +558,16 @@ public partial class Server : MonoBehaviour
 
         Player opponent = match.Opponent(player);
         Minion m = player.board.Add(minion, position,match.playOrder);
+        m.player = player;
 
-        Message message = CreateMessage(Server.MessageType.SummonMinion);
+        CustomMessage message = CreateMessage(Server.MessageType.SummonMinion);
         message.AddBool(true);
         message.AddInt((int)minion);
         message.AddInt(position);
         //server.Send(message, player.connection.clientID);
         SendMessage(message, player);
-        
-        Message messageOp = CreateMessage(Server.MessageType.SummonMinion);
+
+        CustomMessage messageOp = CreateMessage(Server.MessageType.SummonMinion);
         messageOp.AddBool(false);
         messageOp.AddInt((int)minion);
         messageOp.AddInt(position);
@@ -559,7 +583,7 @@ public partial class Server : MonoBehaviour
         match.StartSequenceSummonMinion(summonCast, minion);
     }
 
-    public void AttackMinion(ulong matchID, ushort clientID, ulong playerID, int attackerInd, int targetInd)
+    public void AttackMinion(ulong matchID, int clientID, ulong playerID, int attackerInd, int targetInd)
     {
         if (currentMatches.ContainsKey(matchID) == false) return;
         Match match = currentMatches[matchID];
@@ -589,10 +613,11 @@ public partial class Server : MonoBehaviour
 
     public void UpdateMinion(Match match, Minion minion)
     {
-        Message messageOwner = CreateMessage(MessageType.UpdateMinion);
-        Message messageOpponent = CreateMessage(MessageType.UpdateMinion);
+        CustomMessage messageOwner = CreateMessage(MessageType.UpdateMinion);
+        CustomMessage messageOpponent = CreateMessage(MessageType.UpdateMinion);
 
         string jsonText = JsonUtility.ToJson(minion);
+        //Debug.Log(jsonText);
         messageOwner.AddString(jsonText);
         messageOpponent.AddString(jsonText);
 
@@ -616,8 +641,8 @@ public partial class Server : MonoBehaviour
         int ind = minion.index;
 
         owner.board.RemoveAt(ind);
-        Message messageOwner = CreateMessage(MessageType.DestroyMinion);
-        Message messageOpponent = CreateMessage(MessageType.DestroyMinion);
+        CustomMessage messageOwner = CreateMessage(MessageType.DestroyMinion);
+        CustomMessage messageOpponent = CreateMessage(MessageType.DestroyMinion);
 
         messageOwner.AddInt(ind);
         messageOpponent.AddInt(ind);
@@ -633,7 +658,7 @@ public partial class Server : MonoBehaviour
         //TODO: ON MINION DEATH TRIGGERS
         //TODO: DEATHRATTLE TRIGGERS
     }
-    public void AttackFace(ulong matchID,ushort clientID, ulong playerID, int attackerInd)
+    public void AttackFace(ulong matchID, int clientID, ulong playerID, int attackerInd)
     {
         if (currentMatches.ContainsKey(matchID) == false) return;
         Match match = currentMatches[matchID];
@@ -660,8 +685,8 @@ public partial class Server : MonoBehaviour
 
     public void UpdateHero(Match match, Player player)
     {
-        Message messageOwner = CreateMessage(MessageType.UpdateHero);
-        Message messageOpponent = CreateMessage(MessageType.UpdateHero);
+        CustomMessage messageOwner = CreateMessage(MessageType.UpdateHero);
+        CustomMessage messageOpponent = CreateMessage(MessageType.UpdateHero);
 
         messageOwner.AddInt(player.health);
         messageOpponent.AddInt(player.health);
@@ -669,6 +694,8 @@ public partial class Server : MonoBehaviour
         messageOwner.AddBool(true);
         messageOpponent.AddBool(false);
 
+        messageOwner.AddInt(player.deck.Count);
+        messageOpponent.AddInt(player.deck.Count);
         //server.Send(messageOwner, player.connection.clientID);
         SendMessage(messageOwner, player);
         //server.Send(messageOpponent, match.Opponent(player).connection.clientID);
@@ -684,14 +711,14 @@ public partial class Server : MonoBehaviour
         if (REMOVE) minion.RemoveMatchingTrigger(t);
         else minion.AddTrigger(type,side,ability);
 
-        Message messageOwner = CreateMessage(REMOVE ? MessageType.RemoveTrigger : MessageType.AddTrigger);
-        Message messageOpponent = CreateMessage(REMOVE ? MessageType.RemoveTrigger : MessageType.AddTrigger);
+        CustomMessage messageOwner = CreateMessage(REMOVE ? MessageType.RemoveTrigger : MessageType.AddTrigger);
+        CustomMessage messageOpponent = CreateMessage(REMOVE ? MessageType.RemoveTrigger : MessageType.AddTrigger);
 
         Player owner = match.FindOwner(minion);
         Player opponent = owner.opponent;
 
-        messageOwner.Add(minion.index);
-        messageOpponent.Add(minion.index);
+        messageOwner.AddInt(minion.index);
+        messageOpponent.AddInt(minion.index);
 
         messageOwner.AddBool(true);
         messageOpponent.AddBool(false);
@@ -720,14 +747,14 @@ public partial class Server : MonoBehaviour
         }
         else minion.AddAura(aura);
 
-        Message messageOwner = CreateMessage(REMOVE? MessageType.RemoveAura : MessageType.AddAura);
-        Message messageOpponent = CreateMessage(REMOVE? MessageType.RemoveAura : MessageType.AddAura);
+        CustomMessage messageOwner = CreateMessage(REMOVE? MessageType.RemoveAura : MessageType.AddAura);
+        CustomMessage messageOpponent = CreateMessage(REMOVE? MessageType.RemoveAura : MessageType.AddAura);
 
         Player owner = match.FindOwner(minion);
         Player opponent = owner.opponent;
 
-        messageOwner.Add(minion.index);
-        messageOpponent.Add(minion.index);
+        messageOwner.AddInt(minion.index);
+        messageOpponent.AddInt(minion.index);
 
         messageOwner.AddBool(true);
         messageOpponent.AddBool(false);
@@ -766,8 +793,8 @@ public partial class Server : MonoBehaviour
     {
         Card.Cardname c = player.deck[0];
         player.deck.RemoveAt(0);
-        Message messageOwner = CreateMessage(MessageType.DiscardCard);
-        Message messageOpponent = CreateMessage(MessageType.DiscardCard);
+        CustomMessage messageOwner = CreateMessage(MessageType.MillCard);
+        CustomMessage messageOpponent = CreateMessage(MessageType.MillCard);
 
         messageOwner.AddBool(true);
         messageOpponent.AddBool(false);
@@ -787,8 +814,8 @@ public partial class Server : MonoBehaviour
         player.hand.RemoveAt(index);
         match.StartSequenceDiscardCard(discardAction);
 
-        Message messageOwner = CreateMessage(MessageType.DiscardCard);
-        Message messageOpponent = CreateMessage(MessageType.DiscardCard);
+        CustomMessage messageOwner = CreateMessage(MessageType.DiscardCard);
+        CustomMessage messageOpponent = CreateMessage(MessageType.DiscardCard);
 
         messageOwner.AddBool(true);
         messageOpponent.AddBool(false);
@@ -804,7 +831,7 @@ public partial class Server : MonoBehaviour
     }
 
 
-    private void CastHeroPower(ulong matchID,ushort clientID, ulong playerID, ushort heroPower, int target, bool isFriendly, bool isHero)
+    private void CastHeroPower(ulong matchID, int clientID, ulong playerID, ushort heroPower, int target, bool isFriendly, bool isHero)
     {
 
         if (currentMatches.ContainsKey(matchID) == false) return;
@@ -825,12 +852,12 @@ public partial class Server : MonoBehaviour
         match.StartSequenceHeroPower(spell);
         ConfirmHeroPower(spell);
     }
-
+    /*
     public static CustomMessage CopyMessage(Message message, MessageType type)
     {
         CustomMessage result = new CustomMessage();
         result.type = type;
-        result.type = type;
+
         switch (type)
         {
             case MessageType.Matchmaking:
@@ -899,4 +926,5 @@ public partial class Server : MonoBehaviour
         }
         return result;
     }
+    */
 }

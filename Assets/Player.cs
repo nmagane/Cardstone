@@ -13,6 +13,7 @@ public class Player
 
     public Card.Cardname heroPower = Card.Cardname.Lifetap;
     public int heroPowerCost = 2;
+    public int fatigue = 0;
 
     public bool turn = false;
     public List<Card.Cardname> deck = new List<Card.Cardname>();

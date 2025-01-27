@@ -12,11 +12,17 @@ public class HeroPower : MonoBehaviour
     public Sprite activeSprite;
     public Sprite disabledSprite;
 
-    public Card.Cardname ability;
     public int manaCost = 2;
 
     public new bool enabled = true;
     public bool TARGETED = false;
+
+    HandCard card;
+
+    public void Set(Card.Cardname heroPower)
+    {
+        card = new HandCard(heroPower, 0);
+    }
 
     public void Enable()
     {
@@ -33,11 +39,53 @@ public class HeroPower : MonoBehaviour
     private void OnMouseDown()
     {
         if (enabled == false || transform.position.y>0) return;
+        if (board.currTurn == false) return; 
+        if (board.targeting)
+        {
+            return;
+        }
         if (board.currMana < manaCost)
         {
             Debug.Log("TODO: ERROR NO MANA HERO POWER");
             return;
         }
-        board.CastHeroPower(ability, -1, true, true);
+        if (card.TARGETED)
+        {
+            board.StartTargetingHeroPower(card);
+        }
+        else
+        {
+            switch (card.card)
+            {
+                default:
+                    board.CastHeroPower(card.card, -1, true, true);
+                    break;
+            }
+        }
+        clickPos = Card.GetMousePos();
+    }
+    Vector3 clickPos = Vector3.zero;
+    
+    int dragCounter = 0;
+    int dragTime = 5;
+    private void OnMouseDrag()
+    {
+        if (enabled == false || transform.position.y > 0) return;
+        if (board.currHand.mulliganMode != Hand.MulliganState.Done)
+        {
+            return;
+        }
+        if (board.targetingCard == card)
+        {
+            if (dragCounter < dragTime) dragCounter++;
+            if (dragCounter >= dragTime)
+            {
+                if (Vector3.Distance(Card.GetMousePos(), clickPos) > 0.2f)
+                {
+                    board.dragTargeting = true;
+                    //Debug.Log("drag");
+                }
+            }
+        }
     }
 }

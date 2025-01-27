@@ -77,10 +77,10 @@ public class Aura
 
     public void ActivateAura(Match match)
     {
-        Debug.Log("active");
+        //Debug.Log("active");
         if (enrage == true && EnrageCheck() == false)
         {
-            Debug.Log("failenrage");
+            //Debug.Log("failenrage");
             return;
         }
 

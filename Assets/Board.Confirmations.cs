@@ -3,13 +3,13 @@ using Riptide;
 using System.Data;
 
 public partial class Board
-{
+{/*
     public static Message CreateMessage(Server.MessageType type)
     {
         Message m = Message.Create(MessageSendMode.Reliable, (ushort)type);
         m.ReserveBits(16);
         return m;
-    }
+
     public void SendMessage(Message message, bool UNORDERED=false)
     {
         //todo: not sure if this check is ok. are there ever messages sent on enemy turn?
@@ -20,6 +20,26 @@ public partial class Board
         if (UNORDERED == false)
             matchMessageOrder++;
     }
+    }*/
+    public static Server.CustomMessage CreateMessage(Server.MessageType type)
+    {
+        Server.CustomMessage m = new Server.CustomMessage();
+        m.type = type;
+        return m;
+    }
+    public void SendMessage(Server.CustomMessage message, bool UNORDERED = false)
+    {
+        //todo: not sure if this check is ok. are there ever messages sent on enemy turn?
+        if (UNORDERED == false && currTurn == false)
+            return;
+        message.order = matchMessageOrder;
+        message.clientID = (int)playerID;
+        //client.Send(message);
+        mirror.SendClient(message);
+        if (UNORDERED == false)
+            matchMessageOrder++;
+    }
+    /*
     public Server.CustomMessage CopyMessage(Message message, Server.MessageType type)
     {
         Server.CustomMessage result = new Server.CustomMessage();
@@ -43,7 +63,7 @@ public partial class Board
                 result.AddUShorts(mulliganNewHand);
                 break;
             case Server.MessageType.EnemyMulligan:
-                int[] enemyMulligan = message.GetInts();
+                int enemyMulligan = message.GetInts();
                 result.AddInts(enemyMulligan);
                 break;
             case Server.MessageType.DrawCards:
@@ -192,7 +212,7 @@ public partial class Board
         }
 
         return result;
-    }
+    }*/
     public void ConfirmPreAttackMinion(bool allyAttack, int attackerIndex, int targetIndex)
     {
         //TODO: preattack animation
@@ -208,7 +228,7 @@ public partial class Board
             Server.ConsumeAttackCharge(attacker);
         }
 
-        Debug.Log(playerID + ": " + (allyAttack ? "ally " : "enemy ") + attacker.ToString() + " hits " + target.ToString());
+        //Debug.Log(playerID + ": " + (allyAttack ? "ally " : "enemy ") + attacker.ToString() + " hits " + target.ToString());
         //TODO: attack animation
     }
 

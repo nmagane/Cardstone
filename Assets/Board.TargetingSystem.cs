@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using static Board;
 using static UnityEngine.GraphicsBuffer;
@@ -57,18 +58,20 @@ public partial class Board
             Debug.Log("Invalid target");
             return;
         }
+        bool friendly = IsFriendly(minion);
         switch (targetMode)
         {
             case TargetMode.Battlecry:
-                PlayCard(targetingCard, IsFriendly(minion)? minion.previewIndex:minion.index, currMinions.previewMinion.index, IsFriendly(minion));
+                PlayCard(targetingCard, friendly? minion.previewIndex:minion.index, currMinions.previewMinion.index, IsFriendly(minion));
                 break;
             case TargetMode.Attack:
                 AttackMinion(targetingMinion, minion);
                 break;
             case TargetMode.Spell:
-                PlayCard(targetingCard, minion.index, -1, IsFriendly(minion));
+                PlayCard(targetingCard, minion.index, -1, friendly);
                 break;
             case TargetMode.HeroPower:
+                CastHeroPower(targetingCard.card, minion.index, friendly,false);
                 break;
             case TargetMode.Weapon:
                 break;
@@ -85,19 +88,20 @@ public partial class Board
             Debug.Log("Invalid target");
             return;
         }
-
+        bool friendly = IsFriendly(hero);
         switch (targetMode)
         {
             case TargetMode.Battlecry:
-                PlayCard(targetingCard, -1, currMinions.previewMinion.index, IsFriendly(hero));
+                PlayCard(targetingCard, -1, currMinions.previewMinion.index, friendly,true);
                 break;
             case TargetMode.Attack:
                 AttackFace(targetingMinion, hero);
                 break;
             case TargetMode.Spell:
-                PlayCard(targetingCard, -1, -1, IsFriendly(hero), true);
+                PlayCard(targetingCard, -1, -1, friendly, true);
                 break;
             case TargetMode.HeroPower:
+                CastHeroPower(targetingCard.card, -1, friendly, true);
                 break;
             case TargetMode.Weapon:
                 break;
@@ -134,9 +138,18 @@ public partial class Board
         StartTargetingAnim(customPos!=null? customPos : currHero);
     }
 
+    public void StartTargetingHeroPower(HandCard source)
+    {
+        targeting = true;
+        targetMode = TargetMode.HeroPower;
+        eligibleTargets = source.eligibleTargets;
+        targetingCard = source;
+
+        StartTargetingAnim(heroPower);
+    }
+
     public void EndTargeting(bool cancel=false)
     {
-        Debug.Log("endtarget");
         targeting = false;
         targetMode = TargetMode.None;
         eligibleTargets = EligibleTargets.AllCharacters;
@@ -205,6 +218,21 @@ public partial class Board
         if (eligibleTargets == EligibleTargets.FriendlyMinions || eligibleTargets == EligibleTargets.EnemyMinions || eligibleTargets == EligibleTargets.AllMinions)
             return false;
         return false;
+    }
+
+    public bool ValidTargetsAvailable(EligibleTargets targets)
+    {
+        switch (targets)
+        {
+            case EligibleTargets.FriendlyMinions:
+                return currMinions.Count() > 0;
+            case EligibleTargets.EnemyMinions:
+                return enemyMinions.Count() > 0;
+            case EligibleTargets.AllMinions:
+                return (currMinions.Count() + enemyMinions.Count()) > 0;
+            default:
+                return true;
+        }
     }
 
     public void StartPlayingCard(Card c)

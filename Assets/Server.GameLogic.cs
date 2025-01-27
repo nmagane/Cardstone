@@ -9,8 +9,9 @@ public partial class Server
     }
     public static void ConsumeAttackCharge(Minion m)
     {
-        if (m.WINDFURY) m.WINDFURY = false;
-        else m.canAttack = false;
+        //if (m.WINDFURY) m.WINDFURY = false;
+        //else
+        m.canAttack = false;
     }
     public void DamageMinionsAOE()
     {
@@ -37,8 +38,6 @@ public partial class Server
         }
         minion.health -= damage;
 
-        //TODO: trigger ON DAMAGE (acolyte)
-        //todo: triggier MINION DAMAGE (frothing)
         match.TriggerMinion(Trigger.Type.OnDamageTaken,minion);
         match.AddTrigger(Trigger.Type.OnMinionDamage, null, minion);
         UpdateMinion(match, minion);
@@ -48,10 +47,18 @@ public partial class Server
     public void DamageFace(Match match, Player target, int damage)
     {
         target.health -= damage;
-        //UpdateHero(match,target);
+
+        match.AddTrigger(Trigger.Type.OnFaceDamage, null, target);
 
         UpdateHero(match, target);
-        //TODO: trigger ON DAMAGE FACE
+        
+    }
+
+    public void FatiguePlayer(Match match, Player target)
+    {
+        target.fatigue++;
+
+        DamageFace(match, target, target.fatigue);
     }
 
     public bool ExecuteAttack(ref CastInfo action)

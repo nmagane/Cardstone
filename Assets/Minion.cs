@@ -19,16 +19,18 @@ public partial class Minion
 
     public bool canAttack = false;
 
-    public bool STEALTH = false;
-    public bool WINDFURY = false;
-
     public bool DEAD = false;
 
     public List<Aura> auras = new List<Aura>();
     public List<Trigger> triggers = new List<Trigger>();
 
+    [System.NonSerialized]
     public int previewIndex = -1;
+
     public int playOrder = 0;
+
+    [System.NonSerialized]
+    public Player player=null;
 
     [System.NonSerialized]
     public MinionBoard board;
@@ -107,12 +109,10 @@ public partial class Minion
     public void AddAura(Aura a)
     {
         Aura finder = FindAura(a.type);
-        Debug.Log("starting add aura " + a.type);
         if (finder != null)
         {
             if (finder.stackable == false)
             {
-                Debug.Log("cantstack " + a.type);
                 return;
             }
         }
@@ -124,7 +124,6 @@ public partial class Minion
             {
                 //Refresh and don't re-add.
 
-                Debug.Log("already on it " + a.type);
                 finder.refreshed = true;
                 return;
             }
@@ -134,11 +133,9 @@ public partial class Minion
         {
             //First time application of foreign aura. Add and considered it refreshed.
 
-            Debug.Log("first time" + a.type);
             a.refreshed = true;
         }
 
-        Debug.Log("adding aura " + a.type);
         a.minion = this;
         a.InitAura();
         auras.Add(a);

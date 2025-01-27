@@ -37,6 +37,8 @@ public class Trigger
 
         OnDrawCard,
         OnDiscardCard,
+        OnMillCard,
+        OnFatigue,
 
         AfterHeroPower,
         //==============
@@ -44,6 +46,8 @@ public class Trigger
         //=============SPECIAL EVENTS
         OnDamageTaken,
         OnMinionDamage,
+
+        OnFaceDamage,
 
         Deathrattle,
         OnMinionDeath,

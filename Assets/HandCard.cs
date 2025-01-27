@@ -23,7 +23,6 @@ public class HandCard
 
     public void Set(Card.Cardname name, int ind)
     {
-        Debug.Log("Setting ind " + ind+name);
         card = name;
         index = ind;
 

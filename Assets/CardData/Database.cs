@@ -37,10 +37,8 @@ public partial class Database
         CardInfo info = new CardInfo();
         switch (card)
         {
-            
-            case Card.Cardname.Ping:
-                return Ping();
-
+            case Card.Cardname.Coin:
+                return Coin();
             case Card.Cardname.Argent_Squire:
                 return Argent_Squire();
 
@@ -94,7 +92,10 @@ public partial class Database
 
             case Card.Cardname.Lifetap:
                 return Lifetap();
-            
+
+            case Card.Cardname.Ping:
+                return Ping();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 break;
@@ -102,6 +103,18 @@ public partial class Database
         return info;
     }
 
+    static CardInfo Coin()
+    { 
+        CardInfo c = new();
+
+        c.name = "The Coin";
+        c.text = "Gain 1 mana this turn only.";
+        c.manaCost = 0;
+        c.SPELL = true;
+        c.TARGETED = false;
+
+        return c;
+    }
     static CardInfo Ping()
     { 
         CardInfo c = new();

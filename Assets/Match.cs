@@ -14,7 +14,7 @@ public partial class Match
     public int playOrder = 0;
     public bool started = false;
     public ushort messageCount = 0;
-    List<(Server.MessageType, ushort, Server.CustomMessage, ushort)> messageQue = new();
+    List<(Server.MessageType, int, Server.CustomMessage, ushort)> messageQue = new();
     //todo: secrets
     //todo: graveyards
 
@@ -70,7 +70,7 @@ public partial class Match
         players[1].board.server = true;
     }
 
-    public void ReceiveMessage(Server.MessageType messageID, ushort clientID, Server.CustomMessage message, ushort count)
+    public void ReceiveMessage(Server.MessageType messageID, int clientID, Server.CustomMessage message, ushort count)
     {
         if (count == messageCount)
         {
@@ -87,7 +87,6 @@ public partial class Match
             var v = messageQue[i];
             if (v.Item4 == messageCount)
             {
-                Debug.Log("executing message " + messageCount);
                 ReceiveMessage(v.Item1, v.Item2, v.Item3, v.Item4);
                 messageQue.Remove(v);
                 break;
@@ -131,7 +130,8 @@ public partial class Match
             return players[0];
         if (players[1].board.Contains(minion))
             return players[1];
-        return players[0];
+        if (minion.player == null) Debug.LogError("MINION OWNER NOT FOUND");
+        return minion.player;
     }
     public Player FindOpponent(Minion minion)
     {

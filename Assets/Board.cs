@@ -39,6 +39,9 @@ public partial class Board : MonoBehaviour
 
     public HeroPower heroPower;
     public HeroPower enemyHeroPower;
+
+    public Deck deck;
+    public Deck enemyDeck;
     public int currMana => mana.curr;
 
     /*
@@ -92,17 +95,23 @@ public partial class Board : MonoBehaviour
     {
         return l.OrderBy(x => UnityEngine.Random.value).ToArray();
     }
+    public NetworkHandler mirror;
     void Start()
     {
         Application.targetFrameRate = 60;
-        client.Connect("127.0.0.1:8888",5,0,null,false);
-        client.MessageReceived += OnMessageReceived;
+#if (UNITY_EDITOR == false)
+        playerID = (ulong)Random.Range(-1000000, 1000000);
+#endif
+        mirror.StartClient();
+        //client.Connect("127.0.0.1:8888",5,0,null,false);
+        //client.MessageReceived += OnMessageReceived;
         currHand.board = this;
         currHand.server = false;
     }
     public ushort matchMessageOrder = 0;
     public ushort messageReceivedOrder = 0;
     List<(Server.MessageType, Server.CustomMessage, ushort)> messageQue = new();
+    /*
     public void OnMessageReceived(object sender, MessageReceivedEventArgs eventArgs)
     {
 
@@ -112,6 +121,17 @@ public partial class Board : MonoBehaviour
         //Debug.Log("Received Message " + count);
         Server.CustomMessage newMessage = CopyMessage(originalMessage, messageID);
         ParseMessage(newMessage, messageID);
+    }*/
+
+    public void OnMessageReceived(Server.CustomMessage message)
+    {
+
+        Server.MessageType messageID = message.type;
+        //Message originalMessage = eventArgs.Message;
+        ushort count = message.order;
+        //Debug.Log("Received Message " + count);
+        //Server.CustomMessage newMessage = CopyMessage(originalMessage, messageID);
+        ParseMessage(message, messageID);
     }
     public void ReceiveMessage(Server.MessageType type, Server.CustomMessage message, ushort order)
     {
@@ -147,16 +167,16 @@ public partial class Board : MonoBehaviour
                 InitGame(matchID);
                 break;
             case Server.MessageType.DrawHand:
-                ushort[] hand = message.GetUShorts();
+                List<ushort> hand = message.GetUShorts();
                 int enemyCardCount = message.GetInt();
                 InitHand(hand, enemyCardCount);
                 break;
             case Server.MessageType.ConfirmMulligan:
-                ushort[] mulliganNewHand = message.GetUShorts();
+                List<ushort> mulliganNewHand = message.GetUShorts();
                 ConfirmMulligan(mulliganNewHand);
                 break;
             case Server.MessageType.EnemyMulligan:
-                int[] enemyMulligan = message.GetInts();
+                List<int> enemyMulligan = message.GetInts();
                 ConfirmEnemyMulligan(enemyMulligan);
                 break;
             case Server.MessageType.DrawCards:
@@ -231,7 +251,8 @@ public partial class Board : MonoBehaviour
             case Server.MessageType.UpdateHero:
                 int UpdateHeroHP = message.GetInt();
                 bool UpdateHeroFriendly = message.GetBool();
-                UpdateHero(UpdateHeroHP,UpdateHeroFriendly);
+                int UpdateHeroDeckCount = message.GetInt();
+                UpdateHero(UpdateHeroHP,UpdateHeroFriendly, UpdateHeroDeckCount);
                 break;
             case Server.MessageType.AddAura:
             case Server.MessageType.RemoveAura:
@@ -290,7 +311,7 @@ public partial class Board : MonoBehaviour
         Debug.Log("Player " + playerID + " entered game " + matchID);
         currentMatchID = matchID;
     }
-    public void InitHand(ushort[] hand, int enemyCards=4)
+    public void InitHand(List<ushort> hand, int enemyCards=4)
     {
         //Debug.Log(jsonText);
         //Hand hand = JsonUtility.FromJson<Hand>(jsonText);
@@ -314,14 +335,17 @@ public partial class Board : MonoBehaviour
         for (int i=0;i<enemyCards;i++)
             enemyHand.Add(Card.Cardname.Cardback);
 
-        Debug.Log(playerID+" Hand: " + s);
+        //Debug.Log(playerID+" Hand: " + s);
         currHand.mulliganMode = Hand.MulliganState.None;
         mulliganButton.transform.localScale = Vector3.one;
+
+        deck.Set(30 - currHand.Count());
+        enemyDeck.Set(30 - enemyCards);
     }
 
     public void StartMatchmaking()
     {
-        Message message = CreateMessage(Server.MessageType.Matchmaking);
+        Server.CustomMessage message = CreateMessage(Server.MessageType.Matchmaking);
         message.AddULong(playerID);
         string deck = "";
         message.AddString(deck);
@@ -331,15 +355,15 @@ public partial class Board : MonoBehaviour
     public List<int> selectedMulligans = new List<int>(){};
     public void SubmitMulligan()
     {
-        Message message = CreateMessage(Server.MessageType.SubmitMulligan);
+        Server.CustomMessage message = CreateMessage(Server.MessageType.SubmitMulligan);
         message.AddULong(currentMatchID);
-        message.AddInts(selectedMulligans.ToArray(),true);
+        message.AddInts(selectedMulligans);
         message.AddULong(playerID);
         //client.Send(message);
         SendMessage(message,true);
     }
 
-    void ConfirmMulligan(ushort[] cards)
+    void ConfirmMulligan(List<ushort> cards)
     {
         foreach (int i in selectedMulligans)
         {
@@ -350,7 +374,7 @@ public partial class Board : MonoBehaviour
         waitingEnemyMulliganMessage.transform.localScale = Vector3.one;
         mulliganButton.transform.localPosition += new Vector3(0, -10);
     }
-    void ConfirmEnemyMulligan(int[] inds)
+    void ConfirmEnemyMulligan(List<int> inds)
     {
         foreach(int i in inds)
         {
@@ -360,6 +384,8 @@ public partial class Board : MonoBehaviour
     }
     void StartGame(bool isTurn)
     {
+        heroPower.Set(Card.Cardname.Lifetap);
+
         //TODO: Get rid of mulligan screen
         waitingEnemyMulliganMessage.transform.localScale = Vector3.zero;
         currHand.ConfirmBothMulligans();
@@ -378,7 +404,7 @@ public partial class Board : MonoBehaviour
     {
         if (!currTurn) return;
 
-        Message message = CreateMessage(Server.MessageType.EndTurn);
+        Server.CustomMessage message = CreateMessage(Server.MessageType.EndTurn);
         message.AddULong(currentMatchID);
         message.AddULong(playerID);
         //client.Send(message);
@@ -414,12 +440,12 @@ public partial class Board : MonoBehaviour
             m.canAttack = true;
         }
         
-        Debug.Log(playerID + "'s turn.");
+        //Debug.Log(playerID + "'s turn.");
     }
     public void DrawCard(Card.Cardname card)
     {
         //todo: anim draw
-        Debug.Log("Drawn " + card);
+        //Debug.Log("Drawn " + card);
         currHand.Add(card);
     }
     public void DrawEnemy(int x)
@@ -433,9 +459,9 @@ public partial class Board : MonoBehaviour
         if (!currTurn) return;
         if (card.played) return;
         EndTargeting();
-        Debug.Log("Playing card " + card.card);
+        //Debug.Log("Playing card " + card.card);
         //send message to server to play card index
-        Message message = CreateMessage(Server.MessageType.PlayCard);
+        Server.CustomMessage message = CreateMessage(Server.MessageType.PlayCard);
         message.AddULong(currentMatchID);
         message.AddULong(playerID);
         message.AddInt(card.index);
@@ -452,7 +478,7 @@ public partial class Board : MonoBehaviour
         if (side ==false)
         {
             enemyHand.RemoveAt(index);
-            Debug.Log("TODO: Enemy played " + card);
+            //Debug.Log("TODO: Enemy played " + card);
             enemyMana.Spend(manaCost);
             return;
         }
@@ -467,9 +493,9 @@ public partial class Board : MonoBehaviour
         board.Add(card, position);
 
 
-        string s = "";
-        foreach (Minion m in board) s += m.ToString()+" ";
-        Debug.Log((friendlySide ? "Ally" : "Enemy") + " board: " + s);
+        //string s = "";
+        //foreach (Minion m in board) s += m.ToString()+" ";
+        //Debug.Log((friendlySide ? "Ally" : "Enemy") + " board: " + s);
     }
     public void DestroyMinion(int ind, bool friendlySide)
     {
@@ -505,7 +531,7 @@ public partial class Board : MonoBehaviour
 
         EndTargeting();
 
-        Message message = CreateMessage(Server.MessageType.AttackMinion);
+        Server.CustomMessage message = CreateMessage(Server.MessageType.AttackMinion);
         message.AddULong(currentMatchID);
         message.AddULong(playerID);
         message.AddInt(attackerInd);
@@ -551,7 +577,7 @@ public partial class Board : MonoBehaviour
 
         EndTargeting();
 
-        Message message = CreateMessage(Server.MessageType.AttackFace);
+        Server.CustomMessage message = CreateMessage(Server.MessageType.AttackFace);
         message.AddULong(currentMatchID);
         message.AddULong(playerID);
         message.AddInt(attackerInd);
@@ -559,11 +585,19 @@ public partial class Board : MonoBehaviour
         SendMessage(message);
     }
 
-    public void UpdateHero(int hp, bool friendly)
+    public void UpdateHero(int hp, bool friendly, int deckCount)
     {
 
-        if (friendly) currHero.SetHealth(hp);
-        else enemyHero.SetHealth(hp);
+        if (friendly)
+        {
+            currHero.SetHealth(hp);
+            deck.Set(deckCount);
+        }
+        else
+        {
+            enemyHero.SetHealth(hp);
+            enemyDeck.Set(deckCount);
+        }
     }
     public void AddAura(int minionIndex,bool friendly, ushort auraType, ushort value, bool temp, bool foreign,int sourceInd, bool sourceFriendly)
     {
@@ -604,8 +638,9 @@ public partial class Board : MonoBehaviour
 
     public void CastHeroPower(Card.Cardname ability, int target, bool isFriendly, bool isHero)
     {
-        Message message = CreateMessage(Server.MessageType.HeroPower);
+        Server.CustomMessage message = CreateMessage(Server.MessageType.HeroPower);
 
+        if (targeting) EndTargeting();
         message.AddULong(currentMatchID);
         message.AddULong(playerID);
         message.AddUShort((ushort)ability);
@@ -689,6 +724,7 @@ public partial class Board : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
+            //mirror.SendClient();
         }
 #endif //END TESTING HOTKEYS
     }
