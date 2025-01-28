@@ -13,8 +13,10 @@ public class Card : MonoBehaviour
     public TMP_Text health;
     public TMP_Text damage;
     public SpriteRenderer icon;
+    public SpriteRenderer back;
     public SpriteRenderer mulliganMark;
     public Sprite cardback;
+    public bool init = false;
     public enum Cardname
     {
         //NONCARD (ENEMY HAND DISPLAY)
@@ -85,6 +87,28 @@ public class Card : MonoBehaviour
         {
             damage.text = "";
             health.text = "";
+        }
+    }
+    public void Flip()
+    {
+        icon.transform.localEulerAngles = new Vector3(0, 90, 0); 
+        back.enabled = true;
+        StartCoroutine(flipper());
+    }
+    IEnumerator flipper()
+    {
+        float frames = 5;
+        Vector3 OP = new Vector3(0, 90, 0);
+        for (float i=0;i<frames;i++)
+        {
+            back.transform.localEulerAngles = Vector3.Lerp(Vector3.zero,OP,(i+1)/frames);
+            yield return AnimationManager.Wait(1);
+        }
+        back.enabled = false;
+        for (float i=0;i<frames;i++)
+        {
+            icon.transform.localEulerAngles = Vector3.Lerp(OP,Vector3.zero,(i+1)/frames);
+            yield return AnimationManager.Wait(1);
         }
     }
     void ToggleMulligan()
@@ -202,6 +226,65 @@ public class Card : MonoBehaviour
         //Debug.Log(ind);
         return ind;
     }
+    bool preview = false;
+
+    public void PreviewPlay()
+    {
+        if (board.currMana < card.manaCost)
+        {
+            EndPlay();
+            //TODO: Not enough mana popup
+            return;
+        }
+        if (board.currTurn == false)
+        {
+            EndPlay();
+            //TODO: Not your turn popup
+            return;
+        }
+
+        if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED == true)
+        {
+            if (preview) return;
+            if (board.ValidTargetsAvailable(card.eligibleTargets) == false)
+            {
+                EndPlay();
+                return;
+            }
+            //PlayCard();
+            board.StartTargetingCard(card);
+            //EndPlay();
+            HideCard();
+        }
+
+        if ((card.MINION) == true)
+        {
+            if (board.currMinions.Count() >= 7)
+            {
+                EndPlay();
+                //TODO: "too many minions" error
+                return;
+            }
+            board.currMinions.PreviewGap(FindMinionPosition());
+        }
+
+        preview = true;
+    }
+
+    public void EndPreview()
+    {
+        if (preview == false) return;
+        preview = false;
+        if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED == true)
+        {
+            //preview spell/target
+        }
+        if ((card.MINION) == true)
+        {
+            board.currMinions.EndPreview();
+        }
+    }
+    
     public static Vector3 GetMousePos()
     {
         return (Camera.main.ScreenToWorldPoint(Input.mousePosition) - new Vector3(0, 0, Camera.main.ScreenToWorldPoint(Input.mousePosition).z));
@@ -284,59 +367,6 @@ public class Card : MonoBehaviour
     void EndDrag()
     {
         StopAllCoroutines();
-    }
-
-    bool preview = false;
-
-    public void PreviewPlay()
-    {
-        if (board.currMana < card.manaCost)
-        {
-            EndPlay();
-            //TODO: Not enough mana popup
-            return;
-        }
-        if (board.currTurn==false)
-        {
-            EndPlay();
-            //TODO: Not your turn popup
-            return;
-        }
-
-        if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED == true)
-        {
-            if (preview) return;
-            if (board.ValidTargetsAvailable(card.eligibleTargets)==false)
-            {
-                EndPlay();
-                return;
-            }
-            //PlayCard();
-            board.StartTargetingCard(card);
-            //EndPlay();
-            HideCard();
-        }
-
-        if ((card.MINION) == true)
-        {
-            board.currMinions.PreviewGap(FindMinionPosition());
-        }
-
-        preview = true;
-    }
-
-    public void EndPreview()
-    {
-        if (preview == false) return;
-        preview = false;
-        if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED == true)
-        {
-            //preview spell/target
-        }
-        if ((card.MINION) == true)
-        {
-            board.currMinions.EndPreview();
-        }
     }
 
     public IEnumerator dragger()

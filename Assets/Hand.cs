@@ -64,7 +64,18 @@ public class Hand
         c.Set(cards[index]);
         cardObjects.Add(cards[index], c);
         c.transform.parent = board.transform;
+        
+        switch(source)
+        {
+            case CardSource.Deck:
+                c.transform.localPosition = (enemyHand) ? board.enemyDeck.transform.localPosition :board.deck.transform.localPosition;
+                if (enemyHand==false) c.Flip();
+                break;
+        }
+
         OrderInds();
+
+
 
         return newCard;
 
@@ -139,6 +150,7 @@ public class Hand
             foreach (var kvp in cardObjects)
             {
                 Card c = kvp.Value;
+                c.init = true;
                 if (coinHand && c.card.card == Card.Cardname.Coin) continue;
                 c.transform.localScale = Vector3.one * 1.5f;
                 c.transform.localPosition = offset + new Vector3(dist * (c.card.index), 0, 0);
@@ -153,27 +165,37 @@ public class Hand
             coinKVP.Value.transform.localScale = Vector3.one;
         }
         float count2 = cardObjects.Count;
-        float dist2 = 3f-0.15f*count2;
+        float dist2 = 3.5f-0.15f*count2;
         float offset2 = -((count2 - 1) / 2f * dist2);
 
         //x2+y2=r2
         float radius = 40;
-        Vector3 circleCenter = new Vector3(0, -radius);
-        float centerInt = (count2-1) / 2;
         foreach (var kvp in cardObjects)
         {
+            if (enemyHand) break;
             Card c = kvp.Value;
             c.transform.localScale = Vector3.one;
             float x = offset2 + dist2*c.card.index;
             float y = -10 - (radius-Mathf.Sqrt(radius*radius-x*x));
             float angle = 180*Mathf.Acos(x/radius)/Mathf.PI;
             angle = angle-90;
-            float radAngle = angle * Mathf.PI / 180f;
-            //y = y - Mathf.Abs(centerInt-c.card.index) * 0.5f * Mathf.Tan(Mathf.Abs(radAngle));
-            //x = x - ( * Mathf.Tan(radAngle));
-            c.transform.localPosition = new Vector3(x, enemyHand ? 10 : y, 0);
-            c.transform.localEulerAngles = new Vector3(0, 0, angle);
+            //c.transform.localPosition = 
+            MoveCard(c, new Vector3(x, y, 0), new Vector3(0, 0, angle));
         }
+        foreach (var kvp in cardObjects)
+        {
+            if (!enemyHand) break;
+            Card c = kvp.Value;
+            c.transform.localScale = Vector3.one;
+            float x = offset2 + dist2*c.card.index;
+            float y = 10 + (radius-Mathf.Sqrt(radius*radius-x*x));
+            float angle = 180*Mathf.Asin(x/radius)/Mathf.PI;
+            //angle = angle;
+            //c.transform.localPosition = new Vector3(x, y, 0);
+            RotateCard(c, new Vector3(0, 0, angle));
+            MoveCard(c, new Vector3(x, y, 0),Vector3.zero);
+        }
+        
     }
     public int Count()
     {
@@ -185,5 +207,27 @@ public class Hand
     }
 
 
-
+    public void MoveCard(Card c, Vector3 location,Vector3 rotation)
+    {
+        int frames = 5;
+        if (c.init==false)
+        {
+            c.init = true;
+            frames += 10;
+            if (enemyHand == false)
+            {
+                board.animationManager.DrawAnim(c, new Vector3(13, -5, 0), location, 5, 5, 10,rotation);
+                return;
+            }
+        }
+        board.animationManager.LerpTo(c, location, frames, 0);
+        if (enemyHand==false)
+        {
+            RotateCard(c, rotation);
+        }
+    }
+    public void RotateCard(Card c, Vector3 rotation)
+    {
+        board.animationManager.LerpRotate(c, rotation, 5);
+    }
 }
