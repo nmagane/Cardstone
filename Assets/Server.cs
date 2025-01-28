@@ -7,7 +7,7 @@ using UnityEngine;
 public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() {Card.Cardname.Ping, Card.Cardname.Knife_Juggler };//{ Card.Cardname.Doomguard, Card.Cardname.Soulfire };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { };
 
     /*public static Message CreateMessage(MessageType type)
     {
@@ -304,16 +304,20 @@ public partial class Server : MonoBehaviour
             m.players[1].hand.Add(m.players[1].deck[0]);
             m.players[1].deck.RemoveAt(0);
         }
+
+        foreach (var v in TESTCARDS) m.players[0].hand.Add(v);
+
         if (m.turn==Turn.player1)
         {
             //TODO: add coin p2
+            m.players[1].hand.Add(Card.Cardname.Coin);
         }
         else
         {
             //TODO: add coin p1
+            m.players[0].hand.Add(Card.Cardname.Coin);
         }
 
-        foreach (var v in TESTCARDS) m.players[0].hand.Add(v);
 
         //TODO: THIS MESSAGE SIZE MIGHT GET TOO LARGE TO SEND, CHANGE TO ARRAY OF ENUMS ONLY?
         List<ushort> hand1 = new List<ushort>();
@@ -696,6 +700,12 @@ public partial class Server : MonoBehaviour
 
         messageOwner.AddInt(player.deck.Count);
         messageOpponent.AddInt(player.deck.Count);
+
+        messageOwner.AddInt(player.currMana);
+        messageOwner.AddInt(player.maxMana);
+
+        messageOpponent.AddInt(player.currMana);
+        messageOpponent.AddInt(player.maxMana);
         //server.Send(messageOwner, player.connection.clientID);
         SendMessage(messageOwner, player);
         //server.Send(messageOpponent, match.Opponent(player).connection.clientID);

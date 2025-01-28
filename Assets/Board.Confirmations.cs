@@ -249,17 +249,15 @@ public partial class Board
         //todo: attack face animation
     }
 
-    void ConfirmHeroPower(bool ally, int manaCost)
+    void ConfirmHeroPower(bool ally)
     {
         if (ally)
         {
             heroPower.Disable();
-            mana.Spend(manaCost);
         }
         else
         {
             enemyHeroPower.Disable();
-            enemyMana.Spend(manaCost);
         }
     }
 }

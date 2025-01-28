@@ -17,6 +17,7 @@ public class Creature : MonoBehaviour
     public Minion minion;
     public int index => minion.index;
     public bool preview = false;
+    public bool init = false;
     public void Set(Minion c)
     {
         minion = c;

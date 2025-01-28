@@ -124,6 +124,9 @@ public partial class Server
         //TODO: check for target survival/validity after prespell phase. fizzle if invalid.
         switch(spell.card.card)
         {
+            case Card.Cardname.Coin:
+                Coin(spell);
+                break;
             case Card.Cardname.Ping:
                 Ping(spell);
                 break;
@@ -226,6 +229,10 @@ public partial class Server
         {
             match.server.RemoveTrigger(match, minion, t);
         }
+    }
+    void Coin(CastInfo spell)
+    {
+        spell.player.currMana++;
     }
     void Ping(CastInfo spell)
     {

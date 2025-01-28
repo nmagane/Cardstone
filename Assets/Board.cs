@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public partial class Board : MonoBehaviour
 {
+    public AnimationManager animationManager;
     public UIButton mulliganButton;
     public GameObject waitingEnemyMulliganMessage;
 
@@ -252,7 +253,9 @@ public partial class Board : MonoBehaviour
                 int UpdateHeroHP = message.GetInt();
                 bool UpdateHeroFriendly = message.GetBool();
                 int UpdateHeroDeckCount = message.GetInt();
-                UpdateHero(UpdateHeroHP,UpdateHeroFriendly, UpdateHeroDeckCount);
+                int UpdateHeroCurrMana = message.GetInt();
+                int UpdateHeroMaxMana = message.GetInt();
+                UpdateHero(UpdateHeroHP,UpdateHeroFriendly, UpdateHeroDeckCount,UpdateHeroCurrMana,UpdateHeroMaxMana);
                 break;
             case Server.MessageType.AddAura:
             case Server.MessageType.RemoveAura:
@@ -298,8 +301,7 @@ public partial class Board : MonoBehaviour
                 break;
             case Server.MessageType.ConfirmHeroPower:
                 bool heroPowerFriendly = message.GetBool();
-                int heroPowerManaCost = message.GetInt();
-                ConfirmHeroPower(heroPowerFriendly, heroPowerManaCost);
+                ConfirmHeroPower(heroPowerFriendly);
                 break;
             default:
                 Debug.LogError("UNKNOWN MESSAGE TYPE");
@@ -315,7 +317,8 @@ public partial class Board : MonoBehaviour
     {
         //Debug.Log(jsonText);
         //Hand hand = JsonUtility.FromJson<Hand>(jsonText);
-
+        if (hand.Contains((ushort)Card.Cardname.Coin))
+            currHand.coinHand = true;
         foreach (var c in hand)
         {
             currHand.Add(((Card.Cardname)c));
@@ -585,18 +588,22 @@ public partial class Board : MonoBehaviour
         SendMessage(message);
     }
 
-    public void UpdateHero(int hp, bool friendly, int deckCount)
+    public void UpdateHero(int hp, bool friendly, int deckCount, int currMana,int maxMana)
     {
 
         if (friendly)
         {
             currHero.SetHealth(hp);
             deck.Set(deckCount);
+            mana.SetCurrent(currMana);
+            mana.SetMax(maxMana);
         }
         else
         {
             enemyHero.SetHealth(hp);
             enemyDeck.Set(deckCount);
+            enemyMana.SetCurrent(currMana);
+            enemyMana.SetMax(maxMana);
         }
     }
     public void AddAura(int minionIndex,bool friendly, ushort auraType, ushort value, bool temp, bool foreign,int sourceInd, bool sourceFriendly)
@@ -724,7 +731,7 @@ public partial class Board : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
-            //mirror.SendClient();
+            currHand.OrderInds();
         }
 #endif //END TESTING HOTKEYS
     }

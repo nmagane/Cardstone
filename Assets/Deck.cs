@@ -12,4 +12,6 @@ public class Deck : MonoBehaviour
         count = x;
         countText.text = x.ToString();
     }
+
+    //TODO: DECK TRACKER ON HOVER
 }

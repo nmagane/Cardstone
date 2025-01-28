@@ -112,7 +112,14 @@ public class MinionBoard
         foreach (var kvp in minionObjects)
         {
             Creature c = kvp.Value;
-            c.transform.localPosition = new Vector3(offset + dist * (kvp.Key.index), this == board.currMinions ? -2.75f : 3, 0);
+            Vector3 targetPos = new Vector3(offset + dist * (kvp.Key.index), this == board.currMinions ? -2.75f : 3, 0);
+
+            if (c.init == false)
+            {
+                c.transform.localPosition = targetPos;
+                c.init = true;
+            }
+            else MoveCreature(c, targetPos);
         }
     }
 
@@ -136,7 +143,9 @@ public class MinionBoard
             int ind = kvp.Key.index;
             if (ind >= gapIndex) ind++;
             kvp.Key.previewIndex = ind;
-            c.transform.localPosition = new Vector3(offset + dist * (ind), this == board.currMinions ? -2.75f : 3, 0);
+            //c.transform.localPosition 
+            Vector3 targetPos = new Vector3(offset + dist * (ind), this == board.currMinions ? -2.75f : 3, 0);
+            MoveCreature(c, targetPos);
         }
     }
     public void EndPreview()
@@ -166,6 +175,7 @@ public class MinionBoard
         float dist = 4.5f;
         float offset = -((count - 1) / 2f * dist);
 
+
         creature.transform.localPosition = new Vector3(offset + dist * (pos), this == board.currMinions ? -2.75f : 3, 0);
 
     }
@@ -181,6 +191,11 @@ public class MinionBoard
     public MinionBoard()
     {
         minions = new List<Minion>();
+    }
+
+    public void MoveCreature(Creature c, Vector3 location)
+    {
+        board.animationManager.LerpTo(c, location, 5, 0.1f);
     }
 
 }

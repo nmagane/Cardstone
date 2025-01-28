@@ -71,6 +71,7 @@
         c.health = 7;
 
         c.MINION = true;
+        c.BATTLECRY = true;
         c.auras.Add(Aura.Type.Charge);
 
         return c;
