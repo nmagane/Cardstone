@@ -172,6 +172,7 @@ public class Hand
                 c.init = true;
                 if (coinHand && c.card.card == Card.Cardname.Coin) continue;
                 c.transform.localScale = Vector3.one * 1.5f;
+                c.shadow.elevation = 1;
                 c.transform.localPosition = offset + new Vector3(dist * (c.card.index), 0, 0);
             }
 
@@ -250,7 +251,7 @@ public class Hand
             }
         }
         board.animationManager.LerpTo(c, location, frames, 0);
-
+        c.ElevateTo(0.1f, frames);
         RotateCard(c, rotation);
         
     }

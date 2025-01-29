@@ -11,13 +11,13 @@ public class DropShadow : MonoBehaviour
     public bool enableCustomColor = false;
     public Color customColor;
     public int layerGap = 1;
-    void Start()
+    void Awake()
     {
         parent = GetComponent<SpriteRenderer>();
         shadow = new GameObject("dropshadow_"+this.gameObject.name);
         spriteRenderer = shadow.AddComponent<SpriteRenderer>();
         spriteRenderer.enabled = parent.enabled;
-        spriteRenderer.sortingLayerName = parent.sortingLayerName;
+        spriteRenderer.sortingLayerName = "shadow";
         spriteRenderer.sortingOrder = parent.sortingOrder- layerGap;
         spriteRenderer.material = Camera.main.GetComponentInChildren<AnimationManager>().shadowMat;
         spriteRenderer.color = new Color(0.2f, 0.2f, 0.2f,parent.color.a);
@@ -33,14 +33,24 @@ public class DropShadow : MonoBehaviour
         if (spriteRenderer.drawMode == SpriteDrawMode.Tiled || spriteRenderer.drawMode == SpriteDrawMode.Sliced)
             spriteRenderer.size = parent.size;
     }
+    public float elevation = 0.3f;
+    public void SetOffset()
+    {
+        float y = transform.position.y;
+        float x = transform.position.x;
+        float v = (9 + y) / 18;
+        float h = x / 16;
+        offset = new Vector3(h * elevation, v * -elevation);
+    }
     void Update()
     {
+        SetOffset();
         shadow.transform.position = this.transform.position + offset;
         spriteRenderer.sprite = parent.sprite;
         spriteRenderer.enabled = parent.enabled;
         if (enableCustomColor)
         {
-            spriteRenderer.color = new Color(customColor.r, customColor.g, customColor.b, parent.color.a);
+            spriteRenderer.color = new Color(customColor.r, customColor.g, customColor.b, parent.color.a*customColor.a);
         }
         else
             spriteRenderer.color = new Color(0.2f, 0.2f, 0.2f, parent.color.a);

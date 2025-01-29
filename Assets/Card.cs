@@ -6,6 +6,7 @@ public class Card : MonoBehaviour
 {
     public Board board;
     public HandCard card;
+    public DropShadow shadow;
 
     float _alpha = 1;
     public float alpha
@@ -78,9 +79,9 @@ public class Card : MonoBehaviour
         //UNIMPLEMENTED
         Voodoo_Doctor,
     }
-    void Start()
+    void Awake()
     {
-        
+        shadow = icon.GetComponent<DropShadow>();
     }
 
     public void Set(HandCard c)
@@ -398,13 +399,24 @@ public class Card : MonoBehaviour
     {
         icon.transform.localScale = Vector3.one * 1.25f;
         //icon.transform.localPosition += new Vector3(0, -2);
-        icon.transform.localEulerAngles = -handRot;
+        icon.transform.localEulerAngles = Vector3.zero;
+        transform.localEulerAngles = Vector3.zero;
         SetSortingLayer("top1");
+        shadow.elevation = 1;
         yield return null;
+        Vector3 last = DragPos();
+        float angle = 0;
         while (true)
         {
-
-            transform.position = DragPos();
+            Vector3 pos = DragPos();
+            float x = pos.x;
+            float l = last.x;
+            float diff = Mathf.Clamp(x - l, -2, 2);
+            float target = diff / 2 * 30f;
+            angle = Mathf.Lerp(angle, target, 0.25f);
+            transform.localEulerAngles = new Vector3(0, 0, angle);
+            transform.position = pos;
+            last = pos;
 
             if (transform.localPosition.y >= -6.5f)
             {
@@ -475,6 +487,7 @@ public class Card : MonoBehaviour
         icon.transform.localEulerAngles = -handRot;
         board.animationManager.LerpTo(icon.gameObject, new Vector3(0,(-10-transform.localPosition.y)+2.5f), 5, 0); 
         SetSortingLayer("top1");
+        shadow.elevation = 1f;
     }
     public void HideHover()
     {
@@ -487,6 +500,7 @@ public class Card : MonoBehaviour
         icon.transform.localScale = Vector3.one;
         icon.transform.localEulerAngles = Vector3.zero;
         board.animationManager.LerpTo(icon.gameObject, Vector3.zero, 5, 0);
+        shadow.elevation = 0.1f;
         SetSortingLayer("top0");
     }
     public void ReturnToHand()
@@ -499,6 +513,19 @@ public class Card : MonoBehaviour
         icon.transform.localEulerAngles = Vector3.zero;
         icon.transform.localPosition = Vector3.zero;
         SetSortingLayer("top0");
+    }
+    public void ElevateTo(float v,float f)
+    {
+        StartCoroutine(elevator(v, f));
+    }
+    IEnumerator elevator(float v,float frames)
+    {
+        float op = shadow.elevation;
+        for (int i=0;i<frames;i++)
+        {
+            shadow.elevation = Mathf.Lerp(op, v, (i + 1) / frames);
+            yield return null;
+        }
     }
     IEnumerator flipper()
     {

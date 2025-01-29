@@ -15,9 +15,12 @@ start and end turn confirms to opponent players? //probably not needed
 note: minion and spell cards look different.
 
 addcard message to client
-card anims for letting go of play + mulligan + discard
+
+hidecard() and showcard() fade/scale
 
 ===========================================
+
+card anims for letting go of play + mulligan + discard
 
 todo: hand limit + discarding + milling.
 
