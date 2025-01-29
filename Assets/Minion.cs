@@ -169,7 +169,6 @@ public partial class Minion
     public bool RemoveAura(Aura a)
     {
         auras.Remove(a);
-        Debug.Log("removing aura " + a.type);
         switch (a.type)
         {
             case Aura.Type.Health:

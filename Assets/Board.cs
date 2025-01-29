@@ -3,6 +3,7 @@ using Riptide;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public partial class Board : MonoBehaviour
 {
@@ -64,38 +65,6 @@ public partial class Board : MonoBehaviour
     {
         Destroy(o.gameObject);
     }
-    public static bool RNG(float percent) //Two point precision. RNG(XX.XXf)
-    {
-        percent *= 100;
-        return (UnityEngine.Random.Range(0, 10000) <= percent);
-    }
-    public static T RandElem<T>(List<T> L)
-    {
-        return L[UnityEngine.Random.Range(0, L.Count)];
-    }
-    public static KeyValuePair<T, Q> RandElem<T, Q>(Dictionary<T, Q> L)
-    {
-        List<T> L2 = new List<T>(L.Keys);
-
-        T K2 = RandElem(L2);
-        Q V2 = L[K2];
-
-        KeyValuePair<T, Q> kvp = new KeyValuePair<T, Q>(K2, V2);
-
-        return kvp;
-    }
-    public static T RandElem<T>(T[] L)
-    {
-        return L[UnityEngine.Random.Range(0, L.Length)];
-    }
-    public static List<T> Shuffle<T>(List<T> l)
-    {
-        return l.OrderBy(x => UnityEngine.Random.value).ToList();
-    }
-    public static T[] Shuffle<T>(T[] l)
-    {
-        return l.OrderBy(x => UnityEngine.Random.value).ToArray();
-    }
     public NetworkHandler mirror;
     void Start()
     {
@@ -109,21 +78,26 @@ public partial class Board : MonoBehaviour
         currHand.board = this;
         currHand.server = false;
     }
+    Queue<Server.CustomMessage> confirmedMessages = new Queue<Server.CustomMessage>();
     public ushort matchMessageOrder = 0;
     public ushort messageReceivedOrder = 0;
     List<(Server.MessageType, Server.CustomMessage, ushort)> messageQue = new();
-    /*
-    public void OnMessageReceived(object sender, MessageReceivedEventArgs eventArgs)
+
+
+    bool executing = false;
+    public IEnumerator ExecuteMessages()
     {
+        executing = true;
+        while (confirmedMessages.Count>0)
+        {
+            Server.CustomMessage msg = confirmedMessages.Dequeue();
 
-        Server.MessageType messageID = (Server.MessageType)eventArgs.MessageId;
-        Message originalMessage = eventArgs.Message;
-        ushort count = originalMessage.GetUShort();
-        //Debug.Log("Received Message " + count);
-        Server.CustomMessage newMessage = CopyMessage(originalMessage, messageID);
-        ParseMessage(newMessage, messageID);
-    }*/
 
+            Coroutine c = ParseMessage(msg);
+            if (c != null) yield return c;
+        }
+        executing = false;
+    }
     public void OnMessageReceived(Server.CustomMessage message)
     {
 
@@ -132,14 +106,17 @@ public partial class Board : MonoBehaviour
         ushort count = message.order;
         //Debug.Log("Received Message " + count);
         //Server.CustomMessage newMessage = CopyMessage(originalMessage, messageID);
-        ParseMessage(message, messageID);
+        ReceiveMessage(message.type, message, count);
+
     }
     public void ReceiveMessage(Server.MessageType type, Server.CustomMessage message, ushort order)
     {
         if (order == messageReceivedOrder)
         {
             messageReceivedOrder++;
-            ParseMessage(message, type);
+            //ParseMessage(message);
+            confirmedMessages.Enqueue(message);
+            if (!executing) StartCoroutine(ExecuteMessages());
         }
         else
         {
@@ -157,8 +134,10 @@ public partial class Board : MonoBehaviour
             }
         }
     }
-    public void ParseMessage(Server.CustomMessage message, Server.MessageType messageID)
+    public Coroutine ParseMessage(Server.CustomMessage message)
     {
+        Server.MessageType messageID = message.type;
+        Coroutine animation = null;
         switch (messageID)
         {
             case Server.MessageType._TEST:
@@ -307,6 +286,7 @@ public partial class Board : MonoBehaviour
                 Debug.LogError("UNKNOWN MESSAGE TYPE");
                 break;
         }
+        return animation;
     }
     public void InitGame(ulong matchID)
     {
@@ -635,7 +615,7 @@ public partial class Board : MonoBehaviour
         Hand hand = friendly ? currHand : enemyHand;
         HandCard c = hand[ind];
         Debug.Log((friendly?"":"enemy ")+"discarded " + card);
-        hand.RemoveAt(ind);
+        hand.RemoveAt(ind,Hand.RemoveCardType.Discard,card);
         //TODO: discard anim
     }
     public void MillCard(bool friendly, Card.Cardname card)

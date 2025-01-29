@@ -80,13 +80,21 @@ public class Hand
         return newCard;
 
     }
-    public void RemoveAt(int x)
+    public enum RemoveCardType
+    {
+        Play,
+        Discard,
+    }
+    public void RemoveAt(int x, RemoveCardType type = RemoveCardType.Play, Card.Cardname name=Card.Cardname.Coin)
     {
         if (!server)
         {
             Card c = cardObjects[cards[x]];
             cardObjects.Remove(cards[x]);
-            board.DestroyObject(c);
+
+            //board.DestroyObject(c);
+            //todo: show cards custom mana cost if its changed by freezing trap/loatheb etc
+            FadeCard(c, enemyHand == false, type == RemoveCardType.Discard, name);
         }
 
         cards.RemoveAt(x);
@@ -180,7 +188,8 @@ public class Hand
             float angle = 180*Mathf.Acos(x/radius)/Mathf.PI;
             angle = angle-90;
             //c.transform.localPosition = 
-            MoveCard(c, new Vector3(x, y, 0), new Vector3(0, 0, angle));
+            c.SetSortingOrder(c.card.index);
+            MoveCard(c, new Vector3(x, y, -0.5f*c.card.index), new Vector3(0, 0, angle));
         }
         foreach (var kvp in cardObjects)
         {
@@ -192,8 +201,8 @@ public class Hand
             float angle = 180*Mathf.Asin(x/radius)/Mathf.PI;
             //angle = angle;
             //c.transform.localPosition = new Vector3(x, y, 0);
-            RotateCard(c, new Vector3(0, 0, angle));
-            MoveCard(c, new Vector3(x, y, 0),Vector3.zero);
+            c.SetSortingOrder(c.card.index);
+            MoveCard(c, new Vector3(x, y, 0.5f * c.card.index),new Vector3(0, 0, angle));
         }
         
     }
@@ -209,6 +218,8 @@ public class Hand
 
     public void MoveCard(Card c, Vector3 location,Vector3 rotation)
     {
+        c.handPos = location;
+        c.handRot = rotation;
         int frames = 5;
         if (c.init==false)
         {
@@ -216,18 +227,23 @@ public class Hand
             frames += 10;
             if (enemyHand == false)
             {
-                board.animationManager.DrawAnim(c, new Vector3(13, -5, 0), location, 5, 5, 10,rotation);
+                board.animationManager.DrawAnim(c.gameObject, new Vector3(13, -5, 0), location, 5, 5, 10,rotation);
                 return;
             }
         }
         board.animationManager.LerpTo(c, location, frames, 0);
-        if (enemyHand==false)
-        {
-            RotateCard(c, rotation);
-        }
+
+        RotateCard(c, rotation);
+        
     }
     public void RotateCard(Card c, Vector3 rotation)
     {
-        board.animationManager.LerpRotate(c, rotation, 5);
+        board.animationManager.LerpRotate(c.gameObject, rotation, 5);
+    }
+
+    public void FadeCard(Card c, bool friendly, bool discard=false, Card.Cardname name =Card.Cardname.Coin)
+    {
+        c.noReturn = true;
+        board.animationManager.FadeCard(c, friendly, discard, name);
     }
 }

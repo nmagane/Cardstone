@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class AnimationManager : MonoBehaviour
 {
-    Dictionary<MonoBehaviour, Coroutine> activeLerps = new Dictionary<MonoBehaviour, Coroutine>();
-    Dictionary<MonoBehaviour, Coroutine> activeZooms = new Dictionary<MonoBehaviour, Coroutine>();
-    Dictionary<MonoBehaviour, Coroutine> activeRotates = new Dictionary<MonoBehaviour, Coroutine>();
+    Dictionary<GameObject, Coroutine> activeLerps = new Dictionary<GameObject, Coroutine>();
+    Dictionary<GameObject, Coroutine> activeZooms = new Dictionary<GameObject, Coroutine>();
+    Dictionary<GameObject, Coroutine> activeRotates = new Dictionary<GameObject, Coroutine>();
     public static IEnumerator Wait(int x)
     {
         for (int i = 0; i < x; i++)
             yield return null;
     }
 
-    public void DrawAnim(MonoBehaviour obj, Vector3 tar1, Vector3 tar2, float f1, float f2, int delay, Vector3 rotation)
+    public void DrawAnim(GameObject obj, Vector3 tar1, Vector3 tar2, float f1, float f2, int delay, Vector3 rotation)
     {
         if (activeLerps.ContainsKey(obj))
         {
@@ -29,7 +29,7 @@ public class AnimationManager : MonoBehaviour
         Coroutine c = StartCoroutine(_drawAnim(obj, tar1, tar2, f1,f2,delay,rotation));
         activeLerps.Add(obj, c);
     }
-    IEnumerator _drawAnim(MonoBehaviour obj, Vector3 tar1, Vector3 tar2, float f1, float f2, int delay,Vector3 rotation)
+    IEnumerator _drawAnim(GameObject obj, Vector3 tar1, Vector3 tar2, float f1, float f2, int delay,Vector3 rotation)
     {
         LerpZoom(obj, Vector3.one * 1.5f, f1);
         yield return _lerpTo(obj, tar1, f1);
@@ -38,7 +38,11 @@ public class AnimationManager : MonoBehaviour
         LerpRotate(obj, rotation, f2);
         yield return _lerpTo(obj, tar2, f2);
     }
-    public void LerpTo(MonoBehaviour obj,Vector3 tar, int frameCount=30, float bounce = 0)
+    public void LerpTo(MonoBehaviour obj, Vector3 tar, int frameCount = 30, float bounce = 0)
+    {
+        LerpTo(obj.gameObject, tar, frameCount, bounce);
+    }
+    public void LerpTo(GameObject obj,Vector3 tar, int frameCount=30, float bounce = 0)
     {
         if (activeLerps.ContainsKey(obj))
         {
@@ -54,7 +58,15 @@ public class AnimationManager : MonoBehaviour
         Coroutine c = StartCoroutine(_lerpTo(obj, tar, frameCount, bounce));
         activeLerps.Add(obj, c);
     }
-    IEnumerator _lerpTo(MonoBehaviour obj, Vector3 tar, float frameCount= 30, float bounce=0)
+    public void EndMovement(GameObject obj)
+    {
+        if (activeLerps.ContainsKey(obj))
+        {
+            StopCoroutine(activeLerps[obj]);
+            activeLerps.Remove(obj);
+        }
+    }
+    IEnumerator _lerpTo(GameObject obj, Vector3 tar, float frameCount= 30, float bounce=0)
     {
         Vector3 OP = obj.transform.localPosition;
         Vector3 DP = tar;
@@ -81,7 +93,7 @@ public class AnimationManager : MonoBehaviour
         }
         if (activeLerps.ContainsKey(obj)) activeLerps.Remove(obj);
     }
-    public void LerpZoom(MonoBehaviour obj, Vector3 tar, float frameCount = 30, float bounce = 0)
+    public void LerpZoom(GameObject obj, Vector3 tar, float frameCount = 30, float bounce = 0)
     {
         if (activeZooms.ContainsKey(obj))
         {
@@ -97,7 +109,7 @@ public class AnimationManager : MonoBehaviour
         Coroutine c = StartCoroutine(_lerpZoom(obj, tar, frameCount, bounce));
         activeZooms.Add(obj, c);
     }
-    IEnumerator _lerpZoom(MonoBehaviour obj, Vector3 tar, float frameCount = 30, float bounce = 0)
+    IEnumerator _lerpZoom(GameObject obj, Vector3 tar, float frameCount = 30, float bounce = 0)
     {
         Vector3 OP = obj.transform.localScale;
         Vector3 DP = tar;
@@ -124,7 +136,7 @@ public class AnimationManager : MonoBehaviour
         }
         if (activeZooms.ContainsKey(obj)) activeZooms.Remove(obj);
     }
-    public void LerpRotate(MonoBehaviour obj, Vector3 tar, float frameCount = 30, float bounce = 0)
+    public void LerpRotate(GameObject obj, Vector3 tar, float frameCount = 30, float bounce = 0)
     {
         if (activeRotates.ContainsKey(obj))
         {
@@ -140,7 +152,7 @@ public class AnimationManager : MonoBehaviour
         Coroutine c = StartCoroutine(_lerpRotate(obj, tar, frameCount, bounce));
         activeRotates.Add(obj, c);
     }
-    IEnumerator _lerpRotate(MonoBehaviour obj, Vector3 tar, float frameCount = 30, float bounce = 0)
+    IEnumerator _lerpRotate(GameObject obj, Vector3 tar, float frameCount = 30, float bounce = 0)
     {
         Vector3 OP = obj.transform.localEulerAngles;
         Vector3 DP = tar;
@@ -169,7 +181,6 @@ public class AnimationManager : MonoBehaviour
         {
             OP -= new Vector3(0,0,360);
         }
-        Debug.Log(obj.GetComponent<Card>().card.card + " " + OP.z + " "+DP.z);
         Vector3 dir = (DP - OP).normalized;
         DP += dir * bounce;
         for (int i = 0; i < frameCount; i++)
@@ -192,5 +203,43 @@ public class AnimationManager : MonoBehaviour
             }
         }
         if (activeRotates.ContainsKey(obj)) activeRotates.Remove(obj);
+    }
+
+    public void FadeCard(Card c, bool friendly, bool discard = false, Card.Cardname name = Card.Cardname.Coin)
+    {
+        if (discard)
+        {
+            if (friendly == false)
+            {
+                c.back.enabled = false;
+                
+                c.Set(new HandCard(name,0));
+                LerpTo(c, c.transform.localPosition + new Vector3(0, -10), 120);
+            }
+            else
+            {
+                LerpTo(c, c.transform.localPosition + new Vector3(0, 10), 120);
+            }
+            StartCoroutine(_fadeCard(c,60,60));
+            return;
+        }
+
+        if (friendly==false)
+        {
+            LerpTo(c, c.transform.localPosition + new Vector3(0, -6), 10);
+        }
+
+        StartCoroutine(_fadeCard(c,10));
+    }
+    IEnumerator _fadeCard(Card c,float f=10,int delay=0)
+    {
+        yield return Wait(delay);
+        float frames = f;
+        for (int i=0;i< frames; i++)
+        {
+            c.alpha -= 1/frames;
+            yield return Wait(1);
+        }
+        Destroy(c.gameObject);
     }
 }

@@ -32,7 +32,7 @@
         CardInfo c = new();
 
         c.name = "Flame Imp";
-        c.text = "Take 2 damage. Draw a card.";
+        c.text = "Battlecry: Deal 3 damage to your hero.";
         c.manaCost = 1;
         c.damage = 3;
         c.health = 2;

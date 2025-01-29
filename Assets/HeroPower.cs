@@ -58,6 +58,7 @@ public class HeroPower : MonoBehaviour
             switch (card.card)
             {
                 default:
+                    //TODO: target enemy for hunter hero power etc...
                     board.CastHeroPower(card.card, -1, true, true);
                     break;
             }

@@ -33,6 +33,7 @@ public partial class Server : MonoBehaviour
     {
         //message.SetBits(player.messageCount++, 16, 28);
         //server.Send(message, player.connection.clientID);
+        message.order = player.messageCount++;
         mirror.SendServer(message, player);
     }
     public enum MessageType

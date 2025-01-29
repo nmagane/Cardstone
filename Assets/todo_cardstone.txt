@@ -14,7 +14,8 @@ start and end turn confirms to opponent players? //probably not needed
 
 note: minion and spell cards look different.
 
-coin - no show in mulligan. addcard message to client?
+addcard message to client
+card anims for letting go of play + mulligan + discard
 
 ===========================================
 

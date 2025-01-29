@@ -7,6 +7,27 @@ public class Card : MonoBehaviour
     public Board board;
     public HandCard card;
 
+    float _alpha = 1;
+    public float alpha
+    {
+        get
+        {
+            return _alpha;
+        }
+        set
+        {
+            _alpha = value;
+            name.color = new Color(name.color.r, name.color.b, name.color.g, _alpha);
+            text.color = new Color(text.color.r, text.color.b, text.color.g, _alpha);
+            manaCost.color = new Color(manaCost.color.r, manaCost.color.b, manaCost.color.g, _alpha);
+            health.color = new Color(health.color.r, health.color.b, health.color.g, _alpha);
+            damage.color = new Color(damage.color.r, damage.color.b, damage.color.g, _alpha);
+            icon.color = new Color(icon.color.r, icon.color.b, icon.color.g, _alpha);
+            back.color = new Color(back.color.r, back.color.b, back.color.g, _alpha);
+
+        }
+    }
+
     public new TMP_Text name;
     public TMP_Text text;
     public TMP_Text manaCost;
@@ -16,7 +37,9 @@ public class Card : MonoBehaviour
     public SpriteRenderer back;
     public SpriteRenderer mulliganMark;
     public Sprite cardback;
+    public Sprite spritePlaceholder;
     public bool init = false;
+    public bool noReturn = false;
     public enum Cardname
     {
         //NONCARD (ENEMY HAND DISPLAY)
@@ -72,7 +95,7 @@ public class Card : MonoBehaviour
             health.text = "";
             return;
         }
-
+        icon.sprite = spritePlaceholder;
         gameObject.name = c.card.ToString();
         Database.CardInfo cardInfo = Database.GetCardData(c.card);
         name.text = cardInfo.name;
@@ -139,7 +162,7 @@ public class Card : MonoBehaviour
         {
             transform.localScale = Vector3.one;
         }
-        transform.localPosition = OP;
+        if (noReturn == false) ReturnToHand();
         EndDrag();
         board.EndPlayingCard();
         if (preview) EndPreview();
@@ -183,7 +206,7 @@ public class Card : MonoBehaviour
 
             int position = FindMinionPosition();
             board.PlayCard(card, -1, position);
-            //EndPlay();
+            EndDrag();
             return;
         }
 
@@ -306,9 +329,11 @@ public class Card : MonoBehaviour
         if (dragCoroutine != null|| board.playingCard == this) return;
 
         OP = transform.localPosition;
-        offset = this.transform.position - GetMousePos();
+        offset = transform.position - GetMousePos();
         clickPos = GetMousePos();
         board.StartPlayingCard(this);
+
+        transform.position = DragPos();
         StartDrag();
     }
 
@@ -347,14 +372,23 @@ public class Card : MonoBehaviour
         if (board.currTurn == false)
         {
             //ERROR: NOT YOUR TURN
-            transform.localPosition = OP;
+            if (noReturn==false) ReturnToHand();
             return;
         }
 
-        transform.localPosition = OP;
+        //if (noReturn == false) ReturnToHand();
         return;
     }
-
+    private void OnMouseOver()
+    {
+        if (card.card == Cardname.Cardback) return;
+        ShowHover();
+    }
+    private void OnMouseExit()
+    {
+        if (card.card == Cardname.Cardback) return;
+        HideHover();
+    }
     public Vector3 DragPos()
     {
         return GetMousePos() + offset;
@@ -362,18 +396,24 @@ public class Card : MonoBehaviour
     Coroutine dragCoroutine = null;
     void StartDrag()
     {
+        //HideHover();
         if (dragCoroutine==null) StartCoroutine(dragger());
     }
     void EndDrag()
     {
+        //if (noReturn == false) ReturnToHand();
         StopAllCoroutines();
     }
 
     public IEnumerator dragger()
     {
+        icon.transform.localScale = Vector3.one * 1.25f;
+        //icon.transform.localPosition += new Vector3(0, -2);
+        icon.transform.localEulerAngles = -handRot;
         yield return null;
         while (true)
         {
+
             transform.position = DragPos();
 
             if (transform.localPosition.y >= -6.5f)
@@ -407,5 +447,54 @@ public class Card : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    public Vector3 handPos=Vector3.zero;
+    public Vector3 handRot=Vector3.zero;
+
+    public void SetSortingOrder(int x)
+    {
+        x = x * 10;
+        icon.sortingOrder = x;
+        back.sortingOrder = x;
+        name.GetComponent<MeshRenderer>().sortingOrder = x + 1;
+        text.GetComponent<MeshRenderer>().sortingOrder = x + 1;
+        manaCost.GetComponent<MeshRenderer>().sortingOrder = x + 1;
+        health.GetComponent<MeshRenderer>().sortingOrder = x + 1;
+        damage.GetComponent<MeshRenderer>().sortingOrder = x + 1;
+    }
+    bool hov = false;
+    public void ShowHover()
+    {
+        if (dragCoroutine != null) return;
+        if (board.playingCard != null) return;
+        if (noReturn) return;
+        if (board.currHand.mulliganMode != Hand.MulliganState.Done) return;
+        hov = true;
+        icon.transform.localScale = Vector3.one * 1.5f;
+        icon.transform.localEulerAngles = -handRot;
+        board.animationManager.LerpTo(icon.gameObject, new Vector3(0,2), 5, 0);
+    }
+    public void HideHover()
+    {
+        if (dragCoroutine != null) return;
+        if (board.playingCard != null) return;
+        if (noReturn) return;
+        if (board.currHand.mulliganMode != Hand.MulliganState.Done) return;
+        if (!hov) return;
+        hov = false;
+        icon.transform.localScale = Vector3.one;
+        icon.transform.localEulerAngles = Vector3.zero;
+        board.animationManager.LerpTo(icon.gameObject, Vector3.zero, 5, 0);
+    }
+    public void ReturnToHand()
+    {
+        if (noReturn) return;
+        if (board.currHand.cardObjects.ContainsKey(card) == false) return;
+        board.animationManager.EndMovement(icon.gameObject);
+        board.currHand.MoveCard(this, handPos, handRot);
+        icon.transform.localScale = Vector3.one;
+        icon.transform.localEulerAngles = Vector3.zero;
+        icon.transform.localPosition = Vector3.zero;
     }
 }
