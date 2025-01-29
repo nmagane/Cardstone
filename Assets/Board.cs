@@ -154,6 +154,7 @@ public partial class Board : MonoBehaviour
             case Server.MessageType.ConfirmMulligan:
                 List<ushort> mulliganNewHand = message.GetUShorts();
                 ConfirmMulligan(mulliganNewHand);
+                animation = StartCoroutine(AnimationManager.Wait(50));
                 break;
             case Server.MessageType.EnemyMulligan:
                 List<int> enemyMulligan = message.GetInts();
@@ -301,7 +302,7 @@ public partial class Board : MonoBehaviour
             currHand.coinHand = true;
         foreach (var c in hand)
         {
-            currHand.Add(((Card.Cardname)c));
+            currHand.Add(((Card.Cardname)c),-1,Hand.CardSource.Start);
         }
         //currHand = hand;
         string s = "";
@@ -316,7 +317,7 @@ public partial class Board : MonoBehaviour
         enemyHand.mulliganMode = Hand.MulliganState.Done;
         enemyHand.server = false;
         for (int i=0;i<enemyCards;i++)
-            enemyHand.Add(Card.Cardname.Cardback);
+            enemyHand.Add(Card.Cardname.Cardback,-1,Hand.CardSource.Start);
 
         //Debug.Log(playerID+" Hand: " + s);
         currHand.mulliganMode = Hand.MulliganState.None;

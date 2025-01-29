@@ -12,7 +12,21 @@ public class AnimationManager : MonoBehaviour
         for (int i = 0; i < x; i++)
             yield return null;
     }
-
+    public void MulliganAnim(Card c, HandCard newCard)
+    {
+        StartCoroutine(_mulliganAnim(c,newCard));
+    }
+    IEnumerator _mulliganAnim(Card c,HandCard newCard)
+    {
+        Vector3 OP = c.transform.localPosition;
+        c.Flip();
+        LerpZoom(c.gameObject, Vector3.one);
+        yield return _lerpTo(c.gameObject, c.board.deck.transform.localPosition, 20);
+        c.Flip();
+        c.Set(newCard);
+        LerpZoom(c.gameObject, Vector3.one*1.5f);
+        yield return _lerpTo(c.gameObject, OP, 20);
+    }
     public void DrawAnim(GameObject obj, Vector3 tar1, Vector3 tar2, float f1, float f2, int delay, Vector3 rotation)
     {
         if (activeLerps.ContainsKey(obj))

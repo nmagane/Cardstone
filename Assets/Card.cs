@@ -39,6 +39,7 @@ public class Card : MonoBehaviour
     public Sprite cardback;
     public Sprite spritePlaceholder;
     public bool init = false;
+    public bool starter = false;
     public bool noReturn = false;
     public enum Cardname
     {
@@ -112,27 +113,14 @@ public class Card : MonoBehaviour
             health.text = "";
         }
     }
+    public void SetFlipped()
+    {
+        back.enabled = true;
+        icon.transform.localEulerAngles = new Vector3(0, 90, 0);
+    }
     public void Flip()
     {
-        icon.transform.localEulerAngles = new Vector3(0, 90, 0); 
-        back.enabled = true;
         StartCoroutine(flipper());
-    }
-    IEnumerator flipper()
-    {
-        float frames = 5;
-        Vector3 OP = new Vector3(0, 90, 0);
-        for (float i=0;i<frames;i++)
-        {
-            back.transform.localEulerAngles = Vector3.Lerp(Vector3.zero,OP,(i+1)/frames);
-            yield return AnimationManager.Wait(1);
-        }
-        back.enabled = false;
-        for (float i=0;i<frames;i++)
-        {
-            icon.transform.localEulerAngles = Vector3.Lerp(OP,Vector3.zero,(i+1)/frames);
-            yield return AnimationManager.Wait(1);
-        }
     }
     void ToggleMulligan()
     {
@@ -327,7 +315,8 @@ public class Card : MonoBehaviour
             return;
         }
         if (dragCoroutine != null|| board.playingCard == this) return;
-
+        if (board.currHand.mulliganMode != Hand.MulliganState.Done) return;
+        
         OP = transform.localPosition;
         offset = transform.position - GetMousePos();
         clickPos = GetMousePos();
@@ -496,5 +485,42 @@ public class Card : MonoBehaviour
         icon.transform.localScale = Vector3.one;
         icon.transform.localEulerAngles = Vector3.zero;
         icon.transform.localPosition = Vector3.zero;
+    }
+    IEnumerator flipper()
+    {
+        float frames = 5;
+        Vector3 OP = new Vector3(0, 90, 0);
+        if (back.enabled)
+        {
+            for (float i = 0; i < frames; i++)
+            {
+                back.transform.localEulerAngles = Vector3.Lerp(Vector3.zero, OP, (i + 1) / frames);
+                yield return AnimationManager.Wait(1);
+            }
+
+            back.enabled = false;
+
+            for (float i = 0; i < frames; i++)
+            {
+                icon.transform.localEulerAngles = Vector3.Lerp(OP, Vector3.zero, (i + 1) / frames);
+                yield return AnimationManager.Wait(1);
+            }
+        }
+        else
+        {
+            for (float i = 0; i < frames; i++)
+            {
+                icon.transform.localEulerAngles = Vector3.Lerp(Vector3.zero, OP, (i + 1) / frames);
+                yield return AnimationManager.Wait(1);
+            }
+
+            back.enabled = true;
+
+            for (float i = 0; i < frames; i++)
+            {
+                back.transform.localEulerAngles = Vector3.Lerp(OP, Vector3.zero, (i + 1) / frames);
+                yield return AnimationManager.Wait(1);
+            }
+        }
     }
 }

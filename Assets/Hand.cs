@@ -43,6 +43,7 @@ public class Hand
     }
     public enum CardSource
     {
+        Start,
         Deck,
         Board,
         EnemyDeck,
@@ -69,7 +70,17 @@ public class Hand
         {
             case CardSource.Deck:
                 c.transform.localPosition = (enemyHand) ? board.enemyDeck.transform.localPosition :board.deck.transform.localPosition;
-                if (enemyHand==false) c.Flip();
+                if (enemyHand == false)
+                {
+                    c.SetFlipped();
+                    c.Flip();
+                }
+                break;
+            case CardSource.Start:
+                if (enemyHand)
+                {
+                    c.starter = true;
+                }
                 break;
         }
 
@@ -117,7 +128,7 @@ public class Hand
     public void MulliganReplace(int index, Card.Cardname c)
     {
         cards[index].Set(c, index);
-        cardObjects[cards[index]].Set(cards[index]);
+        board.animationManager.MulliganAnim(cardObjects[cards[index]], cards[index]);
         cardObjects[cards[index]].mulliganMark.enabled = false;
     }
     public void EndMulligan()
@@ -202,7 +213,14 @@ public class Hand
             //angle = angle;
             //c.transform.localPosition = new Vector3(x, y, 0);
             c.SetSortingOrder(c.card.index);
-            MoveCard(c, new Vector3(x, y, 0.5f * c.card.index),new Vector3(0, 0, angle));
+            if (c.starter)
+            {
+                c.transform.localPosition = new Vector3(x, y, 0.5f * c.card.index);
+                c.transform.localEulerAngles = new Vector3(0, 0, angle);
+                c.starter = false;
+            }
+            else 
+                MoveCard(c, new Vector3(x, y, -0.5f * c.card.index),new Vector3(0, 0, angle));
         }
         
     }
