@@ -399,6 +399,7 @@ public class Card : MonoBehaviour
         icon.transform.localScale = Vector3.one * 1.25f;
         //icon.transform.localPosition += new Vector3(0, -2);
         icon.transform.localEulerAngles = -handRot;
+        SetSortingLayer("top1");
         yield return null;
         while (true)
         {
@@ -452,6 +453,16 @@ public class Card : MonoBehaviour
         health.GetComponent<MeshRenderer>().sortingOrder = x + 1;
         damage.GetComponent<MeshRenderer>().sortingOrder = x + 1;
     }
+    public void SetSortingLayer(string x)
+    {
+        icon.sortingLayerName = x;
+        back.sortingLayerName = x;
+        name.GetComponent<MeshRenderer>().sortingLayerName = x;
+        text.GetComponent<MeshRenderer>().sortingLayerName = x;
+        manaCost.GetComponent<MeshRenderer>().sortingLayerName = x;
+        health.GetComponent<MeshRenderer>().sortingLayerName = x;
+        damage.GetComponent<MeshRenderer>().sortingLayerName = x;
+    }
     bool hov = false;
     public void ShowHover()
     {
@@ -462,7 +473,8 @@ public class Card : MonoBehaviour
         hov = true;
         icon.transform.localScale = Vector3.one * 1.5f;
         icon.transform.localEulerAngles = -handRot;
-        board.animationManager.LerpTo(icon.gameObject, new Vector3(0,2), 5, 0);
+        board.animationManager.LerpTo(icon.gameObject, new Vector3(0,(-10-transform.localPosition.y)+2.5f), 5, 0); 
+        SetSortingLayer("top1");
     }
     public void HideHover()
     {
@@ -475,6 +487,7 @@ public class Card : MonoBehaviour
         icon.transform.localScale = Vector3.one;
         icon.transform.localEulerAngles = Vector3.zero;
         board.animationManager.LerpTo(icon.gameObject, Vector3.zero, 5, 0);
+        SetSortingLayer("top0");
     }
     public void ReturnToHand()
     {
@@ -485,6 +498,7 @@ public class Card : MonoBehaviour
         icon.transform.localScale = Vector3.one;
         icon.transform.localEulerAngles = Vector3.zero;
         icon.transform.localPosition = Vector3.zero;
+        SetSortingLayer("top0");
     }
     IEnumerator flipper()
     {

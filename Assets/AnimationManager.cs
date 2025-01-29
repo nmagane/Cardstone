@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AnimationManager : MonoBehaviour
 {
+    public Material shadowMat;
     Dictionary<GameObject, Coroutine> activeLerps = new Dictionary<GameObject, Coroutine>();
     Dictionary<GameObject, Coroutine> activeZooms = new Dictionary<GameObject, Coroutine>();
     Dictionary<GameObject, Coroutine> activeRotates = new Dictionary<GameObject, Coroutine>();
