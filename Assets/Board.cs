@@ -188,7 +188,17 @@ public partial class Board : MonoBehaviour
                 int playedIndex = message.GetInt();
                 int playedManaCost = message.GetInt();
                 int playedCard = message.GetInt();
-                ConfirmPlayCard(playedFriendlySide, playedIndex, playedManaCost, (Card.Cardname)playedCard);
+                int playedPos = message.GetInt();
+                if (playedPos != -1)
+                {
+                    if (playedFriendlySide && currMinions.previewMinion != null && currMinions.currPreview == playedPos)
+                    {
+                        animation = currMinions.previewMinion.index == playedPos? null : StartCoroutine(AnimationManager.Wait(10));
+                    }
+                    else animation = StartCoroutine(AnimationManager.Wait(10));
+                }
+
+                ConfirmPlayCard(playedFriendlySide, playedIndex, playedManaCost, (Card.Cardname)playedCard,playedPos);
                 break;
             case Server.MessageType.SummonMinion:
                 bool summonedFriendlySide = message.GetBool();
@@ -442,6 +452,7 @@ public partial class Board : MonoBehaviour
     {
         if (!currTurn) return;
         if (card.played) return;
+        card.played = true;
         EndTargeting();
         //Debug.Log("Playing card " + card.card);
         //send message to server to play card index
@@ -457,17 +468,17 @@ public partial class Board : MonoBehaviour
         //client.Send(message);
         SendMessage(message);
     }
-    public void ConfirmPlayCard(bool side, int index, int manaCost, Card.Cardname card)
+    public void ConfirmPlayCard(bool friendlySide, int index, int manaCost, Card.Cardname card, int pos)
     {
-        if (side ==false)
+        if (friendlySide ==false)
         {
-            enemyHand.RemoveAt(index);
+            enemyHand.RemoveAt(index,Hand.RemoveCardType.Play,card,pos);
             //Debug.Log("TODO: Enemy played " + card);
             enemyMana.Spend(manaCost);
             return;
         }
         //ally played card
-        currHand.RemoveAt(index);
+        currHand.RemoveAt(index,Hand.RemoveCardType.Play,card,pos);
         this.mana.Spend(manaCost);
     }
 

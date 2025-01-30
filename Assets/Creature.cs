@@ -150,4 +150,6 @@ public class Creature : MonoBehaviour
         board.StartTargetingAttack(minion);
         clickPos = Card.GetMousePos();
     }
+
+    public Vector3 boardPos;
 }

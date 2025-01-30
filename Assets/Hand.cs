@@ -94,9 +94,10 @@ public class Hand
     public enum RemoveCardType
     {
         Play,
+        PlayMinion,
         Discard,
     }
-    public void RemoveAt(int x, RemoveCardType type = RemoveCardType.Play, Card.Cardname name=Card.Cardname.Coin)
+    public void RemoveAt(int x, RemoveCardType type = RemoveCardType.Play, Card.Cardname name = Card.Cardname.Coin, int pos = -1)
     {
         if (!server)
         {
@@ -105,7 +106,21 @@ public class Hand
 
             //board.DestroyObject(c);
             //todo: show cards custom mana cost if its changed by freezing trap/loatheb etc
-            FadeCard(c, enemyHand == false, type == RemoveCardType.Discard, name);
+            if (pos!=-1)
+            {
+                Vector3 p;
+                float count = board.currMinions.minionObjects.Count + 1;
+                float dist = 4.5f;
+                float offset = -((count - 1) / 2f * dist);
+
+
+                p = new Vector3(offset + dist * (pos), 1.5f+(enemyHand  ? 3 : -2.75f));
+
+                if (c.hidden == false)
+                    board.animationManager.PlayFade(c, p);
+            }
+            else
+                FadeCard(c, enemyHand == false, type == RemoveCardType.Discard, name);
         }
 
         cards.RemoveAt(x);

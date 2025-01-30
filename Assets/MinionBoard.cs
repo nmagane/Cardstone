@@ -103,8 +103,6 @@ public class MinionBoard
         }
         if (server) return;
 
-        previewing = false;
-        currPreview = -1;
         i = 0;
         float count = minionObjects.Count;
         float dist = 4.5f;
@@ -114,7 +112,14 @@ public class MinionBoard
             Creature c = kvp.Value;
             Vector3 targetPos = new Vector3(offset + dist * (kvp.Key.index), this == board.currMinions ? -2.75f : 3, 0);
 
-            if (c.init == false)
+            if (c.init==false && c.index == currPreview)
+            {
+                c.transform.localPosition = targetPos;
+                c.shadow.elevation = 0;
+                c.transform.localScale = Vector3.one;
+                c.init = true;
+            }
+            else if (c.init == false)
             {
                 c.transform.localPosition = targetPos+new Vector3(0,3);
                 c.shadow.elevation = 2;
@@ -124,6 +129,9 @@ public class MinionBoard
             }
             else MoveCreature(c, targetPos);
         }
+
+        previewing = false;
+        currPreview = -1;
     }
 
     public bool previewing = false;
@@ -165,7 +173,7 @@ public class MinionBoard
         OrderInds();
     }
 
-    public void SpawnPreviewMinion(Card.Cardname card, int pos)
+    public Vector3 SpawnPreviewMinion(Card.Cardname card, int pos)
     {
         Creature creature = board.CreateCreature();
         creature.board = board;
@@ -179,7 +187,14 @@ public class MinionBoard
         float offset = -((count - 1) / 2f * dist);
 
 
-        creature.transform.localPosition = new Vector3(offset + dist * (pos), this == board.currMinions ? -2.75f : 3, 0);
+        Vector3 targetPos = new Vector3(offset + dist * (pos), this == board.currMinions ? -2.75f : 3, 0);
+        creature.transform.localPosition = targetPos + new Vector3(0, 3);
+        creature.shadow.elevation = 2;
+        creature.transform.localScale = Vector3.zero;
+        DropCreature(creature, targetPos, 10);
+        creature.init = true;
+
+        return creature.transform.localPosition;
 
     }
 
@@ -200,12 +215,20 @@ public class MinionBoard
     {
         board.animationManager.LerpTo(c, location, 5, 0.1f);
     }
-    public void DropCreature(Creature c, Vector3 location)
+    public void DropCreature(Creature c, Vector3 location, int delay = 0)
     {
+        if (delay>0)
+        {
+            board.animationManager.DelayedDrop(c, location, delay, this);
+            return;
+        }
         int F = 10;
         board.animationManager.LerpTo(c, location, F);
         board.animationManager.DropMinion(c, F);
         board.animationManager.LerpZoom(c.gameObject, Vector3.one, F,0);
+
+        c.boardPos = location;
     }
+ 
 
 }

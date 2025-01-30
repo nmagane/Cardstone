@@ -261,12 +261,66 @@ public class AnimationManager : MonoBehaviour
     {
         StartCoroutine(_dropper(c, frames));
     }
+    
+    public void DelayedDrop(Creature c, Vector3 loc, int delay, MinionBoard b)
+    {
+        StartCoroutine(_delayedDrop(c, loc, delay, b));
+    }
+    IEnumerator _delayedDrop(Creature c, Vector3 loc, int del, MinionBoard b)
+    {
+        yield return Wait(del);
+        c.transform.localScale = Vector3.one * 1.15f;
+        b.DropCreature(c, loc, 0);
+    }
     IEnumerator _dropper(Creature c, float f)
     {
         float e = c.shadow.elevation;
         for (float i = 0; i < f; i++)
         {
             c.shadow.elevation -= e / f;
+            yield return Wait(1);
+        }
+    }
+
+    Coroutine PlayFader = null;
+    public void PlayFade(Card c, Vector3 location, bool hider=false)
+    {
+        LerpTo(c, location,10);
+        LerpRotate(c.gameObject, Vector3.zero, 10);
+        PlayFader = StartCoroutine(_fadePlay(c, 0.5f,10, 5,hider));
+    }
+    IEnumerator _fadePlay(Card c, float target,float f = 10, int delay = 0, bool hider=false)
+    {
+        yield return Wait(delay);
+        float frames = f;
+        float e = c.alpha;
+        for (int i = 0; i < frames; i++)
+        {
+            c.alpha = Mathf.Lerp(e, target, (i + 1) / frames);
+            yield return Wait(1);
+        }
+        if (hider)
+        {
+            c.alpha = 0;
+        }
+        else
+            Destroy(c.gameObject);
+    }
+    public void Unfade(Card c)
+    {
+        if (PlayFader!=null)
+        {
+            StopCoroutine(PlayFader);
+            PlayFader = null;
+        }
+        StartCoroutine(_unfadeCard(c));
+    }
+    IEnumerator _unfadeCard(Card c)
+    {
+        float x = c.alpha;
+        for (int i = 0; i < 10;i++)
+        {
+            c.alpha = Mathf.Lerp(x, 1, (i + 1) / 10f);
             yield return Wait(1);
         }
     }

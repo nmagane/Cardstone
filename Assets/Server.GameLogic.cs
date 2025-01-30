@@ -208,8 +208,11 @@ public partial class Server
     }
     public void Draw(CastInfo spell, int count, bool enemyDraw=false)
     {
-        for (int i=0;i<count;i++)
-            DrawCard(spell.match,enemyDraw? spell.player.opponent:spell.player);
+        for (int i = 0; i < count; i++)
+        {
+            if (enemyDraw)  spell.player =spell.player.opponent;
+            spell.match.StartSequenceDrawCard(spell);
+        }
     }
     public void SilenceMinion(CastInfo spell)
     {

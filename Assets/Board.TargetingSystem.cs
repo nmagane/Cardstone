@@ -143,12 +143,13 @@ public partial class Board
         }
 
     }
-    public void StartMinionPreview(Card card, int position)
+    public Vector3 StartMinionPreview(Card card, int position)
     {
-        currMinions.SpawnPreviewMinion(card.card.card, position);
+        Vector3 p = currMinions.SpawnPreviewMinion(card.card.card, position);
         playingCard = card;
         StartTargetingCard(card.card,currMinions.previewMinion);
         targetMode = TargetMode.Battlecry;
+        return p;
     }
     public void StartTargetingAttack(Minion source)
     {
@@ -282,14 +283,14 @@ public partial class Board
 
     public void StartTargetingAnim(MonoBehaviour source)
     {
-        StartCoroutine(_animActive(source.transform.position));
+        StartCoroutine(_animActive(source.gameObject));
     }
     public void EndTargetingAnim()
     {
         activeTargetingAnim = false;
     }
 
-    public IEnumerator _animActive(Vector3 pos)
+    public IEnumerator _animActive(GameObject pos)
     {
         if (activeTargetingAnim) yield break;
         activeTargetingAnim = true;
@@ -309,7 +310,7 @@ public partial class Board
             Vector3 mPos = Card.GetMousePos();
             for (int i = 0; i < Arrow.Count; i++)
             {
-                Arrow[i].transform.position = Vector3.Lerp(pos, mPos, (i+1) / ((float)Arrow.Count));
+                Arrow[i].transform.position = Vector3.Lerp(pos.transform.position, mPos, (i+1) / ((float)Arrow.Count));
                 if (i == Arrow.Count - 1)
                 {
                     float x1 = Arrow[i - 1].transform.position.x; float x2 = Arrow[i - 2].transform.position.x;

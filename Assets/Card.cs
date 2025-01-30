@@ -137,19 +137,25 @@ public class Card : MonoBehaviour
             board.selectedMulligans.Add(card.index);
         }
     }
-    bool hidden = false;
-    public void HideCard()
+    public bool hidden = false;
+    public void HideCard(Vector3 pos)
     {
         hidden = true;
         EndDrag();
-        transform.localScale = Vector3.zero;
+        board.animationManager.PlayFade(this, pos, true);
+    }
+    public void ShowCard()
+    {
+        hidden = false;
+        ReturnToHand();
+        board.animationManager.Unfade(this);
     }
 
     public void EndPlay()
     {
         if (hidden)
         {
-            transform.localScale = Vector3.one;
+            ShowCard(); 
         }
         if (noReturn == false) ReturnToHand();
         EndDrag();
@@ -170,7 +176,23 @@ public class Card : MonoBehaviour
             EndPlay();
             return;
         }
+        if (card.MINION && board.currMinions.Count() >= 7)
+        {
+            EndPlay();
+            return;
+        }
+
+        if (card.played)
+        {
+            EndPlay();
+            return;
+        }
+        ////START CAST
         
+        GetComponent<BoxCollider2D>().enabled = false;
+        float f = icon.transform.localPosition.y;
+        icon.transform.localPosition = Vector3.zero;
+        transform.localPosition += new Vector3(0, f);
 
         if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED == false)
         {
@@ -187,12 +209,6 @@ public class Card : MonoBehaviour
         if (card.MINION && card.TARGETED == false)
         {
             //SIMPLE MINION SUMMON
-            if (board.currMinions.Count() >= 7)
-            {
-                EndPlay();
-                return;
-            }
-
             int position = FindMinionPosition();
             board.PlayCard(card, -1, position);
             EndDrag();
@@ -203,11 +219,6 @@ public class Card : MonoBehaviour
         {
             //MINION WITH TARGET ABILITY
             //place temporary minion and start targetining effect
-            if (board.currMinions.Count() >= 7)
-            {
-                EndPlay();
-                return;
-            }
 
             int position = FindMinionPosition();
             //TODO: VALID TARGET EXISTS CHECK
@@ -215,8 +226,8 @@ public class Card : MonoBehaviour
             if (validTargetsExist)
             {
                 //EndPreview();
-                HideCard();
-                board.StartMinionPreview(this, position);
+                Vector3 p = board.StartMinionPreview(this, position);
+                HideCard(p);
             }
             else
                 board.PlayCard(card, -1, position);
@@ -266,7 +277,7 @@ public class Card : MonoBehaviour
             //PlayCard();
             board.StartTargetingCard(card);
             //EndPlay();
-            HideCard();
+            HideCard(this.transform.position);
         }
 
         if ((card.MINION) == true)
@@ -401,6 +412,7 @@ public class Card : MonoBehaviour
         //icon.transform.localPosition += new Vector3(0, -2);
         icon.transform.localEulerAngles = Vector3.zero;
         transform.localEulerAngles = Vector3.zero;
+        GetComponent<BoxCollider2D>().enabled = false;
         SetSortingLayer("top1");
         shadow.elevation = 1;
         yield return null;
@@ -507,6 +519,7 @@ public class Card : MonoBehaviour
     {
         if (noReturn) return;
         if (board.currHand.cardObjects.ContainsKey(card) == false) return;
+        GetComponent<BoxCollider2D>().enabled = true;
         board.animationManager.EndMovement(icon.gameObject);
         board.currHand.MoveCard(this, handPos, handRot);
         icon.transform.localScale = Vector3.one;
