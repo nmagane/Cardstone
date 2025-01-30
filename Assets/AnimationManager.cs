@@ -257,4 +257,17 @@ public class AnimationManager : MonoBehaviour
         }
         Destroy(c.gameObject);
     }
+    public void DropMinion(Creature c, float frames)
+    {
+        StartCoroutine(_dropper(c, frames));
+    }
+    IEnumerator _dropper(Creature c, float f)
+    {
+        float e = c.shadow.elevation;
+        for (float i = 0; i < f; i++)
+        {
+            c.shadow.elevation -= e / f;
+            yield return Wait(1);
+        }
+    }
 }

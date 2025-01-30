@@ -1261,6 +1261,6 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   offset: {x: 0, y: 0, z: 0}
   enableCustomColor: 1
-  customColor: {r: 0.177, g: 0.177, b: 0.177, a: 0.50980395}
+  customColor: {r: 0.177, g: 0.177, b: 0.177, a: 0.5019608}
   layerGap: 1
   elevation: 0.3

@@ -536,6 +536,7 @@ public partial class Server : MonoBehaviour
         confirmPlay.AddInt(index); confirmPlayOpponent.AddInt(index);
         confirmPlay.AddInt(card.manaCost); confirmPlayOpponent.AddInt(card.manaCost);
         confirmPlay.AddInt((int)card.card); confirmPlayOpponent.AddInt((int)card.card);
+        confirmPlay.AddInt(position); confirmPlayOpponent.AddInt(position);
 
         //server.Send(confirmPlay, player.clientID);
         SendMessage(confirmPlay, match.players[p]);

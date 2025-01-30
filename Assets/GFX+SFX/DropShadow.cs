@@ -39,7 +39,7 @@ public class DropShadow : MonoBehaviour
         float y = transform.position.y;
         float x = transform.position.x;
         float v = (9 + y) / 18;
-        float h = x / 16;
+        float h = (14+x) / 28;
         offset = new Vector3(h * elevation, v * -elevation);
     }
     void Update()

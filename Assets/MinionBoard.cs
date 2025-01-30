@@ -116,7 +116,10 @@ public class MinionBoard
 
             if (c.init == false)
             {
-                c.transform.localPosition = targetPos;
+                c.transform.localPosition = targetPos+new Vector3(0,3);
+                c.shadow.elevation = 2;
+                c.transform.localScale = Vector3.one * 1.15f;
+                DropCreature(c, targetPos);
                 c.init = true;
             }
             else MoveCreature(c, targetPos);
@@ -196,6 +199,13 @@ public class MinionBoard
     public void MoveCreature(Creature c, Vector3 location)
     {
         board.animationManager.LerpTo(c, location, 5, 0.1f);
+    }
+    public void DropCreature(Creature c, Vector3 location)
+    {
+        int F = 10;
+        board.animationManager.LerpTo(c, location, F);
+        board.animationManager.DropMinion(c, F);
+        board.animationManager.LerpZoom(c.gameObject, Vector3.one, F,0);
     }
 
 }

@@ -305,7 +305,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7365767399889799472, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
@@ -410,6 +410,14 @@ PrefabInstance:
     - target: {fileID: 7390567199027295289, guid: bffae03449734ad4e88ad9a8d43101e9, type: 3}
       propertyPath: m_Name
       value: HeroPowerEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7390567199027295290, guid: bffae03449734ad4e88ad9a8d43101e9, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7390567199027295290, guid: bffae03449734ad4e88ad9a8d43101e9, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -168459873
       objectReference: {fileID: 0}
     - target: {fileID: 7390567199027295291, guid: bffae03449734ad4e88ad9a8d43101e9, type: 3}
       propertyPath: m_RootOrder
@@ -853,7 +861,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7365767399889799472, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
@@ -1259,7 +1267,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7365767399889799472, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
@@ -2623,7 +2631,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7365767399889799472, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
@@ -2736,7 +2744,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7365767399889799472, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
@@ -3561,7 +3569,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7365767399889799472, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
@@ -4111,6 +4119,14 @@ PrefabInstance:
     - target: {fileID: 7390567199027295289, guid: bffae03449734ad4e88ad9a8d43101e9, type: 3}
       propertyPath: m_Name
       value: HeroPower
+      objectReference: {fileID: 0}
+    - target: {fileID: 7390567199027295290, guid: bffae03449734ad4e88ad9a8d43101e9, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7390567199027295290, guid: bffae03449734ad4e88ad9a8d43101e9, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -168459873
       objectReference: {fileID: 0}
     - target: {fileID: 7390567199027295291, guid: bffae03449734ad4e88ad9a8d43101e9, type: 3}
       propertyPath: m_RootOrder

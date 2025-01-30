@@ -77,7 +77,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -168459873
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &6895042384093357638
@@ -249,7 +249,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -168459873
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &645618781372868210
@@ -356,6 +356,7 @@ GameObject:
   - component: {fileID: 5732632010908122269}
   - component: {fileID: 1850431963990022828}
   - component: {fileID: 5109512973871508826}
+  - component: {fileID: 3027556361408005701}
   m_Layer: 0
   m_Name: Creature
   m_TagString: Untagged
@@ -399,6 +400,7 @@ MonoBehaviour:
   health: {fileID: 7404517308782075844}
   damage: {fileID: 6895042384093357638}
   spriteRenderer: {fileID: 1850431963990022828}
+  shadow: {fileID: 3027556361408005701}
   tauntSprite: {fileID: 4712950097139746968}
   shieldSprite: {fileID: 3955705995333266893}
   board: {fileID: 0}
@@ -411,12 +413,10 @@ MonoBehaviour:
     baseHealth: 0
     baseDamage: 0
     canAttack: 0
-    STEALTH: 0
-    WINDFURY: 0
     DEAD: 0
-    previewIndex: 0
     playOrder: 0
   preview: 0
+  init: 0
 --- !u!212 &1850431963990022828
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -456,7 +456,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -168459873
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0b55f1dc655480542abcdb23a435fcb0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -495,6 +495,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.47969, y: 4.0939894}
   m_EdgeRadius: 0
+--- !u!114 &3027556361408005701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6155155200194002578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26ded1f9c2c7f0349b39fae756d97ddf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 0}
+  offset: {x: 0, y: 0, z: 0}
+  enableCustomColor: 1
+  customColor: {r: 0.1764706, g: 0.1764706, b: 0.1764706, a: 0.5019608}
+  layerGap: 1
+  elevation: 0
 --- !u!1 &6965599755101029990
 GameObject:
   m_ObjectHideFlags: 0
@@ -572,7 +590,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -168459873
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &7404517308782075844
@@ -738,7 +756,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -168459873
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: -2
   m_Sprite: {fileID: 21300000, guid: c7762ac4333389044bec0fd684f47430, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -822,7 +840,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -168459873
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: ac1a520aaf955104985f09992de87afc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

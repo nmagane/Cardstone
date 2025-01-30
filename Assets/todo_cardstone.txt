@@ -17,6 +17,8 @@ note: minion and spell cards look different.
 addcard message to client
 
 hidecard() and showcard() fade/scale
+minion play anim. card goes to minion pos and fades/disappears, then minion spawns?
+change camera angle to be further to the side?
 
 ===========================================
 

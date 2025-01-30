@@ -9,6 +9,7 @@ public class Creature : MonoBehaviour
     public TMP_Text testname;
     public TMP_Text health, damage;
     public SpriteRenderer spriteRenderer;
+    public DropShadow shadow;
     public SpriteRenderer tauntSprite;
     public SpriteRenderer shieldSprite;
 
@@ -17,7 +18,7 @@ public class Creature : MonoBehaviour
     public Minion minion;
     public int index => minion.index;
     public bool preview = false;
-    public  bool init = false;
+    public bool init = false;
     public void Set(Minion c)
     {
         minion = c;
