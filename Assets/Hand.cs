@@ -168,7 +168,7 @@ public class Hand
         if (mulliganMode != MulliganState.Done)
         {
             float count = cardObjects.Count;
-            float dist = 5;
+            float dist = 6.5F;
 
             if (coinHand)
             {

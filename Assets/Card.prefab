@@ -119,7 +119,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.5, y: -2.146}
+  m_AnchoredPosition: {x: -1.5, y: -2.11475}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &1285298382799778340
@@ -463,7 +463,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.5, y: 2.0415}
+  m_AnchoredPosition: {x: -1.5, y: 2.0625}
   m_SizeDelta: {x: 3, y: 3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &566865459476446342
@@ -829,9 +829,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Battlecry:
-
-    Give adjacent minions +1/+1 and Taunt.'
+  m_text: After you summon a minion, deal 1 damage to a random enemy.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 06dc05703f6f28d43a34573092f5d22c, type: 2}
   m_sharedMaterial: {fileID: 2547159853987201026, guid: 06dc05703f6f28d43a34573092f5d22c, type: 2}
@@ -1022,7 +1020,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.5, y: -2.146}
+  m_AnchoredPosition: {x: 1.5, y: -2.11475}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &3299294510894343443
@@ -1087,7 +1085,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 3
+  m_text: 2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 06dc05703f6f28d43a34573092f5d22c, type: 2}
   m_sharedMaterial: {fileID: 2547159853987201026, guid: 06dc05703f6f28d43a34573092f5d22c, type: 2}
