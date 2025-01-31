@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 6482818988996355657, guid: 8f8192f142b702344b756fe3ecf9f4da, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -77,7 +77,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 209027085
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 2
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &2284123011719177795
@@ -102,8 +102,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: START
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f8192f142b702344b756fe3ecf9f4da, type: 2}
-  m_sharedMaterial: {fileID: 6482818988996355657, guid: 8f8192f142b702344b756fe3ecf9f4da, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: faebfff41fad5674a9cb67d3ac9138f0, type: 2}
+  m_sharedMaterial: {fileID: 4809274955262305114, guid: faebfff41fad5674a9cb67d3ac9138f0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -226,6 +226,7 @@ MonoBehaviour:
   icon: {fileID: 3565455371654636067}
   f: 0
   owner: {fileID: 0}
+  board: {fileID: 0}
   data: 0
   floatData: 0
   bounce: 1
@@ -268,7 +269,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 209027085
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 899773b8beeffe64abe45bb28c40468d, type: 3}
   m_Color: {r: 0.37, g: 0.37, b: 0.37, a: 1}
