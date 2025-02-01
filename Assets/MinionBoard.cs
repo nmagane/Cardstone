@@ -90,11 +90,6 @@ public class MinionBoard
 
     public void OrderInds()
     {
-        if (previewMinion != null)
-        {
-            board.DestroyObject(previewMinion);
-            previewMinion = null;
-        }
         int i = 0;
         foreach (var c in minions)
         {
@@ -112,12 +107,15 @@ public class MinionBoard
             Creature c = kvp.Value;
             Vector3 targetPos = new Vector3(offset + dist * (kvp.Key.index), this == board.currMinions ? -2.75f : 3, 0);
 
-            if (c.init==false && c.index == currPreview)
+            if (c.init==false && c.index == currPreview && previewMinion!=null)
             {
-                c.transform.localPosition = targetPos;
-                c.shadow.elevation = 0;
-                c.transform.localScale = Vector3.one;
-                c.init = true;
+                if (previewMinion.minion.card == c.minion.card)
+                {
+                    c.transform.localPosition = targetPos;
+                    c.shadow.elevation = 0;
+                    c.transform.localScale = Vector3.one;
+                    c.init = true;
+                }
             }
             else if (c.init == false)
             {
@@ -130,6 +128,11 @@ public class MinionBoard
             else MoveCreature(c, targetPos);
         }
 
+        if (previewMinion != null)
+        {
+            board.DestroyObject(previewMinion);
+            previewMinion = null;
+        }
         previewing = false;
         currPreview = -1;
     }

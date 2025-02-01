@@ -118,6 +118,8 @@ public class Hand
 
                 if (c.hidden == false)
                     board.animationManager.PlayFade(c, p);
+                else
+                    board.DestroyObject(c);
             }
             else
                 FadeCard(c, enemyHand == false, type == RemoveCardType.Discard, name);
@@ -224,7 +226,7 @@ public class Hand
             Card c = kvp.Value;
             c.transform.localScale = Vector3.one;
             float x = offset2 + dist2*c.card.index;
-            float y = 10 + (radius-Mathf.Sqrt(radius*radius-x*x));
+            float y = 11.2f + (radius-Mathf.Sqrt(radius*radius-x*x));
             float angle = 180*Mathf.Asin(x/radius)/Mathf.PI;
             //angle = angle;
             //c.transform.localPosition = new Vector3(x, y, 0);

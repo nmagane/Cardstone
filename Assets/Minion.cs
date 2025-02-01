@@ -168,6 +168,7 @@ public partial class Minion
 
     public bool RemoveAura(Aura a)
     {
+        Debug.Log("removed Taunt");
         auras.Remove(a);
         switch (a.type)
         {
@@ -227,9 +228,10 @@ public partial class Minion
                 break;
             }
         }
+
         foreach (Aura aura in removers)
         {
-            RemoveAura(a);
+            RemoveAura(aura);
         }
     }
 

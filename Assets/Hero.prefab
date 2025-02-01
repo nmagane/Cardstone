@@ -78,17 +78,14 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 1.2679976, y: 1.0670457}
-      - {x: 0.04131508, y: 1.6197245}
-      - {x: -1.1350096, y: 1.346217}
-      - {x: -1.9219584, y: 0.8874265}
-      - {x: -2.1939433, y: 0.117522955}
-      - {x: -2.4311934, y: -0.9408261}
-      - {x: -2.384348, y: -1.4937085}
-      - {x: 0.21785682, y: -1.2841392}
-      - {x: 1.9511796, y: -1.0982218}
-      - {x: 2.5576215, y: -1.0163234}
-      - {x: 1.9219584, y: 0.53624946}
+    - - {x: -0.7550374, y: 1.3576493}
+      - {x: -1.5947387, y: 0.7303991}
+      - {x: -2.1332862, y: -0.08837122}
+      - {x: -2.1475334, y: -1.3355564}
+      - {x: 2.2270112, y: -1.3454909}
+      - {x: 2.1766095, y: -0.18515253}
+      - {x: 1.4923089, y: 0.726953}
+      - {x: 0.6828195, y: 1.3620956}
 --- !u!1 &3875329440464422885
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,7 +289,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.045, y: -0.85}
+  m_AnchoredPosition: {x: 2, y: -1.2}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &6077507550258028750
@@ -315,7 +312,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2547159853987201026, guid: 06dc05703f6f28d43a34573092f5d22c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -359,15 +356,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 30
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: faebfff41fad5674a9cb67d3ac9138f0, type: 2}
-  m_sharedMaterial: {fileID: 4809274955262305114, guid: faebfff41fad5674a9cb67d3ac9138f0, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 06dc05703f6f28d43a34573092f5d22c, type: 2}
+  m_sharedMaterial: {fileID: 2547159853987201026, guid: 06dc05703f6f28d43a34573092f5d22c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4293847778
-  m_fontColor: {r: 0.885502, g: 0.91705567, b: 0.9339623, a: 1}
+    rgba: 4290835454
+  m_fontColor: {r: 0.99607843, g: 0.9529412, b: 0.7529412, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -384,8 +381,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 4
+  m_fontSizeBase: 4
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

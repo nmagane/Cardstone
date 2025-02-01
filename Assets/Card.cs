@@ -18,13 +18,13 @@ public class Card : MonoBehaviour
         set
         {
             _alpha = value;
-            name.color = new Color(name.color.r, name.color.b, name.color.g, _alpha);
-            text.color = new Color(text.color.r, text.color.b, text.color.g, _alpha);
-            manaCost.color = new Color(manaCost.color.r, manaCost.color.b, manaCost.color.g, _alpha);
-            health.color = new Color(health.color.r, health.color.b, health.color.g, _alpha);
-            damage.color = new Color(damage.color.r, damage.color.b, damage.color.g, _alpha);
-            icon.color = new Color(icon.color.r, icon.color.b, icon.color.g, _alpha);
-            back.color = new Color(back.color.r, back.color.b, back.color.g, _alpha);
+            name.color = new Color(name.color.r, name.color.g, name.color.b, _alpha);
+            text.color = new Color(text.color.r, text.color.g, text.color.b, _alpha);
+            manaCost.color = new Color(manaCost.color.r, manaCost.color.g, manaCost.color.b, _alpha);
+            health.color = new Color(health.color.r, health.color.g, health.color.b, _alpha);
+            damage.color = new Color(damage.color.r, damage.color.g, damage.color.b, _alpha);
+            icon.color = new Color(icon.color.r, icon.color.g, icon.color.b, _alpha);
+            back.color = new Color(back.color.r, back.color.g, back.color.b, _alpha);
 
         }
     }
@@ -39,6 +39,7 @@ public class Card : MonoBehaviour
     public SpriteRenderer mulliganMark;
     public Sprite cardback;
     public Sprite spritePlaceholder;
+    public Sprite spriteSpellPlaceholder;
     public bool init = false;
     public bool starter = false;
     public bool noReturn = false;
@@ -97,7 +98,6 @@ public class Card : MonoBehaviour
             health.text = "";
             return;
         }
-        icon.sprite = spritePlaceholder;
         gameObject.name = c.card.ToString();
         Database.CardInfo cardInfo = Database.GetCardData(c.card);
         name.text = cardInfo.name;
@@ -107,11 +107,13 @@ public class Card : MonoBehaviour
         {
             damage.text = c.damage.ToString();
             health.text = c.health.ToString();
+            icon.sprite = spritePlaceholder;
         }
         if (c.SPELL)
         {
             damage.text = "";
             health.text = "";
+            icon.sprite = spriteSpellPlaceholder;
         }
     }
     public void SetFlipped()
@@ -495,9 +497,9 @@ public class Card : MonoBehaviour
         if (noReturn) return;
         if (board.currHand.mulliganMode != Hand.MulliganState.Done) return;
         hov = true;
-        icon.transform.localScale = Vector3.one * 1.5f;
+        icon.transform.localScale = Vector3.one * 1.55f;
         icon.transform.localEulerAngles = -handRot;
-        board.animationManager.LerpTo(icon.gameObject, new Vector3(0,(-10-transform.localPosition.y)+2.5f), 5, 0); 
+        board.animationManager.LerpTo(icon.gameObject, new Vector3(0,(-10-transform.localPosition.y)+2.8f), 5, 0); 
         SetSortingLayer("top1");
         shadow.elevation = 1f;
     }

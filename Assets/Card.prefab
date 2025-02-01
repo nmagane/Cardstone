@@ -211,8 +211,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3
-  m_fontSizeBase: 3
+  m_fontSize: 3.25
+  m_fontSizeBase: 3.25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -555,8 +555,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3
-  m_fontSizeBase: 3
+  m_fontSize: 3.25
+  m_fontSizeBase: 3.25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -676,6 +676,7 @@ MonoBehaviour:
   mulliganMark: {fileID: 1743571273208037112}
   cardback: {fileID: 21300000, guid: 69ae6a1d6da941e4e85b23bf151a611b, type: 3}
   spritePlaceholder: {fileID: 21300000, guid: ce8f396c9d1f74948aa78c817288de56, type: 3}
+  spriteSpellPlaceholder: {fileID: 21300000, guid: f7b51ba1ae27d75458f0c0ae9dea2e99, type: 3}
   init: 0
   starter: 0
   noReturn: 0
@@ -1112,8 +1113,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3
-  m_fontSizeBase: 3
+  m_fontSize: 3.25
+  m_fontSizeBase: 3.25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

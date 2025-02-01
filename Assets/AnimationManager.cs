@@ -229,11 +229,11 @@ public class AnimationManager : MonoBehaviour
                 c.back.enabled = false;
                 
                 c.Set(new HandCard(name,0));
-                LerpTo(c, c.transform.localPosition + new Vector3(0, -10), 120);
+                LerpTo(c, c.transform.localPosition + new Vector3(0, -7), 120);
             }
             else
             {
-                LerpTo(c, c.transform.localPosition + new Vector3(0, 10), 120);
+                LerpTo(c, c.transform.localPosition + new Vector3(0, 7), 120);
             }
             StartCoroutine(_fadeCard(c,60,60));
             return;
@@ -269,6 +269,7 @@ public class AnimationManager : MonoBehaviour
     IEnumerator _delayedDrop(Creature c, Vector3 loc, int del, MinionBoard b)
     {
         yield return Wait(del);
+        if (c == null) yield break;
         c.transform.localScale = Vector3.one * 1.15f;
         b.DropCreature(c, loc, 0);
     }
@@ -296,6 +297,7 @@ public class AnimationManager : MonoBehaviour
         float e = c.alpha;
         for (int i = 0; i < frames; i++)
         {
+            if (c == null) yield break;
             c.alpha = Mathf.Lerp(e, target, (i + 1) / frames);
             yield return Wait(1);
         }

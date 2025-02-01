@@ -19,7 +19,6 @@ public static class AuraEffects
     }
     public static void DireWolfAlpha(Match match, Minion sourceMinion)
     {
-        Debug.Log("wolf");
         Player owner = match.FindOwner(sourceMinion);
         foreach (var m in owner.board)
         {

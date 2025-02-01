@@ -47,7 +47,7 @@ public class ManaBar : MonoBehaviour
 
     public void UpdateDisplay()
     {
-        text.text = "MANA:" + curr + "/" + max;
+        text.text = "MANA: " + curr + "/" + max;
     }
     void Update()
     {

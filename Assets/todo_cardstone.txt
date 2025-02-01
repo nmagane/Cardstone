@@ -16,13 +16,22 @@ note: minion and spell cards look different.
 
 addcard message to client
 
-hidecard() and showcard() fade/scale
-minion play anim. card goes to minion pos and fades/disappears, then minion spawns?
-change camera angle to be further to the side?
-mill anim
+DAMAGED HP COLOR (F5A097)
+
+mill anim	
+
+minion attack anim
+
+11.2 ehand
+7 ehero
+-5.5 player?
+
 
 ===========================================
 
+change camera angle to be further to the side?
+hidecard() and showcard() fade/scale
+minion play anim. card goes to minion pos and fades/disappears, then minion spawns?
 card anims for letting go of play + mulligan + discard
 
 todo: hand limit + discarding + milling.

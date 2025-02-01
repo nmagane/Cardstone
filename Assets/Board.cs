@@ -333,8 +333,8 @@ public partial class Board : MonoBehaviour
         currHand.mulliganMode = Hand.MulliganState.None;
         mulliganButton.transform.localScale = Vector3.one;
 
-        deck.Set(30 - currHand.Count());
-        enemyDeck.Set(30 - enemyCards);
+        deck.Set(30 - currHand.Count()+(currHand.coinHand?1:0));
+        enemyDeck.Set(30 - enemyCards+(currHand.coinHand?0:1));
     }
 
     public void StartMatchmaking()

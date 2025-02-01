@@ -28,7 +28,7 @@ public class HeroPower : MonoBehaviour
     {
         enabled = true;
         icon.sprite = activeSprite;
-        manaText.transform.localScale = Vector3.one*0.5f;
+        manaText.transform.localScale = Vector3.one;
     }
     public void Disable()
     {
