@@ -8,6 +8,7 @@ using System.Collections;
 public partial class Board : MonoBehaviour
 {
     public AnimationManager animationManager;
+    public GameObject gameAnchor;   
     public UIButton mulliganButton;
     public GameObject waitingEnemyMulliganMessage;
 

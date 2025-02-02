@@ -5,6 +5,7 @@
     {
         CardInfo c = new();
 
+        c.classType = Card.Class.Warlock;
         c.name = "Lifetap";
         c.text = "Take 2 damage. Draw a card.";
         c.manaCost = 2;
@@ -18,6 +19,7 @@
     {
         CardInfo c = new();
 
+        c.classType = Card.Class.Warlock;
         c.name = "Soulfire";
         c.text = "Deal 4 damage. Discard a random card.";
         c.manaCost = 0;
@@ -31,6 +33,7 @@
     {
         CardInfo c = new();
 
+        c.classType = Card.Class.Warlock;
         c.name = "Flame Imp";
         c.text = "Battlecry: Deal 3 damage to your hero.";
         c.manaCost = 1;
@@ -47,6 +50,7 @@
     {
         CardInfo c = new();
 
+        c.classType = Card.Class.Warlock;
         c.name = "Voidwalker";
         c.text = "Taunt.";
 
@@ -63,6 +67,7 @@
     {
         CardInfo c = new();
 
+        c.classType = Card.Class.Warlock;
         c.name = "Doomguard";
         c.text = "Charge. Battlecry: Discard 2 random cards.";
 

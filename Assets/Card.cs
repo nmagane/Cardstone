@@ -80,6 +80,21 @@ public class Card : MonoBehaviour
         //UNIMPLEMENTED
         Voodoo_Doctor,
     }
+
+    public enum Class
+    {
+        Neutral,
+
+        Warlock,
+        Mage,
+        Rogue,
+        Warrior,
+        Druid,
+        Priest,
+        Shaman,
+        Paladin,
+        Hunter,
+    }
     void Awake()
     {
         shadow = icon.GetComponent<DropShadow>();

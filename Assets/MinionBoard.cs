@@ -59,7 +59,7 @@ public class MinionBoard
         creature.board = board;
         creature.Set(minions[ind]);
         minionObjects.Add(minions[ind], creature);
-        creature.transform.parent = board.transform;
+        creature.transform.parent = board.gameAnchor.transform;
 
         OrderInds();
         return newMinion;
@@ -100,12 +100,12 @@ public class MinionBoard
 
         i = 0;
         float count = minionObjects.Count;
-        float dist = 4.5f;
+        float dist = 4.7f;
         float offset = -((count - 1) / 2f * dist);
         foreach (var kvp in minionObjects)
         {
             Creature c = kvp.Value;
-            Vector3 targetPos = new Vector3(offset + dist * (kvp.Key.index), this == board.currMinions ? -2.75f : 3, 0);
+            Vector3 targetPos = new Vector3(offset + dist * (kvp.Key.index), this == board.currMinions ? -2.25f : 2.5f, 0);
 
             if (c.init==false && c.index == currPreview && previewMinion!=null)
             {
@@ -149,7 +149,7 @@ public class MinionBoard
         previewing = true;
         currPreview = gapIndex;
         float count = minionObjects.Count + 1;
-        float dist = 4.5f;
+        float dist = 4.7f;
         float offset = -((count - 1) / 2f * dist);
         foreach (var kvp in minionObjects)
         {
@@ -158,7 +158,7 @@ public class MinionBoard
             if (ind >= gapIndex) ind++;
             kvp.Key.previewIndex = ind;
             //c.transform.localPosition 
-            Vector3 targetPos = new Vector3(offset + dist * (ind), this == board.currMinions ? -2.75f : 3, 0);
+            Vector3 targetPos = new Vector3(offset + dist * (ind), this == board.currMinions ? -2.25f : 2.5f, 0);
             MoveCreature(c, targetPos);
         }
     }
@@ -183,14 +183,14 @@ public class MinionBoard
         Minion prev = new Minion(card, pos, this);
         creature.Set(prev);
         previewMinion = creature;
-        creature.transform.parent = board.transform;
+        creature.transform.parent = board.gameAnchor.transform;
         creature.preview = true;
         float count = minionObjects.Count + 1;
-        float dist = 4.5f;
+        float dist = 4.7f;
         float offset = -((count - 1) / 2f * dist);
 
 
-        Vector3 targetPos = new Vector3(offset + dist * (pos), this == board.currMinions ? -2.75f : 3, 0);
+        Vector3 targetPos = new Vector3(offset + dist * (pos), this == board.currMinions ? -2.25f : 2.5f, 0);
         creature.transform.localPosition = targetPos + new Vector3(0, 3);
         creature.shadow.elevation = 2;
         creature.transform.localScale = Vector3.zero;

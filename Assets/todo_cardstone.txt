@@ -26,6 +26,7 @@ minion attack anim
 7 ehero
 -5.5 player?
 
+change hero frame. no circles in this game.
 
 ===========================================
 

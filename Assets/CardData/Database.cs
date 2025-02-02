@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public partial class Database
@@ -8,6 +9,8 @@ public partial class Database
     {
         public string name="UNDEFINED CARD";
         public string text="UNDEFINED CARD";
+
+        public Card.Class classType = Card.Class.Neutral;
 
         public int manaCost=1;
         public int damage=1;

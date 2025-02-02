@@ -41,13 +41,14 @@ public class Creature : MonoBehaviour
     }
     void Start()
     {
-        
+        StartCoroutine(floater());
     }
 
     void Update()
     {
         damage.text = minion.damage.ToString();
         health.text = minion.health.ToString();
+
     }
 
     public void EnableTaunt()
@@ -152,4 +153,20 @@ public class Creature : MonoBehaviour
     }
 
     public Vector3 boardPos;
+
+    public IEnumerator floater()
+    {
+        int i = 0;
+        float freq = 2F;// 1.5f;
+        while (true)
+        {
+            float ang = freq * Mathf.PI * i / 180;
+            transform.localScale = Vector3.one * ((1.025f + 0.01f * Mathf.Sin(ang)));
+            transform.localEulerAngles = new Vector3(0, 0, 0.5F * Mathf.Sin(0.5f * ang));
+            shadow.elevation = (0.4f + 0.1f * Mathf.Sin(ang));
+            i++;
+            if (i == 360) i = 0;
+            yield return null;
+        }
+    }
 }
