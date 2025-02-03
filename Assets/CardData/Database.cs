@@ -298,8 +298,8 @@ public partial class Database
 
         c.MINION = true;
 
-        c.triggers.Add((Trigger.Type.OnPlayMinion, Trigger.Side.Friendly, Trigger.Ability.KnifeJuggler));
-        c.triggers.Add((Trigger.Type.OnSummonMinion, Trigger.Side.Friendly, Trigger.Ability.KnifeJuggler));
+        c.triggers.Add((Trigger.Type.AfterPlayMinion, Trigger.Side.Friendly, Trigger.Ability.KnifeJuggler));
+        c.triggers.Add((Trigger.Type.AfterSummonMinion, Trigger.Side.Friendly, Trigger.Ability.KnifeJuggler));
 
         return c;
     }

@@ -296,6 +296,17 @@ public partial class Board : MonoBehaviour
                 bool heroPowerFriendly = message.GetBool();
                 ConfirmHeroPower(heroPowerFriendly);
                 break;
+            case Server.MessageType.ConfirmBattlecry:
+            case Server.MessageType.ConfirmTrigger:
+                bool battlecryFriendly = message.GetBool();
+                int battlecryIndex = message.GetInt();
+                if (messageID == Server.MessageType.ConfirmTrigger)
+                {
+                    animation = ConfirmTrigger(battlecryFriendly, battlecryIndex);
+                }
+                else
+                    animation = ConfirmBattlecry(battlecryFriendly, battlecryIndex);
+                break;
             default:
                 Debug.LogError("UNKNOWN MESSAGE TYPE");
                 break;

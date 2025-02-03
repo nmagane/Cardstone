@@ -135,17 +135,20 @@ public partial class Match
 
     public void StartSequencePlayMinion(CastInfo spell)
     {
-        Minion m = server.SummonMinion(this, spell.player, spell.card.card, spell.position);
-        if (m == null) return;
-        spell.minion = m;
+        Minion minion = server.SummonMinion(this, spell.player, spell.card.card, spell.position);
+        if (minion == null) return;
+
+        spell.minion = minion;
 
         StartPhase(Phase.OnPlayCard, ref spell);
         StartPhase(Phase.OnPlayMinion, ref spell);
 
         if (spell.card.BATTLECRY)
         {
+            //DONT TRIGGER IF NO TARGET WAS CHOSEN
             if ((spell.card.TARGETED && spell.target == -1) == false)
             {
+                server.ConfirmBattlecry(spell.match, minion);
                 server.CastSpell(spell);
                 ResolveTriggerQueue(ref spell);
             }
@@ -258,6 +261,7 @@ public partial class Match
     }
     void ReadTriggerBuffer()
     {
+        UpdateStats();
         if (triggerBuffer.Count > 0)
         {
             //Sort by playorder and add to resolve queue
@@ -270,15 +274,9 @@ public partial class Match
         }
     }
     public List<(Minion, Aura, bool)> auraChanges = new List<(Minion, Aura, bool)>();
-    void UpdateAuras()
+    void UpdateStats()
     {
-        //Initial visual update
-        foreach (var a in auraChanges)
-        {
-            server.ConfirmAuraChange(this, a.Item1, a.Item2, a.Item3);
-        }
-        if (auraChanges.Count>0) auraChanges.Clear();
-        //update minions
+
         foreach (Minion minion in players[0].board)
         {
             server.UpdateMinion(this, minion);
@@ -287,10 +285,22 @@ public partial class Match
         {
             server.UpdateMinion(this, minion);
         }
-        //TODO: update and check hero health for game over
+        
         server.UpdateHero(this, players[0]);
         server.UpdateHero(this, players[1]);
+    }
+    void UpdateAuras()
+    {
+        //Initial visual update
+        foreach (var a in auraChanges)
+        {
+            server.ConfirmAuraChange(this, a.Item1, a.Item2, a.Item3);
+        }
+        if (auraChanges.Count>0) auraChanges.Clear();
 
+
+        //update minions
+        UpdateStats();
         //=====================================
         //MINION DEATHS
         List<Minion> destroyList = new List<Minion>();
@@ -358,17 +368,7 @@ public partial class Match
 
 
         //=====================================
-        //update minions after aura recalculation and deaths
-        foreach (Minion minion in players[0].board)
-        {
-            server.UpdateMinion(this, minion);
-        }
-        foreach (Minion minion in players[1].board)
-        {
-            server.UpdateMinion(this, minion);
-        }
-        //TODO: update and check hero health for game over
-        server.UpdateHero(this, players[0]);
-        server.UpdateHero(this, players[1]);
+        UpdateStats();
+        //todo: check gameover
     }
 }

@@ -9,9 +9,12 @@ public class Creature : MonoBehaviour
     public void SetSortingOrder(int x)
     {
         x = x * 10;
+        battlecrySprite.sortingOrder = x - 1;
         spriteRenderer.sortingOrder = x+1;
         tauntSprite.sortingOrder = x;
         shieldSprite.sortingOrder = x+2;
+        triggerSprite.sortingOrder = x+3;
+        deathrattleSprite.sortingOrder = x+3;
         testname.GetComponent<MeshRenderer>().sortingOrder = x + 3;
         health.GetComponent<MeshRenderer>().sortingOrder = x + 3;
         damage.GetComponent<MeshRenderer>().sortingOrder = x + 3;
@@ -22,6 +25,9 @@ public class Creature : MonoBehaviour
     public DropShadow shadow;
     public SpriteRenderer tauntSprite;
     public SpriteRenderer shieldSprite;
+    public SpriteRenderer triggerSprite;
+    public SpriteRenderer deathrattleSprite;
+    public SpriteRenderer battlecrySprite;
 
     public Board board;
 
@@ -55,12 +61,21 @@ public class Creature : MonoBehaviour
     {
         StartCoroutine(floater());
     }
-
+    public Coroutine TriggerBattlecry()
+    {
+        return StartCoroutine(cryer());
+    }
+    IEnumerator cryer()
+    {
+        yield return board.animationManager.LerpZoom(battlecrySprite.gameObject, Vector3.one, 30);
+        board.animationManager.LerpZoom(battlecrySprite.gameObject, Vector3.zero, 30);
+    }
     void Update()
     {
         damage.text = minion.damage.ToString();
         health.text = minion.health.ToString();
 
+        CheckTriggers();
     }
 
     public void EnableTaunt()
@@ -79,6 +94,29 @@ public class Creature : MonoBehaviour
     public void DisableShield()
     {
         board.animationManager.LerpZoom(shieldSprite.gameObject, Vector3.zero, 5, 0.1f);
+    }
+
+    public void CheckTriggers()
+    {
+        if (minion.triggers.Count>0)
+        {
+            bool d = false;
+            foreach (Trigger t in minion.triggers)
+            {
+                if (t.type == Trigger.Type.Deathrattle)
+                {
+                    deathrattleSprite.enabled = true;
+                    d = true;
+                }
+            }
+            if (d == false)
+                triggerSprite.enabled = true;
+        }
+        else
+        {
+            triggerSprite.enabled = false;
+            deathrattleSprite.enabled = false;
+        }
     }
 
     private void OnMouseOver()

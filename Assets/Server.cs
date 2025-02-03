@@ -7,7 +7,7 @@ using UnityEngine;
 public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Knife_Juggler, Card.Cardname.Ironbeak_Owl};
 
     /*public static Message CreateMessage(MessageType type)
     {
@@ -90,6 +90,9 @@ public partial class Server : MonoBehaviour
 
         HeroPower,
         ConfirmHeroPower,
+
+        ConfirmBattlecry,
+        ConfirmTrigger,
 
         AddCard,
 
@@ -720,8 +723,14 @@ public partial class Server : MonoBehaviour
     public void AddTrigger(Match match, Minion minion,Trigger.Type type, Trigger.Side side, Trigger.Ability ability, bool REMOVE = false)
     {
         Trigger t = new Trigger(type, side, ability, null);
-        if (REMOVE) minion.RemoveMatchingTrigger(t);
-        else minion.AddTrigger(type,side,ability);
+        if (REMOVE)
+        {
+            minion.RemoveMatchingTrigger(t);
+        }
+        else
+        {
+            minion.AddTrigger(type, side, ability);
+        }
 
         CustomMessage messageOwner = CreateMessage(REMOVE ? MessageType.RemoveTrigger : MessageType.AddTrigger);
         CustomMessage messageOpponent = CreateMessage(REMOVE ? MessageType.RemoveTrigger : MessageType.AddTrigger);
@@ -866,6 +875,23 @@ public partial class Server : MonoBehaviour
 
         match.StartSequenceHeroPower(spell);
         ConfirmHeroPower(spell);
+    }
+
+    public void ConfirmBattlecry(Match match, Minion minion)
+    {
+        CustomMessage messageOwner = CreateMessage(MessageType.ConfirmBattlecry);
+        CustomMessage messageOpponent = CreateMessage(MessageType.ConfirmBattlecry);
+
+        messageOwner.AddBool(true);
+        messageOpponent.AddBool(false);
+
+        messageOwner.AddInt(minion.index);
+        messageOpponent.AddInt(minion.index);
+
+        Player player = match.FindOwner(minion);
+
+        SendMessage(messageOwner, player);
+        SendMessage(messageOpponent, player.opponent);
     }
     /*
     public static CustomMessage CopyMessage(Message message, MessageType type)

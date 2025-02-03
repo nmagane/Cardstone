@@ -269,6 +269,16 @@ public partial class Board
         //todo: attack face animation
     }
 
+    public Coroutine ConfirmBattlecry(bool friendly, int index)
+    {
+        Creature m = friendly ? currMinions.minionObjects[currMinions[index]] : enemyMinions.minionObjects[enemyMinions[index]];
+        return m.TriggerBattlecry();
+    }
+    public Coroutine ConfirmTrigger(bool friendly, int index)
+    {
+        Creature m = friendly ? currMinions.minionObjects[currMinions[index]] : enemyMinions.minionObjects[enemyMinions[index]];
+        return m.TriggerBattlecry();
+    }
     void ConfirmHeroPower(bool ally)
     {
         if (ally)

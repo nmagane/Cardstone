@@ -109,7 +109,7 @@ public partial class AnimationManager : MonoBehaviour
         }
         if (activeLerps.ContainsKey(obj)) activeLerps.Remove(obj);
     }
-    public void LerpZoom(GameObject obj, Vector3 tar, float frameCount = 30, float bounce = 0)
+    public Coroutine LerpZoom(GameObject obj, Vector3 tar, float frameCount = 30, float bounce = 0)
     {
         if (activeZooms.ContainsKey(obj))
         {
@@ -124,6 +124,7 @@ public partial class AnimationManager : MonoBehaviour
         }
         Coroutine c = StartCoroutine(_lerpZoom(obj, tar, frameCount, bounce));
         activeZooms.Add(obj, c);
+        return c;
     }
     IEnumerator _lerpZoom(GameObject obj, Vector3 tar, float frameCount = 30, float bounce = 0)
     {

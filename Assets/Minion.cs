@@ -85,6 +85,7 @@ public partial class Minion
     {
         Trigger t = new Trigger(type, side, ability, this, playOrder);
         triggers.Add(t);
+
     }
     public void RemoveTrigger(Trigger t)
     {
