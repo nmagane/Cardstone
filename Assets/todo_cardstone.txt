@@ -26,6 +26,8 @@ DAMAGED HP COLOR (F5A097)
 
 a bit of rotation on creeature anim facing the direction of attack?
 
+deathrattle anim
+
 ===========================================
 
 minion attack anim

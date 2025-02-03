@@ -302,7 +302,8 @@ public partial class Board : MonoBehaviour
                 int battlecryIndex = message.GetInt();
                 if (messageID == Server.MessageType.ConfirmTrigger)
                 {
-                    animation = ConfirmTrigger(battlecryFriendly, battlecryIndex);
+                    bool triggerDeathrattle = message.GetBool();
+                    animation = ConfirmTrigger(battlecryFriendly, battlecryIndex,triggerDeathrattle);
                 }
                 else
                     animation = ConfirmBattlecry(battlecryFriendly, battlecryIndex);

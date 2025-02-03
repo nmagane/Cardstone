@@ -254,6 +254,7 @@ public partial class Match
 
             Trigger t = triggerQueue[0];
             triggerQueue.Remove(t);
+            server.ConfirmBattlecry(this, t.minion,true,t.type==Trigger.Type.Deathrattle);
             t.ActivateTrigger(this, ref spell);
         }
 

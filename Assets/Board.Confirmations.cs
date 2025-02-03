@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using Riptide;
-using System.Data;
 
 public partial class Board
 {/*
@@ -274,10 +272,14 @@ public partial class Board
         Creature m = friendly ? currMinions.minionObjects[currMinions[index]] : enemyMinions.minionObjects[enemyMinions[index]];
         return m.TriggerBattlecry();
     }
-    public Coroutine ConfirmTrigger(bool friendly, int index)
+    public Coroutine ConfirmTrigger(bool friendly, int index, bool deathrattle)
     {
+        if (deathrattle)
+        {
+            return StartCoroutine(AnimationManager.Wait(30));
+        }
         Creature m = friendly ? currMinions.minionObjects[currMinions[index]] : enemyMinions.minionObjects[enemyMinions[index]];
-        return m.TriggerBattlecry();
+        return m.TriggerTrigger();
     }
     void ConfirmHeroPower(bool ally)
     {

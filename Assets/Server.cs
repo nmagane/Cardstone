@@ -7,7 +7,7 @@ using UnityEngine;
 public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Knife_Juggler, Card.Cardname.Ironbeak_Owl};
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Knife_Juggler, Card.Cardname.Harvest_Golem};
 
     /*public static Message CreateMessage(MessageType type)
     {
@@ -877,7 +877,7 @@ public partial class Server : MonoBehaviour
         ConfirmHeroPower(spell);
     }
 
-    public void ConfirmBattlecry(Match match, Minion minion)
+    public void ConfirmBattlecry(Match match, Minion minion, bool trigger = false, bool deathrattle=false)
     {
         CustomMessage messageOwner = CreateMessage(MessageType.ConfirmBattlecry);
         CustomMessage messageOpponent = CreateMessage(MessageType.ConfirmBattlecry);
@@ -888,6 +888,12 @@ public partial class Server : MonoBehaviour
         messageOwner.AddInt(minion.index);
         messageOpponent.AddInt(minion.index);
 
+        if (trigger)
+        {
+            messageOwner.type = messageOpponent.type = MessageType.ConfirmTrigger;
+            messageOwner.AddBool(deathrattle);
+            messageOpponent.AddBool(deathrattle);
+        }
         Player player = match.FindOwner(minion);
 
         SendMessage(messageOwner, player);

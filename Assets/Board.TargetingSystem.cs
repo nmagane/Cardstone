@@ -193,7 +193,8 @@ public partial class Board
             }
             if (targetingMinion != null)
             {
-                animationManager.CancelLiftMinion(currMinions.minionObjects[targetingMinion]);
+                if (currMinions.minionObjects.ContainsKey(targetingMinion)==true)
+                    animationManager.CancelLiftMinion(currMinions.minionObjects[targetingMinion]);
             }
         }
         targeting = false;

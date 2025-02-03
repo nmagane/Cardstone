@@ -65,6 +65,15 @@ public class Creature : MonoBehaviour
     {
         return StartCoroutine(cryer());
     }
+    public Coroutine TriggerTrigger()
+    {
+        return StartCoroutine(trigAnim());
+    }
+    IEnumerator trigAnim()
+    {
+        yield return board.animationManager.LerpZoom(triggerSprite.gameObject, Vector3.one*1.2f, 20);
+        yield return board.animationManager.LerpZoom(triggerSprite.gameObject, Vector3.one, 20);
+    }
     IEnumerator cryer()
     {
         yield return board.animationManager.LerpZoom(battlecrySprite.gameObject, Vector3.one, 30);
