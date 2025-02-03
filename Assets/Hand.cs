@@ -263,7 +263,7 @@ public class Hand
             frames += 10;
             if (enemyHand == false)
             {
-                board.animationManager.DrawAnim(c.gameObject, new Vector3(13, -5, 0), location, 5, 5, 10,rotation);
+                board.animationManager.DrawAnim(c.gameObject, new Vector3(13, -5, 0), location, 5, 5, 20,rotation);
                 return;
             }
         }

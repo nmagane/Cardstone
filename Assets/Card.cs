@@ -95,6 +95,10 @@ public class Card : MonoBehaviour
         Paladin,
         Hunter,
     }
+
+    public Sprite[] minionCards;
+    public Sprite[] spellCards;
+
     void Awake()
     {
         shadow = icon.GetComponent<DropShadow>();
@@ -122,13 +126,13 @@ public class Card : MonoBehaviour
         {
             damage.text = c.damage.ToString();
             health.text = c.health.ToString();
-            icon.sprite = spritePlaceholder;
+            icon.sprite = minionCards[(int)cardInfo.classType];
         }
         if (c.SPELL)
         {
             damage.text = "";
             health.text = "";
-            icon.sprite = spriteSpellPlaceholder;
+            icon.sprite = spellCards[(int)cardInfo.classType]; ;
         }
     }
     public void SetFlipped()
@@ -430,7 +434,7 @@ public class Card : MonoBehaviour
         icon.transform.localEulerAngles = Vector3.zero;
         transform.localEulerAngles = Vector3.zero;
         GetComponent<BoxCollider2D>().enabled = false;
-        SetSortingLayer("top1");
+        SetSortingLayer("cardElevated");
         shadow.elevation = 1;
         yield return null;
         Vector3 last = DragPos();
@@ -517,7 +521,7 @@ public class Card : MonoBehaviour
         icon.transform.localScale = Vector3.one * 1.55f;
         icon.transform.localEulerAngles = -handRot;
         board.animationManager.LerpTo(icon.gameObject, new Vector3(0,(-10-transform.localPosition.y)+2.8f), 5, 0); 
-        SetSortingLayer("top1");
+        SetSortingLayer("cardElevated");
         shadow.elevation = 1f;
     }
     public void HideHover()
@@ -532,7 +536,7 @@ public class Card : MonoBehaviour
         icon.transform.localEulerAngles = Vector3.zero;
         board.animationManager.LerpTo(icon.gameObject, Vector3.zero, 5, 0);
         shadow.elevation = 0.1f;
-        SetSortingLayer("top0");
+        SetSortingLayer("card");
     }
     public void ReturnToHand()
     {
@@ -544,7 +548,7 @@ public class Card : MonoBehaviour
         icon.transform.localScale = Vector3.one;
         icon.transform.localEulerAngles = Vector3.zero;
         icon.transform.localPosition = Vector3.zero;
-        SetSortingLayer("top0");
+        SetSortingLayer("card");
     }
     public void ElevateTo(float v,float f)
     {

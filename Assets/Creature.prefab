@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 320925531586084300}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.031483695}
+  m_LocalPosition: {x: 0, y: -1.1875, z: -0.031483695}
   m_LocalScale: {x: 1, y: 1, z: 1.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -70,8 +70,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -168459873
-  m_SortingLayer: 2
+  m_SortingLayerID: 2105654045
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 8a17d946d33cb3f45a18ef38759e8e41, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -154,8 +154,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -168459873
-  m_SortingLayer: 2
+  m_SortingLayerID: 2105654045
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: cb978296027109f498323a6105cbbe6a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -244,8 +244,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -168459873
-  m_SortingLayer: 2
+  m_SortingLayerID: 2105654045
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &6895042384093357638
@@ -416,8 +416,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -168459873
-  m_SortingLayer: 2
+  m_SortingLayerID: 2105654045
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &645618781372868210
@@ -591,8 +591,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -168459873
-  m_SortingLayer: 2
+  m_SortingLayerID: 2105654045
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ef8ca53e1a4071f47a636a3918efe992, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -622,6 +622,7 @@ MonoBehaviour:
   enableCustomColor: 1
   customColor: {r: 0.1764706, g: 0.1764706, b: 0.1764706, a: 0.5019608}
   layerGap: 1
+  sortingLayer: shadowCreature
   elevation: 0.2
 --- !u!1 &5773124054104636858
 GameObject:
@@ -693,8 +694,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -168459873
-  m_SortingLayer: 2
+  m_SortingLayerID: 2105654045
+  m_SortingLayer: 5
   m_SortingOrder: -3
   m_Sprite: {fileID: 21300000, guid: 19120047a047355409d988ee620635ae, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -777,6 +778,9 @@ MonoBehaviour:
     playOrder: 0
   preview: 0
   init: 0
+  baseText: {r: 0.99607843, g: 0.9529412, b: 0.7529412, a: 1}
+  greenText: {r: 0.1254902, g: 0.8392157, b: 0.78039217, a: 1}
+  redText: {r: 0.9607843, g: 0.627451, b: 0.5921569, a: 1}
   boardPos: {x: 0, y: 0, z: 0}
   floating: 0
 --- !u!61 &5109512973871508826
@@ -881,8 +885,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -168459873
-  m_SortingLayer: 2
+  m_SortingLayerID: 2105654045
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &7404517308782075844
@@ -1048,8 +1052,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -168459873
-  m_SortingLayer: 2
+  m_SortingLayerID: 2105654045
+  m_SortingLayer: 5
   m_SortingOrder: -2
   m_Sprite: {fileID: 21300000, guid: c7762ac4333389044bec0fd684f47430, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1079,6 +1083,7 @@ MonoBehaviour:
   enableCustomColor: 1
   customColor: {r: 0.1764706, g: 0.1764706, b: 0.1764706, a: 0.5019608}
   layerGap: 1
+  sortingLayer: shadowCreature
   elevation: 0.2
 --- !u!1 &9085701274405550775
 GameObject:
@@ -1151,8 +1156,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -168459873
-  m_SortingLayer: 2
+  m_SortingLayerID: 2105654045
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: ac1a520aaf955104985f09992de87afc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.4509804}
@@ -1182,4 +1187,5 @@ MonoBehaviour:
   enableCustomColor: 1
   customColor: {r: 0.1764706, g: 0.1764706, b: 0.1764706, a: 0.5019608}
   layerGap: 1
+  sortingLayer: shadowCreature
   elevation: 0.2

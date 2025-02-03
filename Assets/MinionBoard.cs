@@ -70,7 +70,6 @@ public class MinionBoard
         {
             Creature c = minionObjects[minions[x]];
             minionObjects.Remove(minions[x]);
-            //board.DestroyObject(c);
             board.animationManager.DeathAnim(c);
         }
         minions.RemoveAt(x);
@@ -82,7 +81,7 @@ public class MinionBoard
         {
             Creature co = minionObjects[c];
             minionObjects.Remove(c);
-            board.DestroyObject(co);
+            board.animationManager.DeathAnim(co);
         }
         minions.Remove(c);
         OrderInds();

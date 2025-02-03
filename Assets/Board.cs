@@ -647,7 +647,13 @@ public partial class Board : MonoBehaviour
     }
     public void MillCard(bool friendly, Card.Cardname card)
     {
-        //todo: mill anim + reduce deck card counter
+        Card c = CreateCard();
+        c.transform.parent = deck.transform.parent;
+        c.Set(new HandCard(card, 0));
+        c.transform.localPosition = (friendly) ? deck.transform.localPosition : enemyDeck.transform.localPosition;
+        c.SetFlipped();
+        c.Flip();
+        animationManager.MillAnim(c,friendly);
     }
 
     public void CastHeroPower(Card.Cardname ability, int target, bool isFriendly, bool isHero)

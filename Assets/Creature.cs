@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking.Types;
 
@@ -18,6 +19,18 @@ public class Creature : MonoBehaviour
         testname.GetComponent<MeshRenderer>().sortingOrder = x + 3;
         health.GetComponent<MeshRenderer>().sortingOrder = x + 3;
         damage.GetComponent<MeshRenderer>().sortingOrder = x + 3;
+    }
+    public void SetSortingLayer(string x)
+    {
+        battlecrySprite.sortingLayerName = x;
+        spriteRenderer.sortingLayerName = x;
+        tauntSprite.sortingLayerName = x;
+        shieldSprite.sortingLayerName = x;
+        triggerSprite.sortingLayerName = x;
+        deathrattleSprite.sortingLayerName = x;
+        testname.GetComponent<MeshRenderer>().sortingLayerName = x;
+        health.GetComponent<MeshRenderer>().sortingLayerName = x;
+        damage.GetComponent<MeshRenderer>().sortingLayerName = x;
     }
     public TMP_Text testname;
     public TMP_Text health, damage;
@@ -42,9 +55,12 @@ public class Creature : MonoBehaviour
 
         Database.CardInfo info = Database.GetCardData(c.card);
         testname.text = info.name;
-        
+
+        dmg = c.damage;
+        hp = c.health;
         health.text = c.health.ToString();
         damage.text = c.damage.ToString();
+
         if (minion.HasAura(Aura.Type.Taunt))
             EnableTaunt();
         if (minion.HasAura(Aura.Type.Shield))
@@ -79,11 +95,60 @@ public class Creature : MonoBehaviour
         yield return board.animationManager.LerpZoom(battlecrySprite.gameObject, Vector3.one, 30);
         board.animationManager.LerpZoom(battlecrySprite.gameObject, Vector3.zero, 30);
     }
+
+    public Color baseText;
+    public Color greenText;
+    public Color redText;
+    int dmg = 0;
+    int hp = 0;
+    public IEnumerator txtBounce(TMP_Text text)
+    {
+        int frames = 5;
+        for (float i=0;i<frames;i++)
+        {
+            text.transform.localScale += Vector3.one * 0.15f;
+            yield return AnimationManager.Wait(1);
+        }
+        for (float i=0;i<frames;i++)
+        {
+            text.transform.localScale += Vector3.one * -0.15f; 
+            yield return AnimationManager.Wait(1);
+        }
+    }
     void Update()
     {
+        if (dmg!=minion.damage)
+        {
+            StartCoroutine(txtBounce(damage));
+        }
+        if (hp!=minion.health)
+        {
+            StartCoroutine(txtBounce(health));
+        }
+        dmg = minion.damage;
+        hp = minion.health;
         damage.text = minion.damage.ToString();
         health.text = minion.health.ToString();
 
+        //====================
+        if (minion.health < minion.maxHealth)
+            health.color = redText;
+        else if (minion.health > minion.baseHealth && minion.health == minion.maxHealth)
+        {
+            health.color = greenText;
+        }
+        else
+            health.color = baseText;
+
+        //=====================
+        if (minion.damage > minion.baseDamage)
+        {
+            damage.color = greenText;
+        }
+        else
+            damage.color = baseText;
+
+        //=====================
         CheckTriggers();
     }
 

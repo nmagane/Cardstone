@@ -18,9 +18,7 @@ addcard message to client
 
 
 
-
-
-mill anim	
+replace all fade effects with some shader (FAR FUTURE TODO)
 
 DAMAGED HP COLOR (F5A097)
 
@@ -28,7 +26,14 @@ a bit of rotation on creeature anim facing the direction of attack?
 
 deathrattle anim
 
+summoning ally minions should happen client side first?
+make new sorting layers for cards and creatures (includes heroes). and UI elements
+
+get a new color pallette this shit sucks ( future todo )
+
 ===========================================
+
+mill anim	
 
 minion attack anim
 

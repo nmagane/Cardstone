@@ -9,6 +9,7 @@ public partial class AnimationManager
     public void LiftMinion(Creature c)
     {
         c.floating = false;
+        c.SetSortingLayer("creatureElevated");
         StartCoroutine(elevator(c, 1.05f, 0.6f, 5));
     }
     public void CancelLiftMinion(Creature c)
@@ -80,7 +81,10 @@ public partial class AnimationManager
         c.floating = returnToFloat;
         if (c == null) yield break;
         if (returnToFloat)
+        {
             c.SetSortingOrder(c.minion.index);
+            c.SetSortingLayer("creature");
+        }
         else
             c.SetSortingOrder(c.minion.index + 10);
     }
@@ -88,7 +92,41 @@ public partial class AnimationManager
     public void DeathAnim(Creature c)
     {
         c.floating = false;
+        foreach (Trigger t in c.minion.triggers)
+        {
+            if (t.type==Trigger.Type.Deathrattle)
+            {
+                StartCoroutine(deathrattleAnim(c));
+            }
+        }
         StartCoroutine(_death(c));
+    }
+    IEnumerator deathrattleAnim(Creature c)
+    {
+        SpriteRenderer s = Instantiate(c.board.UISprite).GetComponent<SpriteRenderer>();
+        s.sprite = c.deathrattleSprite.sprite;
+        s.transform.parent = c.transform.parent;
+        s.transform.localScale = Vector3.one*2;
+        s.transform.localPosition = c.boardPos;
+        s.sortingLayerName = c.spriteRenderer.sortingLayerName;
+        s.sortingOrder = c.spriteRenderer.sortingOrder + 4;
+        s.color = new Color(1, 1, 1, 0);
+        yield return Wait(10);
+        float f = 5;
+        for (int i = 0; i < f; i++)
+        {
+            s.color += new Color(0, 0, 0, 1 / f);
+            yield return Wait(1);
+        }
+
+        LerpZoom(s.gameObject, Vector3.one * 3, 80);
+        f = 25;
+        for (int i=0;i<f;i++)
+        {
+            s.color += new Color(0, 0, 0, -1 /f);
+            yield return Wait(1);
+        }
+        Destroy(s.gameObject);
     }
     IEnumerator _death(Creature c)
     {

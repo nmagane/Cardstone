@@ -11,13 +11,14 @@ public class DropShadow : MonoBehaviour
     public bool enableCustomColor = false;
     public Color customColor;
     public int layerGap = 1;
+    public string sortingLayer = "shadow";
     void Awake()
     {
         parent = GetComponent<SpriteRenderer>();
         shadow = new GameObject("dropshadow_"+this.gameObject.name);
         spriteRenderer = shadow.AddComponent<SpriteRenderer>();
         spriteRenderer.enabled = parent.enabled;
-        spriteRenderer.sortingLayerName = "shadow";
+        spriteRenderer.sortingLayerName = sortingLayer;
         spriteRenderer.sortingOrder = parent.sortingOrder- layerGap;
         spriteRenderer.material = Camera.main.GetComponentInChildren<AnimationManager>().shadowMat;
         spriteRenderer.color = new Color(0.2f, 0.2f, 0.2f,parent.color.a);

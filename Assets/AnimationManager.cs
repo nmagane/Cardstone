@@ -44,6 +44,21 @@ public partial class AnimationManager : MonoBehaviour
         Coroutine c = StartCoroutine(_drawAnim(obj, tar1, tar2, f1,f2,delay,rotation));
         activeLerps.Add(obj, c);
     }
+    public void MillAnim(Card c, bool friendly)
+    {
+        Vector3 t = friendly ? new Vector3(13, -5, 0) : new Vector3(13, 5, 0);
+        StartCoroutine(_millAnim(c,t,10,20));
+    }
+    IEnumerator _millAnim(Card obj, Vector3 target, float frames, int delay)
+    {
+        LerpZoom(obj.gameObject, Vector3.one * 1.5f, frames);
+        yield return _lerpTo(obj.gameObject, target, frames);
+        yield return Wait(delay);
+        StartCoroutine(_fadeCard(obj,20));
+        LerpZoom(obj.gameObject, Vector3.one * 2, 60);
+
+
+    }
     IEnumerator _drawAnim(GameObject obj, Vector3 tar1, Vector3 tar2, float f1, float f2, int delay,Vector3 rotation)
     {
         LerpZoom(obj, Vector3.one * 1.5f, f1);
@@ -53,6 +68,7 @@ public partial class AnimationManager : MonoBehaviour
         LerpRotate(obj, rotation, f2);
         yield return _lerpTo(obj, tar2, f2);
     }
+
     public void LerpTo(MonoBehaviour obj, Vector3 tar, int frameCount = 30, float bounce = 0)
     {
         LerpTo(obj.gameObject, tar, frameCount, bounce);
