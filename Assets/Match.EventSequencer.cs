@@ -269,10 +269,15 @@ public partial class Match
             triggerBuffer.Clear();
         }
     }
+    public List<(Minion, Aura, bool)> auraChanges = new List<(Minion, Aura, bool)>();
     void UpdateAuras()
     {
         //Initial visual update
-
+        foreach (var a in auraChanges)
+        {
+            server.ConfirmAuraChange(this, a.Item1, a.Item2, a.Item3);
+        }
+        if (auraChanges.Count>0) auraChanges.Clear();
         //update minions
         foreach (Minion minion in players[0].board)
         {

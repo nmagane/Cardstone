@@ -758,9 +758,13 @@ public partial class Server : MonoBehaviour
             if (minion.RemoveAura(aura) == false) return;
         }
         else minion.AddAura(aura);
+        match.auraChanges.Add((minion, aura, REMOVE));
+    }
+    public void ConfirmAuraChange(Match match, Minion minion, Aura aura, bool REMOVE = false)
+    {
 
-        CustomMessage messageOwner = CreateMessage(REMOVE? MessageType.RemoveAura : MessageType.AddAura);
-        CustomMessage messageOpponent = CreateMessage(REMOVE? MessageType.RemoveAura : MessageType.AddAura);
+        CustomMessage messageOwner = CreateMessage(REMOVE ? MessageType.RemoveAura : MessageType.AddAura);
+        CustomMessage messageOpponent = CreateMessage(REMOVE ? MessageType.RemoveAura : MessageType.AddAura);
 
         Player owner = match.FindOwner(minion);
         Player opponent = owner.opponent;
@@ -781,7 +785,7 @@ public partial class Server : MonoBehaviour
         messageOpponent.AddBool(aura.temporary);
         messageOpponent.AddBool(aura.foreignSource);
 
-        if (aura.source==null)
+        if (aura.source == null)
         {
             messageOwner.AddInt(-1);
             messageOwner.AddBool(false);
@@ -800,7 +804,6 @@ public partial class Server : MonoBehaviour
         SendMessage(messageOwner, owner);
         SendMessage(messageOpponent, opponent);
     }
-
     public void MillCard(Match match, Player player)
     {
         Card.Cardname c = player.deck[0];

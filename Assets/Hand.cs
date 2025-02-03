@@ -114,7 +114,7 @@ public class Hand
                 float offset = -((count - 1) / 2f * dist);
 
 
-                p = new Vector3(offset + dist * (pos), 1.5f+(enemyHand  ? 3 : -2.75f));
+                p = new Vector3(offset + dist * (pos), 3f+(enemyHand  ? 3 : -2.75f));
 
                 if (c.hidden == false)
                     board.animationManager.PlayFade(c, p);

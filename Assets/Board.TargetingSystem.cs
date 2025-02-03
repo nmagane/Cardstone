@@ -158,6 +158,8 @@ public partial class Board
         eligibleTargets = EligibleTargets.EnemyCharacters;
         targetingMinion = source;
 
+        animationManager.LiftMinion(currMinions.minionObjects[source]);
+
         StartTargetingAnim(currMinions.minionObjects[source]);
     }
 
@@ -183,6 +185,17 @@ public partial class Board
 
     public void EndTargeting(bool cancel=false)
     {
+        if (cancel)
+        {
+            if (playingCard != null)
+            {
+                playingCard.EndPlay();
+            }
+            if (targetingMinion != null)
+            {
+                animationManager.CancelLiftMinion(currMinions.minionObjects[targetingMinion]);
+            }
+        }
         targeting = false;
         targetMode = TargetMode.None;
         eligibleTargets = EligibleTargets.AllCharacters;
@@ -192,13 +205,7 @@ public partial class Board
         targetingCard = null;
         dragTargeting = false;
 
-        if (cancel)
-        {
-            if (playingCard!=null)
-            {
-                playingCard.EndPlay();
-            }
-        }
+
         EndTargetingAnim();
     }
 

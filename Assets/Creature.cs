@@ -6,6 +6,16 @@ using UnityEngine.Networking.Types;
 
 public class Creature : MonoBehaviour
 {
+    public void SetSortingOrder(int x)
+    {
+        x = x * 10;
+        spriteRenderer.sortingOrder = x+1;
+        tauntSprite.sortingOrder = x;
+        shieldSprite.sortingOrder = x+2;
+        testname.GetComponent<MeshRenderer>().sortingOrder = x + 3;
+        health.GetComponent<MeshRenderer>().sortingOrder = x + 3;
+        damage.GetComponent<MeshRenderer>().sortingOrder = x + 3;
+    }
     public TMP_Text testname;
     public TMP_Text health, damage;
     public SpriteRenderer spriteRenderer;
@@ -22,6 +32,8 @@ public class Creature : MonoBehaviour
     public void Set(Minion c)
     {
         minion = c;
+        SetSortingOrder(minion.index);
+
         Database.CardInfo info = Database.GetCardData(c.card);
         testname.text = info.name;
         
@@ -53,19 +65,20 @@ public class Creature : MonoBehaviour
 
     public void EnableTaunt()
     {
-        tauntSprite.enabled = true;
+        board.animationManager.LerpZoom(tauntSprite.gameObject, Vector3.one, 10, 0.1f);
     }
     public void DisableTaunt()
     {
-        tauntSprite.enabled = false;
+        board.animationManager.LerpZoom(tauntSprite.gameObject, Vector3.zero, 10, 0.1f);
     }
+
     public void EnableShield()
     {
-        shieldSprite.enabled = true;
+        board.animationManager.LerpZoom(shieldSprite.gameObject, Vector3.one, 10, 0.1f);
     }
     public void DisableShield()
     {
-        shieldSprite.enabled = false;
+        board.animationManager.LerpZoom(shieldSprite.gameObject, Vector3.zero, 5, 0.1f);
     }
 
     private void OnMouseOver()
@@ -78,7 +91,7 @@ public class Creature : MonoBehaviour
                 if (board.targetingMinion == minion)
                 {
                     //cancel by releasing on self
-                    board.EndTargeting();
+                    board.EndTargeting(true);
                     return;
                 }
                 board.TargetMinion(minion);
@@ -122,9 +135,9 @@ public class Creature : MonoBehaviour
         dragCounter = 0;
         if (board.dragTargeting && board.targetingMinion==minion)
         {
-            //LETTING GO OVER NOTHING
+            //cancel by LETTING GO OVER NOTHING
             if (board.hoveredMinion==null && board.hoveredHero==null) 
-                board.EndTargeting();
+                board.EndTargeting(true);
         }
     }
 
@@ -138,7 +151,7 @@ public class Creature : MonoBehaviour
             if (board.targetingMinion == minion)
             {
                 //cancel by clicking on self
-                board.EndTargeting();
+                board.EndTargeting(true);
                 return;
             }
 
@@ -154,19 +167,29 @@ public class Creature : MonoBehaviour
 
     public Vector3 boardPos;
 
+    public bool floating = false;
     public IEnumerator floater()
     {
         int i = 0;
         float freq = 2F;// 1.5f;
         while (true)
         {
-            float ang = freq * Mathf.PI * i / 180;
-            transform.localScale = Vector3.one * ((1.025f + 0.01f * Mathf.Sin(ang)));
-            transform.localEulerAngles = new Vector3(0, 0, 0.5F * Mathf.Sin(0.5f * ang));
-            shadow.elevation = (0.4f + 0.1f * Mathf.Sin(ang));
-            i++;
-            if (i == 360) i = 0;
-            yield return null;
+            if (floating)
+            {
+                float ang = freq * i * Mathf.PI / 180;
+                transform.localScale = Vector3.one * ((1.025f + 0.01f * Mathf.Sin(ang)));
+                transform.localEulerAngles = new Vector3(0, 0, 0.15F * Mathf.Sin(0.5f * ang));
+                shadow.elevation = (0.4f + 0.1f * Mathf.Sin(ang));
+                i++;
+                if (i == 360) i = 0;
+                yield return null;
+            }
+            else
+            {
+                i = 90;
+                transform.localEulerAngles = Vector3.zero;//Vector3.Lerp(transform.localEulerAngles,Vector3.zero,0.25f);
+                yield return null;
+            }
         }
     }
 }

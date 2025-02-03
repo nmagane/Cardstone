@@ -70,12 +70,12 @@ public class MinionBoard
         {
             Creature c = minionObjects[minions[x]];
             minionObjects.Remove(minions[x]);
-            board.DestroyObject(c);
+            //board.DestroyObject(c);
+            board.animationManager.DeathAnim(c);
         }
         minions.RemoveAt(x);
         OrderInds();
     }
-
     public void Remove(Minion c)
     {
         if (!server)
@@ -88,6 +88,7 @@ public class MinionBoard
         OrderInds();
     }
 
+    float dist = 4.7f;
     public void OrderInds()
     {
         int i = 0;
@@ -100,7 +101,6 @@ public class MinionBoard
 
         i = 0;
         float count = minionObjects.Count;
-        float dist = 4.7f;
         float offset = -((count - 1) / 2f * dist);
         foreach (var kvp in minionObjects)
         {
@@ -149,7 +149,6 @@ public class MinionBoard
         previewing = true;
         currPreview = gapIndex;
         float count = minionObjects.Count + 1;
-        float dist = 4.7f;
         float offset = -((count - 1) / 2f * dist);
         foreach (var kvp in minionObjects)
         {
@@ -186,7 +185,6 @@ public class MinionBoard
         creature.transform.parent = board.gameAnchor.transform;
         creature.preview = true;
         float count = minionObjects.Count + 1;
-        float dist = 4.7f;
         float offset = -((count - 1) / 2f * dist);
 
 

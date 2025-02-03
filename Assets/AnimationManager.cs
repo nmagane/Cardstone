@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationManager : MonoBehaviour
+public partial class AnimationManager : MonoBehaviour
 {
     public Material shadowMat;
     Dictionary<GameObject, Coroutine> activeLerps = new Dictionary<GameObject, Coroutine>();
@@ -57,7 +57,7 @@ public class AnimationManager : MonoBehaviour
     {
         LerpTo(obj.gameObject, tar, frameCount, bounce);
     }
-    public void LerpTo(GameObject obj,Vector3 tar, int frameCount=30, float bounce = 0)
+    public Coroutine LerpTo(GameObject obj,Vector3 tar, int frameCount=30, float bounce = 0)
     {
         if (activeLerps.ContainsKey(obj))
         {
@@ -72,6 +72,7 @@ public class AnimationManager : MonoBehaviour
         }
         Coroutine c = StartCoroutine(_lerpTo(obj, tar, frameCount, bounce));
         activeLerps.Add(obj, c);
+        return c;
     }
     public void EndMovement(GameObject obj)
     {

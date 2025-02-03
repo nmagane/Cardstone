@@ -213,39 +213,59 @@ public partial class Board
 
         return result;
     }*/
-    public void ConfirmPreAttackMinion(bool allyAttack, int attackerIndex, int targetIndex)
+    public Coroutine ConfirmPreAttackMinion(bool allyAttack, int attackerIndex, int targetIndex)
     {
         //TODO: preattack animation
+        Minion attacker = allyAttack ? currMinions[attackerIndex] : enemyMinions[attackerIndex];
+        Minion target = allyAttack ? enemyMinions[targetIndex] : currMinions[targetIndex];
+
+        Creature atkCreature = allyAttack ? currMinions.minionObjects[attacker] : enemyMinions.minionObjects[attacker];
+        Creature tarCreature = allyAttack ? enemyMinions.minionObjects[target] : currMinions.minionObjects[target];
+
+        //TODO: attack animation
+        return animationManager.PreAttackMinion(atkCreature, tarCreature.transform.localPosition);
     }
-    public void ConfirmAttackMinion(bool allyAttack, int attackerIndex, int targetIndex)
+    public Coroutine ConfirmAttackMinion(bool allyAttack, int attackerIndex, int targetIndex)
     {
         
         Minion attacker = allyAttack ? currMinions[attackerIndex] : enemyMinions[attackerIndex];
         Minion target = allyAttack ? enemyMinions[targetIndex] : currMinions[targetIndex];
 
+        Creature atkCreature = allyAttack ? currMinions.minionObjects[attacker] : enemyMinions.minionObjects[attacker];
+        Creature tarCreature = allyAttack ? enemyMinions.minionObjects[target] : currMinions.minionObjects[target];
+
         if (allyAttack)
         {
             Server.ConsumeAttackCharge(attacker);
         }
 
-        //Debug.Log(playerID + ": " + (allyAttack ? "ally " : "enemy ") + attacker.ToString() + " hits " + target.ToString());
         //TODO: attack animation
+        return animationManager.ConfirmAttackMinion(atkCreature, tarCreature.transform.localPosition);
     }
 
-    public void ConfirmPreAttackFace(bool allyAttack, int attackerIndex)
+    public Coroutine ConfirmPreAttackFace(bool allyAttack, int attackerIndex)
     {
-        //TODO: preattack animation
+        Minion attacker = allyAttack ? currMinions[attackerIndex] : enemyMinions[attackerIndex];
+        Creature atkCreature = allyAttack ? currMinions.minionObjects[attacker] : enemyMinions.minionObjects[attacker];
+        Hero tar = allyAttack ? enemyHero : currHero;
+
+        Debug.Log(playerID + ": " + (allyAttack ? "ally " : "enemy ") + attacker.ToString() + " hits face");
+
+        return animationManager.PreAttackMinion(atkCreature, tar.transform.localPosition);
     }
-    void ConfirmAttackFace(bool allyAttack, int attackerIndex)
+    public Coroutine ConfirmAttackFace(bool allyAttack, int attackerIndex)
     {
 
         Minion attacker = allyAttack ? currMinions[attackerIndex] : enemyMinions[attackerIndex];
-
+        Creature atkCreature = allyAttack ? currMinions.minionObjects[attacker] : enemyMinions.minionObjects[attacker];
+        Hero tar = allyAttack ? enemyHero : currHero;
         if (allyAttack)
         {
             Server.ConsumeAttackCharge(attacker);
         }
         Debug.Log(playerID + ": " + (allyAttack ? "ally " : "enemy ") + attacker.ToString() + " hits face");
+
+        return animationManager.ConfirmAttackMinion(atkCreature, tar.transform.localPosition);
         //todo: attack face animation
     }
 

@@ -16,19 +16,21 @@ note: minion and spell cards look different.
 
 addcard message to client
 
-DAMAGED HP COLOR (F5A097)
+
+
+
 
 mill anim	
 
-minion attack anim
+DAMAGED HP COLOR (F5A097)
 
-11.2 ehand
-7 ehero
--5.5 player?
-
-change hero frame. no circles in this game.
+a bit of rotation on creeature anim facing the direction of attack?
 
 ===========================================
+
+minion attack anim
+
+change hero frame. no circles in this game.
 
 change camera angle to be further to the side?
 hidecard() and showcard() fade/scale

@@ -437,6 +437,8 @@ public class Card : MonoBehaviour
         float angle = 0;
         while (true)
         {
+            if (card.played) break;
+
             Vector3 pos = DragPos();
             float x = pos.x;
             float l = last.x;

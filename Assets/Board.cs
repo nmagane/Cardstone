@@ -93,9 +93,11 @@ public partial class Board : MonoBehaviour
         {
             Server.CustomMessage msg = confirmedMessages.Dequeue();
 
-
+            //if (playerID == 100) Debug.Log(msg.type);
             Coroutine c = ParseMessage(msg);
             if (c != null) yield return c;
+
+            //if (playerID == 100) Debug.Log("finished "+msg.type);
         }
         executing = false;
     }
@@ -216,23 +218,23 @@ public partial class Board : MonoBehaviour
                 bool preMinionAllyAttack = message.GetBool();
                 int preMinionAttackerIndex = message.GetInt();
                 int preMinionTargetIndex = message.GetInt();
-                ConfirmPreAttackMinion(preMinionAllyAttack, preMinionAttackerIndex,preMinionTargetIndex);
+                animation = ConfirmPreAttackMinion(preMinionAllyAttack, preMinionAttackerIndex,preMinionTargetIndex);
                 break;
             case Server.MessageType.ConfirmAttackMinion:
                 bool minionAllyAttack = message.GetBool();
                 int minionAttackerIndex = message.GetInt();
                 int minionTargetIndex = message.GetInt();
-                ConfirmAttackMinion(minionAllyAttack, minionAttackerIndex, minionTargetIndex);
+                animation = ConfirmAttackMinion(minionAllyAttack, minionAttackerIndex, minionTargetIndex);
                 break;
             case Server.MessageType.ConfirmPreAttackFace:
                 bool preFaceAllyAttack = message.GetBool();
                 int preFaceAttackerIndex = message.GetInt();
-                ConfirmPreAttackFace(preFaceAllyAttack, preFaceAttackerIndex);
+                animation = ConfirmPreAttackFace(preFaceAllyAttack, preFaceAttackerIndex);
                 break;
             case Server.MessageType.ConfirmAttackFace:
                 bool faceAllyAttack = message.GetBool();
                 int faceAttackerIndex = message.GetInt();
-                ConfirmAttackFace(faceAllyAttack, faceAttackerIndex);
+                animation = ConfirmAttackFace(faceAllyAttack, faceAttackerIndex);
                 break;
             case Server.MessageType.DestroyMinion:
 

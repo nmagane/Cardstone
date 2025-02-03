@@ -26,7 +26,7 @@ public partial class Server
             //HEAL TRIGGERS HERE
         }
         minion.health = Mathf.Min(minion.health+heal,minion.maxHealth);
-        UpdateMinion(match, minion);
+        //UpdateMinion(match, minion);
     }
 
     public void DamageMinion(Match match, Minion minion, int damage)
@@ -40,7 +40,7 @@ public partial class Server
 
         match.TriggerMinion(Trigger.Type.OnDamageTaken,minion);
         match.AddTrigger(Trigger.Type.OnMinionDamage, null, minion);
-        UpdateMinion(match, minion);
+        //UpdateMinion(match, minion);
     }
 
 
@@ -50,7 +50,7 @@ public partial class Server
 
         match.AddTrigger(Trigger.Type.OnFaceDamage, null, target);
 
-        UpdateHero(match, target);
+        //UpdateHero(match, target);
         
     }
 
