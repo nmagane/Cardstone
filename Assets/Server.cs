@@ -622,7 +622,7 @@ public partial class Server : MonoBehaviour
 
     }
 
-    public void UpdateMinion(Match match, Minion minion)
+    public void UpdateMinion(Match match, Minion minion, bool damaged = false, bool healed=false)
     {
         CustomMessage messageOwner = CreateMessage(MessageType.UpdateMinion);
         CustomMessage messageOpponent = CreateMessage(MessageType.UpdateMinion);
@@ -634,6 +634,12 @@ public partial class Server : MonoBehaviour
 
         messageOwner.AddBool(true);
         messageOpponent.AddBool(false);
+
+        messageOwner.AddBool(damaged);
+        messageOpponent.AddBool(damaged);
+
+        messageOwner.AddBool(healed);
+        messageOpponent.AddBool(healed);
 
         Player owner = match.FindOwner(minion);
         Player opponent = match.FindOpponent(minion);
@@ -692,9 +698,7 @@ public partial class Server : MonoBehaviour
         match.StartSequenceAttackFace(attackAction);
     }
 
-
-
-    public void UpdateHero(Match match, Player player)
+    public void UpdateHero(Match match, Player player, bool damaged=false, bool healed=false)
     {
         CustomMessage messageOwner = CreateMessage(MessageType.UpdateHero);
         CustomMessage messageOpponent = CreateMessage(MessageType.UpdateHero);
@@ -713,9 +717,14 @@ public partial class Server : MonoBehaviour
 
         messageOpponent.AddInt(player.currMana);
         messageOpponent.AddInt(player.maxMana);
-        //server.Send(messageOwner, player.connection.clientID);
+
+        messageOwner.AddBool(damaged);
+        messageOpponent.AddBool(damaged);
+
+        messageOwner.AddBool(healed);
+        messageOpponent.AddBool(healed);
+
         SendMessage(messageOwner, player);
-        //server.Send(messageOpponent, match.Opponent(player).connection.clientID);
         SendMessage(messageOpponent, player.opponent);
     }
     public void RemoveTrigger(Match match, Minion minion, Trigger trigger)

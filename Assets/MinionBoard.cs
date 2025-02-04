@@ -60,6 +60,7 @@ public class MinionBoard
         creature.board = board;
         creature.Set(minions[ind]);
         minionObjects.Add(minions[ind], creature);
+        minions[ind].creature = creature;
         creature.transform.parent = board.gameAnchor.transform;
 
         OrderInds();

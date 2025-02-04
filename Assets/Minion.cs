@@ -35,6 +35,9 @@ public partial class Minion
     [System.NonSerialized]
     public MinionBoard board;
 
+    [System.NonSerialized]
+    public Creature creature;
+
     public void Set(Card.Cardname name, int ind)
     {
         //transform into another minion

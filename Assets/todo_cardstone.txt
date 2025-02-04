@@ -24,12 +24,15 @@ summoning ally minions should happen client side first? (future todo)
 a bit of rotation on creeature anim facing the direction of attack?
 creature floating should hit scale vector3.one?
 
-HIGHLIGHT AVAILABLE TARGETS (ugly?)
+
 hover tooltips + enemy play popup
 damage projectiles
 "-X" damage splash
 new gfx for the targeting arrow
 gameover screen -> reset scene button?
+HIGHLIGHT AVAILABLE TARGETS (ugly?)
+
+health text color on hero hp
 
 ===========================================
 

@@ -755,6 +755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4164486c37e42214fb63b80dc99809be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isElevated: 0
   testname: {fileID: 645618781372868210}
   health: {fileID: 7404517308782075844}
   damage: {fileID: 6895042384093357638}
@@ -786,7 +787,7 @@ MonoBehaviour:
   greenText: {r: 0.1254902, g: 0.8392157, b: 0.78039217, a: 1}
   redText: {r: 0.9607843, g: 0.627451, b: 0.5921569, a: 1}
   boardPos: {x: 0, y: 0, z: 0}
-  floating: 0
+  floatEnabled: 1
 --- !u!61 &5109512973871508826
 BoxCollider2D:
   m_ObjectHideFlags: 0

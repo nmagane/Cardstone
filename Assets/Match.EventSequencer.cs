@@ -275,20 +275,29 @@ public partial class Match
         }
     }
     public List<(Minion, Aura, bool)> auraChanges = new List<(Minion, Aura, bool)>();
-    void UpdateStats()
-    {
 
+    public List<Minion> damagedMinions = new List<Minion>();
+    public List<Minion> healedMinions = new List<Minion>();
+    public List<Player> damagedPlayers = new List<Player>();
+    public List<Player> healedPlayers = new List<Player>();
+    public void UpdateStats()
+    { 
         foreach (Minion minion in players[0].board)
         {
-            server.UpdateMinion(this, minion);
+            server.UpdateMinion(this, minion,damagedMinions.Contains(minion),healedMinions.Contains(minion));
         }
         foreach (Minion minion in players[1].board)
         {
-            server.UpdateMinion(this, minion);
+            server.UpdateMinion(this, minion, damagedMinions.Contains(minion), healedMinions.Contains(minion));
         }
-        
-        server.UpdateHero(this, players[0]);
-        server.UpdateHero(this, players[1]);
+
+        server.UpdateHero(this, players[0], damagedPlayers.Contains(players[0]), healedPlayers.Contains(players[0]));
+        server.UpdateHero(this, players[1], damagedPlayers.Contains(players[1]), healedPlayers.Contains(players[1]));
+
+        damagedMinions.Clear();
+        healedMinions.Clear();
+        damagedPlayers.Clear();
+        healedPlayers.Clear();
     }
     void UpdateAuras()
     {
@@ -305,21 +314,19 @@ public partial class Match
         //=====================================
         //MINION DEATHS
         List<Minion> destroyList = new List<Minion>();
+
         foreach (Minion minion in players[0].board)
         {
-            server.UpdateMinion(this, minion);
             if (minion.health <= 0) destroyList.Add(minion);
         }
         foreach (Minion minion in players[1].board)
         {
-            server.UpdateMinion(this, minion);
             if (minion.health <= 0) destroyList.Add(minion);
         }
 
         //death resolution phase
         foreach (var m in destroyList)
         {
-            Debug.Log("kill " + m.card);
             AddTrigger(Trigger.Type.OnMinionDeath, null, m);
             server.DestroyMinion(this, m);
         }

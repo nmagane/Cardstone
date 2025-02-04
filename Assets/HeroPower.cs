@@ -12,7 +12,9 @@ public class HeroPower : MonoBehaviour
     public Sprite activeSprite;
     public Sprite disabledSprite;
 
-    public int manaCost = 2;
+    public SpriteRenderer highlight;
+
+    public int manaCost => card.manaCost;
 
     public new bool enabled = true;
     public bool TARGETED = false;
@@ -36,6 +38,17 @@ public class HeroPower : MonoBehaviour
         icon.sprite = disabledSprite;
         manaText.transform.localScale = Vector3.zero;
     }
+
+    public void Highlight()
+    {
+        if (enabled == false) return;
+        highlight.enabled = true;
+    }
+    public void Unhighlight()
+    {
+        highlight.enabled = false;
+    }
+
     private void OnMouseDown()
     {
         if (enabled == false || transform.position.y>0) return;

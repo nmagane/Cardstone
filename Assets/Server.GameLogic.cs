@@ -26,7 +26,9 @@ public partial class Server
             //HEAL TRIGGERS HERE
         }
         minion.health = Mathf.Min(minion.health+heal,minion.maxHealth);
-        //UpdateMinion(match, minion);
+
+        //this is for the client to know if its not an aura change
+        match.healedMinions.Add(minion);
     }
 
     public void DamageMinion(Match match, Minion minion, int damage)
@@ -40,7 +42,9 @@ public partial class Server
 
         match.TriggerMinion(Trigger.Type.OnDamageTaken,minion);
         match.AddTrigger(Trigger.Type.OnMinionDamage, null, minion);
-        //UpdateMinion(match, minion);
+
+        //this is for the client to know if its not an aura change
+        match.damagedMinions.Add(minion);
     }
 
 
@@ -50,8 +54,18 @@ public partial class Server
 
         match.AddTrigger(Trigger.Type.OnFaceDamage, null, target);
 
-        //UpdateHero(match, target);
-        
+        //this is for the client to know if its not an aura change
+        match.damagedPlayers.Add(target);
+    }
+    
+    public void HealFace(Match match, Player target, int heal)
+    {
+        target.health -= heal;
+
+        match.AddTrigger(Trigger.Type.OnFaceDamage, null, target);
+
+        //this is for the client to know if its not an aura change
+        match.healedPlayers.Add(target);
     }
 
     public void FatiguePlayer(Match match, Player target)

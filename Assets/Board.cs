@@ -23,6 +23,7 @@ public partial class Board : MonoBehaviour
     public GameObject cardObject;
     public GameObject minionObject;
     public GameObject UISprite;
+    public GameObject splashObject;
 
     public Client client = new Client();
 
@@ -56,6 +57,13 @@ public partial class Board : MonoBehaviour
     {
         Card c = Instantiate(cardObject).GetComponent<Card>();
         return c;
+    }
+    public Splash CreateSplash(MonoBehaviour obj,int value)
+    {
+        Splash splash = Instantiate(splashObject).GetComponent<Splash>();
+        Splash.Type type = value < 0 ? Splash.Type.Damage : Splash.Type.Heal;
+        splash.Set(type, value, obj);
+        return splash;
     }
     public Creature CreateCreature()
     {
@@ -212,7 +220,11 @@ public partial class Board : MonoBehaviour
             case Server.MessageType.UpdateMinion:
                 string minionUpdateJson = message.GetString();
                 bool minionUpdateFriendly = message.GetBool();
-                UpdateMinion(minionUpdateJson, minionUpdateFriendly);
+
+                bool UpdateMinionDamaged = message.GetBool();
+                bool UpdateMinionHealed = message.GetBool();
+
+                UpdateMinion(minionUpdateJson, minionUpdateFriendly, UpdateMinionDamaged, UpdateMinionHealed);
                 break;
             case Server.MessageType.ConfirmPreAttackMinion:
                 bool preMinionAllyAttack = message.GetBool();
@@ -248,7 +260,9 @@ public partial class Board : MonoBehaviour
                 int UpdateHeroDeckCount = message.GetInt();
                 int UpdateHeroCurrMana = message.GetInt();
                 int UpdateHeroMaxMana = message.GetInt();
-                UpdateHero(UpdateHeroHP,UpdateHeroFriendly, UpdateHeroDeckCount,UpdateHeroCurrMana,UpdateHeroMaxMana);
+                bool UpdateHeroDamaged = message.GetBool();
+                bool UpdateHeroHealed = message.GetBool();
+                UpdateHero(UpdateHeroHP,UpdateHeroFriendly, UpdateHeroDeckCount,UpdateHeroCurrMana,UpdateHeroMaxMana, UpdateHeroDamaged, UpdateHeroHealed);
                 break;
             case Server.MessageType.AddAura:
             case Server.MessageType.RemoveAura:
@@ -534,15 +548,18 @@ public partial class Board : MonoBehaviour
         SendMessage(message);
     }
 
-    public void UpdateMinion(string minionJson,bool friendly)
+    public void UpdateMinion(string minionJson,bool friendly, bool damaged, bool healed)
     {
         Minion updatedMinion = JsonUtility.FromJson<Minion>(minionJson);
         Minion minion = friendly ? currMinions[updatedMinion.index] : enemyMinions[updatedMinion.index];
 
+        int diff = updatedMinion.health - minion.health;
         minion.health = updatedMinion.health;
         minion.damage = updatedMinion.damage;
 
-        //auras (buffs/debuffs) update
+        if (damaged || healed) CreateSplash(minion.creature, diff);
+        //todo: splash damage/heal
+        
     }
 
     public void AttackFace(Minion minion, Hero h)
@@ -579,23 +596,34 @@ public partial class Board : MonoBehaviour
         SendMessage(message);
     }
 
-    public void UpdateHero(int hp, bool friendly, int deckCount, int currMana,int maxMana)
+    public void UpdateHero(int hp, bool friendly, int deckCount, int currMana,int maxMana, bool damaged, bool healed)
     {
 
         if (friendly)
         {
+            int diff = hp - currHero.health;
+
             currHero.SetHealth(hp);
             deck.Set(deckCount);
             mana.SetCurrent(currMana);
             mana.SetMax(maxMana);
+
+            if (damaged || healed) CreateSplash(currHero, diff);
         }
         else
         {
+            int diff = hp - enemyHero.health;
+
             enemyHero.SetHealth(hp);
             enemyDeck.Set(deckCount);
             enemyMana.SetCurrent(currMana);
             enemyMana.SetMax(maxMana);
+
+            if (damaged || healed) CreateSplash(enemyHero, diff);
         }
+
+        //TODO: Damage/Heal splashes
+
         CheckHighlights();
     }
     public void AddAura(int minionIndex,bool friendly, ushort auraType, ushort value, bool temp, bool foreign,int sourceInd, bool sourceFriendly)
