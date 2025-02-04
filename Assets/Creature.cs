@@ -12,6 +12,7 @@ public class Creature : MonoBehaviour
         x = x * 10;
         battlecrySprite.sortingOrder = x - 1;
         spriteRenderer.sortingOrder = x+1;
+        highlight.sortingOrder = x+1;
         tauntSprite.sortingOrder = x;
         shieldSprite.sortingOrder = x+2;
         triggerSprite.sortingOrder = x+3;
@@ -20,9 +21,14 @@ public class Creature : MonoBehaviour
         health.GetComponent<MeshRenderer>().sortingOrder = x + 3;
         damage.GetComponent<MeshRenderer>().sortingOrder = x + 3;
     }
-    public void SetSortingLayer(string x)
+    public bool isElevated = false;
+    public void SetElevated(bool elevated)
     {
+        isElevated = elevated;
+        string x = elevated ? "creatureElevated" : "creature";
+        string s = elevated ? " shadowCreatureElevated" : "shadowCreature";
         battlecrySprite.sortingLayerName = x;
+        highlight.sortingLayerName = x;
         spriteRenderer.sortingLayerName = x;
         tauntSprite.sortingLayerName = x;
         shieldSprite.sortingLayerName = x;
@@ -41,6 +47,10 @@ public class Creature : MonoBehaviour
     public SpriteRenderer triggerSprite;
     public SpriteRenderer deathrattleSprite;
     public SpriteRenderer battlecrySprite;
+
+    public SpriteRenderer highlight;
+    public Sprite highlightNormal;
+    public Sprite highlightTaunt;
 
     public Board board;
 
@@ -152,12 +162,29 @@ public class Creature : MonoBehaviour
         CheckTriggers();
     }
 
+    public void Highlight()
+    {
+        if (isElevated) return;
+
+        if (tauntSprite.enabled)
+            highlight.sprite = highlightTaunt;
+        else
+            highlight.sprite = highlightNormal;
+
+        highlight.enabled = true;
+    }
+    public void Unhighlight()
+    {
+        highlight.enabled = false;
+    }
     public void EnableTaunt()
     {
+        tauntSprite.enabled = true;
         board.animationManager.LerpZoom(tauntSprite.gameObject, Vector3.one, 10, 0.1f);
     }
     public void DisableTaunt()
     {
+        tauntSprite.enabled = false;
         board.animationManager.LerpZoom(tauntSprite.gameObject, Vector3.zero, 10, 0.1f);
     }
 
@@ -279,18 +306,18 @@ public class Creature : MonoBehaviour
 
     public Vector3 boardPos;
 
-    public bool floating = false;
+    public bool floatEnabled = true;
     public IEnumerator floater()
     {
         int i = 0;
         float freq = 2F;// 1.5f;
         while (true)
         {
-            if (floating)
+            if (floatEnabled)
             {
                 float ang = freq * i * Mathf.PI / 180;
                 transform.localScale = Vector3.one * ((1.025f + 0.01f * Mathf.Sin(ang)));
-                transform.localEulerAngles = new Vector3(0, 0, 0.15F * Mathf.Sin(0.5f * ang));
+                //transform.localEulerAngles = new Vector3(0, 0, 0.15F * Mathf.Sin(0.5f * ang));
                 shadow.elevation = (0.4f + 0.1f * Mathf.Sin(ang));
                 i++;
                 if (i == 360) i = 0;
@@ -299,7 +326,7 @@ public class Creature : MonoBehaviour
             else
             {
                 i = 90;
-                transform.localEulerAngles = Vector3.zero;//Vector3.Lerp(transform.localEulerAngles,Vector3.zero,0.25f);
+                //transform.localEulerAngles = Vector3.zero;//Vector3.Lerp(transform.localEulerAngles,Vector3.zero,0.25f);
                 yield return null;
             }
         }

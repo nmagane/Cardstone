@@ -56,6 +56,30 @@ TagManager:
   - name: top1
     uniqueID: 2797564669
     locked: 0
+  - name: shadowCreature
+    uniqueID: 4213817775
+    locked: 0
+  - name: creature
+    uniqueID: 2105654045
+    locked: 0
+  - name: shadowCreatureElevated
+    uniqueID: 2522887157
+    locked: 0
+  - name: creatureElevated
+    uniqueID: 1631192933
+    locked: 0
+  - name: shadowCard
+    uniqueID: 843447963
+    locked: 0
+  - name: card
+    uniqueID: 2748620445
+    locked: 0
+  - name: shadowCardElevated
+    uniqueID: 2652760823
+    locked: 0
+  - name: cardElevated
+    uniqueID: 1194144581
+    locked: 0
   - name: ui0
     uniqueID: 209027085
     locked: 0

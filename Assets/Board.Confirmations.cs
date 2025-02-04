@@ -37,180 +37,21 @@ public partial class Board
         if (UNORDERED == false)
             matchMessageOrder++;
     }
-    /*
-    public Server.CustomMessage CopyMessage(Message message, Server.MessageType type)
-    {
-        Server.CustomMessage result = new Server.CustomMessage();
-        result.type = type;
-        switch (type)
-        {
-            case Server.MessageType._TEST:
-                break;
-            case Server.MessageType.ConfirmMatch:
-                ulong matchID = message.GetULong();
-                result.AddULong(matchID);
-                break;
-            case Server.MessageType.DrawHand:
-                ushort[] hand = message.GetUShorts();
-                int enemyCardCount = message.GetInt();
-                result.AddUShorts(hand);
-                result.AddInt(enemyCardCount);
-                break;
-            case Server.MessageType.ConfirmMulligan:
-                ushort[] mulliganNewHand = message.GetUShorts();
-                result.AddUShorts(mulliganNewHand);
-                break;
-            case Server.MessageType.EnemyMulligan:
-                int enemyMulligan = message.GetInts();
-                result.AddInts(enemyMulligan);
-                break;
-            case Server.MessageType.DrawCards:
-                int draw = message.GetInt();
-                result.AddInt(draw);
-                break;
-            case Server.MessageType.DrawEnemy:
-                int enemyDraws = message.GetInt();
-                result.AddInt(enemyDraws);
-                break;
-            case Server.MessageType.StartGame:
-                bool isTurn = message.GetBool();
-                result.AddBool(isTurn);
-                break;
-            case Server.MessageType.StartTurn:
-                bool startAllyTurn = message.GetBool();
-                int startMaxMana = message.GetInt();
-                int startCurrMana = message.GetInt();
-                ushort startMessageCount = message.GetUShort();
-                result.AddBool(startAllyTurn);
-                result.AddInt(startMaxMana);
-                result.AddInt(startCurrMana);
-                result.AddUShort(startMessageCount);
-                break;
-            case Server.MessageType.EndTurn:
-                break;
-            case Server.MessageType.PlayCard:
-                bool playedFriendlySide = message.GetBool();
-                int playedIndex = message.GetInt();
-                int playedManaCost = message.GetInt();
-                int playedCard = message.GetInt();
-                result.AddBool(playedFriendlySide);
-                result.AddInt(playedIndex);
-                result.AddInt(playedManaCost);
-                result.AddInt(playedCard);
-                break;
-            case Server.MessageType.SummonMinion:
-                bool summonedFriendlySide = message.GetBool();
-                int summonedMinion = message.GetInt();
-                int summonedPos = message.GetInt();
-                result.AddBool(summonedFriendlySide);
-                result.AddInt(summonedMinion);
-                result.AddInt(summonedPos);
-                break;
-            case Server.MessageType.UpdateMinion:
-                string minionUpdateJson = message.GetString();
-                bool minionUpdateFriendly = message.GetBool();
-                result.AddString(minionUpdateJson);
-                result.AddBool(minionUpdateFriendly);
-                break;
-            case Server.MessageType.ConfirmPreAttackMinion:
-                bool preminionAllyAttack = message.GetBool();
-                int preminionAttackerIndex = message.GetInt();
-                int preminionTargetIndex = message.GetInt();
-                result.AddBool(preminionAllyAttack);
-                result.AddInt(preminionAttackerIndex);
-                result.AddInt(preminionTargetIndex);
-                break;
-            case Server.MessageType.ConfirmAttackMinion:
-                bool minionAllyAttack = message.GetBool();
-                int minionAttackerIndex = message.GetInt();
-                int minionTargetIndex = message.GetInt();
-                result.AddBool(minionAllyAttack);
-                result.AddInt(minionAttackerIndex);
-                result.AddInt(minionTargetIndex);
-                break;
-            case Server.MessageType.ConfirmPreAttackFace:
-                bool preFaceAllyAttack = message.GetBool();
-                int preFaceAttackerIndex = message.GetInt();
-                result.AddBool(preFaceAllyAttack);
-                result.AddInt(preFaceAttackerIndex);
-                break;
-            case Server.MessageType.ConfirmAttackFace:
-                bool FaceAllyAttack = message.GetBool();
-                int FaceAttackerIndex = message.GetInt();
-                result.AddBool(FaceAllyAttack);
-                result.AddInt(FaceAttackerIndex);
-                break;
-            case Server.MessageType.DestroyMinion:
-                int DestroyInd = message.GetInt();
-                bool DestroyFriendly = message.GetBool();
-                result.AddInt(DestroyInd);
-                result.AddBool(DestroyFriendly);
-                break;
-            case Server.MessageType.UpdateHero:
-                int UpdateHeroHP = message.GetInt();
-                bool UpdateHeroFriendly = message.GetBool();
-                result.AddInt(UpdateHeroHP);
-                result.AddBool(UpdateHeroFriendly);
-                break;
-            case Server.MessageType.AddAura:
-            case Server.MessageType.RemoveAura:
-                int addAuraMinionIndex = message.GetInt();
-                bool addAuraFriendly = message.GetBool();
-                ushort addAuraType = message.GetUShort();
-                ushort addAuraValue= message.GetUShort();
-                bool addAuraTemp = message.GetBool();
-                bool addAuraForeign = message.GetBool();
-                int addAuraSourceInd = message.GetInt();
-                bool addAuraSourceFriendly = message.GetBool();
-                result.AddInt(addAuraMinionIndex);
-                result.AddBool(addAuraFriendly);
-                result.AddUShort(addAuraType);
-                result.AddUShort(addAuraValue);
-                result.AddBool(addAuraTemp);
-                result.AddBool(addAuraForeign);
-                result.AddInt(addAuraSourceInd);
-                result.AddBool(addAuraSourceFriendly);
-                break;
-            case Server.MessageType.AddTrigger:
-            case Server.MessageType.RemoveTrigger:
-                int addTriggerMinionIndex = message.GetInt();
-                bool addTriggerFriendly = message.GetBool();
-                ushort addTriggerType = message.GetUShort();
-                ushort addTriggerSide = message.GetUShort();
-                ushort addTriggerAbility = message.GetUShort();
-                result.AddInt(addTriggerMinionIndex);
-                result.AddBool(addTriggerFriendly);
-                result.AddUShort(addTriggerType);
-                result.AddUShort(addTriggerSide);
-                result.AddUShort(addTriggerAbility);
-                break;
-            case Server.MessageType.DiscardCard:
-                bool discardFriendly = message.GetBool();
-                int discardCardInd = message.GetInt();
-                int discardCardName = message.GetInt();
-                result.AddBool(discardFriendly);
-                result.AddInt(discardCardInd);
-                result.AddInt(discardCardName);
-                break;
-            case Server.MessageType.MillCard:
-                bool millFriendly = message.GetBool();
-                int millCardName = message.GetInt();
-                result.AddBool(millFriendly);
-                result.AddInt(millCardName);
-                break;
-            case Server.MessageType.ConfirmHeroPower:
-                bool heroPowerFriendly = message.GetBool();
-                int heroPowerManaCost = message.GetInt();
-                result.AddBool(heroPowerFriendly);
-                result.AddInt(heroPowerManaCost);
-                break;
-            default:
-                Debug.LogError("UNKNOWN MESSAGE TYPE");
-                break;
-        }
 
-        return result;
-    }*/
+    public void ConfirmPlayCard(bool friendlySide, int index, int manaCost, Card.Cardname card, int pos)
+    {
+        if (friendlySide == false)
+        {
+            enemyHand.RemoveAt(index, Hand.RemoveCardType.Play, card, pos);
+            //Debug.Log("TODO: Enemy played " + card);
+            enemyMana.Spend(manaCost);
+            return;
+        }
+        //ally played card
+        currHand.RemoveAt(index, Hand.RemoveCardType.Play, card, pos);
+        this.mana.Spend(manaCost);
+        CheckHighlights();
+    }
     public Coroutine ConfirmPreAttackMinion(bool allyAttack, int attackerIndex, int targetIndex)
     {
         //TODO: preattack animation
@@ -220,7 +61,7 @@ public partial class Board
         Creature atkCreature = allyAttack ? currMinions.minionObjects[attacker] : enemyMinions.minionObjects[attacker];
         Creature tarCreature = allyAttack ? enemyMinions.minionObjects[target] : currMinions.minionObjects[target];
 
-        //TODO: attack animation
+        CheckHighlights();
         return animationManager.PreAttackMinion(atkCreature, tarCreature.transform.localPosition);
     }
     public Coroutine ConfirmAttackMinion(bool allyAttack, int attackerIndex, int targetIndex)
@@ -238,6 +79,7 @@ public partial class Board
         }
 
         //TODO: attack animation
+        CheckHighlights();
         return animationManager.ConfirmAttackMinion(atkCreature, tarCreature.transform.localPosition);
     }
 
@@ -247,8 +89,7 @@ public partial class Board
         Creature atkCreature = allyAttack ? currMinions.minionObjects[attacker] : enemyMinions.minionObjects[attacker];
         Hero tar = allyAttack ? enemyHero : currHero;
 
-        Debug.Log(playerID + ": " + (allyAttack ? "ally " : "enemy ") + attacker.ToString() + " hits face");
-
+        CheckHighlights();
         return animationManager.PreAttackMinion(atkCreature, tar.transform.localPosition);
     }
     public Coroutine ConfirmAttackFace(bool allyAttack, int attackerIndex)
@@ -261,7 +102,6 @@ public partial class Board
         {
             Server.ConsumeAttackCharge(attacker);
         }
-        Debug.Log(playerID + ": " + (allyAttack ? "ally " : "enemy ") + attacker.ToString() + " hits face");
 
         return animationManager.ConfirmAttackMinion(atkCreature, tar.transform.localPosition);
         //todo: attack face animation
@@ -270,6 +110,8 @@ public partial class Board
     public Coroutine ConfirmBattlecry(bool friendly, int index)
     {
         Creature m = friendly ? currMinions.minionObjects[currMinions[index]] : enemyMinions.minionObjects[enemyMinions[index]];
+
+        CheckHighlights();
         return m.TriggerBattlecry();
     }
     public Coroutine ConfirmTrigger(bool friendly, int index, bool deathrattle)
@@ -279,6 +121,8 @@ public partial class Board
             return StartCoroutine(AnimationManager.Wait(30));
         }
         Creature m = friendly ? currMinions.minionObjects[currMinions[index]] : enemyMinions.minionObjects[enemyMinions[index]];
+
+        CheckHighlights();
         return m.TriggerTrigger();
     }
     void ConfirmHeroPower(bool ally)
@@ -291,5 +135,6 @@ public partial class Board
         {
             enemyHeroPower.Disable();
         }
+        CheckHighlights();
     }
 }

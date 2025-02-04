@@ -403,11 +403,7 @@ public partial class Board : MonoBehaviour
         enemyMinions = new MinionBoard();
         enemyMinions.board = currMinions.board = this;
         currMinions.server = enemyMinions.server = false;
-        /*if (isTurn)
-        {
-            currTurn = true;
-            Debug.Log(playerID + "'s turn.");
-        }*/
+
     }
     public void SubmitEndTurn()
     {
@@ -416,7 +412,6 @@ public partial class Board : MonoBehaviour
         Server.CustomMessage message = CreateMessage(Server.MessageType.EndTurn);
         message.AddULong(currentMatchID);
         message.AddULong(playerID);
-        //client.Send(message);
         SendMessage(message);
     }
 
@@ -424,6 +419,7 @@ public partial class Board : MonoBehaviour
     {
         if (!currTurn) return;
         currTurn = false;
+        CheckHighlights();
     }
     public void StartTurn(bool allyTurn, int maxMana, int currMana, ushort messageCount)
     {
@@ -448,14 +444,13 @@ public partial class Board : MonoBehaviour
         {
             m.canAttack = true;
         }
-        
-        //Debug.Log(playerID + "'s turn.");
+
+        CheckHighlights();
     }
     public void DrawCard(Card.Cardname card)
     {
-        //todo: anim draw
-        //Debug.Log("Drawn " + card);
         currHand.Add(card);
+        CheckHighlights();
     }
     public void DrawEnemy(int x)
     {
@@ -469,6 +464,7 @@ public partial class Board : MonoBehaviour
         if (card.played) return;
         card.played = true;
         EndTargeting();
+        playingCard = null;
         //Debug.Log("Playing card " + card.card);
         //send message to server to play card index
         Server.CustomMessage message = CreateMessage(Server.MessageType.PlayCard);
@@ -482,19 +478,6 @@ public partial class Board : MonoBehaviour
 
         //client.Send(message);
         SendMessage(message);
-    }
-    public void ConfirmPlayCard(bool friendlySide, int index, int manaCost, Card.Cardname card, int pos)
-    {
-        if (friendlySide ==false)
-        {
-            enemyHand.RemoveAt(index,Hand.RemoveCardType.Play,card,pos);
-            //Debug.Log("TODO: Enemy played " + card);
-            enemyMana.Spend(manaCost);
-            return;
-        }
-        //ally played card
-        currHand.RemoveAt(index,Hand.RemoveCardType.Play,card,pos);
-        this.mana.Spend(manaCost);
     }
 
     public void SummonMinion(bool friendlySide, Card.Cardname card, int position)
@@ -517,6 +500,7 @@ public partial class Board : MonoBehaviour
         {
             enemyMinions.RemoveAt(ind);
         }
+        CheckHighlights();
     }
 
     public void AttackMinion(Minion attacker, Minion target)
@@ -612,6 +596,7 @@ public partial class Board : MonoBehaviour
             enemyMana.SetCurrent(currMana);
             enemyMana.SetMax(maxMana);
         }
+        CheckHighlights();
     }
     public void AddAura(int minionIndex,bool friendly, ushort auraType, ushort value, bool temp, bool foreign,int sourceInd, bool sourceFriendly)
     {
@@ -655,7 +640,6 @@ public partial class Board : MonoBehaviour
         c.Flip();
         animationManager.MillAnim(c,friendly);
     }
-
     public void CastHeroPower(Card.Cardname ability, int target, bool isFriendly, bool isHero)
     {
         Server.CustomMessage message = CreateMessage(Server.MessageType.HeroPower);

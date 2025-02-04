@@ -19,20 +19,24 @@ addcard message to client
 
 
 replace all fade effects with some shader (FAR FUTURE TODO)
-
-DAMAGED HP COLOR (F5A097)
-
-a bit of rotation on creeature anim facing the direction of attack?
-
-deathrattle anim
-
-summoning ally minions should happen client side first?
-make new sorting layers for cards and creatures (includes heroes). and UI elements
-
 get a new color pallette this shit sucks ( future todo )
+summoning ally minions should happen client side first? (future todo)
+a bit of rotation on creeature anim facing the direction of attack?
+creature floating should hit scale vector3.one?
+
+HIGHLIGHT AVAILABLE ATTACKERS/CARDS
+hover tooltips
+damage projectiles
+"-X" damage splash
+new gfx for the targeting arrow
+gameover screen -> reset scene button?
 
 ===========================================
 
+
+make new sorting layers for cards and creatures (includes heroes). and UI elements
+
+deathrattle anim
 mill anim	
 
 minion attack anim

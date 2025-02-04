@@ -59,6 +59,7 @@ public class DropShadow : MonoBehaviour
         spriteRenderer.flipX = parent.flipX;
         spriteRenderer.flipY = parent.flipY;
         spriteRenderer.sortingOrder = parent.sortingOrder - layerGap;
+        spriteRenderer.sortingLayerName = sortingLayer;
         if (spriteRenderer.drawMode==SpriteDrawMode.Tiled || spriteRenderer.drawMode==SpriteDrawMode.Sliced)
             spriteRenderer.size = parent.size;
     }

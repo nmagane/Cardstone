@@ -8,12 +8,13 @@ public partial class AnimationManager
 
     public void LiftMinion(Creature c)
     {
-        c.floating = false;
-        c.SetSortingLayer("creatureElevated");
+        c.floatEnabled = false;
+        c.SetElevated(true);
         StartCoroutine(elevator(c, 1.05f, 0.6f, 5));
     }
     public void CancelLiftMinion(Creature c)
     {
+        c.isElevated = false;
         StartCoroutine(elevator(c, 1.025f, 0.4f, 10,true));
     }
 
@@ -25,7 +26,12 @@ public partial class AnimationManager
         float ang = Mathf.Atan2(c.boardPos.y - target.y, c.boardPos.x - target.x);
         float diff = 1.4375f * Mathf.Sin(ang);
         target = target + dir * diff*2;
-        return LerpTo(c.gameObject, Vector3.Lerp(c.transform.localPosition, target, 0.25f), (int)(attackFrames*0.25));
+        return StartCoroutine(preAttack(c,target));
+    }
+    IEnumerator preAttack(Creature c, Vector3 target)
+    {
+        yield return Wait(10);
+        yield return LerpTo(c.gameObject, Vector3.Lerp(c.transform.localPosition, target, 0.25f), (int)(attackFrames * 0.25));
     }
     public Coroutine ConfirmAttackMinion(Creature c, Vector3 target)
     {
@@ -40,7 +46,6 @@ public partial class AnimationManager
         target = target + dir * diff*1.5f * ((target.y<c.transform.localPosition.y)? -1:1);
 
         yield return _lerpAccel(c.gameObject, target, (int)(attackFrames* 0.75));
-
         CancelLiftMinion(c);
         c.transform.localPosition = Vector3.Lerp(c.transform.localPosition, c.boardPos, 0.075f);
         LerpTo(c.gameObject, c.boardPos, 5);
@@ -78,20 +83,22 @@ public partial class AnimationManager
             c.shadow.elevation = Mathf.Lerp(op, v, (i + 1) / frames);
             yield return null;
         }
-        c.floating = returnToFloat;
+        c.floatEnabled = returnToFloat;
         if (c == null) yield break;
         if (returnToFloat)
         {
             c.SetSortingOrder(c.minion.index);
-            c.SetSortingLayer("creature");
+            c.SetElevated(false);
         }
         else
+        {
             c.SetSortingOrder(c.minion.index + 10);
+        }
     }
 
     public void DeathAnim(Creature c)
     {
-        c.floating = false;
+        c.floatEnabled = false;
         foreach (Trigger t in c.minion.triggers)
         {
             if (t.type==Trigger.Type.Deathrattle)

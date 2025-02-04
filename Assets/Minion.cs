@@ -42,11 +42,12 @@ public partial class Minion
         index = ind;
         //manaCost
     }
-    public Minion(Card.Cardname c, int ind, MinionBoard _board)
+    public Minion(Card.Cardname c, int ind, MinionBoard _board, int order=0)
     {
         board = _board;
         card = c;
         index = ind;
+        playOrder = order;
 
         Database.CardInfo info = Database.GetCardData(c);
         health = info.health;

@@ -31,23 +31,24 @@ public class MinionBoard
     public Minion Add(Card.Cardname c, int ind = -1, int playOrder = 0)
     {
         Minion newMinion = null;
+        
         if (ind == -1)
         {
             ind = Count();
         }
         if (Count() == 0)
         {
-            newMinion = new Minion(c, 0, this);
+            newMinion = new Minion(c, 0, this, playOrder);
             minions.Add(newMinion);
         }
         else if (Count() != 0 && ind >= Count())
         {
-            newMinion = new Minion(c, Count(), this);
+            newMinion = new Minion(c, Count(), this, playOrder);
             minions.Add(newMinion);
         }
         else
         {
-            newMinion = new Minion(c, ind, this);
+            newMinion = new Minion(c, ind, this, playOrder);
             minions.Insert(ind, newMinion);
         }
         if (server)

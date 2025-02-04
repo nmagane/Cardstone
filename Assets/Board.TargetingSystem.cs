@@ -284,6 +284,7 @@ public partial class Board
     {
         playingCard = null;
         dragTargeting = false;
+        Debug.Log("end");
     }
 
     public bool activeTargetingAnim = false;
@@ -291,10 +292,12 @@ public partial class Board
 
     public void StartTargetingAnim(MonoBehaviour source)
     {
+        CheckHighlights();
         StartCoroutine(_animActive(source.gameObject));
     }
     public void EndTargetingAnim()
     {
+        CheckHighlights();
         activeTargetingAnim = false;
     }
 
