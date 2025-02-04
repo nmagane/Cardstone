@@ -190,10 +190,12 @@ public class Creature : MonoBehaviour
 
     public void EnableShield()
     {
+        shieldSprite.enabled = true;
         board.animationManager.LerpZoom(shieldSprite.gameObject, Vector3.one, 10, 0.1f);
     }
     public void DisableShield()
     {
+        shieldSprite.enabled = false;
         board.animationManager.LerpZoom(shieldSprite.gameObject, Vector3.zero, 5, 0.1f);
     }
 

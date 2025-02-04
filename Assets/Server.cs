@@ -94,6 +94,8 @@ public partial class Server : MonoBehaviour
         ConfirmBattlecry,
         ConfirmTrigger,
 
+        ConfirmAnimation,
+        
         AddCard,
 
         Concede,
@@ -898,6 +900,27 @@ public partial class Server : MonoBehaviour
 
         SendMessage(messageOwner, player);
         SendMessage(messageOpponent, player.opponent);
+    }
+    public void ConfirmAnimation(Match match, Player player, Card.Cardname name, int target = -1, bool friendly=false, bool isHero=false)
+    {
+        CustomMessage messageOwner = CreateMessage(MessageType.ConfirmAnimation);
+        CustomMessage messageOpponent = CreateMessage(MessageType.ConfirmAnimation);
+
+        messageOwner.AddInt((int)name);
+        messageOpponent.AddInt((int)name);
+
+        messageOwner.AddInt(target);
+        messageOpponent.AddInt(target);
+        
+        messageOwner.AddBool(friendly);
+        messageOpponent.AddBool(friendly);
+
+        messageOwner.AddBool(isHero);
+        messageOpponent.AddBool(isHero);
+
+        SendMessage(messageOwner, player);
+        SendMessage(messageOpponent, player.opponent);
+
     }
     /*
     public static CustomMessage CopyMessage(Message message, MessageType type)
