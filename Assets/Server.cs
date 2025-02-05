@@ -908,23 +908,19 @@ public partial class Server : MonoBehaviour
         SendMessage(messageOwner, player);
         SendMessage(messageOpponent, player.opponent);
     }
-    public void ConfirmAnimation(Match match, Player player, Card.Cardname name, int target = -1, bool friendly=false, bool isHero=false)
+    public void ConfirmAnimation(Match match, Player player, AnimationManager.AnimationInfo anim)
     {
         CustomMessage messageOwner = CreateMessage(MessageType.ConfirmAnimation);
         CustomMessage messageOpponent = CreateMessage(MessageType.ConfirmAnimation);
 
-        messageOwner.AddInt((int)name);
-        messageOpponent.AddInt((int)name);
+        messageOwner.AddBool(true);
+        messageOpponent.AddBool(false);
 
-        messageOwner.AddInt(target);
-        messageOpponent.AddInt(target);
+        string jsonText = JsonUtility.ToJson(anim);
+
+        messageOwner.AddString(jsonText);
+        messageOpponent.AddString(jsonText);
         
-        messageOwner.AddBool(friendly);
-        messageOpponent.AddBool(friendly);
-
-        messageOwner.AddBool(isHero);
-        messageOpponent.AddBool(isHero);
-
         SendMessage(messageOwner, player);
         SendMessage(messageOpponent, player.opponent);
 

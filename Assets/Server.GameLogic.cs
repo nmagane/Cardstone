@@ -201,6 +201,7 @@ public partial class Server
     }
     public void Damage(CastInfo spell, int damage)
     {
+
         if (spell.isHero)
         {
             Player player = spell.isFriendly ? spell.player : spell.player.opponent;
@@ -210,6 +211,7 @@ public partial class Server
         Minion minion = spell.GetTargetMinion();
         DamageMinion(spell.match, minion, damage);
         //TODO: TRIGGER ANIMATION
+
     }
     public void Discard(CastInfo spell, int count=1, bool enemyDiscard = false)
     {

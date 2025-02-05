@@ -322,6 +322,12 @@ public partial class Board : MonoBehaviour
                 else
                     animation = ConfirmBattlecry(battlecryFriendly, battlecryIndex);
                 break;
+            case Server.MessageType.ConfirmAnimation:
+                bool animationFriendly = message.GetBool();
+                string animJson = message.GetString();
+                AnimationManager.AnimationInfo animInfo = JsonUtility.FromJson<AnimationManager.AnimationInfo>(animJson);
+                animation = animationManager.StartAnimation(animInfo, animationFriendly);
+                break;
             default:
                 Debug.LogError("UNKNOWN MESSAGE TYPE");
                 break;

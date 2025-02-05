@@ -7,13 +7,25 @@ public class TriggerEffects
         int damage = 1;
         Player opponent = match.FindOpponent(minion);
         int tar = Random.Range(-1, opponent.board.Count());
+
+        AnimationManager.AnimationInfo anim = new AnimationManager.AnimationInfo
+        {
+            card = Card.Cardname.Knife_Juggler,
+            sourceIsHero = false,
+            sourceIsFriendly = true,
+            sourceIndex = minion.index,
+            targetIndex = tar,
+            targetIsFriendly = false,
+            targetIsHero = tar == -1,
+        };
+
+        match.server.ConfirmAnimation(match, minion.player, anim);
+
         if (tar==-1)
         {
             match.server.DamageFace(match, opponent, damage);
             return;
         }
-
-        //TODO: CONFIRM TRIGGER MESSAGE TO PLAYERS?
         match.server.DamageMinion(match, opponent.board[tar], damage);
     }
 
@@ -34,7 +46,6 @@ public class TriggerEffects
         while (m == minion) m = p.board[Random.Range(0, p.board.Count())];
 
         match.server.AddAura(match, m, new Aura(Aura.Type.Health, 1));
-        //TODO: CONFIRM TRIGGER MESSAGE TO PLAYERS?
     }
 
     public static void HarvestGolem(Match match, Minion minion)

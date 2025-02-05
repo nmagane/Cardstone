@@ -25,6 +25,9 @@ a bit of rotation on creeature anim facing the direction of attack?
 different tooltip shape for hero power hover
 creature floating should hit scale vector3.one?
 
+cards can be played with ID instead of order? idk
+cards need to be playable during animations somehow and not break
+maybe have board client execute everything instantly but only show it by waiting for animations queue <-- probably the best solution but a lot of work
 
 damage projectiles
 card art for each card
