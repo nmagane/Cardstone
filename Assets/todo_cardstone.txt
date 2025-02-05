@@ -28,6 +28,9 @@ creature floating should hit scale vector3.one?
 cards can be played with ID instead of order? idk
 cards need to be playable during animations somehow and not break
 maybe have board client execute everything instantly but only show it by waiting for animations queue <-- probably the best solution but a lot of work
+case: when imp gang boss has a lot of anims queued but theyre not spawned, playig something on right of the boss will make it spawn on the farthest edge after imps
+so playing a minion on rightmost side should always register as index -1 or whatever
+
 
 damage projectiles
 card art for each card
