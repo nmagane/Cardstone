@@ -173,7 +173,6 @@ public partial class Minion
 
     public bool RemoveAura(Aura a)
     {
-        Debug.Log("removed Taunt");
         auras.Remove(a);
         switch (a.type)
         {

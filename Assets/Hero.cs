@@ -12,6 +12,11 @@ public class Hero : MonoBehaviour
     public int health = 30;
     public int maxHealth = 30;
 
+    public SpriteRenderer highlight;
+
+    public Sprite highlightNormal;
+    public Sprite highlightTarget;
+
     public enum Class
     {
         Mage,
@@ -39,6 +44,22 @@ public class Hero : MonoBehaviour
     private void UpdateText()
     {
         hpText.text = health.ToString();
+        if (health < maxHealth) 
+            hpText.color = board.minionObject.GetComponent<Creature>().redText;
+        else 
+            hpText.color = board.minionObject.GetComponent<Creature>().baseText;
+    }
+
+    public void Highlight(bool target=false)
+    {
+        highlight.enabled = true;
+        if (target) highlight.sprite = highlightTarget;
+        else highlight.sprite = highlightNormal;
+    }
+
+    public void Unhighlight()
+    {
+        highlight.enabled = false;
     }
     void Update()
     {

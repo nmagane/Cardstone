@@ -2,6 +2,46 @@
 using UnityEngine;
 public partial class Board
 {
+    public Tooltip enemyPlayTip;
+    public Tooltip hoverTip;
+    public void ShowEnemyPlay(Card.Cardname c)
+    {
+        enemyPlayTip.Set(c,90);
+    }
+
+    public void ShowHoverTip(Creature c)
+    {
+        if (c.transform.localPosition.x<0)
+        {
+            hoverTip.transform.position = c.transform.position + new Vector3(6, 0);
+        }
+        else
+            hoverTip.transform.position = c.transform.position + new Vector3(-6, 0);
+
+        hoverTip.transform.localScale = Vector3.one * 0.3f;
+        animationManager.LerpZoom(hoverTip.gameObject,Vector3.one, 5,0.1f);
+        hoverTip.Set(c.minion.card);
+        
+    }
+    public void ShowHoverTip(HeroPower p)
+    {
+        if (p.transform.position.y<0)
+        {
+            hoverTip.transform.position = p.transform.position + new Vector3(6, 6);
+        }
+        else
+            hoverTip.transform.position = p.transform.position + new Vector3(6, -6);
+
+        hoverTip.transform.localScale = Vector3.one * 0.3f;
+        animationManager.LerpZoom(hoverTip.gameObject,Vector3.one, 5,0.1f);
+        hoverTip.Set(p.card.card);
+    }
+    public void HideHoverTip()
+    {
+        hoverTip.Hide();
+        hoverTip.transform.localPosition = new Vector3(0, 20);
+    }
+
     public void CheckHighlights()
     {
         UnhighlightAll();

@@ -43,7 +43,7 @@ public partial class Board
         if (friendlySide == false)
         {
             enemyHand.RemoveAt(index, Hand.RemoveCardType.Play, card, pos);
-            //Debug.Log("TODO: Enemy played " + card);
+            ShowEnemyPlay(card);
             enemyMana.Spend(manaCost);
             return;
         }

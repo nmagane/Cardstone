@@ -331,12 +331,16 @@ public partial class Board : MonoBehaviour
     public void InitGame(ulong matchID)
     {
         Debug.Log("Player " + playerID + " entered game " + matchID);
+
+        //TODO: ENEMY CLASS COMMUNICATED IN MESSAGE
+
+        heroPower.Set(Card.Cardname.Lifetap);
+        enemyHeroPower.Set(Card.Cardname.Lifetap);
+
         currentMatchID = matchID;
     }
     public void InitHand(List<ushort> hand, int enemyCards=4)
     {
-        //Debug.Log(jsonText);
-        //Hand hand = JsonUtility.FromJson<Hand>(jsonText);
         if (hand.Contains((ushort)Card.Cardname.Coin))
             currHand.coinHand = true;
         foreach (var c in hand)
@@ -407,8 +411,6 @@ public partial class Board : MonoBehaviour
     }
     void StartGame(bool isTurn)
     {
-        heroPower.Set(Card.Cardname.Lifetap);
-
         //TODO: Get rid of mulligan screen
         waitingEnemyMulliganMessage.transform.localScale = Vector3.zero;
         currHand.ConfirmBothMulligans();
@@ -654,7 +656,6 @@ public partial class Board : MonoBehaviour
     {
         Hand hand = friendly ? currHand : enemyHand;
         HandCard c = hand[ind];
-        Debug.Log((friendly?"":"enemy ")+"discarded " + card);
         hand.RemoveAt(ind,Hand.RemoveCardType.Discard,card);
         //TODO: discard anim
     }

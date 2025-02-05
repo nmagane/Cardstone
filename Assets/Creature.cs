@@ -52,6 +52,9 @@ public class Creature : MonoBehaviour
     public Sprite highlightNormal;
     public Sprite highlightTaunt;
 
+    public Sprite highlightTargetNormal;
+    public Sprite highlightTargetTaunt;
+
     public Board board;
 
     public Minion minion;
@@ -222,9 +225,11 @@ public class Creature : MonoBehaviour
         }
     }
 
+    int hoverTimer = 0;
     private void OnMouseOver()
     {
         if (preview) return;
+
         if (board.targeting && board.dragTargeting)
         {
             if (Input.GetMouseButtonUp(0))
@@ -238,7 +243,13 @@ public class Creature : MonoBehaviour
                 board.TargetMinion(minion);
             }
         }
-        //TODO: timer for tooltip to show up
+        if (hoverTimer < 30)
+        {
+            hoverTimer++; 
+            if (hoverTimer == 30)
+                board.ShowHoverTip(this);
+        }
+        
     }
     private void OnMouseEnter()
     {
@@ -247,6 +258,8 @@ public class Creature : MonoBehaviour
     private void OnMouseExit()
     {
         board.hoveredMinion = null;
+        hoverTimer = 0;
+        board.HideHoverTip();
     }
 
     int dragCounter = 0;

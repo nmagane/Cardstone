@@ -46,14 +46,14 @@ public class Splash : MonoBehaviour
     }
     IEnumerator fader()
     {
-        float bumpTime = 20;
+        float bumpTime = 10;
         for (int i=0;i<bumpTime;i++)
         {
             transform.localScale += Vector3.one * 0.25f / bumpTime;
             yield return AnimationManager.Wait(1);
         }
         //yield return AnimationManager.Wait(10);
-        float fadeTime = 40;
+        float fadeTime = 25;
         for (int i=0;i< fadeTime; i++)
         {
             spriteRenderer.color += new Color(0, 0, 0, -1 / fadeTime);

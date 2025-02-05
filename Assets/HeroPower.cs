@@ -19,7 +19,7 @@ public class HeroPower : MonoBehaviour
     public new bool enabled = true;
     public bool TARGETED = false;
 
-    HandCard card;
+    public HandCard card;
 
     public void Set(Card.Cardname heroPower)
     {
@@ -49,6 +49,21 @@ public class HeroPower : MonoBehaviour
         highlight.enabled = false;
     }
 
+    int hoverTimer = 0;
+    private void OnMouseOver()
+    {
+        if (hoverTimer < 30)
+        {
+            hoverTimer++;
+            if (hoverTimer == 30)
+                board.ShowHoverTip(this);
+        }
+    }
+    private void OnMouseExit()
+    {
+        hoverTimer = 0;
+        board.HideHoverTip();
+    }
     private void OnMouseDown()
     {
         if (enabled == false || transform.position.y>0) return;

@@ -610,8 +610,6 @@ public partial class Server : MonoBehaviour
         Minion target = match.enemyPlayer.board[targetInd];
         if (ValidAttackMinion(match, attackerInd, targetInd) == false) return;
 
-        Debug.Log("Attack " + attacker.ToString() + " " + target.ToString());
-
         AttackInfo attackInfo = new AttackInfo(match.currPlayer, attacker, target, false, false, false);
         CastInfo attackAction = new CastInfo(match, attackInfo);
 

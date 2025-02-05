@@ -17,7 +17,7 @@ note: minion and spell cards look different.
 addcard message to client
 
 
-
+auras in hover tooltip
 replace all fade effects with some shader (FAR FUTURE TODO)
 get a new color pallette this shit sucks ( future todo )
 summoning ally minions should happen client side first? (future todo)
@@ -27,7 +27,6 @@ creature floating should hit scale vector3.one?
 
 hover tooltips + enemy play popup
 damage projectiles
-"-X" damage splash
 new gfx for the targeting arrow
 gameover screen -> reset scene button?
 HIGHLIGHT AVAILABLE TARGETS (ugly?)
@@ -37,6 +36,7 @@ health text color on hero hp
 ===========================================
 
 
+"-X" damage splash
 HIGHLIGHT AVAILABLE ATTACKERS/CARDS
 
 make new sorting layers for cards and creatures (includes heroes). and UI elements

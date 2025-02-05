@@ -284,7 +284,6 @@ public partial class Board
     {
         playingCard = null;
         dragTargeting = false;
-        Debug.Log("end");
     }
 
     public bool activeTargetingAnim = false;

@@ -106,7 +106,6 @@ public class Trigger
     }
     public void ActivateTrigger(Match match, ref CastInfo spell)
     {
-        Debug.Log("Trigger Activated");
         switch (ability)
         {
             case Ability.KnifeJuggler:
