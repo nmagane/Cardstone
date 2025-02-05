@@ -130,5 +130,21 @@ public partial class Server
             ushortArrays = new List<ushort>(m.ushortArrays);//(m.intArrays);
 
         }
+
+        public CustomMessage(CustomMessage m)
+        {
+            type = m.type;
+            clientID = m.clientID;
+            order = m.order;
+            ints = new Queue<int>(m.ints);
+            ulongs = new Queue<ulong>(m.ulongs);
+            ushorts = new Queue<ushort>(m.ushorts);
+            bools = new Queue<bool>(m.bools);
+            strings = new Queue<string>(m.strings);
+
+            intArrays = new List<int>(m.intArrays);//(m.intArrays);
+            ushortArrays = new List<ushort>(m.ushortArrays);//(m.intArrays);
+
+        }
     }
 }
