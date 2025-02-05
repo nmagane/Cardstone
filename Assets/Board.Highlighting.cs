@@ -67,10 +67,16 @@ public partial class Board
 
         foreach (var m in currMinions)
         {
-            currMinions.minionObjects[m].Unhighlight();
+            m.creature.Unhighlight();
+        }
+        foreach (var m in enemyMinions)
+        {
+            m.creature.Unhighlight();
         }
 
         heroPower.Unhighlight();
+        currHero.Unhighlight();
+        enemyHero.Unhighlight();
     }
 
 
@@ -87,7 +93,7 @@ public partial class Board
         foreach (var m in currMinions)
         {
             if (m.canAttack == false) continue;
-            currMinions.minionObjects[m].Highlight();
+            m.creature.Highlight();
         }
 
         if (heroPower.enabled)
@@ -102,7 +108,115 @@ public partial class Board
     }
     public void HighlightTargets()
     {
+        switch (targetMode)
+        {
+            case TargetMode.Attack:
+            case TargetMode.Weapon:
+                HighlightAttack();
+                break;
 
+            case TargetMode.Battlecry:
+            case TargetMode.Spell:
+            case TargetMode.HeroPower:
+                HighlightSpell();
+                break;
+        }
+    }
+    void HighlightAttack()
+    {
+        bool taunter = false;
+        foreach (Minion m in enemyMinions)
+        {
+            if (m.HasAura(Aura.Type.Taunt)) taunter = true;
+        }
+        if (taunter)
+        {
+            foreach (Minion m in enemyMinions)
+            {
+                if (m.HasAura(Aura.Type.Stealth)) continue;
+
+                if (m.HasAura(Aura.Type.Taunt))
+                {
+                    m.creature.Highlight(true);
+
+                    //bounce taunters (experimental)
+                    animationManager.LerpZoom(enemyMinions.minionObjects[m].gameObject, enemyMinions.minionObjects[m].transform.localScale, 5, 0.2f);
+                }
+            }
+        }
+        else
+        {
+            enemyHero.Highlight(true);
+            HighlightEnemyMinions();
+        }
+    }
+    void HighlightSpell()
+    {
+        switch (eligibleTargets)
+        {
+            case EligibleTargets.AllCharacters:
+                HighlightEnemyHero();
+                HighlightEnemyMinions();
+                HighlightFriendlyHero();
+                HighlightFriendlyMinions();
+                break;
+            case EligibleTargets.EnemyCharacters:
+                HighlightEnemyHero();
+                HighlightEnemyMinions();
+                break;
+            case EligibleTargets.FriendlyCharacters:
+                HighlightFriendlyHero();
+                HighlightFriendlyMinions();
+                break;
+
+            case EligibleTargets.EnemyMinions:
+                HighlightEnemyMinions();
+                break;
+            case EligibleTargets.FriendlyMinions:
+                HighlightFriendlyMinions();
+                break;
+            case EligibleTargets.AllMinions:
+                HighlightFriendlyMinions();
+                HighlightEnemyMinions();
+                break;
+
+            case EligibleTargets.EnemyHero:
+                HighlightEnemyHero();
+                break;
+            case EligibleTargets.FriendlyHero:
+                HighlightFriendlyHero();
+                break;
+            case EligibleTargets.AllHeroes:
+                HighlightEnemyHero();
+                HighlightFriendlyHero();
+                break;
+            default:
+                Debug.LogError("NO HIGHLIGHT IMPLEMENTED: " + eligibleTargets);
+                break;
+        }
     }
 
+    void HighlightEnemyHero()
+    {
+        enemyHero.Highlight(true);
+    }
+    void HighlightEnemyMinions()
+    {
+        foreach (Minion m in enemyMinions)
+        {
+            if (m.HasAura(Aura.Type.Stealth)) continue;
+            m.creature.Highlight(true);
+        }
+    }
+    void HighlightFriendlyHero()
+    {
+        currHero.Highlight(true);
+    }
+    void HighlightFriendlyMinions()
+    {
+        foreach (var m in currMinions)
+        {
+            m.creature.Highlight(true);
+        }
+    }
 }

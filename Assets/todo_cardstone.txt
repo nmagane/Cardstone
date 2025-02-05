@@ -22,19 +22,23 @@ replace all fade effects with some shader (FAR FUTURE TODO)
 get a new color pallette this shit sucks ( future todo )
 summoning ally minions should happen client side first? (future todo)
 a bit of rotation on creeature anim facing the direction of attack?
+different tooltip shape for hero power hover
 creature floating should hit scale vector3.one?
 
 
-hover tooltips + enemy play popup
 damage projectiles
-new gfx for the targeting arrow
+card art for each card
+creature class color
 gameover screen -> reset scene button?
-HIGHLIGHT AVAILABLE TARGETS (ugly?)
-
-health text color on hero hp
 
 ===========================================
 
+health text color on hero hp
+hovertooltip for hero power
+HIGHLIGHT AVAILABLE TARGETS (ugly?)
+new gfx for the targeting arrow
+
+hover tooltips + enemy play popup
 
 "-X" damage splash
 HIGHLIGHT AVAILABLE ATTACKERS/CARDS

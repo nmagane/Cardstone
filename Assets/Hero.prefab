@@ -54,6 +54,9 @@ MonoBehaviour:
   hpText: {fileID: 8836683096817158229}
   health: 30
   maxHealth: 30
+  highlight: {fileID: 5652826871360112596}
+  highlightNormal: {fileID: 21300000, guid: 4029559576036c24c9822a0e1a577053, type: 3}
+  highlightTarget: {fileID: 21300000, guid: 24af1fae71df6df43ad7f63589b1d1fa, type: 3}
 --- !u!60 &1671318675257879375
 PolygonCollider2D:
   m_ObjectHideFlags: 0

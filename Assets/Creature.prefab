@@ -769,6 +769,8 @@ MonoBehaviour:
   highlight: {fileID: 3637574858730120586}
   highlightNormal: {fileID: 21300000, guid: cc75fbc37f34d7447b8c0538a98d6a6b, type: 3}
   highlightTaunt: {fileID: 21300000, guid: 8e1ed807fe982534cb1d101b8e06668b, type: 3}
+  highlightTargetNormal: {fileID: 21300000, guid: 5ec6bc2237edc3146ab6a8d5077ac68d, type: 3}
+  highlightTargetTaunt: {fileID: 21300000, guid: 84d9d27007046cb418894cf9e99d1fe6, type: 3}
   board: {fileID: 0}
   minion:
     card: 0

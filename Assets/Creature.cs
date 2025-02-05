@@ -165,14 +165,14 @@ public class Creature : MonoBehaviour
         CheckTriggers();
     }
 
-    public void Highlight()
+    public void Highlight(bool target = false)
     {
         if (isElevated) return;
 
         if (tauntSprite.enabled)
-            highlight.sprite = highlightTaunt;
+            highlight.sprite = target? highlightTargetTaunt : highlightTaunt;
         else
-            highlight.sprite = highlightNormal;
+            highlight.sprite = target? highlightTargetNormal : highlightNormal;
 
         highlight.enabled = true;
     }
