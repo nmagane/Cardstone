@@ -185,16 +185,8 @@ public partial class Minion
                 damage -= a.value;
                 break;
             case Aura.Type.Taunt:
-                if (board.server == false)
-                {
-                    board.minionObjects[this].DisableTaunt();
-                }
                 break;
             case Aura.Type.Shield:
-                if (board.server == false)
-                {
-                    board.minionObjects[this].DisableShield();
-                }
                 break;
         }
         return true;

@@ -51,22 +51,8 @@ public class Aura
                 minion.canAttack = true;
                 break;
             case Type.Taunt:
-                if (minion.board.server == false)
-                {
-                    if (minion.board.minionObjects.ContainsKey(minion))
-                    {
-                        minion.board.minionObjects[minion].EnableTaunt();
-                    }
-                }
                 break;
             case Type.Shield:
-                if (minion.board.server == false)
-                {
-                    if (minion.board.minionObjects.ContainsKey(minion))
-                    {
-                        minion.board.minionObjects[minion].EnableShield();
-                    }
-                }
                 break;
 
             case Type.Amani: //ENRAGE AURAS GO HERE?

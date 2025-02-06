@@ -37,6 +37,11 @@ public partial class Board
         Server.CustomMessage message = CreateMessage(Server.MessageType.EndTurn);
         message.AddULong(currentMatchID);
         message.AddULong(playerID);
+
+        //todo: is this ok??
+        currTurn = false;
+        CheckHighlights();
+
         SendMessage(message);
     }
 
@@ -58,6 +63,8 @@ public partial class Board
         message.AddBool(friendlySide);
         message.AddBool(isHero);
 
+        mana.Spend(card.manaCost);
+        mana.UpdateDisplay();
         //client.Send(message);
         SendMessage(message);
     }
@@ -139,6 +146,8 @@ public partial class Board
         message.AddInt(target);
         message.AddBool(isFriendly);
         message.AddBool(isHero);
+
+        heroPower.Disable();
 
         SendMessage(message);
     }

@@ -20,9 +20,12 @@ public partial class Board
         public List<HandCard> handCards = new();
         public List<string> strings = new();
         public List<int> ints = new();
+        public Server.CustomMessage customMessage = new();
 
         public bool isFriendly;
+        public bool trigger = false;
         public int health, damage, manaCost, index, target;
+
     }
     public void QueueAnimation(VisualInfo message)
     {
@@ -92,12 +95,30 @@ public partial class Board
             case Server.MessageType.UpdateHero:
                 return UpdateHeroVisual(message);
 
-                /*
             case Server.MessageType.ConfirmBattlecry:
-                return UpdateHeroVisual(message);
+                return ConfirmBattlecryVisual(message);
+
             case Server.MessageType.ConfirmTrigger:
-                return UpdateHeroVisual(message);
-                */
+                return ConfirmTriggerVisual(message);
+
+            case Server.MessageType.MillCard:
+                return MillVisual(message);
+
+            case Server.MessageType.ConfirmHeroPower:
+                return ConfirmHeroPowerVisual(message);
+                
+            case Server.MessageType.AddAura:
+                return AddAuraVisual(message);
+                
+            case Server.MessageType.RemoveAura:
+                return RemoveAuraVisual(message);
+
+            case Server.MessageType.AddTrigger:
+                return AddTriggerVisual(message);
+                
+            case Server.MessageType.RemoveTrigger:
+                return RemoveTriggerVisual(message);
+                
             
             default:
                 Debug.LogError("ANIMATION NOT IMPLEMENTED: " + message.type);
@@ -125,7 +146,6 @@ public partial class Board
 
     Coroutine StartTurnVisual(VisualInfo message)
     {
-        Debug.Log(playerID+ " STARTING TURN: "+message.isFriendly);
         if (!message.isFriendly)
         {
             currTurn = false;
@@ -174,11 +194,11 @@ public partial class Board
         if (message.isFriendly == false)
         {
             ShowEnemyPlay(message.names[0]);
-            enemyMana.Spend(message.manaCost);
+            //enemyMana.Spend(message.manaCost);
         }
         else
         {
-            mana.Spend(message.manaCost);
+            //mana.Spend(message.manaCost);
         }
 
 
@@ -198,6 +218,7 @@ public partial class Board
     Coroutine DrawVisual(VisualInfo message)
     {
         currHand.AddCard(message.handCards[0],Hand.CardSource.Deck);
+        CheckHighlights();
         return StartCoroutine(Wait(15));
     }
     Coroutine DrawEnemyVisual(VisualInfo message)
@@ -217,11 +238,113 @@ public partial class Board
 
     Coroutine UpdateMinionVisual(VisualInfo message)
     {
+        message.minions[0].creature.hp = message.ints[0]; 
+        message.minions[0].creature.dmg = message.ints[1];
+        message.minions[0].creature.UpdateDisplay(); 
+
+        if (message.trigger)
+        {
+            CreateSplash(message.minions[0].creature, message.damage);
+        }
         return null;
     }
     Coroutine UpdateHeroVisual(VisualInfo message)
     {
+        if (message.isFriendly)
+        {
+            currHero.UpdateText(message.ints[0]);
+            deck.UpdateDisplay(message.ints[1]);
+            mana.UpdateDisplay(message.ints[2], message.ints[3]);
+        }
+        else
+        {
+            enemyHero.UpdateText(message.ints[0]);
+            enemyDeck.UpdateDisplay(message.ints[1]);
+            enemyMana.UpdateDisplay(message.ints[2], message.ints[3]);
+        }
+
+        if (message.trigger)
+        {
+            CreateSplash(message.isFriendly ? currHero : enemyHero, message.damage);
+        }
         return null;
     }
 
+    Coroutine ConfirmBattlecryVisual(VisualInfo message)
+    {
+        bool friendly = message.isFriendly;
+        int index = message.index;
+        Creature m = friendly ? currMinions.minionObjects[currMinions[index]] : enemyMinions.minionObjects[enemyMinions[index]];
+        return m.TriggerBattlecry();
+    }
+    Coroutine ConfirmTriggerVisual(VisualInfo message)
+    {
+        if (message.trigger==true)
+        {
+            return StartCoroutine(Wait(30));
+        }
+        bool friendly = message.isFriendly;
+        int index = message.index;
+        Creature m = friendly ? currMinions.minionObjects[currMinions[index]] : enemyMinions.minionObjects[enemyMinions[index]];
+        return m.TriggerTrigger();
+    }
+
+    Coroutine MillVisual(VisualInfo message)
+    {
+        Card.Cardname card = message.names[0];
+        bool friendly = message.isFriendly;
+        Card c = CreateCard();
+        c.GetComponent<BoxCollider2D>().enabled = false;
+        c.transform.parent = deck.transform.parent;
+        c.Set(new HandCard(card, 0));
+        c.transform.localPosition = (friendly) ? deck.transform.localPosition : enemyDeck.transform.localPosition;
+        c.SetFlipped();
+        c.Flip();
+        animationManager.MillAnim(c, friendly);
+
+        return StartCoroutine(Wait(15));
+    }
+
+    Coroutine ConfirmHeroPowerVisual(VisualInfo message)
+    {
+        
+        if (message.isFriendly)
+        {
+            heroPower.Disable();
+        }
+        else
+        {
+            enemyHeroPower.Disable();
+        }
+
+        return null;
+    }
+
+    Coroutine RemoveAuraVisual(VisualInfo message)
+    {
+        if (message.minions[0].creature == null) return null;
+        message.minions[0].creature.CheckAuras();
+        CheckHighlights();
+        return null;
+    }
+    Coroutine AddAuraVisual(VisualInfo message)
+    {
+        if (message.minions[0].creature == null) return null;
+        message.minions[0].creature.CheckAuras();
+        CheckHighlights();
+        return null;
+    }
+
+    Coroutine AddTriggerVisual(VisualInfo message)
+    {
+        if (message.minions[0].creature == null) return null;
+        message.minions[0].creature.CheckTriggers();
+        return null;
+    }
+    Coroutine RemoveTriggerVisual(VisualInfo message)
+    {
+        if (message.minions[0].creature == null) return null;
+        message.minions[0].creature.CheckTriggers();
+        return null;
+    }
 }

@@ -276,6 +276,7 @@ public class Card : MonoBehaviour
         
         foreach (var kvp in board.currMinions.minionObjects)
         {
+            if (kvp.Key.DEAD) continue;
             float x = kvp.Value.transform.position.x;
             if (mPos > x) ind++;
         }

@@ -33,18 +33,18 @@ public class Hero : MonoBehaviour
     public void Damage(int x)
     {
         health -= x;
-        UpdateText();
     }
     public void SetHealth(int x)
     {
         health = x;
-        UpdateText();
     }
 
-    private void UpdateText()
+    public void UpdateText(int hp=-1)
     {
-        hpText.text = health.ToString();
-        if (health < maxHealth) 
+        int x = hp == -1 ? health : hp;
+
+        hpText.text = hp.ToString();
+        if (hp < maxHealth) 
             hpText.color = board.minionObject.GetComponent<Creature>().redText;
         else 
             hpText.color = board.minionObject.GetComponent<Creature>().baseText;

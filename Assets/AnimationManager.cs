@@ -62,9 +62,11 @@ public partial class AnimationManager : MonoBehaviour
     }
     IEnumerator _drawAnim(GameObject obj, Vector3 tar1, Vector3 tar2, float f1, float f2, int delay,Vector3 rotation)
     {
+        obj.GetComponent<Card>().GetComponent<BoxCollider2D>().enabled = false;
         LerpZoom(obj, Vector3.one * 1.5f, f1);
         yield return _lerpTo(obj, tar1, f1);
         yield return Wait(delay);
+        obj.GetComponent<Card>().GetComponent<BoxCollider2D>().enabled = true;
         LerpZoom(obj, Vector3.one, f2);
         LerpRotate(obj, rotation, f2);
         yield return _lerpTo(obj, tar2, f2);

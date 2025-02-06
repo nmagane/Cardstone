@@ -15,24 +15,20 @@ public class ManaBar : MonoBehaviour
     public void IncreaseMax(int x)
     {
         max += x;
-        UpdateDisplay();
     }
 
     public void SetMax(int x)
     {
         max = x;
-        UpdateDisplay();
     }
     public void SetCurrent(int x)
     {
         curr = x;
-        UpdateDisplay();
     }
 
     public void Gain(int x)
     {
         curr += x;
-        UpdateDisplay();
     }
     public void Spend(int x)
     {
@@ -45,9 +41,11 @@ public class ManaBar : MonoBehaviour
         UpdateDisplay();
     }
 
-    public void UpdateDisplay()
+    public void UpdateDisplay(int c=-1,int m=-1)
     {
-        text.text = "MANA: " + curr + "/" + max;
+        int x = c == -1 ? curr : c;
+        int y = m == -1 ? max : m;
+        text.text = "MANA: " + x + "/" + y;
     }
     void Update()
     {

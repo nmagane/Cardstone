@@ -139,7 +139,7 @@ public partial class Board
 
         QueueAnimation(anim);
 
-        return animationManager.ConfirmAttackMinion(atkCreature, tarCreature.transform.localPosition);
+        return null;
     }
 
     public Coroutine ConfirmPreAttackFace(bool allyAttack, int attackerIndex)
@@ -157,7 +157,7 @@ public partial class Board
         QueueAnimation(anim);
 
         CheckHighlights();
-        return null;//animationManager.PreAttackMinion(atkCreature, tar.transform.localPosition);
+        return null;
     }
     public Coroutine ConfirmAttackFace(bool allyAttack, int attackerIndex)
     {
@@ -177,47 +177,49 @@ public partial class Board
 
         QueueAnimation(anim);
 
-        return null;// animationManager.ConfirmAttackMinion(atkCreature, tar.transform.localPosition);
-        //todo: attack face animation
+        return null;
     }
 
     public Coroutine ConfirmBattlecry(bool friendly, int index)
     {
-        Debug.LogWarning("ANIMATION REQ - CONFIRM BATTLECRY");
-        /*
-        Creature m = friendly ? currMinions.minionObjects[currMinions[index]] : enemyMinions.minionObjects[enemyMinions[index]];
+        VisualInfo anim = new();
+        anim.type = Server.MessageType.ConfirmBattlecry;
+        anim.isFriendly = friendly;
+        anim.index = index;
 
-        CheckHighlights();
-        return m.TriggerBattlecry();
-        */
+        QueueAnimation(anim);
         return null;
     }
     public Coroutine ConfirmTrigger(bool friendly, int index, bool deathrattle)
     {
-
-        Debug.LogWarning("ANIMATION REQ - CONFIRM TRIGGER");
-        /*
         if (deathrattle)
         {
-            return StartCoroutine(AnimationManager.Wait(30));
-        }
-        Creature m = friendly ? currMinions.minionObjects[currMinions[index]] : enemyMinions.minionObjects[enemyMinions[index]];
+            VisualInfo animDR = new();
+            animDR.type = Server.MessageType.ConfirmTrigger;
+            animDR.trigger = true;
+            //anim.creatures.Add(m);
 
-        CheckHighlights();
-        return m.TriggerTrigger();
-        */
+            QueueAnimation(animDR);
+            return null;
+        }
+
+        VisualInfo anim = new();
+        anim.isFriendly = friendly;
+        anim.index = index;
+        anim.type = Server.MessageType.ConfirmTrigger;
+
+        QueueAnimation(anim);
+
         return null;
     }
     void ConfirmHeroPower(bool ally)
     {
-        if (ally)
-        {
-            heroPower.Disable();
-        }
-        else
-        {
-            enemyHeroPower.Disable();
-        }
+        VisualInfo anim = new();
+        anim.type = Server.MessageType.ConfirmHeroPower;
+        anim.isFriendly = ally;
+
+        QueueAnimation(anim);
+
         CheckHighlights();
     }
 }

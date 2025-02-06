@@ -93,23 +93,6 @@ public partial class Board : MonoBehaviour
     List<(Server.MessageType, Server.CustomMessage, ushort)> messageQue = new();
 
 
-    bool executing = false;
-    public IEnumerator ExecuteMessages()
-    {
-        executing = true;
-        while (confirmedMessages.Count>0)
-        {
-            Server.CustomMessage msg = confirmedMessages.Dequeue();
-
-            //if (playerID == 100) Debug.Log(msg.type);
-            Coroutine c = ParseMessage(msg);
-            //if (c != null) yield return c;
-
-            //if (playerID == 100) Debug.Log("finished "+msg.type);
-        }
-        yield return null;
-        executing = false;
-    }
     public void OnMessageReceived(Server.CustomMessage message)
     {
 
@@ -127,8 +110,6 @@ public partial class Board : MonoBehaviour
         {
             messageReceivedOrder++;
             ParseMessage(message);
-            //confirmedMessages.Enqueue(message);
-            //if (!executing) StartCoroutine(ExecuteMessages());
         }
         else
         {
@@ -265,7 +246,7 @@ public partial class Board : MonoBehaviour
                 UpdateHero(UpdateHeroHP,UpdateHeroFriendly, UpdateHeroDeckCount,UpdateHeroCurrMana,UpdateHeroMaxMana, UpdateHeroDamaged, UpdateHeroHealed);
                 break;
             case Server.MessageType.AddAura:
-            case Server.MessageType.RemoveAura: //THESE ARE ENTIRELY VISUAL ANYWAY
+            case Server.MessageType.RemoveAura:
                 int addAuraMinionIndex = message.GetInt();
                 bool addAuraFriendly = message.GetBool();
                 ushort addAuraType = message.GetUShort();
@@ -282,7 +263,7 @@ public partial class Board : MonoBehaviour
                 AddAura(addAuraMinionIndex, addAuraFriendly, addAuraType, addAuraValue, addAuraTemp, addAuraForeign, addAuraSourceInd, addAuraSourceFriendly);
                 break;
             case Server.MessageType.AddTrigger:
-            case Server.MessageType.RemoveTrigger://THESE ARE ENTIRELY VISUAL ANYWAY
+            case Server.MessageType.RemoveTrigger:
                 int addTriggerMinionIndex = message.GetInt();
                 bool addTriggerFriendly = message.GetBool();
                 ushort addTriggerType = message.GetUShort();
@@ -301,16 +282,16 @@ public partial class Board : MonoBehaviour
                 int discardCardName = message.GetInt();
                 DiscardCard(discardFriendly, discardCardInd, (Card.Cardname)discardCardName);
                 break;
-            case Server.MessageType.MillCard: //TODO ANIM QUEUE
+            case Server.MessageType.MillCard:
                 bool millFriendly = message.GetBool();
                 int millCardName = message.GetInt();
                 MillCard(millFriendly, (Card.Cardname)millCardName);
                 break;
-            case Server.MessageType.ConfirmHeroPower: //TODO ANIM QUEUE
+            case Server.MessageType.ConfirmHeroPower:
                 bool heroPowerFriendly = message.GetBool();
                 ConfirmHeroPower(heroPowerFriendly);
                 break;
-            case Server.MessageType.ConfirmBattlecry: //TODO ANIM QUEUE
+            case Server.MessageType.ConfirmBattlecry: 
             case Server.MessageType.ConfirmTrigger:
                 bool battlecryFriendly = message.GetBool();
                 int battlecryIndex = message.GetInt();
@@ -453,7 +434,7 @@ public partial class Board : MonoBehaviour
         {
             m = enemyMinions.RemoveAt(ind);
         }
-        
+        m.DEAD = true;
         CheckHighlights();
 
         //===========ANIM
@@ -475,38 +456,60 @@ public partial class Board : MonoBehaviour
         minion.health = updatedMinion.health;
         minion.damage = updatedMinion.damage;
 
-        if (damaged || healed) CreateSplash(minion.creature, diff);
+        VisualInfo anim = new VisualInfo();
+        anim.ints.Add(minion.health);
+        anim.ints.Add(minion.damage);
+        anim.type = Server.MessageType.UpdateMinion;
+        anim.minions.Add(minion);
+        if (damaged || healed)
+        {
+            anim.trigger = true;
+            anim.damage=diff;
+        }
+        QueueAnimation(anim);
         //todo: splash damage/heal
         
     }
     public void UpdateHero(int hp, bool friendly, int deckCount, int currMana,int maxMana, bool damaged, bool healed)
     {
+        int diff = 0;
 
         if (friendly)
         {
-            int diff = hp - currHero.health;
+            diff = hp - currHero.health;
 
             currHero.SetHealth(hp);
             deck.Set(deckCount);
             mana.SetCurrent(currMana);
             mana.SetMax(maxMana);
 
-            if (damaged || healed) CreateSplash(currHero, diff);
+            //if (damaged || healed) CreateSplash(currHero, diff);
         }
         else
         {
-            int diff = hp - enemyHero.health;
+            diff = hp - enemyHero.health;
 
             enemyHero.SetHealth(hp);
             enemyDeck.Set(deckCount);
             enemyMana.SetCurrent(currMana);
             enemyMana.SetMax(maxMana);
 
-            if (damaged || healed) CreateSplash(enemyHero, diff);
+            //if (damaged || healed) CreateSplash(enemyHero, diff);
         }
 
-        //TODO: Damage/Heal splashes
-
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.UpdateHero;
+        anim.isFriendly = friendly;
+        anim.ints.Add(hp);
+        anim.ints.Add(deckCount);
+        anim.ints.Add(currMana);
+        anim.ints.Add(maxMana);
+        if (damaged || healed)
+        {
+            anim.trigger = true;
+            anim.damage=diff;
+        }
+        QueueAnimation(anim);
         CheckHighlights();
     }
     public void AddAura(int minionIndex,bool friendly, ushort auraType, ushort value, bool temp, bool foreign,int sourceInd, bool sourceFriendly)
@@ -514,6 +517,11 @@ public partial class Board : MonoBehaviour
         Minion target = friendly? currMinions[minionIndex] : enemyMinions[minionIndex];
         Minion source = sourceInd == -1 ? null : (sourceFriendly ? currMinions[sourceInd] : enemyMinions[sourceInd]);
         target.AddAura(new Aura((Aura.Type)auraType, value, temp, foreign, source));
+
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.AddAura;
+        anim.minions.Add(target);
+        QueueAnimation(anim);
         
     }
     public void RemoveAura(int minionIndex,bool friendly, ushort auraType, ushort value, bool temp, bool foreign,int sourceInd, bool sourceFriendly)
@@ -521,16 +529,31 @@ public partial class Board : MonoBehaviour
         Minion target = friendly? currMinions[minionIndex] : enemyMinions[minionIndex];
         Minion source = sourceInd == -1 ? null : (sourceFriendly ? currMinions[sourceInd] : enemyMinions[sourceInd]);
         target.RemoveMatchingAura(new Aura((Aura.Type)auraType, value, temp, foreign, source));
+
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.RemoveAura;
+        anim.minions.Add(target);
+        QueueAnimation(anim);
     }
     public void RemoveTrigger(int minionIndex, bool friendly, ushort type, ushort side, ushort ability)
     {
         Minion target = friendly ? currMinions[minionIndex] : enemyMinions[minionIndex];
         target.RemoveMatchingTrigger(new Trigger((Trigger.Type)type, (Trigger.Side)side, (Trigger.Ability)ability,target));
+
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.RemoveTrigger;
+        anim.minions.Add(target);
+        QueueAnimation(anim);
     }
     public void AddTrigger(int minionIndex, bool friendly, ushort type, ushort side, ushort ability)
     {
         Minion target = friendly ? currMinions[minionIndex] : enemyMinions[minionIndex];
         target.AddTrigger((Trigger.Type)type, (Trigger.Side)side, (Trigger.Ability)ability);
+
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.AddTrigger;
+        anim.minions.Add(target);
+        QueueAnimation(anim);
     }
 
     public void DiscardCard(bool friendly, int ind, Card.Cardname card)
@@ -550,14 +573,11 @@ public partial class Board : MonoBehaviour
     }
     public void MillCard(bool friendly, Card.Cardname card)
     {
-        //TODO: make this into an animation queue call
-        Card c = CreateCard();
-        c.transform.parent = deck.transform.parent;
-        c.Set(new HandCard(card, 0));
-        c.transform.localPosition = (friendly) ? deck.transform.localPosition : enemyDeck.transform.localPosition;
-        c.SetFlipped();
-        c.Flip();
-        animationManager.MillAnim(c,friendly);
+        VisualInfo anim = new();
+        anim.type = Server.MessageType.MillCard;
+        anim.isFriendly = friendly;
+        anim.names.Add(card);
+        QueueAnimation(anim);
     }
 
 

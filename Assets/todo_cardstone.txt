@@ -24,8 +24,7 @@ summoning ally minions should happen client side first? (future todo)
 a bit of rotation on creeature anim facing the direction of attack?
 different tooltip shape for hero power hover
 creature floating should hit scale vector3.one?
-
-cards can be played with ID instead of order? idk
+creatures should be limited in ordercreatures to board edges, this is mostly because previews can make them go wider than 7 minion spaces
 
 cards need to be playable during animations somehow and not break
 

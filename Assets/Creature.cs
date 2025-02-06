@@ -69,15 +69,14 @@ public class Creature : MonoBehaviour
         Database.CardInfo info = Database.GetCardData(c.card);
         testname.text = info.name;
 
-        dmg = c.damage;
-        hp = c.health;
+        prevDmg = c.damage;
+        prevHP = c.health;
         health.text = c.health.ToString();
         damage.text = c.damage.ToString();
 
-        if (minion.HasAura(Aura.Type.Taunt))
-            EnableTaunt();
-        if (minion.HasAura(Aura.Type.Shield))
-            EnableShield();
+        CheckAuras();
+        CheckTriggers();
+
     }
     public bool IsFriendly()
     {
@@ -112,8 +111,8 @@ public class Creature : MonoBehaviour
     public Color baseText;
     public Color greenText;
     public Color redText;
-    int dmg = 0;
-    int hp = 0;
+    int prevDmg = 0;
+    int prevHP = 0;
     public IEnumerator txtBounce(TMP_Text text)
     {
         int frames = 5;
@@ -130,23 +129,31 @@ public class Creature : MonoBehaviour
     }
     void Update()
     {
-        if (dmg!=minion.damage)
+    }
+
+    public int hp, dmg;
+
+    public void UpdateDisplay()
+    {
+        if (prevDmg != dmg)
         {
             StartCoroutine(txtBounce(damage));
         }
-        if (hp!=minion.health)
+        if (prevHP != hp)
         {
             StartCoroutine(txtBounce(health));
         }
-        dmg = minion.damage;
-        hp = minion.health;
-        damage.text = minion.damage.ToString();
-        health.text = minion.health.ToString();
+        prevDmg = dmg;
+        prevHP = hp;
+        damage.text = dmg.ToString();
+        health.text = hp.ToString();
 
-        //====================
-        if (minion.health < minion.maxHealth)
+        //==================== 
+        //TODO: THESE minion. VALUES SHOULD BE STORED AND BUFFERED IN CREATURE PER UPDATE TOO
+        //TO PREVENT COLOR CHANGING BEFORE IT SHOULD
+        if (hp < minion.maxHealth)
             health.color = redText;
-        else if (minion.health > minion.baseHealth && minion.health == minion.maxHealth)
+        else if (hp > minion.baseHealth && hp == minion.maxHealth)
         {
             health.color = greenText;
         }
@@ -154,15 +161,13 @@ public class Creature : MonoBehaviour
             health.color = baseText;
 
         //=====================
-        if (minion.damage > minion.baseDamage)
+        if (dmg > minion.baseDamage)
         {
             damage.color = greenText;
         }
         else
             damage.color = baseText;
 
-        //=====================
-        CheckTriggers();
     }
 
     public void Highlight(bool target = false)
@@ -222,6 +227,31 @@ public class Creature : MonoBehaviour
         {
             triggerSprite.enabled = false;
             deathrattleSprite.enabled = false;
+        }
+    }
+
+    public void CheckAuras()
+    {
+        if (minion.HasAura(Aura.Type.Taunt))
+        {
+            if (tauntSprite.enabled == false)
+                EnableTaunt();
+        }
+        else
+        {
+            if (tauntSprite.enabled == true)
+                DisableTaunt();
+        }
+
+        if (minion.HasAura(Aura.Type.Shield))
+        {
+            if (tauntSprite.enabled == false)
+                EnableShield();
+        }
+        else
+        {
+            if (tauntSprite.enabled == true)
+                DisableShield();
         }
     }
 

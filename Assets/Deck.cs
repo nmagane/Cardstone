@@ -10,8 +10,11 @@ public class Deck : MonoBehaviour
     public void Set(int x)
     {
         count = x;
+    }
+    public void UpdateDisplay(int cards=-1)
+    {
+        int x = cards == -1 ? count : cards;
         countText.text = x.ToString();
     }
-
     //TODO: DECK TRACKER ON HOVER
 }
