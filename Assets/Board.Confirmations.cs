@@ -71,22 +71,50 @@ public partial class Board
 
     public void ConfirmPlayPlayer(HandCard card, int pos)
     {
-        return;
+        //return;
         currHand.RemoveAt(card.index);
         currHand.RemoveCard(card,Hand.RemoveCardType.Play,card.card,pos);
         if (card.MINION)
         {
+            int p = pos;
+
             if (pos >= 7) pos = currMinions.Count();
             Minion m = new Minion(card.card, pos, currMinions);
+            prePlayMinions.Add(p, m);
             currMinions.AddCreature(m);
+
         }
     }
-
+    public Dictionary<int, Minion> prePlayMinions = new Dictionary<int, Minion>();
     public void SummonMinion(bool friendlySide, Card.Cardname card, int position, MinionBoard.MinionSource source)
     {
         if (friendlySide && source == MinionBoard.MinionSource.Play)
         {
-            // return;
+            if (prePlayMinions.ContainsKey(position) == false) Debug.LogError("NOT FOUND PREPLAY");
+            if (prePlayMinions[position].card != card) Debug.LogError("NOT FOUND PREPLAY");
+
+            Minion ppm = prePlayMinions[position];
+
+            if (position == -1)
+            {
+                position = currMinions.Count();
+            }
+            if (currMinions.Count() == 0)
+            {
+                currMinions.minions.Add(ppm);
+            }
+            else if (currMinions.Count() != 0 && position >= currMinions.Count())
+            {
+                currMinions.minions.Add(ppm);
+            }
+            else
+            {
+                currMinions.minions.Insert(position, ppm);
+            }
+            currMinions.OrderInds();
+            //currMinions.OrderCreatures();
+            prePlayMinions.Remove(position);
+            return;
         }
 
         MinionBoard board = friendlySide ? currMinions : enemyMinions;
@@ -102,7 +130,7 @@ public partial class Board
     }
     public void ConfirmPlayCard(bool friendlySide, int index, int manaCost, Card.Cardname card, int pos)
     {
-        //if (friendlySide) return;
+        if (friendlySide) return;
 
         HandCard hc = null;
         if (friendlySide == false)

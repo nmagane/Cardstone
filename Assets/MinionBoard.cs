@@ -130,17 +130,35 @@ public class MinionBoard
     public void OrderCreatures()
     {
         int i = 0;
-        float count = minionObjects.Count;
-        float offset = -((count - 1) / 2f * dist);
+
+        List<Creature> creatures = new();
         foreach (var kvp in minionObjects)
         {
-            Creature c = kvp.Value;
+            creatures.Add(kvp.Value);
+        }
+
+        creatures.Sort((x, y) => x.minion.index.CompareTo(y.minion.index));
+
+        foreach (var kvp in board.prePlayMinions)
+        {
+            if (creatures.Contains(kvp.Value.creature)) creatures.Remove(kvp.Value.creature);
+            if (creatures.Count == 0 || kvp.Key>=creatures.Count) creatures.Add(kvp.Value.creature);
+            else creatures.Insert(kvp.Key, kvp.Value.creature);
+        }
+
+        //creatures.Sort((x, y) => x.minion.index.CompareTo(y.minion.index));
+        //todo: change count or whatever
+        float count = creatures.Count;
+        float offset = -((count - 1) / 2f * dist);
+        foreach (Creature c in creatures)
+        {  
             //todo: sort the minionobjects by kvp.key.index then have it be dist*i++ below,
             //so it doesnt move ahead of itself?
-            Vector3 targetPos = new Vector3(offset + dist * (kvp.Key.index), this == board.currMinions ? -2.25f : 2.5f, 0);
+            Vector3 targetPos = new Vector3(offset + dist * i++, this == board.currMinions ? -2.25f : 2.5f, 0);
 
             if (c.init == false && c.index == currPreview && previewMinion != null)
             {
+                //battlecry prev
                 if (previewMinion.minion.card == c.minion.card)
                 {
                     c.transform.localPosition = targetPos;

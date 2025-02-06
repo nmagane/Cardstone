@@ -353,7 +353,6 @@ public class Card : MonoBehaviour
 
 
     Vector3 offset;
-    Vector3 OP = new Vector3();
     Vector3 clickPos = new Vector3();
     private void OnMouseDown()
     {
@@ -366,8 +365,8 @@ public class Card : MonoBehaviour
         }
         if (dragCoroutine != null|| board.playingCard == this) return;
         if (board.currHand.mulliganMode != Hand.MulliganState.Done) return;
+        if (card.played) return;
         
-        OP = transform.localPosition;
         offset = transform.position - GetMousePos();
         clickPos = GetMousePos();
         board.StartPlayingCard(this);

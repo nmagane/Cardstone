@@ -44,6 +44,8 @@ concede button
 damage projectiles for flame imp and soulfire
 change animinfo to contain minions and creatures/cards whatever instead of indexes - it breaks if index changes between anims!
 
+try dictionary approach for preshow: <pos, minion> prevminions.
+
 ===========================================
 
 health text color on hero hp

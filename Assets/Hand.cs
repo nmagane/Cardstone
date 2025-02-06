@@ -102,7 +102,15 @@ public class Hand
         cards.RemoveAt(x);
         OrderInds();
 
-        //if (!server) RemoveCard(c, type, name,pos);
+        if (!server)
+        {
+            if (cardObjects.ContainsKey(c))
+            {
+
+                cardObjects[c].Unhighlight();
+                cardObjects[c].card.played=true;
+            }
+        }
         return c;
     }
     public void RemoveCard(HandCard card, RemoveCardType type = RemoveCardType.Play, Card.Cardname name = Card.Cardname.Coin, int pos = -1)
