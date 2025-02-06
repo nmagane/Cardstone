@@ -279,6 +279,7 @@ public class Card : MonoBehaviour
             float x = kvp.Value.transform.position.x;
             if (mPos > x) ind++;
         }
+        //if (ind >= board.currMinions.minionObjects.Count) ind = 10;
         //Debug.Log(ind);
         return ind;
     }

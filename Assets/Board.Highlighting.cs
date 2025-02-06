@@ -60,18 +60,18 @@ public partial class Board
 
     public void UnhighlightAll()
     {
-        foreach (var c in currHand)
+        foreach (var c in currHand.cardObjects)
         {
-            currHand.cardObjects[c].Unhighlight();
+            c.Value.Unhighlight();
         }
 
-        foreach (var m in currMinions)
+        foreach (var m in currMinions.minionObjects)
         {
-            m.creature.Unhighlight();
+            m.Value.Unhighlight();
         }
-        foreach (var m in enemyMinions)
+        foreach (var m in enemyMinions.minionObjects)
         {
-            m.creature.Unhighlight();
+            m.Value.Unhighlight();
         }
 
         heroPower.Unhighlight();
@@ -82,18 +82,18 @@ public partial class Board
 
     public void HighlightActions()
     {
-        foreach (var c in currHand)
+        foreach (var c in currHand.cardObjects)
         {
-            if (c.manaCost > currMana) continue;
-            if (c.SPELL && c.TARGETED && ValidTargetsAvailable(c.eligibleTargets) == false) continue;
-            if (c.MINION && currMinions.Count() >= 7) continue;
-            currHand.cardObjects[c].Highlight();
+            if (c.Value.card.manaCost > currMana) continue;
+            if (c.Value.card.SPELL && c.Value.card.TARGETED && ValidTargetsAvailable(c.Value.card.eligibleTargets) == false) continue;
+            if (c.Value.card.MINION && currMinions.Count() >= 7) continue;
+            c.Value.Highlight();
         }
 
-        foreach (var m in currMinions)
+        foreach (var m in currMinions.minionObjects)
         {
-            if (m.canAttack == false) continue;
-            m.creature.Highlight();
+            if (m.Value.minion.canAttack == false) continue;
+            m.Value.Highlight();
         }
 
         if (heroPower.enabled)

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public partial class Board
 {/*
@@ -37,21 +38,62 @@ public partial class Board
         if (UNORDERED == false)
             matchMessageOrder++;
     }
+    void ConfirmMulligan(List<ushort> cards)
+    {
+        foreach (int i in selectedMulligans)
+        {
+            //TODO: mull anim goes here
+            currHand.MulliganReplace(i, (Card.Cardname)cards[i]);
+        }
+        currHand.EndMulligan();
+        waitingEnemyMulliganMessage.transform.localScale = Vector3.one;
+        mulliganButton.transform.localPosition += new Vector3(0, -10);
+
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.ConfirmMulligan;
+        QueueAnimation(anim);
+    }
+    void ConfirmEnemyMulligan(List<int> inds)
+    {
+        foreach (int i in inds)
+        {
+            //TODO: enemy mull anim
+            //enemyHand.cardObjects[enemyHand[i]].mulliganMark.enabled = true;
+        }
+    }
+    void StartGame(bool isTurn)
+    {
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.StartGame;
+        anim.isFriendly = isTurn;
+        QueueAnimation(anim);
+    }
 
     public void ConfirmPlayCard(bool friendlySide, int index, int manaCost, Card.Cardname card, int pos)
     {
+        HandCard hc = null;
         if (friendlySide == false)
         {
-            enemyHand.RemoveAt(index, Hand.RemoveCardType.Play, card, pos);
-            ShowEnemyPlay(card);
-            enemyMana.Spend(manaCost);
-            return;
+            hc = enemyHand.RemoveAt(index);
         }
-        //ally played card
-        currHand.RemoveAt(index, Hand.RemoveCardType.Play, card, pos);
-        this.mana.Spend(manaCost);
+        else
+            hc = currHand.RemoveAt(index);
+
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.PlayCard;
+        anim.handCards.Add(hc);
+        anim.names.Add(card);
+        anim.isFriendly = friendlySide;
+        anim.manaCost = manaCost;
+        anim.index = pos;
+
+        QueueAnimation(anim);
+
         CheckHighlights();
     }
+
+
+
     public Coroutine ConfirmPreAttackMinion(bool allyAttack, int attackerIndex, int targetIndex)
     {
         //TODO: preattack animation
@@ -62,7 +104,16 @@ public partial class Board
         Creature tarCreature = allyAttack ? enemyMinions.minionObjects[target] : currMinions.minionObjects[target];
 
         CheckHighlights();
-        return animationManager.PreAttackMinion(atkCreature, tarCreature.transform.localPosition);
+
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.ConfirmPreAttackMinion;
+        anim.creatures.Add(atkCreature);
+        anim.vectors.Add(tarCreature.transform.localPosition);
+
+        QueueAnimation(anim);
+
+
+        return null;
     }
     public Coroutine ConfirmAttackMinion(bool allyAttack, int attackerIndex, int targetIndex)
     {
@@ -78,8 +129,16 @@ public partial class Board
             Server.ConsumeAttackCharge(attacker);
         }
 
-        //TODO: attack animation
         CheckHighlights();
+
+
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.ConfirmAttackMinion;
+        anim.creatures.Add(atkCreature);
+        anim.vectors.Add(tarCreature.transform.localPosition);
+
+        QueueAnimation(anim);
+
         return animationManager.ConfirmAttackMinion(atkCreature, tarCreature.transform.localPosition);
     }
 
@@ -89,8 +148,16 @@ public partial class Board
         Creature atkCreature = allyAttack ? currMinions.minionObjects[attacker] : enemyMinions.minionObjects[attacker];
         Hero tar = allyAttack ? enemyHero : currHero;
 
+
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.ConfirmPreAttackMinion;
+        anim.creatures.Add(atkCreature);
+        anim.vectors.Add(tar.transform.localPosition);
+
+        QueueAnimation(anim);
+
         CheckHighlights();
-        return animationManager.PreAttackMinion(atkCreature, tar.transform.localPosition);
+        return null;//animationManager.PreAttackMinion(atkCreature, tar.transform.localPosition);
     }
     public Coroutine ConfirmAttackFace(bool allyAttack, int attackerIndex)
     {
@@ -103,19 +170,33 @@ public partial class Board
             Server.ConsumeAttackCharge(attacker);
         }
 
-        return animationManager.ConfirmAttackMinion(atkCreature, tar.transform.localPosition);
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.ConfirmAttackFace;
+        anim.creatures.Add(atkCreature);
+        anim.vectors.Add(tar.transform.localPosition);
+
+        QueueAnimation(anim);
+
+        return null;// animationManager.ConfirmAttackMinion(atkCreature, tar.transform.localPosition);
         //todo: attack face animation
     }
 
     public Coroutine ConfirmBattlecry(bool friendly, int index)
     {
+        Debug.LogWarning("ANIMATION REQ - CONFIRM BATTLECRY");
+        /*
         Creature m = friendly ? currMinions.minionObjects[currMinions[index]] : enemyMinions.minionObjects[enemyMinions[index]];
 
         CheckHighlights();
         return m.TriggerBattlecry();
+        */
+        return null;
     }
     public Coroutine ConfirmTrigger(bool friendly, int index, bool deathrattle)
     {
+
+        Debug.LogWarning("ANIMATION REQ - CONFIRM TRIGGER");
+        /*
         if (deathrattle)
         {
             return StartCoroutine(AnimationManager.Wait(30));
@@ -124,6 +205,8 @@ public partial class Board
 
         CheckHighlights();
         return m.TriggerTrigger();
+        */
+        return null;
     }
     void ConfirmHeroPower(bool ally)
     {

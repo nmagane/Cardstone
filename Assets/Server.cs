@@ -9,30 +9,14 @@ public partial class Server : MonoBehaviour
     public NetworkHandler mirror;
     List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Knife_Juggler, Card.Cardname.Harvest_Golem};
 
-    /*public static Message CreateMessage(MessageType type)
-    {
-        Message m = Message.Create(MessageSendMode.Reliable, (ushort)type);
-        m.ReserveBits(16);
-        return m;
-    }
-    public void SendMessage(Message message, Player player)
-    {
-        message.SetBits(player.messageCount++, 16, 28);
-        server.Send(message, player.connection.clientID);
-    }*/
     public static CustomMessage CreateMessage(MessageType type)
     {
-        //Message m = Message.Create(MessageSendMode.Reliable, (ushort)type);
-        //m.ReserveBits(16);
-        //return m;
         CustomMessage m = new CustomMessage();
         m.type = type;
         return m;
     }
     public void SendMessage(CustomMessage message, Player player)
     {
-        //message.SetBits(player.messageCount++, 16, 28);
-        //server.Send(message, player.connection.clientID);
         message.order = player.messageCount++;
         mirror.SendServer(message, player);
     }

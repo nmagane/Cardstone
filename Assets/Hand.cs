@@ -48,28 +48,18 @@ public class Hand
         Board,
         EnemyDeck,
     }
-    public HandCard Add(Card.Cardname x, int ind = -1, CardSource source = CardSource.Deck)
+    public Card AddCard(HandCard card, CardSource source)
     {
-        int index = ind == -1 ? Count() : ind;
-        HandCard newCard = new HandCard(x, index);
-        cards.Add(newCard);
-
-        if (server)
-        {
-            OrderInds();
-            return newCard;
-        }
-
         Card c = board.CreateCard();
         c.board = board;
-        c.Set(cards[index]);
-        cardObjects.Add(cards[index], c);
+        c.Set(card);
+        cardObjects.Add(card, c);
         c.transform.parent = board.transform;
-        
-        switch(source)
+
+        switch (source)
         {
             case CardSource.Deck:
-                c.transform.localPosition = (enemyHand) ? board.enemyDeck.transform.localPosition :board.deck.transform.localPosition;
+                c.transform.localPosition = (enemyHand) ? board.enemyDeck.transform.localPosition : board.deck.transform.localPosition;
                 if (enemyHand == false)
                 {
                     c.SetFlipped();
@@ -84,9 +74,18 @@ public class Hand
                 break;
         }
 
+        OrderCards();
+        //OrderInds();
+
+        return c;
+    }
+    public HandCard Add(Card.Cardname x, int ind = -1, CardSource source = CardSource.Deck)
+    {
+        int index = ind == -1 ? Count() : ind;
+        HandCard newCard = new HandCard(x, index);
+        cards.Add(newCard);
+
         OrderInds();
-
-
 
         return newCard;
 
@@ -97,49 +96,45 @@ public class Hand
         PlayMinion,
         Discard,
     }
-    public void RemoveAt(int x, RemoveCardType type = RemoveCardType.Play, Card.Cardname name = Card.Cardname.Coin, int pos = -1)
+    public HandCard RemoveAt(int x)
     {
-        if (!server)
-        {
-            Card c = cardObjects[cards[x]];
-            cardObjects.Remove(cards[x]);
-
-            //board.DestroyObject(c);
-            //todo: show cards custom mana cost if its changed by freezing trap/loatheb etc
-            if (pos!=-1)
-            {
-                Vector3 p;
-                float count = board.currMinions.minionObjects.Count + 1;
-                float dist = 4.5f;
-                float offset = -((count - 1) / 2f * dist);
-
-
-                p = new Vector3(offset + dist * (pos), 3f+(enemyHand  ? 3 : -2.75f));
-
-                if (c.hidden == false)
-                    board.animationManager.PlayFade(c, p);
-                else
-                    board.DestroyObject(c);
-            }
-            else
-                FadeCard(c, enemyHand == false, type == RemoveCardType.Discard, name);
-        }
-
+        HandCard c = cards[x];
         cards.RemoveAt(x);
-
         OrderInds();
+
+        //if (!server) RemoveCard(c, type, name,pos);
+        return c;
     }
-
-    public void Remove(HandCard c)
+    public void RemoveCard(HandCard card, RemoveCardType type = RemoveCardType.Play, Card.Cardname name = Card.Cardname.Coin, int pos = -1)
     {
-        if (!server)
+        Card c = cardObjects[card];
+        cardObjects.Remove(card);
+
+        //board.DestroyObject(c);
+        //todo: show cards custom mana cost if its changed by freezing trap/loatheb etc
+        if (pos != -1)
         {
-            Card co = cardObjects[c];
-            cardObjects.Remove(c);
-            board.DestroyObject(co);
+            Vector3 p;
+            float count = enemyHand? board.enemyMinions.minionObjects.Count+1 : board.currMinions.minionObjects.Count + 1;
+            float dist = 4.7f;
+            float offset = -((count - 1) / 2f * dist);
+
+            if (enemyHand)
+            {
+                c.SetElevated(true);
+                c.transform.localScale = Vector3.one * 1.25f;
+            }
+            p = new Vector3(offset + dist * (pos), 3f + (enemyHand ? 2.5f: -2.25f));
+
+            if (c.hidden == false)
+                board.animationManager.PlayFade(c, p);
+            else
+                board.DestroyObject(c);
         }
-        cards.Remove(c);
-        OrderInds();
+        else
+            FadeCard(c, enemyHand == false, type == RemoveCardType.Discard, name);
+
+        OrderCards();
     }
 
     public void MulliganReplace(int index, Card.Cardname c)
@@ -152,11 +147,13 @@ public class Hand
     {
         mulliganMode = MulliganState.Waiting;
         OrderInds();
+        OrderCards();
     }
     public void ConfirmBothMulligans()
     {
         mulliganMode = MulliganState.Done;
         OrderInds();
+        OrderCards();
     }
     public void OrderInds()
     {
@@ -166,7 +163,10 @@ public class Hand
             c.index = i++;
         }
         if (server) return;
+    }
 
+    public void OrderCards()
+    {
         if (mulliganMode != MulliganState.Done)
         {
             float count = cardObjects.Count;
@@ -198,11 +198,21 @@ public class Hand
         if (coinHand)
         {
             coinHand = false;
-            var coinKVP = cardObjects.ElementAt(cards.Count - 1);
+
+            KeyValuePair<HandCard, Card> coinKVP=new();
+            foreach (var kvp in cardObjects)
+            {
+                if (kvp.Key.card == Card.Cardname.Coin)
+                {
+                    coinKVP = kvp;
+                    break;
+                }
+            }
+
             coinKVP.Value.transform.localScale = Vector3.one;
         }
         float count2 = cardObjects.Count;
-        float dist2 = 3.5f-0.15f*count2;
+        float dist2 = 3.5f - 0.15f * count2;
         float offset2 = -((count2 - 1) / 2f * dist2);
 
         //x2+y2=r2
@@ -212,22 +222,22 @@ public class Hand
             if (enemyHand) break;
             Card c = kvp.Value;
             c.transform.localScale = Vector3.one;
-            float x = offset2 + dist2*c.card.index;
-            float y = -10 - (radius-Mathf.Sqrt(radius*radius-x*x));
-            float angle = 180*Mathf.Acos(x/radius)/Mathf.PI;
-            angle = angle-90;
+            float x = offset2 + dist2 * c.card.index;
+            float y = -10 - (radius - Mathf.Sqrt(radius * radius - x * x));
+            float angle = 180 * Mathf.Acos(x / radius) / Mathf.PI;
+            angle = angle - 90;
             //c.transform.localPosition = 
             c.SetSortingOrder(c.card.index);
-            MoveCard(c, new Vector3(x, y, -0.5f*c.card.index), new Vector3(0, 0, angle));
+            MoveCard(c, new Vector3(x, y, -0.5f * c.card.index), new Vector3(0, 0, angle));
         }
         foreach (var kvp in cardObjects)
         {
             if (!enemyHand) break;
             Card c = kvp.Value;
             c.transform.localScale = Vector3.one;
-            float x = offset2 + dist2*c.card.index;
-            float y = 11.2f + (radius-Mathf.Sqrt(radius*radius-x*x));
-            float angle = 180*Mathf.Asin(x/radius)/Mathf.PI;
+            float x = offset2 + dist2 * c.card.index;
+            float y = 11.2f + (radius - Mathf.Sqrt(radius * radius - x * x));
+            float angle = 180 * Mathf.Asin(x / radius) / Mathf.PI;
             //angle = angle;
             //c.transform.localPosition = new Vector3(x, y, 0);
             c.SetSortingOrder(c.card.index);
@@ -237,11 +247,11 @@ public class Hand
                 c.transform.localEulerAngles = new Vector3(0, 0, angle);
                 c.starter = false;
             }
-            else 
-                MoveCard(c, new Vector3(x, y, -0.5f * c.card.index),new Vector3(0, 0, angle));
+            else
+                MoveCard(c, new Vector3(x, y, -0.5f * c.card.index), new Vector3(0, 0, angle));
         }
-        
     }
+
     public int Count()
     {
         return cards.Count;

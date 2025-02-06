@@ -103,10 +103,11 @@ public partial class Board : MonoBehaviour
 
             //if (playerID == 100) Debug.Log(msg.type);
             Coroutine c = ParseMessage(msg);
-            if (c != null) yield return c;
+            //if (c != null) yield return c;
 
             //if (playerID == 100) Debug.Log("finished "+msg.type);
         }
+        yield return null;
         executing = false;
     }
     public void OnMessageReceived(Server.CustomMessage message)
@@ -125,9 +126,9 @@ public partial class Board : MonoBehaviour
         if (order == messageReceivedOrder)
         {
             messageReceivedOrder++;
-            //ParseMessage(message);
-            confirmedMessages.Enqueue(message);
-            if (!executing) StartCoroutine(ExecuteMessages());
+            ParseMessage(message);
+            //confirmedMessages.Enqueue(message);
+            //if (!executing) StartCoroutine(ExecuteMessages());
         }
         else
         {
@@ -165,7 +166,6 @@ public partial class Board : MonoBehaviour
             case Server.MessageType.ConfirmMulligan:
                 List<ushort> mulliganNewHand = message.GetUShorts();
                 ConfirmMulligan(mulliganNewHand);
-                animation = StartCoroutine(AnimationManager.Wait(50));
                 break;
             case Server.MessageType.EnemyMulligan:
                 List<int> enemyMulligan = message.GetInts();
@@ -265,7 +265,7 @@ public partial class Board : MonoBehaviour
                 UpdateHero(UpdateHeroHP,UpdateHeroFriendly, UpdateHeroDeckCount,UpdateHeroCurrMana,UpdateHeroMaxMana, UpdateHeroDamaged, UpdateHeroHealed);
                 break;
             case Server.MessageType.AddAura:
-            case Server.MessageType.RemoveAura:
+            case Server.MessageType.RemoveAura: //THESE ARE ENTIRELY VISUAL ANYWAY
                 int addAuraMinionIndex = message.GetInt();
                 bool addAuraFriendly = message.GetBool();
                 ushort addAuraType = message.GetUShort();
@@ -282,7 +282,7 @@ public partial class Board : MonoBehaviour
                 AddAura(addAuraMinionIndex, addAuraFriendly, addAuraType, addAuraValue, addAuraTemp, addAuraForeign, addAuraSourceInd, addAuraSourceFriendly);
                 break;
             case Server.MessageType.AddTrigger:
-            case Server.MessageType.RemoveTrigger:
+            case Server.MessageType.RemoveTrigger://THESE ARE ENTIRELY VISUAL ANYWAY
                 int addTriggerMinionIndex = message.GetInt();
                 bool addTriggerFriendly = message.GetBool();
                 ushort addTriggerType = message.GetUShort();
@@ -301,16 +301,16 @@ public partial class Board : MonoBehaviour
                 int discardCardName = message.GetInt();
                 DiscardCard(discardFriendly, discardCardInd, (Card.Cardname)discardCardName);
                 break;
-            case Server.MessageType.MillCard:
+            case Server.MessageType.MillCard: //TODO ANIM QUEUE
                 bool millFriendly = message.GetBool();
                 int millCardName = message.GetInt();
                 MillCard(millFriendly, (Card.Cardname)millCardName);
                 break;
-            case Server.MessageType.ConfirmHeroPower:
+            case Server.MessageType.ConfirmHeroPower: //TODO ANIM QUEUE
                 bool heroPowerFriendly = message.GetBool();
                 ConfirmHeroPower(heroPowerFriendly);
                 break;
-            case Server.MessageType.ConfirmBattlecry:
+            case Server.MessageType.ConfirmBattlecry: //TODO ANIM QUEUE
             case Server.MessageType.ConfirmTrigger:
                 bool battlecryFriendly = message.GetBool();
                 int battlecryIndex = message.GetInt();
@@ -322,7 +322,7 @@ public partial class Board : MonoBehaviour
                 else
                     animation = ConfirmBattlecry(battlecryFriendly, battlecryIndex);
                 break;
-            case Server.MessageType.ConfirmAnimation:
+            case Server.MessageType.ConfirmAnimation: //TODO ANIM QUEUE
                 bool animationFriendly = message.GetBool();
                 string animJson = message.GetString();
                 AnimationManager.AnimationInfo animInfo = JsonUtility.FromJson<AnimationManager.AnimationInfo>(animJson);
@@ -351,7 +351,8 @@ public partial class Board : MonoBehaviour
             currHand.coinHand = true;
         foreach (var c in hand)
         {
-            currHand.Add(((Card.Cardname)c),-1,Hand.CardSource.Start);
+            HandCard handcardPlayer = currHand.Add(((Card.Cardname)c),-1,Hand.CardSource.Start);
+            currHand.AddCard(handcardPlayer, Hand.CardSource.Start);
         }
         //currHand = hand;
         string s = "";
@@ -365,8 +366,11 @@ public partial class Board : MonoBehaviour
         enemyHand.board = this;
         enemyHand.mulliganMode = Hand.MulliganState.Done;
         enemyHand.server = false;
-        for (int i=0;i<enemyCards;i++)
-            enemyHand.Add(Card.Cardname.Cardback,-1,Hand.CardSource.Start);
+        for (int i = 0; i < enemyCards; i++)
+        {
+            HandCard handcardEnemy = enemyHand.Add(Card.Cardname.Cardback, -1, Hand.CardSource.Start);
+            enemyHand.AddCard(handcardEnemy, Hand.CardSource.Start);
+        }
 
         //Debug.Log(playerID+" Hand: " + s);
         currHand.mulliganMode = Hand.MulliganState.None;
@@ -376,66 +380,6 @@ public partial class Board : MonoBehaviour
         enemyDeck.Set(30 - enemyCards+(currHand.coinHand?0:1));
     }
 
-    public void StartMatchmaking()
-    {
-        Server.CustomMessage message = CreateMessage(Server.MessageType.Matchmaking);
-        message.AddULong(playerID);
-        string deck = "";
-        message.AddString(deck);
-        //client.Send(message);
-        SendMessage(message,true);
-    }
-    public List<int> selectedMulligans = new List<int>(){};
-    public void SubmitMulligan()
-    {
-        Server.CustomMessage message = CreateMessage(Server.MessageType.SubmitMulligan);
-        message.AddULong(currentMatchID);
-        message.AddInts(selectedMulligans);
-        message.AddULong(playerID);
-        //client.Send(message);
-        SendMessage(message,true);
-    }
-
-    void ConfirmMulligan(List<ushort> cards)
-    {
-        foreach (int i in selectedMulligans)
-        {
-            //TODO: mull anim goes here
-            currHand.MulliganReplace(i, (Card.Cardname)cards[i]);
-        }
-        currHand.EndMulligan();
-        waitingEnemyMulliganMessage.transform.localScale = Vector3.one;
-        mulliganButton.transform.localPosition += new Vector3(0, -10);
-    }
-    void ConfirmEnemyMulligan(List<int> inds)
-    {
-        foreach(int i in inds)
-        {
-            //TODO: enemy mull anim
-            //enemyHand.cardObjects[enemyHand[i]].mulliganMark.enabled = true;
-        }
-    }
-    void StartGame(bool isTurn)
-    {
-        //TODO: Get rid of mulligan screen
-        waitingEnemyMulliganMessage.transform.localScale = Vector3.zero;
-        currHand.ConfirmBothMulligans();
-        currHand.OrderInds();
-        currMinions = new MinionBoard();
-        enemyMinions = new MinionBoard();
-        enemyMinions.board = currMinions.board = this;
-        currMinions.server = enemyMinions.server = false;
-
-    }
-    public void SubmitEndTurn()
-    {
-        if (!currTurn) return;
-
-        Server.CustomMessage message = CreateMessage(Server.MessageType.EndTurn);
-        message.AddULong(currentMatchID);
-        message.AddULong(playerID);
-        SendMessage(message);
-    }
 
     public void EndTurn()
     {
@@ -445,115 +389,81 @@ public partial class Board : MonoBehaviour
     }
     public void StartTurn(bool allyTurn, int maxMana, int currMana, ushort messageCount)
     {
-
-        if (!allyTurn)
-        {
-            enemyMana.SetMax(maxMana);
-            enemyMana.SetCurrent(currMana);
-            enemyHeroPower.Enable();
-            return;
-        }
         matchMessageOrder = messageCount;
-        if (currTurn) return;
 
-        currTurn = true;
+        VisualInfo anim =new();
+        anim.type = Server.MessageType.StartTurn;
+        anim.isFriendly = allyTurn;
+        anim.ints.Add(currMana);
+        anim.ints.Add(maxMana);
 
-        mana.SetMax(maxMana);
-        mana.SetCurrent(currMana);
-
-        heroPower.Enable();
-        foreach (Minion m in currMinions)
-        {
-            m.canAttack = true;
-        }
+        QueueAnimation(anim);
 
         CheckHighlights();
     }
     public void DrawCard(Card.Cardname card)
     {
-        currHand.Add(card);
-        CheckHighlights();
+        HandCard c = currHand.Add(card);
+
+        //=========ANIM
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.DrawCards;
+        anim.handCards.Add(c);
+        anim.isFriendly = true;
+
+        QueueAnimation(anim);
     }
     public void DrawEnemy(int x)
     {
+        List<HandCard> cards = new List<HandCard>();
         for (int i = 0; i < x; i++)
-            enemyHand.Add(Card.Cardname.Cardback);
-    }
+            cards.Add(enemyHand.Add(Card.Cardname.Cardback));
 
-    public void PlayCard(HandCard card, int target = -1, int position = -1, bool friendlySide = false, bool isHero=false)
-    {
-        if (!currTurn) return;
-        if (card.played) return;
-        card.played = true;
-        EndTargeting();
-        playingCard = null;
-        //Debug.Log("Playing card " + card.card);
-        //send message to server to play card index
-        Server.CustomMessage message = CreateMessage(Server.MessageType.PlayCard);
-        message.AddULong(currentMatchID);
-        message.AddULong(playerID);
-        message.AddInt(card.index);
-        message.AddInt(target);
-        message.AddInt(position);
-        message.AddBool(friendlySide);
-        message.AddBool(isHero);
 
-        //client.Send(message);
-        SendMessage(message);
+        //=========ANIM
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.DrawEnemy;
+        anim.handCards.AddRange(cards);
+
+        QueueAnimation(anim);
     }
 
     public void SummonMinion(bool friendlySide, Card.Cardname card, int position)
     {
         MinionBoard board = friendlySide ? currMinions : enemyMinions;
-        board.Add(card, position);
+        Minion m = board.Add(card, position);
 
+        //===========ANIM
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.SummonMinion;
+        anim.minions.Add(m);
+        anim.isFriendly = friendlySide;
 
-        //string s = "";
-        //foreach (Minion m in board) s += m.ToString()+" ";
-        //Debug.Log((friendlySide ? "Ally" : "Enemy") + " board: " + s);
+        QueueAnimation(anim);
     }
     public void DestroyMinion(int ind, bool friendlySide)
     {
+        Minion m = null;
+
         if (friendlySide)
         {
-            currMinions.RemoveAt(ind);
+            m = currMinions.RemoveAt(ind);
         }
         else
         {
-            enemyMinions.RemoveAt(ind);
+            m = enemyMinions.RemoveAt(ind);
         }
+        
         CheckHighlights();
-    }
 
-    public void AttackMinion(Minion attacker, Minion target)
-    {
+        //===========ANIM
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.DestroyMinion;
+        anim.minions.Add(m);
+        anim.isFriendly = friendlySide;
 
-        int attackerInd = attacker.index;
-        int targetInd = target.index;
-        bool enemyTaunting = false;
+        QueueAnimation(anim);
 
-
-        //todo: valid attack function
-        foreach (Minion m in enemyMinions)
-        {
-            if (m.HasAura(Aura.Type.Taunt)) enemyTaunting = true;
-        }
-        if (enemyTaunting && target.HasAura(Aura.Type.Taunt)==false)
-        {
-            //can't attack non taunter
-            Debug.Log("Taunt in the way");
-            return;
-        }
-
-        EndTargeting();
-
-        Server.CustomMessage message = CreateMessage(Server.MessageType.AttackMinion);
-        message.AddULong(currentMatchID);
-        message.AddULong(playerID);
-        message.AddInt(attackerInd);
-        message.AddInt(targetInd);
-        //client.Send(message);
-        SendMessage(message);
     }
 
     public void UpdateMinion(string minionJson,bool friendly, bool damaged, bool healed)
@@ -569,41 +479,6 @@ public partial class Board : MonoBehaviour
         //todo: splash damage/heal
         
     }
-
-    public void AttackFace(Minion minion, Hero h)
-    {
-
-        int attackerInd = minion.index;
-        bool enemyTaunting = false;
-
-        if (CheckTargetEligibility(h) == false)
-        {
-            //invalid target todo:check these on server
-            Debug.Log("Invalid target");
-            return;
-        }
-
-        foreach (Minion m in enemyMinions)
-        {
-            if (m.HasAura(Aura.Type.Taunt)) enemyTaunting = true;
-        }
-        if (enemyTaunting)
-        {
-            //can't attack non taunter
-            Debug.Log("Taunt in the way");
-            return;
-        }
-
-        EndTargeting();
-
-        Server.CustomMessage message = CreateMessage(Server.MessageType.AttackFace);
-        message.AddULong(currentMatchID);
-        message.AddULong(playerID);
-        message.AddInt(attackerInd);
-        //client.Send(message);
-        SendMessage(message);
-    }
-
     public void UpdateHero(int hp, bool friendly, int deckCount, int currMana,int maxMana, bool damaged, bool healed)
     {
 
@@ -662,11 +537,20 @@ public partial class Board : MonoBehaviour
     {
         Hand hand = friendly ? currHand : enemyHand;
         HandCard c = hand[ind];
-        hand.RemoveAt(ind,Hand.RemoveCardType.Discard,card);
-        //TODO: discard anim
+        hand.RemoveAt(ind);
+
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.DiscardCard;
+        anim.handCards.Add(c);
+        anim.names.Add(card);
+        anim.isFriendly = friendly;
+
+        QueueAnimation(anim);
+
     }
     public void MillCard(bool friendly, Card.Cardname card)
     {
+        //TODO: make this into an animation queue call
         Card c = CreateCard();
         c.transform.parent = deck.transform.parent;
         c.Set(new HandCard(card, 0));
@@ -675,20 +559,7 @@ public partial class Board : MonoBehaviour
         c.Flip();
         animationManager.MillAnim(c,friendly);
     }
-    public void CastHeroPower(Card.Cardname ability, int target, bool isFriendly, bool isHero)
-    {
-        Server.CustomMessage message = CreateMessage(Server.MessageType.HeroPower);
 
-        if (targeting) EndTargeting();
-        message.AddULong(currentMatchID);
-        message.AddULong(playerID);
-        message.AddUShort((ushort)ability);
-        message.AddInt(target);
-        message.AddBool(isFriendly);
-        message.AddBool(isHero);
-
-        SendMessage(message);
-    }
 
     public bool IsFriendly(Minion m)
     {

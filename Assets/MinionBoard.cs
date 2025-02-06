@@ -51,31 +51,52 @@ public class MinionBoard
             newMinion = new Minion(c, ind, this, playOrder);
             minions.Insert(ind, newMinion);
         }
-        if (server)
-        {
-            OrderInds();
-            return newMinion;
-        }
-        Creature creature = board.CreateCreature();
-        creature.board = board;
-        creature.Set(minions[ind]);
-        minionObjects.Add(minions[ind], creature);
-        minions[ind].creature = creature;
-        creature.transform.parent = board.gameAnchor.transform;
 
         OrderInds();
+
+        if (server)
+        {
+            return newMinion;
+        }
+
+        //AddCreature(minions[ind]);
+
         return newMinion;
     }
-    public void RemoveAt(int x)
+
+    public void AddCreature(Minion m)
     {
-        if (!server)
-        {
-            Creature c = minionObjects[minions[x]];
-            minionObjects.Remove(minions[x]);
-            board.animationManager.DeathAnim(c);
-        }
+        Creature creature = board.CreateCreature();
+        creature.board = board;
+        creature.Set(m);
+        minionObjects.Add(m, creature);
+        m.creature = creature;
+        creature.transform.parent = board.gameAnchor.transform;
+
+        OrderCreatures();
+    }
+
+    public void RemoveCreature(Minion m)
+    {
+        Creature c = minionObjects[m];
+        minionObjects.Remove(m);
+        board.animationManager.DeathAnim(c);
+
+        OrderCreatures();
+    }
+
+    public Minion RemoveAt(int x)
+    {
+        Minion m = minions[x];
         minions.RemoveAt(x);
         OrderInds();
+
+        if (!server)
+        {
+            m.creature.GetComponent<BoxCollider2D>().enabled = false;
+            m.creature.Unhighlight();
+        }
+        return m;
     }
     public void Remove(Minion c)
     {
@@ -99,16 +120,22 @@ public class MinionBoard
             c.previewIndex = -1;
         }
         if (server) return;
+        //OrderCreatures();
+    }
 
-        i = 0;
+    public void OrderCreatures()
+    {
+        int i = 0;
         float count = minionObjects.Count;
         float offset = -((count - 1) / 2f * dist);
         foreach (var kvp in minionObjects)
         {
             Creature c = kvp.Value;
+            //todo: sort the minionobjects by kvp.key.index then have it be dist*i++ below,
+            //so it doesnt move ahead of itself?
             Vector3 targetPos = new Vector3(offset + dist * (kvp.Key.index), this == board.currMinions ? -2.25f : 2.5f, 0);
 
-            if (c.init==false && c.index == currPreview && previewMinion!=null)
+            if (c.init == false && c.index == currPreview && previewMinion != null)
             {
                 if (previewMinion.minion.card == c.minion.card)
                 {
@@ -120,7 +147,7 @@ public class MinionBoard
             }
             else if (c.init == false)
             {
-                c.transform.localPosition = targetPos+new Vector3(0,3);
+                c.transform.localPosition = targetPos + new Vector3(0, 3);
                 c.shadow.elevation = 2;
                 c.transform.localScale = Vector3.one * 1.15f;
                 DropCreature(c, targetPos);
@@ -174,6 +201,7 @@ public class MinionBoard
             previewMinion = null;
         }
         OrderInds();
+        OrderCreatures();
     }
 
     public Vector3 SpawnPreviewMinion(Card.Cardname card, int pos)
