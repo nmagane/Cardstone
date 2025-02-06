@@ -69,8 +69,16 @@ public partial class Board
         QueueAnimation(anim);
     }
 
+    public void ConfirmPlayPlayer(HandCard card)
+    {
+        currHand.RemoveAt(card.index);
+        currHand.RemoveCard(card);
+    }
+
     public void ConfirmPlayCard(bool friendlySide, int index, int manaCost, Card.Cardname card, int pos)
     {
+        //if (friendlySide) return;
+
         HandCard hc = null;
         if (friendlySide == false)
         {
@@ -79,6 +87,7 @@ public partial class Board
         else
             hc = currHand.RemoveAt(index);
 
+        //===================
         VisualInfo anim = new VisualInfo();
         anim.type = Server.MessageType.PlayCard;
         anim.handCards.Add(hc);

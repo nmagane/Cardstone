@@ -119,6 +119,8 @@ public class Hand
             float dist = 4.7f;
             float offset = -((count - 1) / 2f * dist);
 
+            if (pos >= 7) pos = (int)count-1;
+
             if (enemyHand)
             {
                 c.SetElevated(true);

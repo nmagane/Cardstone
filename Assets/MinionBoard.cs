@@ -207,6 +207,7 @@ public class MinionBoard
     public Vector3 SpawnPreviewMinion(Card.Cardname card, int pos)
     {
         Creature creature = board.CreateCreature();
+        if (pos >= 7) pos = minionObjects.Count;
         creature.board = board;
         Minion prev = new Minion(card, pos, this);
         creature.Set(prev);
