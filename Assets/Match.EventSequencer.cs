@@ -135,7 +135,7 @@ public partial class Match
 
     public void StartSequencePlayMinion(CastInfo spell)
     {
-        Minion minion = server.SummonMinion(this, spell.player, spell.card.card, spell.position);
+        Minion minion = server.SummonMinion(this, spell.player, spell.card.card,MinionBoard.MinionSource.Play, spell.position);
         if (minion == null) return;
 
         spell.minion = minion;
@@ -160,7 +160,7 @@ public partial class Match
     public void StartSequenceSummonMinion(CastInfo spell, Card.Cardname card)
     {
 
-        Minion m = server.SummonMinion(this, spell.player, card, spell.position);
+        Minion m = server.SummonMinion(this, spell.player, card,MinionBoard.MinionSource.Summon, spell.position);
         if (m == null) return;
         spell.minion = m;
 

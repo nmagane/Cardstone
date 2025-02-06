@@ -62,14 +62,7 @@ public partial class Board
         mana.Spend(card.manaCost);
         mana.UpdateDisplay();
 
-        if (card.MINION)
-        {
-            //todo - insta summon minions
-        }
-        else
-        {
-
-        }
+        ConfirmPlayPlayer(card, position);
         //client.Send(message);
         SendMessage(message);
     }

@@ -7,7 +7,7 @@ using UnityEngine;
 public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Knife_Juggler, Card.Cardname.Harvest_Golem};
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Knife_Juggler, Card.Cardname.Knife_Juggler};
 
     public static CustomMessage CreateMessage(MessageType type)
     {
@@ -547,7 +547,7 @@ public partial class Server : MonoBehaviour
             match.StartSequencePlayMinion(spell);
         }
     }
-    public Minion SummonMinion(Match match, Player player, Card.Cardname minion, int position=-1)
+    public Minion SummonMinion(Match match, Player player, Card.Cardname minion,MinionBoard.MinionSource source, int position=-1)
     {
         if (player.board.Count() >= 7) return null;
 
@@ -559,14 +559,14 @@ public partial class Server : MonoBehaviour
         message.AddBool(true);
         message.AddInt((int)minion);
         message.AddInt(position);
-        //server.Send(message, player.connection.clientID);
+        message.AddInt((int)source);
         SendMessage(message, player);
 
         CustomMessage messageOp = CreateMessage(Server.MessageType.SummonMinion);
         messageOp.AddBool(false);
         messageOp.AddInt((int)minion);
         messageOp.AddInt(position);
-        //server.Send(messageOp, opponent.connection.clientID);
+        messageOp.AddInt((int)source);
         SendMessage(messageOp, opponent);
 
         return m;

@@ -196,12 +196,12 @@ public partial class Board : MonoBehaviour
                 bool summonedFriendlySide = message.GetBool();
                 int summonedMinion = message.GetInt();
                 int summonedPos = message.GetInt();
-                SummonMinion(summonedFriendlySide,(Card.Cardname)summonedMinion,summonedPos);
+                int summonedSource = message.GetInt();
+                SummonMinion(summonedFriendlySide,(Card.Cardname)summonedMinion,summonedPos, (MinionBoard.MinionSource)summonedSource);
                 break;
             case Server.MessageType.UpdateMinion:
                 string minionUpdateJson = message.GetString();
                 bool minionUpdateFriendly = message.GetBool();
-
                 bool UpdateMinionDamaged = message.GetBool();
                 bool UpdateMinionHealed = message.GetBool();
 
@@ -412,19 +412,6 @@ public partial class Board : MonoBehaviour
         QueueAnimation(anim);
     }
 
-    public void SummonMinion(bool friendlySide, Card.Cardname card, int position)
-    {
-        MinionBoard board = friendlySide ? currMinions : enemyMinions;
-        Minion m = board.Add(card, position);
-
-        //===========ANIM
-        VisualInfo anim = new VisualInfo();
-        anim.type = Server.MessageType.SummonMinion;
-        anim.minions.Add(m);
-        anim.isFriendly = friendlySide;
-
-        QueueAnimation(anim);
-    }
     public void DestroyMinion(int ind, bool friendlySide)
     {
         Minion m = null;

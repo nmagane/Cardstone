@@ -40,7 +40,9 @@ creature class color
 skulls on characters when attack is going to kill
 gameover screen -> reset scene button?
 concede button
+
 damage projectiles for flame imp and soulfire
+change animinfo to contain minions and creatures/cards whatever instead of indexes - it breaks if index changes between anims!
 
 ===========================================
 

@@ -69,12 +69,37 @@ public partial class Board
         QueueAnimation(anim);
     }
 
-    public void ConfirmPlayPlayer(HandCard card)
+    public void ConfirmPlayPlayer(HandCard card, int pos)
     {
+        return;
         currHand.RemoveAt(card.index);
-        currHand.RemoveCard(card);
+        currHand.RemoveCard(card,Hand.RemoveCardType.Play,card.card,pos);
+        if (card.MINION)
+        {
+            if (pos >= 7) pos = currMinions.Count();
+            Minion m = new Minion(card.card, pos, currMinions);
+            currMinions.AddCreature(m);
+        }
     }
 
+    public void SummonMinion(bool friendlySide, Card.Cardname card, int position, MinionBoard.MinionSource source)
+    {
+        if (friendlySide && source == MinionBoard.MinionSource.Play)
+        {
+            // return;
+        }
+
+        MinionBoard board = friendlySide ? currMinions : enemyMinions;
+        Minion m = board.Add(card, position);
+
+        //===========ANIM
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.SummonMinion;
+        anim.minions.Add(m);
+        anim.isFriendly = friendlySide;
+
+        QueueAnimation(anim);
+    }
     public void ConfirmPlayCard(bool friendlySide, int index, int manaCost, Card.Cardname card, int pos)
     {
         //if (friendlySide) return;
@@ -87,7 +112,7 @@ public partial class Board
         else
             hc = currHand.RemoveAt(index);
 
-        //===================
+        //===================ANIM
         VisualInfo anim = new VisualInfo();
         anim.type = Server.MessageType.PlayCard;
         anim.handCards.Add(hc);

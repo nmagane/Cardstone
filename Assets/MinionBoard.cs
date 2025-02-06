@@ -63,7 +63,11 @@ public class MinionBoard
 
         return newMinion;
     }
-
+    public enum MinionSource
+    {
+        Play,
+        Summon,
+    }
     public void AddCreature(Minion m)
     {
         Creature creature = board.CreateCreature();
