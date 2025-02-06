@@ -61,6 +61,7 @@ public class Creature : MonoBehaviour
     public int index => minion.index;
     public bool preview = false;
     public bool init = false;
+    public MinionBoard.MinionSource source;
     public void Set(Minion c)
     {
         minion = c;
@@ -298,6 +299,7 @@ public class Creature : MonoBehaviour
     {
         if (preview) return;
         if (board.currTurn == false) return;
+        if (board.disableInput) return;
         if (board.targetingMinion==minion)
         {
             if (dragCounter < dragTime) dragCounter++;
@@ -330,6 +332,7 @@ public class Creature : MonoBehaviour
     {
         if (preview) return; 
         if (board.currTurn == false) return;
+        if (board.disableInput) return;
         if (board.targeting)
         {
             if (board.targetingMinion == minion)

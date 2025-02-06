@@ -84,6 +84,8 @@ public partial class Server : MonoBehaviour
 
         Concede,
 
+        StartSequence,
+        EndSequence,
         _TEST
     }
     public Riptide.Server server = new Riptide.Server();

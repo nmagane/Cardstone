@@ -52,6 +52,10 @@ public class HeroPower : MonoBehaviour
     int hoverTimer = 0;
     private void OnMouseOver()
     {
+        if (board.currHand.mulliganMode != Hand.MulliganState.Done)
+        {
+            return;
+        }
         if (hoverTimer < 30)
         {
             hoverTimer++;
@@ -67,7 +71,8 @@ public class HeroPower : MonoBehaviour
     private void OnMouseDown()
     {
         if (enabled == false || transform.position.y>0) return;
-        if (board.currTurn == false) return; 
+        if (board.currTurn == false) return;
+        if (board.disableInput) return;
         if (board.targeting)
         {
             return;
@@ -100,6 +105,7 @@ public class HeroPower : MonoBehaviour
     private void OnMouseDrag()
     {
         if (enabled == false || transform.position.y > 0) return;
+        if (board.disableInput) return;
         if (board.currHand.mulliganMode != Hand.MulliganState.Done)
         {
             return;

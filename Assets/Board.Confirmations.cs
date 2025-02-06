@@ -20,6 +20,8 @@ public partial class Board
             matchMessageOrder++;
     }
     }*/
+
+    public bool disableInput = false;
     public static Server.CustomMessage CreateMessage(Server.MessageType type)
     {
         Server.CustomMessage m = new Server.CustomMessage();
@@ -112,7 +114,7 @@ public partial class Board
                 currMinions.minions.Insert(position, ppm);
             }
             currMinions.OrderInds();
-            //currMinions.OrderCreatures();
+            currMinions.OrderCreatures();
             prePlayMinions.Remove(position);
             return;
         }
@@ -283,5 +285,10 @@ public partial class Board
         QueueAnimation(anim);
 
         CheckHighlights();
+    }
+
+    void ConfirmAnimation(AnimationManager.AnimationInfo animInfo, bool friendly)
+    {
+
     }
 }

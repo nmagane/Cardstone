@@ -145,6 +145,10 @@ public partial class Board
         message.AddBool(isFriendly);
         message.AddBool(isHero);
 
+
+        mana.Spend(heroPower.card.manaCost);
+        mana.UpdateDisplay();
+
         heroPower.Disable();
 
         SendMessage(message);

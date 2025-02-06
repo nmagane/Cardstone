@@ -68,7 +68,7 @@ public class MinionBoard
         Play,
         Summon,
     }
-    public void AddCreature(Minion m)
+    public void AddCreature(Minion m, MinionSource source=MinionSource.Play)
     {
         Creature creature = board.CreateCreature();
         creature.board = board;
@@ -76,7 +76,7 @@ public class MinionBoard
         minionObjects.Add(m, creature);
         m.creature = creature;
         creature.transform.parent = board.gameAnchor.transform;
-
+        creature.source = source;
         OrderCreatures();
     }
 
@@ -169,10 +169,7 @@ public class MinionBoard
             }
             else if (c.init == false)
             {
-                c.transform.localPosition = targetPos + new Vector3(0, 3);
-                c.shadow.elevation = 2;
-                c.transform.localScale = Vector3.one * 1.15f;
-                DropCreature(c, targetPos);
+                DropCreature(c, targetPos,10);
                 c.init = true;
             }
             else MoveCreature(c, targetPos);
@@ -268,13 +265,22 @@ public class MinionBoard
     {
         board.animationManager.LerpTo(c, location, 5, 0.1f);
     }
-    public void DropCreature(Creature c, Vector3 location, int delay = 0)
+    public void DropCreature(Creature c, Vector3 location, int delay = 10)
     {
+        c.transform.localPosition = location + new Vector3(0, 3);
+        c.shadow.elevation = 2;
         if (delay>0)
         {
+            Debug.Log("del");
+            c.floatEnabled = false;
+            c.transform.localScale = Vector3.zero;
             board.animationManager.DelayedDrop(c, location, delay, this);
             return;
         }
+
+        Debug.Log("drop");
+        c.floatEnabled = true;
+        c.transform.localScale = Vector3.one * 1.15f;
         int F = 10;
         board.animationManager.LerpTo(c, location, F);
         board.animationManager.DropMinion(c, F);

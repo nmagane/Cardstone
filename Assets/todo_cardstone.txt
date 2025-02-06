@@ -26,14 +26,8 @@ different tooltip shape for hero power hover
 creature floating should hit scale vector3.one?
 creatures should be limited in ordercreatures to board edges, this is mostly because previews can make them go wider than 7 minion spaces
 
-cards need to be playable during animations somehow and not break
-
-maybe have board client execute everything instantly but only show it by waiting for animations queue <-- probably the best solution but a lot of work
-case: when imp gang boss has a lot of anims queued but theyre not spawned, playig something on right of the boss will make it spawn on the farthest edge after imps
-so playing a minion on rightmost side should always register as index -1 or whatever
-	--go through each message and split it into backend and visuals (even updateminion/hero)
-	--board.phaseOngoing bool or something to disable input until server sends "phase over" message?
-
+--board.phaseOngoing bool or something to disable input until server sends "phase over" message?
+deathrattle/spawned source minions should pop up lerpzoom, not drop in
 
 card art for each card
 creature class color
@@ -44,9 +38,13 @@ concede button
 damage projectiles for flame imp and soulfire
 change animinfo to contain minions and creatures/cards whatever instead of indexes - it breaks if index changes between anims!
 
-try dictionary approach for preshow: <pos, minion> prevminions.
 
 ===========================================
+maybe have board client execute everything instantly but only show it by waiting for animations queue <-- probably the best solution but a lot of work
+case: when imp gang boss has a lot of anims queued but theyre not spawned, playig something on right of the boss will make it spawn on the farthest edge after imps
+so playing a minion on rightmost side should always register as index -1 or whatever
+	--go through each message and split it into backend and visuals (even updateminion/hero)
+try dictionary approach for preshow: <pos, minion> prevminions.
 
 health text color on hero hp
 hovertooltip for hero power

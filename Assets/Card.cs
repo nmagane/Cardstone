@@ -366,6 +366,7 @@ public class Card : MonoBehaviour
         if (dragCoroutine != null|| board.playingCard == this) return;
         if (board.currHand.mulliganMode != Hand.MulliganState.Done) return;
         if (card.played) return;
+        if (board.disableInput) return;
         
         offset = transform.position - GetMousePos();
         clickPos = GetMousePos();
@@ -380,6 +381,7 @@ public class Card : MonoBehaviour
     private void OnMouseDrag()
     {
         if (card.card == Cardname.Cardback) return;
+        if (board.disableInput) return;
         if (board.currHand.mulliganMode!=Hand.MulliganState.Done)
         {
             return;

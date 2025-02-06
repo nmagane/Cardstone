@@ -135,6 +135,14 @@ public partial class Board : MonoBehaviour
         {
             case Server.MessageType._TEST:
                 break;
+
+            case Server.MessageType.StartSequence:
+                disableInput = true;
+                break;
+            case Server.MessageType.EndSequence:
+                disableInput = false;
+                break;
+
             case Server.MessageType.ConfirmMatch:
                 ulong matchID = message.GetULong();
                 InitGame(matchID);
