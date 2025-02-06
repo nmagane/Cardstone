@@ -119,6 +119,9 @@ public partial class Board
             case Server.MessageType.RemoveTrigger:
                 return RemoveTriggerVisual(message);
                 
+            case Server.MessageType.ConfirmAnimation:
+                return ConfirmAnimationVisual(message);
+                
             
             default:
                 Debug.LogError("ANIMATION NOT IMPLEMENTED: " + message.type);
@@ -177,6 +180,7 @@ public partial class Board
     {
         MinionBoard board = message.isFriendly ? currMinions : enemyMinions;
         board.AddCreature(message.minions[0]);
+        CheckHighlights();
         return StartCoroutine(Wait(15));
     }
     Coroutine DestroyMinionVisual(VisualInfo message)
@@ -274,7 +278,9 @@ public partial class Board
     {
         bool friendly = message.isFriendly;
         int index = message.index;
-        Creature m = friendly ? currMinions.minionObjects[currMinions[index]] : enemyMinions.minionObjects[enemyMinions[index]];
+
+        if (message.minions[0].creature == null) return null;
+        Creature m = message.minions[0].creature;
         return m.TriggerBattlecry();
     }
     Coroutine ConfirmTriggerVisual(VisualInfo message)
@@ -283,9 +289,9 @@ public partial class Board
         {
             return StartCoroutine(Wait(30));
         }
-        bool friendly = message.isFriendly;
-        int index = message.index;
-        Creature m = friendly ? currMinions.minionObjects[currMinions[index]] : enemyMinions.minionObjects[enemyMinions[index]];
+
+        if (message.minions[0].creature == null) return null;
+        Creature m = message.minions[0].creature; 
         return m.TriggerTrigger();
     }
 
@@ -346,5 +352,11 @@ public partial class Board
         if (message.minions[0].creature == null) return null;
         message.minions[0].creature.CheckTriggers();
         return null;
+    }
+
+    Coroutine ConfirmAnimationVisual(VisualInfo message)
+    {
+        AnimationManager.AnimationInfo animInfo = JsonUtility.FromJson<AnimationManager.AnimationInfo>(message.strings[0]);
+        return animationManager.StartAnimation(animInfo, message.isFriendly);
     }
 }

@@ -34,11 +34,13 @@ so playing a minion on rightmost side should always register as index -1 or what
 	--go through each message and split it into backend and visuals (even updateminion/hero)
 	--board.phaseOngoing bool or something to disable input until server sends "phase over" message?
 
-damage projectiles
+
 card art for each card
 creature class color
 skulls on characters when attack is going to kill
 gameover screen -> reset scene button?
+concede button
+damage projectiles for flame imp and soulfire
 
 ===========================================
 

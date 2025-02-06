@@ -184,8 +184,8 @@ public partial class Board
     {
         VisualInfo anim = new();
         anim.type = Server.MessageType.ConfirmBattlecry;
-        anim.isFriendly = friendly;
-        anim.index = index;
+        Minion m = friendly ? currMinions[index] : enemyMinions[index];
+        anim.minions.Add(m);
 
         QueueAnimation(anim);
         return null;
@@ -204,8 +204,8 @@ public partial class Board
         }
 
         VisualInfo anim = new();
-        anim.isFriendly = friendly;
-        anim.index = index;
+        Minion m = friendly ? currMinions[index] : enemyMinions[index];
+        anim.minions.Add(m);
         anim.type = Server.MessageType.ConfirmTrigger;
 
         QueueAnimation(anim);

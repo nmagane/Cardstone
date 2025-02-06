@@ -38,10 +38,6 @@ public partial class Board
         message.AddULong(currentMatchID);
         message.AddULong(playerID);
 
-        //todo: is this ok??
-        currTurn = false;
-        CheckHighlights();
-
         SendMessage(message);
     }
 
