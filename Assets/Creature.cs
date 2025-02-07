@@ -16,8 +16,10 @@ public class Creature : MonoBehaviour
         highlight.sortingOrder = x+1;
         tauntSprite.sortingOrder = x;
         shieldSprite.sortingOrder = x+3;
+        silenceSprite.sortingOrder = x+3;
         triggerSprite.sortingOrder = x+4;
         deathrattleSprite.sortingOrder = x+4;
+        skull.sortingOrder = x+4;
         testname.GetComponent<MeshRenderer>().sortingOrder = x + 3;
         health.GetComponent<MeshRenderer>().sortingOrder = x + 3;
         damage.GetComponent<MeshRenderer>().sortingOrder = x + 3;
@@ -34,8 +36,10 @@ public class Creature : MonoBehaviour
         icon.sortingLayerName = x;
         tauntSprite.sortingLayerName = x;
         shieldSprite.sortingLayerName = x;
+        silenceSprite.sortingLayerName = x;
         triggerSprite.sortingLayerName = x;
         deathrattleSprite.sortingLayerName = x;
+        skull.sortingLayerName = x;
         testname.GetComponent<MeshRenderer>().sortingLayerName = x;
         health.GetComponent<MeshRenderer>().sortingLayerName = x;
         damage.GetComponent<MeshRenderer>().sortingLayerName = x;
@@ -47,6 +51,7 @@ public class Creature : MonoBehaviour
     public DropShadow shadow;
     public SpriteRenderer tauntSprite;
     public SpriteRenderer shieldSprite;
+    public SpriteRenderer silenceSprite;
     public SpriteRenderer triggerSprite;
     public SpriteRenderer deathrattleSprite;
     public SpriteRenderer battlecrySprite;
@@ -63,6 +68,7 @@ public class Creature : MonoBehaviour
     public Minion minion;
     public Sprite[] frameSprites;
     public int index => minion.index;
+    public Card.Cardname card => minion.card;
     public int order = 0;
     public bool preview = false;
     public bool init = false;
@@ -241,6 +247,11 @@ public class Creature : MonoBehaviour
 
     public void CheckAuras()
     {
+        if (minion.HasAura(Aura.Type.Silence))
+        {
+            silenceSprite.enabled = true;
+        }
+        
         if (minion.HasAura(Aura.Type.Taunt))
         {
             if (tauntSprite.enabled == false)
@@ -263,7 +274,15 @@ public class Creature : MonoBehaviour
                 DisableShield();
         }
     }
-
+    public SpriteRenderer skull;
+    public void ShowSkull()
+    {
+        skull.enabled = true;
+    }
+    public void HideSkull()
+    {
+        skull.enabled = false;
+    }
     int hoverTimer = 0;
     private void OnMouseOver()
     {
@@ -293,12 +312,19 @@ public class Creature : MonoBehaviour
     private void OnMouseEnter()
     {
         board.hoveredMinion = this;
+        if (board.targeting && board.targetingMinion!=minion && highlight.enabled)
+        {
+            board.ShowSkulls(this);
+        }
     }
     private void OnMouseExit()
     {
         board.hoveredMinion = null;
         hoverTimer = 0;
         board.HideHoverTip();
+
+        if (highlight.enabled)
+            board.HideSkulls();
     }
 
     int dragCounter = 0;

@@ -296,6 +296,7 @@ public partial class Board
     }
     public void EndTargetingAnim()
     {
+        HideSkulls();
         CheckHighlights();
         activeTargetingAnim = false;
     }
@@ -356,5 +357,34 @@ public partial class Board
 
         yield return null;
 
+    }
+
+
+    public void ShowSkulls(Creature target)
+    {
+        if (targetMode == TargetMode.Attack)
+        {
+            if (targetingMinion.damage >= target.minion.health)
+            {
+                if (target.minion.HasAura(Aura.Type.Shield) == false)
+                    target.ShowSkull();
+            }
+            if (target.minion.damage >= targetingMinion.health)
+            {
+                if (targetingMinion.HasAura(Aura.Type.Shield)==false)
+                    targetingMinion.creature.ShowSkull();
+            }
+        }
+        if (targetMode == TargetMode.Spell || targetMode == TargetMode.Battlecry || targetMode == TargetMode.HeroPower)
+        {
+
+        }
+    }
+    public void HideSkulls()
+    {
+        foreach (Creature c in currMinions.minionObjects.Values)
+            c.HideSkull();
+        foreach (Creature c in enemyMinions.minionObjects.Values)
+            c.HideSkull();
     }
 }

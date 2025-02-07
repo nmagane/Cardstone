@@ -117,7 +117,7 @@ public class Hand
     {
         Card c = cardObjects[card];
         cardObjects.Remove(card);
-
+        c.GetComponent<BoxCollider2D>().enabled = false;
         //board.DestroyObject(c);
         //todo: show cards custom mana cost if its changed by freezing trap/loatheb etc
         if (pos != -1)

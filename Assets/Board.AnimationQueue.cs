@@ -157,7 +157,7 @@ public partial class Board
         Match.Result result = (Match.Result)message.ints[0];
         gameoverText.text = result == Match.Result.Draw ? "DRAW." : "YOU " + result.ToString().ToUpper()+".";
         
-        return animationManager.LerpTo(this.gameObject,new Vector3(this.transform.position.x,40),10,1);
+        return animationManager.LerpTo(this.gameObject,new Vector3(this.transform.position.x,40),10,0.2f);
     }
     Coroutine StartTurnVisual(VisualInfo message)
     {

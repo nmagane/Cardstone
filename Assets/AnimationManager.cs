@@ -14,6 +14,15 @@ public partial class AnimationManager : MonoBehaviour
         for (int i = 0; i < x; i++)
             yield return null;
     }
+    public void MulliganEnemyAnim(Card c)
+    {
+        StartCoroutine(_mulliganAnimEnemy(c));
+    }
+    IEnumerator _mulliganAnimEnemy(Card c)
+    {
+        yield return LerpTo(c.gameObject, c.transform.localPosition + new Vector3(0, 2),8);
+        yield return LerpTo(c.gameObject, c.transform.localPosition + new Vector3(0, -2),8);
+    }
     public void MulliganAnim(Card c, HandCard newCard)
     {
         StartCoroutine(_mulliganAnim(c,newCard));

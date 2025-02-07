@@ -209,6 +209,7 @@ public class MinionBoard
         previewing = true;
         currPreview = gapIndex;
         float count = minionObjects.Count + 1;
+        if (currPreview>=7) currPreview = minionObjects.Count;
         float offset = -((count - 1) / 2f * dist);
         foreach (var kvp in minionObjects)
         {
@@ -289,7 +290,7 @@ public class MinionBoard
             board.animationManager.DelayedDrop(c, location, delay, this);
             return;
         }
-
+        //if (board.playerID == 100) Debug.Log("Dropping minion " + c.minion.card);
         c.floatEnabled = true;
         c.transform.localScale = Vector3.one * 1.15f;
         int F = 10;

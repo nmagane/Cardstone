@@ -246,6 +246,8 @@ public partial class Server
         {
             match.server.RemoveTrigger(match, minion, t);
         }
+
+        match.server.AddAura(match, minion, new Aura(Aura.Type.Silence));
     }
     void Coin(CastInfo spell)
     {

@@ -15,7 +15,6 @@ addcard message to client for stuff like sap
 auras in hover tooltip
 replace all fade effects with some shader (FAR FUTURE TODO)
 get a new color pallette this shit sucks ( future todo )
-get a new font (maybe just numbers?) this shit sucks ( future todo )
 a bit of rotation on creeature anim facing the direction of attack?
 different tooltip shape for hero power hover
 creature floating should hit scale vector3.one?
@@ -25,17 +24,24 @@ creatures should be limited in ordercreatures to board edges, this is mostly bec
 deathrattle/spawned source minions should pop up lerpzoom, not drop in
 FIX REPEAT CODE IN ANIMATOINMANAGER.CARDS?
 
+fix creatures swapping position too early before the one before it dies.
+	This issue happens when ordercreatures is called when minion indexes changed too much in the backend
 
-enemy mulligan anim (just move up down)
+	
 skulls on characters when attack is going to kill
 concede button
-fix creatures swapping position too early before the one before it dies.
-fix prev battlecry dropping
 
+get a new font (maybe just numbers?) this shit sucks
 
 ===============================================
 =====================DONE======================
 ===============================================
+
+enemy mulligan anim (just move up down)
+
+add visuals for silence?
+fix prev battlecry dropping
+
 start and end turn confirms to opponent players? //probably not needed
 
 

@@ -14,8 +14,9 @@ public class Aura
         Stealth,
         Windfury,
         NoAttack,
-        Amani,
+        Silence,
 
+        Amani,
         StormwindChampion,
         DireWolfAlpha,
     }

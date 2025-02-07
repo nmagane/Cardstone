@@ -10,7 +10,7 @@ public class Tooltip : MonoBehaviour
     {
         card.SetSortingOrder(11);
         if (!anim) transform.localScale = Vector3.one;
-        card.Set(new HandCard(name, 0));
+        card.Set(new HandCard(name, 1));
 
         if (delay != -1)
             StartCoroutine(disappear(delay));

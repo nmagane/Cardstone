@@ -60,8 +60,7 @@ public partial class Board
     {
         foreach (int i in inds)
         {
-            //TODO: enemy mull anim
-            //enemyHand.cardObjects[enemyHand[i]].mulliganMark.enabled = true;
+            animationManager.MulliganEnemyAnim(enemyHand.cardObjects[enemyHand[i]]);
         }
     }
     void StartGame(bool isTurn)
