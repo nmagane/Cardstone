@@ -596,7 +596,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b739eebfb8f5d9645b73a792470eb9e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileObject: {fileID: 2473487087288080458, guid: fd95a39502feaf248b3f3ec89f59ec11, type: 3}
+  effectObjects:
+  - {fileID: 2473487087288080458, guid: fd95a39502feaf248b3f3ec89f59ec11, type: 3}
+  - {fileID: 2473487087288080458, guid: ae0b0cdc8c3d69b42aa6bd7fbbe204a6, type: 3}
+  - {fileID: 2473487087288080458, guid: 4c8ef42eeb995da43b6bd0f37c0022ff, type: 3}
+  - {fileID: 2473487087288080458, guid: 47b9ce870c92de046b46c6a382d3db03, type: 3}
   shadowMat: {fileID: 2100000, guid: ab167aeb60df8ca4cb7736e375cabbc2, type: 2}
   board: {fileID: 716059625}
 --- !u!1 &343869435
@@ -3173,7 +3177,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b739eebfb8f5d9645b73a792470eb9e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileObject: {fileID: 2473487087288080458, guid: fd95a39502feaf248b3f3ec89f59ec11, type: 3}
+  effectObjects:
+  - {fileID: 2473487087288080458, guid: fd95a39502feaf248b3f3ec89f59ec11, type: 3}
+  - {fileID: 2473487087288080458, guid: ae0b0cdc8c3d69b42aa6bd7fbbe204a6, type: 3}
+  - {fileID: 2473487087288080458, guid: 4c8ef42eeb995da43b6bd0f37c0022ff, type: 3}
+  - {fileID: 2473487087288080458, guid: 47b9ce870c92de046b46c6a382d3db03, type: 3}
   shadowMat: {fileID: 2100000, guid: ab167aeb60df8ca4cb7736e375cabbc2, type: 2}
   board: {fileID: 1733639530}
 --- !u!1001 &1393976760

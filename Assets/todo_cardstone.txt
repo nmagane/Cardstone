@@ -20,11 +20,11 @@ addcard message to client
 auras in hover tooltip
 replace all fade effects with some shader (FAR FUTURE TODO)
 get a new color pallette this shit sucks ( future todo )
-summoning ally minions should happen client side first? (future todo)
+get a new font (maybe just numbers?) this shit sucks ( future todo )
 a bit of rotation on creeature anim facing the direction of attack?
 different tooltip shape for hero power hover
 creature floating should hit scale vector3.one?
-creatures should be limited in ordercreatures to board edges, this is mostly because previews can make them go wider than 7 minion spaces
+creatures should be limited in ordercreatures to board edges, this is mostly because previews can make them go wider than 7 minion spaces //THIS IS FIXED?
 
 --board.phaseOngoing bool or something to disable input until server sends "phase over" message?
 deathrattle/spawned source minions should pop up lerpzoom, not drop in
@@ -35,10 +35,19 @@ skulls on characters when attack is going to kill
 gameover screen -> reset scene button?
 concede button
 
+//move card animations to database.animations? static functions?
+
 damage projectiles for flame imp and soulfire
+(REPEAT CODE. FIX THIS EVENTUALLY)
 
 fix creatures swapping position too early before the one before it dies.
-===========================================
+
+===============================================
+=====================DONE======================
+===============================================
+
+summoning ally minions should happen client side first? (future todo)
+
 change animinfo to contain minions and creatures/cards whatever instead of indexes - it breaks if index changes between anims!
 
 maybe have board client execute everything instantly but only show it by waiting for animations queue <-- probably the best solution but a lot of work

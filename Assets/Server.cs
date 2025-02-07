@@ -7,7 +7,7 @@ using UnityEngine;
 public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Knife_Juggler, Card.Cardname.Knife_Juggler, Card.Cardname.Knife_Juggler};
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Knife_Juggler, Card.Cardname.Flame_Imp, Card.Cardname.Soulfire};
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Argent_Squire};
 
     public static CustomMessage CreateMessage(MessageType type)

@@ -169,22 +169,16 @@ public partial class Server
                 Heal(spell, 2);
                 break;
             case Card.Cardname.Soulfire:
-                Damage(spell, 4);
-                spell.match.ResolveTriggerQueue(ref spell);
-                Discard(spell, 1);
+                Soulfire(spell);
                 break;
             case Card.Cardname.Doomguard:
                 Discard(spell, 2);
                 break;
             case Card.Cardname.Lifetap:
-                Damage(spell, 2);
-                spell.match.ResolveTriggerQueue(ref spell);
-                Draw(spell, 1);
+                Lifetap(spell);
                 break;
             case Card.Cardname.Flame_Imp:
-                spell.isFriendly = true;
-                spell.isHero = true;
-                Damage(spell, 3);
+                Flame_Imp(spell);
                 break;
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);
@@ -206,7 +200,6 @@ public partial class Server
     }
     public void Damage(CastInfo spell, int damage)
     {
-
         if (spell.isHero)
         {
             Player player = spell.isFriendly ? spell.player : spell.player.opponent;
@@ -330,5 +323,63 @@ public partial class Server
                 //m.AddAura(new Aura(Aura.Type.Damage, 1));
             }
         }
+    }
+
+    void Flame_Imp(CastInfo spell)
+    {
+        AnimationManager.AnimationInfo anim = new AnimationManager.AnimationInfo
+        {
+            card = Card.Cardname.Flame_Imp,
+            sourceIsHero = false,
+            sourceIsFriendly = true,
+            sourceIndex = spell.minion.index,
+            targetIndex = -1,
+            targetIsFriendly = true,
+            targetIsHero = true,
+        };
+
+        ConfirmAnimation(spell.match, spell.player, anim);
+
+        spell.isFriendly = true;
+        spell.isHero = true;
+        Damage(spell, 3);
+    }
+
+    void Lifetap(CastInfo spell)
+    {
+        AnimationManager.AnimationInfo anim = new AnimationManager.AnimationInfo
+        {
+            card = Card.Cardname.Lifetap,
+            sourceIsHero =true,
+            sourceIsFriendly = true,
+            targetIsHero = true,
+            targetIsFriendly = true,
+        };
+
+        ConfirmAnimation(spell.match, spell.player, anim);
+
+        Damage(spell, 2);
+        spell.match.ResolveTriggerQueue(ref spell);
+        Draw(spell, 1);
+    }
+
+    void Soulfire(CastInfo spell)
+    {
+        AnimationManager.AnimationInfo anim = new AnimationManager.AnimationInfo
+        {
+            card = Card.Cardname.Soulfire,
+            sourceIsHero = true,
+            sourceIsFriendly = true,
+            sourceIndex = -1,
+            targetIndex = spell.target,
+            targetIsFriendly = spell.isFriendly,
+            targetIsHero = spell.isHero,
+        };
+
+        ConfirmAnimation(spell.match, spell.player, anim);
+
+        Damage(spell, 4);
+        spell.match.ResolveTriggerQueue(ref spell);
+        Discard(spell, 1);
     }
 }

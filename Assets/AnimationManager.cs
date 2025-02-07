@@ -347,4 +347,48 @@ public partial class AnimationManager : MonoBehaviour
             yield return Wait(1);
         }
     }
+
+    public Coroutine Spin(GameObject g, float speed, int frames=0)
+    {
+        return StartCoroutine(_spinner(g, speed, frames));
+    }
+    IEnumerator _spinner(GameObject g, float speed, int frames)
+    {
+        if (frames==0)
+        {
+            while (true)
+            {
+                if (g == null) yield break;
+                g.transform.localEulerAngles += new Vector3(0, 0, speed);
+                yield return Wait(1);
+            }
+        }
+        else
+        {
+            for (int i=0;i<frames;i++)
+            {
+                if (g == null) yield break;
+                g.transform.localEulerAngles += new Vector3(0, 0, speed);
+                yield return Wait(1);
+            }
+        }
+    }
+
+    public static void PointTo(GameObject g, Vector3 target, float ang=0)
+    {
+        float angle = 180 / Mathf.PI * Mathf.Atan2(g.transform.position.y - target.y, g.transform.localPosition.x - target.x);
+        angle += ang;
+        g.transform.localEulerAngles = new Vector3(0, 0, angle);
+    }
+
+    IEnumerator _fadeout(GameObject g, int frames, bool destroy=true)
+    {
+        SpriteRenderer s = g.GetComponent<SpriteRenderer>();
+        for (int i=0;i<frames;i++)
+        {
+            s.color += new Color(0, 0, 0, -1f / frames);
+            yield return Wait(1);
+        }
+        if (destroy) Destroy(s.gameObject);
+    }
 }

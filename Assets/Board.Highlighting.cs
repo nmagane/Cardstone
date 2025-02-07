@@ -11,7 +11,7 @@ public partial class Board
 
     public void ShowHoverTip(Creature c)
     {
-        if (c.transform.localPosition.x<0)
+        if (c.transform.localPosition.x< -2.5)
         {
             hoverTip.transform.position = c.transform.position + new Vector3(6, 0);
         }
