@@ -281,7 +281,14 @@ public partial class Match
     public List<Player> damagedPlayers = new List<Player>();
     public List<Player> healedPlayers = new List<Player>();
     public void UpdateStats()
-    { 
+    {
+
+        foreach (var a in auraChanges)
+        {
+            server.ConfirmAuraChange(this, a.Item1, a.Item2, a.Item3);
+        }
+        if (auraChanges.Count > 0) auraChanges.Clear();
+
         foreach (Minion minion in players[0].board)
         {
             server.UpdateMinion(this, minion,damagedMinions.Contains(minion),healedMinions.Contains(minion));
@@ -302,11 +309,6 @@ public partial class Match
     void UpdateAuras()
     {
         //Initial visual update
-        foreach (var a in auraChanges)
-        {
-            server.ConfirmAuraChange(this, a.Item1, a.Item2, a.Item3);
-        }
-        if (auraChanges.Count>0) auraChanges.Clear();
 
 
         //update minions

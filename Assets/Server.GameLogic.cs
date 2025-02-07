@@ -5,6 +5,11 @@ public partial class Server
 {
     public static void RefreshAttackCharge(Minion m)
     {
+        if (m.HasAura(Aura.Type.NoAttack))
+        {
+            m.FindAura(Aura.Type.NoAttack).trigger = true;
+            return;
+        }
         m.canAttack = true;
     }
     public static void ConsumeAttackCharge(Minion m)

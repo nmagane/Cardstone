@@ -8,6 +8,15 @@ public class TriggerEffects
         Player opponent = match.FindOpponent(minion);
         int tar = Random.Range(-1, opponent.board.Count());
 
+        if (tar != -1)
+        {
+            while (opponent.board[tar].health <= 0)
+            {
+                tar = Random.Range(-1, opponent.board.Count());
+                if (tar == -1) break;
+            }
+        }
+
         AnimationManager.AnimationInfo anim = new AnimationManager.AnimationInfo
         {
             card = Card.Cardname.Knife_Juggler,
@@ -18,7 +27,6 @@ public class TriggerEffects
             targetIsFriendly = false,
             targetIsHero = tar == -1,
         };
-
         match.server.ConfirmAnimation(match, minion.player, anim);
 
         if (tar==-1)

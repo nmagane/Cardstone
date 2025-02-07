@@ -1776,6 +1776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9012a4d34dd5254492512922e3b6824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableInput: 0
   animationManager: {fileID: 331482548}
   gameAnchor: {fileID: 1421786286}
   mulliganButton: {fileID: 768848211}
@@ -1832,9 +1833,9 @@ MonoBehaviour:
   mirror: {fileID: 1742687334}
   matchMessageOrder: 0
   messageReceivedOrder: 0
-  selectedMulligans: 
   enemyPlayTip: {fileID: 703081525}
   hoverTip: {fileID: 804960259}
+  selectedMulligans: 
   targeting: 0
   targetMode: 0
   eligibleTargets: 0
@@ -3432,6 +3433,14 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5652826871360112596, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_SortingLayer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5652826871360112596, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1194144581
+      objectReference: {fileID: 0}
     - target: {fileID: 6077507550258028750, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -3986,6 +3995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9012a4d34dd5254492512922e3b6824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableInput: 0
   animationManager: {fileID: 1382597164}
   gameAnchor: {fileID: 1733639529}
   mulliganButton: {fileID: 606688239}
@@ -4042,9 +4052,9 @@ MonoBehaviour:
   mirror: {fileID: 1098835300}
   matchMessageOrder: 0
   messageReceivedOrder: 0
-  selectedMulligans: 
   enemyPlayTip: {fileID: 1999131095}
   hoverTip: {fileID: 1658375601}
+  selectedMulligans: 
   targeting: 0
   targetMode: 0
   eligibleTargets: 0

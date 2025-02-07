@@ -7,7 +7,8 @@ using UnityEngine;
 public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Knife_Juggler, Card.Cardname.Knife_Juggler};
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Knife_Juggler, Card.Cardname.Knife_Juggler, Card.Cardname.Knife_Juggler};
+    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Argent_Squire};
 
     public static CustomMessage CreateMessage(MessageType type)
     {
@@ -298,6 +299,7 @@ public partial class Server : MonoBehaviour
         }
 
         foreach (var v in TESTCARDS) m.players[0].hand.Add(v);
+        foreach (var v in TESTCARDS2) m.players[1].hand.Add(v);
 
         if (m.turn==Turn.player1)
         {
@@ -823,7 +825,7 @@ public partial class Server : MonoBehaviour
 
         SendMessage(messageOwner, player);
         SendMessage(messageOpponent, player.opponent);
-    }
+    }   
     public void DiscardCard(Match match, Player player, int index)
     {
         if (player.hand.Count() == 0 || index>=player.hand.Count()) return;

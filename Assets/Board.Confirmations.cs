@@ -289,6 +289,54 @@ public partial class Board
 
     void ConfirmAnimation(AnimationManager.AnimationInfo animInfo, bool friendly)
     {
+        AnimationManager.AnimationData data = TranslateAnimationInfo(animInfo,friendly);
 
+        //===============================
+        VisualInfo anim = new();
+        anim.type = Server.MessageType.ConfirmAnimation;
+        anim.isFriendly = friendly;
+        anim.anim = data;
+
+        QueueAnimation(anim);
+    }
+
+    AnimationManager.AnimationData TranslateAnimationInfo(AnimationManager.AnimationInfo info, bool friendly)
+    {
+        if (friendly == false)
+        {
+            info.sourceIsFriendly = !info.sourceIsFriendly;
+            info.targetIsFriendly = !info.targetIsFriendly;
+        }
+
+        AnimationManager.AnimationData data = new();
+        data.card = info.card;
+        data.sourceIsHero = info.sourceIsHero;
+        data.targetIsHero = info.targetIsHero;
+
+        //============
+        if (info.sourceIsHero)
+        {
+            data.sourceMinion = null;
+            data.sourceHero = info.sourceIsFriendly ? currHero : enemyHero;
+        }
+        else
+        {
+            data.sourceHero = null;
+            data.sourceMinion = info.sourceIsFriendly ? currMinions[info.sourceIndex] : enemyMinions[info.sourceIndex];
+        }
+
+        //=========
+        if (info.targetIsHero)
+        {
+            data.targetMinion = null;
+            data.targetHero = info.targetIsFriendly ? currHero : enemyHero;
+        }
+        else
+        {
+            data.targetHero = null;
+            data.targetMinion = info.targetIsFriendly ? currMinions[info.targetIndex] : enemyMinions[info.targetIndex];
+        }
+        //========
+        return data;
     }
 }

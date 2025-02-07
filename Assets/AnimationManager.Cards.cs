@@ -22,40 +22,59 @@ public partial class AnimationManager
         public bool targetIsFriendly;
         public bool targetIsHero;
 
-    }
-    public Coroutine StartAnimation(AnimationInfo c, bool isFriendly)
-    {
-        if (isFriendly == false)
+        public void SetUntargeted()
         {
-            c.sourceIsFriendly = !c.sourceIsFriendly;
-            c.targetIsFriendly = !c.targetIsFriendly;
-        }
+            sourceIsHero = true;
+            sourceIsFriendly = true;
 
-        switch (c.card)
+            targetIsHero = true;
+            targetIsFriendly = false;
+        }
+    }
+
+    public class AnimationData
+    {
+        public Card.Cardname card;
+
+        public bool sourceIsHero;
+        public Minion sourceMinion = null;
+        public Hero sourceHero = null;
+
+        public bool targetIsHero;
+        public Minion targetMinion = null;
+        public Hero targetHero = null;
+    }
+    public Coroutine StartAnimation(AnimationData data)
+    {
+        switch (data.card)
         {
             case Card.Cardname.Knife_Juggler:
-                return StartCoroutine(KnifeJugglerAnim(c));
+                return StartCoroutine(KnifeJugglerAnim(data));
+
+            default:
+                Debug.LogWarning("Animatin Unimplemented? " + data.card);
+                return null;
         }
 
-        return null;
     }
 
-    IEnumerator KnifeJugglerAnim(AnimationInfo anim)
+    IEnumerator KnifeJugglerAnim(AnimationData data)
     {
         GameObject p = CreateProjectile();
         p.transform.parent = board.gameAnchor.transform;
 
-        Creature source = anim.sourceIsFriendly ? board.currMinions[anim.sourceIndex].creature : board.enemyMinions[anim.sourceIndex].creature;
+        Creature source = data.sourceMinion.creature;
 
         MonoBehaviour target;
-        if (anim.targetIsHero) target = anim.targetIsFriendly ? board.currHero: board.enemyHero ;
-        else target = anim.targetIsFriendly? board.currMinions[anim.targetIndex].creature : board.enemyMinions[anim.targetIndex].creature;
+        if (data.targetIsHero) target = data.targetHero;
+        else target = data.targetMinion.creature;
 
         p.transform.localPosition = source.transform.localPosition;
         Vector3 targetPos = target.transform.localPosition;
 
         yield return LerpTo(p,targetPos,10);
-
         Destroy(p.gameObject);
+
+        yield return Wait(5);
     }
 }

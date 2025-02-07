@@ -21,6 +21,7 @@ public partial class Board
         public List<string> strings = new();
         public List<int> ints = new();
         public Server.CustomMessage customMessage = new();
+        public AnimationManager.AnimationData anim = new();
 
         public bool isFriendly;
         public bool trigger = false;
@@ -42,7 +43,9 @@ public partial class Board
         exec = true;
         while (visualMessageQueue.Count>0)
         {
-            Coroutine c = ResolveAnimation(visualMessageQueue.Dequeue());
+            VisualInfo info = visualMessageQueue.Dequeue();
+
+            Coroutine c = ResolveAnimation(info);
             if (c == null) continue;
             yield return c;
         }
@@ -187,7 +190,13 @@ public partial class Board
     {
         MinionBoard board = message.isFriendly ? currMinions : enemyMinions;
         board.RemoveCreature(message.minions[0]);
-        return StartCoroutine(Wait(15));
+
+        if (visualMessageQueue.Count == 0)
+        {
+            return StartCoroutine(Wait(15));
+        }
+        else if (visualMessageQueue.Peek().type == Server.MessageType.DestroyMinion) return null;
+        else return StartCoroutine(Wait(15));
     }
 
     Coroutine PlayCardVisual(VisualInfo message)
@@ -356,7 +365,7 @@ public partial class Board
 
     Coroutine ConfirmAnimationVisual(VisualInfo message)
     {
-        AnimationManager.AnimationInfo animInfo = JsonUtility.FromJson<AnimationManager.AnimationInfo>(message.strings[0]);
-        return animationManager.StartAnimation(animInfo, message.isFriendly);
+        AnimationManager.AnimationData animData = message.anim;
+        return animationManager.StartAnimation(animData);
     }
 }

@@ -36,10 +36,11 @@ gameover screen -> reset scene button?
 concede button
 
 damage projectiles for flame imp and soulfire
+
+fix creatures swapping position too early before the one before it dies.
+===========================================
 change animinfo to contain minions and creatures/cards whatever instead of indexes - it breaks if index changes between anims!
 
-
-===========================================
 maybe have board client execute everything instantly but only show it by waiting for animations queue <-- probably the best solution but a lot of work
 case: when imp gang boss has a lot of anims queued but theyre not spawned, playig something on right of the boss will make it spawn on the farthest edge after imps
 so playing a minion on rightmost side should always register as index -1 or whatever

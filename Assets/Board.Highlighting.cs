@@ -207,6 +207,7 @@ public partial class Board
         foreach (Minion m in enemyMinions)
         {
             if (m.HasAura(Aura.Type.Stealth)) continue;
+            if (m.creature == null) continue;
             m.creature.Highlight(true);
         }
     }

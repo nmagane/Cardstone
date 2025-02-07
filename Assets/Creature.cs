@@ -59,6 +59,7 @@ public class Creature : MonoBehaviour
 
     public Minion minion;
     public int index => minion.index;
+    public int order = 0;
     public bool preview = false;
     public bool init = false;
     public MinionBoard.MinionSource source;
@@ -246,12 +247,12 @@ public class Creature : MonoBehaviour
 
         if (minion.HasAura(Aura.Type.Shield))
         {
-            if (tauntSprite.enabled == false)
+            if (shieldSprite.enabled == false)
                 EnableShield();
         }
         else
         {
-            if (tauntSprite.enabled == true)
+            if (shieldSprite.enabled == true)
                 DisableShield();
         }
     }

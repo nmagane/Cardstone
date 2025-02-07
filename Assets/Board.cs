@@ -314,11 +314,8 @@ public partial class Board : MonoBehaviour
             case Server.MessageType.ConfirmAnimation: //TODO ANIM QUEUE
                 bool animationFriendly = message.GetBool();
                 string animJson = message.GetString();
-                VisualInfo anim = new();
-                anim.type = Server.MessageType.ConfirmAnimation;
-                anim.isFriendly = animationFriendly;
-                anim.strings.Add(animJson);
-                QueueAnimation(anim);
+                AnimationManager.AnimationInfo animInfo = JsonUtility.FromJson<AnimationManager.AnimationInfo>(animJson);
+                ConfirmAnimation(animInfo, animationFriendly);
                 break;
             default:
                 Debug.LogError("UNKNOWN MESSAGE TYPE");

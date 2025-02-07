@@ -77,6 +77,13 @@ public class MinionBoard
         m.creature = creature;
         creature.transform.parent = board.gameAnchor.transform;
         creature.source = source;
+
+        
+        foreach (Creature c in minionObjects.Values)
+        {
+            c.order = m.index;
+        }
+
         OrderCreatures();
     }
 
@@ -85,7 +92,11 @@ public class MinionBoard
         Creature c = minionObjects[m];
         minionObjects.Remove(m);
         board.animationManager.DeathAnim(c);
-
+        
+        foreach (Creature cr in minionObjects.Values)
+        {
+            cr.order = m.index;
+        }
         OrderCreatures();
     }
 
@@ -139,13 +150,15 @@ public class MinionBoard
 
         creatures.Sort((x, y) => x.minion.index.CompareTo(y.minion.index));
 
-        foreach (var kvp in board.prePlayMinions)
+        if (this == board.currMinions)
         {
-            if (creatures.Contains(kvp.Value.creature)) creatures.Remove(kvp.Value.creature);
-            if (creatures.Count == 0 || kvp.Key>=creatures.Count) creatures.Add(kvp.Value.creature);
-            else creatures.Insert(kvp.Key, kvp.Value.creature);
+            foreach (var kvp in board.prePlayMinions)
+            {
+                if (creatures.Contains(kvp.Value.creature)) creatures.Remove(kvp.Value.creature);
+                if (creatures.Count == 0 || kvp.Key >= creatures.Count) creatures.Add(kvp.Value.creature);
+                else creatures.Insert(kvp.Key, kvp.Value.creature);
+            }
         }
-
         //creatures.Sort((x, y) => x.minion.index.CompareTo(y.minion.index));
         //todo: change count or whatever
         float count = creatures.Count;
@@ -271,14 +284,12 @@ public class MinionBoard
         c.shadow.elevation = 2;
         if (delay>0)
         {
-            Debug.Log("del");
             c.floatEnabled = false;
             c.transform.localScale = Vector3.zero;
             board.animationManager.DelayedDrop(c, location, delay, this);
             return;
         }
 
-        Debug.Log("drop");
         c.floatEnabled = true;
         c.transform.localScale = Vector3.one * 1.15f;
         int F = 10;
