@@ -4,6 +4,12 @@ using UnityEngine;
 
 public partial class Match
 {
+    public enum Result
+    {
+        Win,
+        Lose,
+        Draw
+    }
     public enum Phase
     {
         NONE,
@@ -41,6 +47,7 @@ public partial class Match
         StartPhase(Phase.EndTurn, ref spell);
 
         BetweenTurnEvents(spell);
+        WinCheck();
     }
 
     public void BetweenTurnEvents(CastInfo spell)
@@ -63,6 +70,9 @@ public partial class Match
     public void StartSequenceStartTurn(CastInfo spell)
     {
         StartPhase(Phase.StartTurn, ref spell);
+
+        if (WinCheck()) return;
+
         StartSequenceDrawCard(spell);
     }
 
@@ -82,20 +92,26 @@ public partial class Match
         HandCard card = server.DrawCard(spell.match, spell.player);
         spell.card = card;
         StartPhase(Phase.OnDrawCard, ref spell);
+
+        WinCheck();
     }
     public void StartSequenceDiscardCard(CastInfo spell)
     {
         StartPhase(Phase.OnDiscardCard, ref spell);
+        WinCheck();
     }
     public void StartSequenceMillCard(CastInfo spell)
     {
         server.MillCard(spell.match, spell.player);
         StartPhase(Phase.OnMillCard, ref spell);
+        WinCheck();
     }
 
     public void StartSequenceAttackMinion(CastInfo spell)
     {
         StartPhase(Phase.BeforeAttack, ref spell);
+
+        if (WinCheck()) return;
 
         bool successfulAttack = server.ExecuteAttack(ref spell);
         ResolveTriggerQueue(ref spell);
@@ -106,10 +122,13 @@ public partial class Match
         }
 
         StartPhase(Phase.AfterAttack, ref spell);
+        WinCheck();
     }
     public void StartSequenceAttackFace(CastInfo spell)
     {
         StartPhase(Phase.BeforeAttackFace, ref spell);
+
+        if (WinCheck()) return;
 
         bool successfulAttack = server.ExecuteAttack(ref spell);
         ResolveTriggerQueue(ref spell);
@@ -120,6 +139,7 @@ public partial class Match
         }
 
         StartPhase(Phase.AfterAttackFace, ref spell);
+        WinCheck();
     }
     public void StartSequencePlaySpell(CastInfo spell)
     {
@@ -131,6 +151,7 @@ public partial class Match
 
         StartPhase(Phase.AfterPlayCard, ref spell);
         StartPhase(Phase.AfterPlaySpell, ref spell);
+        WinCheck();
     }
 
     public void StartSequencePlayMinion(CastInfo spell)
@@ -156,6 +177,7 @@ public partial class Match
 
         StartPhase(Phase.AfterPlayCard, ref spell);
         StartPhase(Phase.AfterPlayMinion, ref spell);
+        WinCheck();
     }
     public void StartSequenceSummonMinion(CastInfo spell, Card.Cardname card)
     {
@@ -167,11 +189,13 @@ public partial class Match
         StartPhase(Phase.OnSummonMinion, ref spell);
 
         StartPhase(Phase.AfterSummonMinion, ref spell);
+        WinCheck();
     }
     public void StartSequenceHeroPower(CastInfo spell)
     {
         server.CastSpell(spell);
         StartPhase(Phase.AfterHeroPower, ref spell);
+        WinCheck();
     }
     public void TriggerMinion(Trigger.Type type, Minion target)
     {
@@ -380,5 +404,27 @@ public partial class Match
         //=====================================
         UpdateStats();
         //todo: check gameover
+    }
+
+    bool WinCheck()
+    {
+        if (players[0].health<=0 && players[1].health<=0)
+        {
+            //Draw
+            server.EndMatch(this,null);
+            return true;
+        }
+        else if (players[0].health<=0)
+        {
+            server.EndMatch(this,players[1]);
+            return true;
+        }
+        else if (players[1].health<=0)
+        {
+            server.EndMatch(this,players[0]);
+            return true;
+        }
+
+        return false;
     }
 }

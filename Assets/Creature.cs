@@ -12,11 +12,12 @@ public class Creature : MonoBehaviour
         x = x * 10;
         battlecrySprite.sortingOrder = x - 1;
         spriteRenderer.sortingOrder = x+1;
+        icon.sortingOrder = x+2;
         highlight.sortingOrder = x+1;
         tauntSprite.sortingOrder = x;
-        shieldSprite.sortingOrder = x+2;
-        triggerSprite.sortingOrder = x+3;
-        deathrattleSprite.sortingOrder = x+3;
+        shieldSprite.sortingOrder = x+3;
+        triggerSprite.sortingOrder = x+4;
+        deathrattleSprite.sortingOrder = x+4;
         testname.GetComponent<MeshRenderer>().sortingOrder = x + 3;
         health.GetComponent<MeshRenderer>().sortingOrder = x + 3;
         damage.GetComponent<MeshRenderer>().sortingOrder = x + 3;
@@ -30,6 +31,7 @@ public class Creature : MonoBehaviour
         battlecrySprite.sortingLayerName = x;
         highlight.sortingLayerName = x;
         spriteRenderer.sortingLayerName = x;
+        icon.sortingLayerName = x;
         tauntSprite.sortingLayerName = x;
         shieldSprite.sortingLayerName = x;
         triggerSprite.sortingLayerName = x;
@@ -41,6 +43,7 @@ public class Creature : MonoBehaviour
     public TMP_Text testname;
     public TMP_Text health, damage;
     public SpriteRenderer spriteRenderer;
+    public SpriteRenderer icon;
     public DropShadow shadow;
     public SpriteRenderer tauntSprite;
     public SpriteRenderer shieldSprite;
@@ -58,6 +61,7 @@ public class Creature : MonoBehaviour
     public Board board;
 
     public Minion minion;
+    public Sprite[] frameSprites;
     public int index => minion.index;
     public int order = 0;
     public bool preview = false;
@@ -69,12 +73,15 @@ public class Creature : MonoBehaviour
         SetSortingOrder(minion.index);
 
         Database.CardInfo info = Database.GetCardData(c.card);
-        testname.text = info.name;
+        testname.text = "";// info.name;
 
         prevDmg = c.damage;
         prevHP = c.health;
         health.text = c.health.ToString();
         damage.text = c.damage.ToString();
+
+        spriteRenderer.sprite = frameSprites[(int)info.classType];
+        icon.sprite = board.cardObject.GetComponent<Card>().cardSprites[(int)c.card];
 
         CheckAuras();
         CheckTriggers();

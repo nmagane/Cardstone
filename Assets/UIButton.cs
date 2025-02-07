@@ -11,6 +11,8 @@ public class UIButton : MonoBehaviour
 
         SubmitMulligan,
         EndTurn,
+
+        RestartScene,
     }
     public AudioClip[] sounds;
     public SpriteRenderer bg;
@@ -70,6 +72,11 @@ public class UIButton : MonoBehaviour
         board.StartMatchmaking();
         Destroy(this.gameObject);
     }
+    public void RestartScene()
+    {
+        board.RestartScene();
+        Destroy(this.gameObject);
+    }
     
 
 
@@ -127,6 +134,9 @@ public class UIButton : MonoBehaviour
                 break;
             case func.SubmitMulligan:
                 SubmitMulligan();
+                break;
+            case func.RestartScene:
+                RestartScene();
                 break;
             default:
                 Debug.LogError("NO BUTTON FUNCTION");

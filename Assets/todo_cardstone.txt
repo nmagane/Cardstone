@@ -9,13 +9,8 @@ todo:
 	
 
 
-start and end turn confirms to opponent players? //probably not needed
 
-
-note: minion and spell cards look different.
-
-addcard message to client
-
+addcard message to client for stuff like sap
 
 auras in hover tooltip
 replace all fade effects with some shader (FAR FUTURE TODO)
@@ -25,26 +20,32 @@ a bit of rotation on creeature anim facing the direction of attack?
 different tooltip shape for hero power hover
 creature floating should hit scale vector3.one?
 creatures should be limited in ordercreatures to board edges, this is mostly because previews can make them go wider than 7 minion spaces //THIS IS FIXED?
-
+//move card animations to database.animations? static functions?
 --board.phaseOngoing bool or something to disable input until server sends "phase over" message?
 deathrattle/spawned source minions should pop up lerpzoom, not drop in
+FIX REPEAT CODE IN ANIMATOINMANAGER.CARDS?
 
-card art for each card
-creature class color
+
+enemy mulligan anim (just move up down)
 skulls on characters when attack is going to kill
-gameover screen -> reset scene button?
 concede button
-
-//move card animations to database.animations? static functions?
-
-damage projectiles for flame imp and soulfire
-(REPEAT CODE. FIX THIS EVENTUALLY)
-
 fix creatures swapping position too early before the one before it dies.
+fix prev battlecry dropping
+
 
 ===============================================
 =====================DONE======================
 ===============================================
+start and end turn confirms to opponent players? //probably not needed
+
+
+note: minion and spell cards look different.
+gameover screen -> reset scene button?
+
+damage projectiles for flame imp and soulfire
+
+card art for each card
+creature class color
 
 summoning ally minions should happen client side first? (future todo)
 

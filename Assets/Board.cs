@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using TMPro;
 
 public partial class Board : MonoBehaviour
 {
@@ -48,6 +49,7 @@ public partial class Board : MonoBehaviour
     public Deck enemyDeck;
     public int currMana => mana.curr;
 
+    public TMP_Text gameoverText;
     /*
     public int currMana = 0;
     public int maxMana = 0;
@@ -136,6 +138,10 @@ public partial class Board : MonoBehaviour
             case Server.MessageType._TEST:
                 break;
 
+            case Server.MessageType.EndGame:
+                Match.Result endgameResult = (Match.Result)message.GetInt();
+                EndGame(endgameResult);
+                break;
             case Server.MessageType.StartSequence:
                 disableInput = true;
                 break;
@@ -636,7 +642,7 @@ public partial class Board : MonoBehaviour
         
         if (Input.GetKey(KeyCode.BackQuote))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            RestartScene();
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -661,6 +667,11 @@ public partial class Board : MonoBehaviour
     private void FixedUpdate()
     {
         client.Update();
+    }
+
+    public void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
 }

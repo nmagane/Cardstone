@@ -50,6 +50,7 @@ public partial class Board
         currHand.EndMulligan();
         waitingEnemyMulliganMessage.transform.localScale = Vector3.one;
         mulliganButton.transform.localPosition += new Vector3(0, -10);
+        mulliganButton.transform.localScale = Vector3.zero;
 
         VisualInfo anim = new VisualInfo();
         anim.type = Server.MessageType.ConfirmMulligan;
@@ -68,6 +69,18 @@ public partial class Board
         VisualInfo anim = new VisualInfo();
         anim.type = Server.MessageType.StartGame;
         anim.isFriendly = isTurn;
+        QueueAnimation(anim);
+    }
+
+    void EndGame(Match.Result result)
+    {
+        disableInput = true;
+        currTurn = false;
+        CheckHighlights();
+
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.EndGame;
+        anim.ints.Add((int)result);
         QueueAnimation(anim);
     }
 

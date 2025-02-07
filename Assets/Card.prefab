@@ -256,6 +256,90 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 1285298382799778340}
   m_maskType: 0
+--- !u!1 &2328540679109350974
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7749457406982351782}
+  - component: {fileID: 3196792686632191057}
+  m_Layer: 0
+  m_Name: art
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7749457406982351782
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2328540679109350974}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.875, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1084335336091685025}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &3196792686632191057
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2328540679109350974}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -1546346851
+  m_SortingLayer: 9
+  m_SortingOrder: 3
+  m_Sprite: {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2.1875, y: 2.1875}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &2472743979808240548
 GameObject:
   m_ObjectHideFlags: 0
@@ -750,12 +834,44 @@ MonoBehaviour:
     BATTLECRY: 0
     played: 0
   shadow: {fileID: 2670244061852006825}
+  cardSprites:
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: 60fa83986848b6644b93b11ea6542402, type: 3}
+  - {fileID: 21300000, guid: 4c82bea398e019d4d96ac1bb11bad5a2, type: 3}
+  - {fileID: 21300000, guid: 8ae431af2c5929c41beb5f34c0f9447b, type: 3}
+  - {fileID: 21300000, guid: 7edd53d074adbd849b89255985ffe1b4, type: 3}
+  - {fileID: 21300000, guid: 517a6b2f2a3c7e84e9d47df7e1994a63, type: 3}
+  - {fileID: 21300000, guid: f9c902c9571a7584791565f6094c5a9b, type: 3}
+  - {fileID: 21300000, guid: c3a18c57b0b7b044ba4b5ed410ad794e, type: 3}
+  - {fileID: 21300000, guid: 18e311059a46a0e4daf72cc12ae09aec, type: 3}
+  - {fileID: 21300000, guid: 34df743f97ae20345a39192f4283e33d, type: 3}
+  - {fileID: 21300000, guid: bbf8a3fcbcd1edb4fabe9fb6f3841237, type: 3}
+  - {fileID: 21300000, guid: ca5a97706bbc3414d97b73a6f2cad9bb, type: 3}
+  - {fileID: 21300000, guid: 893abb3279b5d8d4aa6d9aedfb776f7f, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: 76426f7254055c843ac0d2e822c502dc, type: 3}
+  - {fileID: 21300000, guid: d5559e299f85b7f48a13389d42a1d504, type: 3}
+  - {fileID: 21300000, guid: c8f7a59a5c984e34f8c85e57bceb0c46, type: 3}
+  - {fileID: 21300000, guid: a119986025af1934794e51cf6a41ceec, type: 3}
+  - {fileID: 21300000, guid: aaf9d853b7985ae429643096fee93c47, type: 3}
+  - {fileID: 21300000, guid: 8f8c9f497168a334da4508c215b9bfe0, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
   name: {fileID: 8764927573253110649}
   text: {fileID: 7809844254190655317}
   manaCost: {fileID: 5503984478277702751}
   health: {fileID: 6397873228368202551}
   damage: {fileID: 477049995625680310}
-  icon: {fileID: 7187123306332122834}
+  frame: {fileID: 7187123306332122834}
+  icon: {fileID: 3196792686632191057}
   back: {fileID: 4317927336061253282}
   mulliganMark: {fileID: 1743571273208037112}
   highlight: {fileID: 5105641997196815704}
@@ -766,11 +882,19 @@ MonoBehaviour:
   starter: 0
   noReturn: 0
   minionCards:
-  - {fileID: 21300000, guid: ce8f396c9d1f74948aa78c817288de56, type: 3}
-  - {fileID: 21300000, guid: dc75399312dfcd849b2d8250e90b0926, type: 3}
+  - {fileID: 21300000, guid: eb137372216a87648b328be2a8f9eb83, type: 3}
+  - {fileID: 21300000, guid: 036d55f16dcf47d4ea4830daa3a51520, type: 3}
+  - {fileID: 21300000, guid: 036d55f16dcf47d4ea4830daa3a51520, type: 3}
+  - {fileID: 21300000, guid: 036d55f16dcf47d4ea4830daa3a51520, type: 3}
+  - {fileID: 21300000, guid: 036d55f16dcf47d4ea4830daa3a51520, type: 3}
+  - {fileID: 21300000, guid: 036d55f16dcf47d4ea4830daa3a51520, type: 3}
+  - {fileID: 21300000, guid: 036d55f16dcf47d4ea4830daa3a51520, type: 3}
+  - {fileID: 21300000, guid: 036d55f16dcf47d4ea4830daa3a51520, type: 3}
+  - {fileID: 21300000, guid: 036d55f16dcf47d4ea4830daa3a51520, type: 3}
+  - {fileID: 21300000, guid: 036d55f16dcf47d4ea4830daa3a51520, type: 3}
   spellCards:
-  - {fileID: 21300000, guid: f7b51ba1ae27d75458f0c0ae9dea2e99, type: 3}
-  - {fileID: 21300000, guid: 35bea891e6fb56941b39ec445078d795, type: 3}
+  - {fileID: 21300000, guid: e32d87570ad5fb14f8886b2264aea62d, type: 3}
+  - {fileID: 21300000, guid: 4684abf4edeb36f4b809dcec303f344d, type: 3}
   - {fileID: 21300000, guid: f7b51ba1ae27d75458f0c0ae9dea2e99, type: 3}
   - {fileID: 21300000, guid: f7b51ba1ae27d75458f0c0ae9dea2e99, type: 3}
   - {fileID: 21300000, guid: f7b51ba1ae27d75458f0c0ae9dea2e99, type: 3}
@@ -1293,6 +1417,7 @@ Transform:
   - {fileID: 101563518004322516}
   - {fileID: 7751850323966045925}
   - {fileID: 459709971042808491}
+  - {fileID: 7749457406982351782}
   m_Father: {fileID: 8767642050265229191}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1337,7 +1462,7 @@ SpriteRenderer:
   m_SortingLayerID: -1546346851
   m_SortingLayer: 9
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: ce8f396c9d1f74948aa78c817288de56, type: 3}
+  m_Sprite: {fileID: 21300000, guid: eb137372216a87648b328be2a8f9eb83, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

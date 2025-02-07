@@ -85,6 +85,8 @@ public partial class Server : MonoBehaviour
 
         Concede,
 
+        EndGame,
+
         StartSequence,
         EndSequence,
         _TEST
@@ -275,6 +277,33 @@ public partial class Server : MonoBehaviour
         matchList.Add(match);
         DrawStarterHands(match);
         currMatchID += 1;
+    }
+    public void EndMatch(Match match, Player winner)
+    {
+        CustomMessage message0 = CreateMessage(MessageType.EndGame);
+        CustomMessage message1 = CreateMessage(MessageType.EndGame);
+
+        if (winner==null)
+        {
+            message0.AddInt((int)Match.Result.Draw);
+            message1.AddInt((int)Match.Result.Draw);
+        }
+        else if (winner == match.players[0])
+        {
+            message0.AddInt((int)Match.Result.Win);
+            message1.AddInt((int)Match.Result.Lose);
+        }
+        if (winner== match.players[1])
+        {
+            message0.AddInt((int)Match.Result.Lose);
+            message1.AddInt((int)Match.Result.Win);
+        }
+
+        SendMessage(message0, match.players[0]);
+        SendMessage(message1, match.players[1]);
+
+        matchList.Remove(match);
+        currentMatches.Remove(match.matchID);
     }
     public enum Turn
     {

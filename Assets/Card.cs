@@ -24,17 +24,20 @@ public class Card : MonoBehaviour
             manaCost.color = new Color(manaCost.color.r, manaCost.color.g, manaCost.color.b, _alpha);
             health.color = new Color(health.color.r, health.color.g, health.color.b, _alpha);
             damage.color = new Color(damage.color.r, damage.color.g, damage.color.b, _alpha);
-            icon.color = new Color(icon.color.r, icon.color.g, icon.color.b, _alpha);
+            frame.color = new Color(frame.color.r, frame.color.g, frame.color.b, _alpha);
+            icon.color = new Color(frame.color.r, frame.color.g, frame.color.b, _alpha+0.1f);
             back.color = new Color(back.color.r, back.color.g, back.color.b, _alpha);
 
         }
     }
+    public Sprite[] cardSprites;
 
     public new TMP_Text name;
     public TMP_Text text;
     public TMP_Text manaCost;
     public TMP_Text health;
     public TMP_Text damage;
+    public SpriteRenderer frame;
     public SpriteRenderer icon;
     public SpriteRenderer back;
     public SpriteRenderer mulliganMark;
@@ -103,7 +106,7 @@ public class Card : MonoBehaviour
 
     void Awake()
     {
-        shadow = icon.GetComponent<DropShadow>();
+        shadow = frame.GetComponent<DropShadow>();
     }
 
     public void Set(HandCard c)
@@ -111,7 +114,8 @@ public class Card : MonoBehaviour
         card = c;
         if (c.card == Cardname.Cardback)
         {
-            icon.sprite = cardback;
+            frame.sprite = cardback;
+            icon.sprite = null;
             name.text = "";
             text.text = "";
             manaCost.text = "";
@@ -120,6 +124,7 @@ public class Card : MonoBehaviour
             return;
         }
         gameObject.name = c.card.ToString();
+        icon.sprite = cardSprites[(int)c.card];
         Database.CardInfo cardInfo = Database.GetCardData(c.card);
         name.text = cardInfo.name;
         text.text = cardInfo.text;
@@ -128,14 +133,14 @@ public class Card : MonoBehaviour
         {
             damage.text = c.damage.ToString();
             health.text = c.health.ToString();
-            icon.sprite = minionCards[(int)cardInfo.classType];
+            frame.sprite = minionCards[(int)cardInfo.classType];
             highlight.sprite = highlightMinion;
         }
         if (c.SPELL)
         {
             damage.text = "";
             health.text = "";
-            icon.sprite = spellCards[(int)cardInfo.classType]; ;
+            frame.sprite = spellCards[(int)cardInfo.classType]; ;
             highlight.sprite = highlightSpell;
         }
     }
@@ -150,7 +155,7 @@ public class Card : MonoBehaviour
     public void SetFlipped()
     {
         back.enabled = true;
-        icon.transform.localEulerAngles = new Vector3(0, 90, 0);
+        frame.transform.localEulerAngles = new Vector3(0, 90, 0);
     }
     public void Flip()
     {
@@ -223,8 +228,8 @@ public class Card : MonoBehaviour
         ////START CAST
         
         GetComponent<BoxCollider2D>().enabled = false;
-        float f = icon.transform.localPosition.y;
-        icon.transform.localPosition = Vector3.zero;
+        float f = frame.transform.localPosition.y;
+        frame.transform.localPosition = Vector3.zero;
         transform.localPosition += new Vector3(0, f);
 
         if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED == false)
@@ -447,9 +452,9 @@ public class Card : MonoBehaviour
 
     public IEnumerator dragger()
     {
-        icon.transform.localScale = Vector3.one * 1.25f;
+        frame.transform.localScale = Vector3.one * 1.25f;
         //icon.transform.localPosition += new Vector3(0, -2);
-        icon.transform.localEulerAngles = Vector3.zero;
+        frame.transform.localEulerAngles = Vector3.zero;
         transform.localEulerAngles = Vector3.zero;
         GetComponent<BoxCollider2D>().enabled = false;
         SetElevated(true);
@@ -510,7 +515,8 @@ public class Card : MonoBehaviour
     public void SetSortingOrder(int x)
     {
         x = x * 10;
-        icon.sortingOrder = x;
+        frame.sortingOrder = x;
+        icon.sortingOrder = x+1;
         back.sortingOrder = x;
         highlight.sortingOrder = x;
         name.GetComponent<MeshRenderer>().sortingOrder = x + 1;
@@ -523,6 +529,7 @@ public class Card : MonoBehaviour
     {
         string x = elevated ? "cardElevated" : "card";
         string s = elevated ? "shadowCardElevated" : "shadowCard";
+        frame.sortingLayerName = x;
         icon.sortingLayerName = x;
         back.sortingLayerName = x;
         highlight.sortingLayerName = x;
@@ -542,9 +549,9 @@ public class Card : MonoBehaviour
         if (noReturn) return;
         if (board.currHand.mulliganMode != Hand.MulliganState.Done) return;
         hov = true;
-        icon.transform.localScale = Vector3.one * 1.55f;
-        icon.transform.localEulerAngles = -handRot;
-        board.animationManager.LerpTo(icon.gameObject, new Vector3(0,(-10-transform.localPosition.y)+2.8f), 5, 0);
+        frame.transform.localScale = Vector3.one * 1.55f;
+        frame.transform.localEulerAngles = -handRot;
+        board.animationManager.LerpTo(frame.gameObject, new Vector3(0,(-10-transform.localPosition.y)+2.8f), 5, 0);
 
         SetElevated(true);
         shadow.elevation = 1f;
@@ -557,9 +564,9 @@ public class Card : MonoBehaviour
         if (board.currHand.mulliganMode != Hand.MulliganState.Done) return;
         if (!hov) return;
         hov = false;
-        icon.transform.localScale = Vector3.one;
-        icon.transform.localEulerAngles = Vector3.zero;
-        board.animationManager.LerpTo(icon.gameObject, Vector3.zero, 5, 0);
+        frame.transform.localScale = Vector3.one;
+        frame.transform.localEulerAngles = Vector3.zero;
+        board.animationManager.LerpTo(frame.gameObject, Vector3.zero, 5, 0);
         shadow.elevation = 0.1f;
 
         SetElevated(false);
@@ -569,11 +576,11 @@ public class Card : MonoBehaviour
         if (noReturn) return;
         if (board.currHand.cardObjects.ContainsKey(card) == false) return;
         GetComponent<BoxCollider2D>().enabled = true;
-        board.animationManager.EndMovement(icon.gameObject);
+        board.animationManager.EndMovement(frame.gameObject);
         board.currHand.MoveCard(this, handPos, handRot);
-        icon.transform.localScale = Vector3.one;
-        icon.transform.localEulerAngles = Vector3.zero;
-        icon.transform.localPosition = Vector3.zero;
+        frame.transform.localScale = Vector3.one;
+        frame.transform.localEulerAngles = Vector3.zero;
+        frame.transform.localPosition = Vector3.zero;
         SetElevated(false);
     }
     public void ElevateTo(float v,float f)
@@ -605,7 +612,7 @@ public class Card : MonoBehaviour
 
             for (float i = 0; i < frames; i++)
             {
-                icon.transform.localEulerAngles = Vector3.Lerp(OP, Vector3.zero, (i + 1) / frames);
+                frame.transform.localEulerAngles = Vector3.Lerp(OP, Vector3.zero, (i + 1) / frames);
                 yield return AnimationManager.Wait(1);
             }
         }
@@ -613,7 +620,7 @@ public class Card : MonoBehaviour
         {
             for (float i = 0; i < frames; i++)
             {
-                icon.transform.localEulerAngles = Vector3.Lerp(Vector3.zero, OP, (i + 1) / frames);
+                frame.transform.localEulerAngles = Vector3.Lerp(Vector3.zero, OP, (i + 1) / frames);
                 yield return AnimationManager.Wait(1);
             }
 

@@ -63,6 +63,9 @@ public partial class Board
             case Server.MessageType.StartGame:
                 return StartGameVisual(message);
                 
+            case Server.MessageType.EndGame:
+                return EndGameVisual(message);
+                
             case Server.MessageType.StartTurn:
                 return StartTurnVisual(message);
                 
@@ -149,7 +152,13 @@ public partial class Board
         currTurn = message.isFriendly;
         return null;
     }
-
+    Coroutine EndGameVisual(VisualInfo message)
+    {
+        Match.Result result = (Match.Result)message.ints[0];
+        gameoverText.text = result == Match.Result.Draw ? "DRAW." : "YOU " + result.ToString().ToUpper()+".";
+        
+        return animationManager.LerpTo(this.gameObject,new Vector3(this.transform.position.x,40),10,1);
+    }
     Coroutine StartTurnVisual(VisualInfo message)
     {
         if (!message.isFriendly)
