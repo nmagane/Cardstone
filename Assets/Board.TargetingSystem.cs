@@ -321,7 +321,7 @@ public partial class Board
             Vector3 mPos = Card.GetMousePos();
             for (int i = 0; i < Arrow.Count; i++)
             {
-                Arrow[i].transform.position = Vector3.Lerp(pos.transform.position, mPos, (i+1) / ((float)Arrow.Count));
+                Arrow[i].transform.position = Vector3.Lerp(pos.transform.position, mPos, (i+0.7f) / ((float)Arrow.Count));
                 if (i == Arrow.Count - 1)
                 {
                     float x1 = Arrow[i - 1].transform.position.x; float x2 = Arrow[i - 2].transform.position.x;
@@ -338,6 +338,7 @@ public partial class Board
                         Arrow[i].GetComponent<SpriteRenderer>().flipY = false;
                     }
                     Arrow[i].transform.localEulerAngles = new Vector3(0, 0, angle);
+                    //Arrow[i].transform.position = Vector3.Lerp(pos.transform.position, mPos, (i + 1) / ((float)Arrow.Count)
                 }
             }
 

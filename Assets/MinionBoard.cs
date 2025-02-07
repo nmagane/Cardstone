@@ -277,7 +277,12 @@ public class MinionBoard
 
     public void MoveCreature(Creature c, Vector3 location)
     {
-        board.animationManager.LerpTo(c, location, 5, 0.1f);
+        float bounce = 0.1f;
+
+        if (Vector3.Distance(c.transform.localPosition, location) < dist) 
+            bounce = 0;
+
+        board.animationManager.LerpTo(c, location, 5, bounce);
     }
     public void DropCreature(Creature c, Vector3 location, int delay = 10)
     {

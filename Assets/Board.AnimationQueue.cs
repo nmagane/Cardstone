@@ -228,7 +228,7 @@ public partial class Board
         {
             if (currMinions.previewMinion.index == message.index) return null;
         }
-        return StartCoroutine(Wait(10));
+        return StartCoroutine(Wait(8));
     }
     Coroutine DiscardVisual(VisualInfo message)
     {

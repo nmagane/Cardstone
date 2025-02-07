@@ -121,6 +121,7 @@ public class Card : MonoBehaviour
             manaCost.text = "";
             damage.text = "";
             health.text = "";
+            SetElevated(false);
             return;
         }
         gameObject.name = c.card.ToString();
@@ -529,6 +530,7 @@ public class Card : MonoBehaviour
     {
         string x = elevated ? "cardElevated" : "card";
         string s = elevated ? "shadowCardElevated" : "shadowCard";
+        if (card.card == Cardname.Cardback && !elevated) s = "shadow";
         frame.sortingLayerName = x;
         icon.sortingLayerName = x;
         back.sortingLayerName = x;

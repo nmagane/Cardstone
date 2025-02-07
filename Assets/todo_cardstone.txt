@@ -32,10 +32,15 @@ get a new font (maybe just numbers?) this shit sucks
 
 disconnect handling (end game immediately?)
 
+
+menu with playerid setting name/textbox 
+
 ===============================================
 =====================DONE======================
 ===============================================
 	
+no bounce in place
+
 concede button
 
 skulls on characters when attack is going to kill
