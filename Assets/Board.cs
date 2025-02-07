@@ -669,9 +669,41 @@ public partial class Board : MonoBehaviour
         client.Update();
     }
 
+
+    //todo: make UImanager monobehavior/class
     public void RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+    public GameObject menu;
+    public void ToggleMenu()
+    {
+        menu.transform.localScale = menu.transform.localScale == Vector3.zero ? Vector3.one : Vector3.zero;
+        if (menu.transform.localScale == Vector3.one)
+        {
+            StartCoroutine(menuCancel());
+        }
+    }
+    IEnumerator menuCancel()
+    {
+        menu.transform.localPosition += new Vector3(0, 0.1f);
+        yield return null;
+        menu.transform.localPosition += new Vector3(0, 0.1f);
+        yield return null;
+        menu.transform.localPosition += new Vector3(0, -0.1f);
+        yield return null;
+        menu.transform.localPosition += new Vector3(0, -0.1f);
+        yield return null;
 
+        while (true)
+        {
+            if (Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1) || Input.GetMouseButtonUp(2) || Input.GetMouseButtonDown(1))
+            {
+                menu.transform.localScale = Vector3.zero;
+                break;
+            }
+            yield return null;
+        }
+
+    }
 }

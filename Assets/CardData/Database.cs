@@ -15,6 +15,7 @@ public partial class Database
         public int manaCost=1;
         public int damage=1;
         public int health=1;
+        public int spellDamage = 0;
 
         public bool SPELL = false;
         public bool MINION = false;
@@ -125,6 +126,7 @@ public partial class Database
         c.name = "Ping";
         c.text = "Deal 1 damage.";
         c.manaCost = 2;
+        c.spellDamage = 1;
         c.SPELL = true;
         c.TARGETED = true;
         c.eligibleTargets = Board.EligibleTargets.AllCharacters;

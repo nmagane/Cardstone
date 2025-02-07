@@ -129,24 +129,25 @@ public partial class Server : MonoBehaviour
 
     public void OnMessageReceived(CustomMessage message)//public void OnMessageReceived(object sender, MessageReceivedEventArgs eventArgs)
     {
-        MessageType messageID = message.type;//(MessageType)eventArgs.MessageId;
-        int clientID = message.clientID;//eventArgs.FromConnection.Id;
-        //Message originalMessage = eventArgs.Message;
-        ushort count = message.order;//.GetUShort();
+        MessageType messageID = message.type;
+        int clientID = message.clientID;
+        ushort count = message.order;
         //CustomMessage message;
         bool orderedMessage = false;
         //UNORDERED MESSAGES, OUT OF GAME (NO MATCH ID ATTACHED)
         switch (messageID)
         {
             case MessageType.Matchmaking:
-                //message = CopyMessage(originalMessage, messageID);
                 ParseMessage(messageID, clientID, message, 0);
                 orderedMessage = false;
                 break;
 
             case MessageType.SubmitMulligan:
-                //ulong matchID = message.GetULong();
-                //message = CopyMessage(originalMessage, messageID);
+                ParseMessage(messageID, clientID, message, 0);
+                orderedMessage = false;
+                break;
+                
+            case MessageType.Concede:
                 ParseMessage(messageID, clientID, message, 0);
                 orderedMessage = false;
                 break;
@@ -218,6 +219,11 @@ public partial class Server : MonoBehaviour
                 bool heroIsHero = message.GetBool();
                 CastHeroPower(matchID,clientID,heroPowerPlayerID,heroPower, heroPowerTargetInd, heroPowerFriendly, heroIsHero);
                 break;
+            case MessageType.Concede:
+                ulong concedeMatchID = message.GetULong();
+                ulong concedePlayerID = message.GetULong();
+                ConcedeMatch(concedeMatchID, clientID, concedePlayerID);
+                break;
         }
         
     }
@@ -277,6 +283,27 @@ public partial class Server : MonoBehaviour
         matchList.Add(match);
         DrawStarterHands(match);
         currMatchID += 1;
+    }
+    public void ConcedeMatch(ulong matchID,int clientID, ulong playerID)
+    {
+        if (currentMatches.ContainsKey(matchID) == false) return;
+        Match match = currentMatches[matchID];
+        int p = -1;
+        if (match.players[0].connection.playerID == playerID)
+        {
+            p = 0;
+        }
+        if (match.players[1].connection.playerID==playerID)
+        {
+            p = 1;
+        }
+        Debug.Log(p);
+        if (p == -1) return;
+        PlayerConnection player = match.players[p].connection;
+        PlayerConnection opponent = match.players[match.Opponent(p)].connection;
+        if (player.clientID != clientID || player.playerID != playerID) return;
+
+        EndMatch(match, match.players[p].opponent);
     }
     public void EndMatch(Match match, Player winner)
     {

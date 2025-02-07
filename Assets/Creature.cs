@@ -278,6 +278,8 @@ public class Creature : MonoBehaviour
     public void ShowSkull()
     {
         skull.enabled = true;
+        skull.transform.localScale = Vector3.one * 1.5f;
+        board.animationManager.LerpZoom(skull.gameObject, Vector3.one * 2, 5, 0.3f);
     }
     public void HideSkull()
     {

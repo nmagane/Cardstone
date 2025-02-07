@@ -40,6 +40,14 @@ public partial class Board
 
         SendMessage(message);
     }
+    public void SubmitConcede()
+    {
+        Server.CustomMessage message = CreateMessage(Server.MessageType.Concede);
+        message.AddULong(currentMatchID);
+        message.AddULong(playerID);
+
+        SendMessage(message,true);
+    }
 
     public void PlayCard(HandCard card, int target = -1, int position = -1, bool friendlySide = false, bool isHero = false)
     {

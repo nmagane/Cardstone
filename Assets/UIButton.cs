@@ -8,11 +8,12 @@ public class UIButton : MonoBehaviour
     public enum func
     {
         StartMatchmaking,
-
         SubmitMulligan,
         EndTurn,
-
         RestartScene,
+        Concede,
+
+        Menu,
     }
     public AudioClip[] sounds;
     public SpriteRenderer bg;
@@ -65,6 +66,14 @@ public class UIButton : MonoBehaviour
     public void EndTurn()
     {
         board.SubmitEndTurn();
+    }
+    public void Concede()
+    {
+        board.SubmitConcede();
+    }
+    public void Menu()
+    {
+        board.ToggleMenu();
     }
 
     public void StartMatchmaking()
@@ -137,6 +146,12 @@ public class UIButton : MonoBehaviour
                 break;
             case func.RestartScene:
                 RestartScene();
+                break;
+            case func.Concede:
+                Concede();
+                break;
+            case func.Menu:
+                Menu();
                 break;
             default:
                 Debug.LogError("NO BUTTON FUNCTION");

@@ -360,6 +360,7 @@ public partial class Board
     }
 
 
+    //TODO: factor in spell power for skull
     public void ShowSkulls(Creature target)
     {
         if (targetMode == TargetMode.Attack)
@@ -377,7 +378,28 @@ public partial class Board
         }
         if (targetMode == TargetMode.Spell || targetMode == TargetMode.Battlecry || targetMode == TargetMode.HeroPower)
         {
-
+            if (Database.GetCardData(targetingCard.card).spellDamage >= target.minion.health)
+            {
+                if (target.minion.HasAura(Aura.Type.Shield) == false)
+                    target.ShowSkull();
+            }
+        }
+    }
+    public void ShowSkulls(Hero target)
+    {
+        if (targetMode == TargetMode.Attack)
+        {
+            if (targetingMinion.damage >= target.health)
+            {
+                  target.ShowSkull();
+            }
+        }
+        if (targetMode == TargetMode.Spell || targetMode == TargetMode.Battlecry || targetMode == TargetMode.HeroPower)
+        {
+            if (Database.GetCardData(targetingCard.card).spellDamage >= target.health)
+            {
+                 target.ShowSkull();
+            }
         }
     }
     public void HideSkulls()
@@ -386,5 +408,7 @@ public partial class Board
             c.HideSkull();
         foreach (Creature c in enemyMinions.minionObjects.Values)
             c.HideSkull();
+        currHero.HideSkull();
+        enemyHero.HideSkull();
     }
 }

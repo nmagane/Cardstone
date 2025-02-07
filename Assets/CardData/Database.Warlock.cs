@@ -6,7 +6,7 @@
         CardInfo c = new();
 
         c.classType = Card.Class.Warlock;
-        c.name = "Lifetap";
+        c.name = "Life Tap";
         c.text = "Take 2 damage. Draw a card.";
         c.manaCost = 2;
         c.SPELL = true;
@@ -23,6 +23,7 @@
         c.name = "Soulfire";
         c.text = "Deal 4 damage. Discard a random card.";
         c.manaCost = 0;
+        c.spellDamage = 4;
         c.SPELL = true;
         c.TARGETED = true;
         c.eligibleTargets = Board.EligibleTargets.AllCharacters;

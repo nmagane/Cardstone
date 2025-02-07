@@ -27,16 +27,19 @@ FIX REPEAT CODE IN ANIMATOINMANAGER.CARDS?
 fix creatures swapping position too early before the one before it dies.
 	This issue happens when ordercreatures is called when minion indexes changed too much in the backend
 
-	
-skulls on characters when attack is going to kill
-concede button
 
 get a new font (maybe just numbers?) this shit sucks
+
+disconnect handling (end game immediately?)
 
 ===============================================
 =====================DONE======================
 ===============================================
+	
+concede button
 
+skulls on characters when attack is going to kill
+	add bounce to this.
 enemy mulligan anim (just move up down)
 
 add visuals for silence?

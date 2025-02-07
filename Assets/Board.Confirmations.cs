@@ -31,6 +31,7 @@ public partial class Board
     public void SendMessage(Server.CustomMessage message, bool UNORDERED = false)
     {
         //todo: not sure if this check is ok. are there ever messages sent on enemy turn?
+        //response: yes, concede message.
         if (UNORDERED == false && currTurn == false)
             return;
         message.order = matchMessageOrder;

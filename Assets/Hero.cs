@@ -61,6 +61,17 @@ public class Hero : MonoBehaviour
     {
         highlight.enabled = false;
     }
+    public SpriteRenderer skull;
+    public void ShowSkull()
+    {
+        skull.enabled = true;
+        skull.transform.localScale = Vector3.one * 1.5f;
+        board.animationManager.LerpZoom(skull.gameObject, Vector3.one * 2, 5, 0.3f);
+    }
+    public void HideSkull()
+    {
+        skull.enabled = false;
+    }
     void Update()
     {
         
@@ -102,11 +113,18 @@ public class Hero : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        if (board.targeting && highlight.enabled) //board.targetingHero !=this
+        {
+            board.ShowSkulls(this);
+        }
         board.hoveredHero = this;
     }
     private void OnMouseExit()
     {
         board.hoveredHero = null;
+
+        if (highlight.enabled)
+            board.HideSkulls();
     }
     public Hero()
     {

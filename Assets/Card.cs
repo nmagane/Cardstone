@@ -25,7 +25,7 @@ public class Card : MonoBehaviour
             health.color = new Color(health.color.r, health.color.g, health.color.b, _alpha);
             damage.color = new Color(damage.color.r, damage.color.g, damage.color.b, _alpha);
             frame.color = new Color(frame.color.r, frame.color.g, frame.color.b, _alpha);
-            icon.color = new Color(frame.color.r, frame.color.g, frame.color.b, _alpha+0.1f);
+            icon.color = new Color(frame.color.r, frame.color.g, frame.color.b, _alpha);
             back.color = new Color(back.color.r, back.color.g, back.color.b, _alpha);
 
         }
