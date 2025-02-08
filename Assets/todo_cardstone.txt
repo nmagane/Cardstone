@@ -30,6 +30,7 @@ fix creatures swapping position too early before the one before it dies.
 
 disconnect handling (end game immediately?)
 
+fix that issue where one time the mulligan cards froze mid air during mulligan end anim. prob just disable collider for the anim
 ===============================================
 =====================DONE======================
 ===============================================

@@ -18,6 +18,12 @@ public class NetworkHandler : NetworkBehaviour
         NetworkManager.singleton.exceptionsDisconnect = false;
         Debug.Log("Server Started"); 
         RegisterMessages();
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "[CLIENT]")
+        {
+            SERVER_EDITOR_TEST = true;
+        }
+        else
+            SERVER_EDITOR_TEST = false;
     }
     public void StopConnection()
     {
@@ -68,21 +74,24 @@ public class NetworkHandler : NetworkBehaviour
         // Do something with the data
     }
     // Handle incoming messages
-    Dictionary<int, NetworkConnectionToClient> connections = new();
-    
+    public Dictionary<int, NetworkConnectionToClient> connections = new();
+
+    bool SERVER_EDITOR_TEST = true;
     private void ServerReceive(NetworkConnectionToClient conn, Server.JsonMessage msg)
     {
         // Deserialize and process the JSON
         Server.CustomMessageIntermediate data = JsonUtility.FromJson<Server.CustomMessageIntermediate>(msg.jsonString);
         Server.CustomMessage message = new Server.CustomMessage(data);
 
+        int clientID = 0;
+        if (SERVER_EDITOR_TEST == false)
+        {
+            clientID = conn.connectionId;
+            message.clientID = clientID;
+        }
+        else
+            clientID = data.clientID;
 
-#if (UNITY_EDITOR == false)
-        int clientID = conn.connectionId;
-        message.clientID = clientID;
-#else
-        int clientID = data.clientID;
-#endif
 
         if (connections.ContainsKey(clientID) == false)
         {

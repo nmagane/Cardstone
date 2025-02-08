@@ -69,9 +69,8 @@ public class NetworkManagerCustom : NetworkManager
 
     private void ServerHandleDisconnect(NetworkConnectionToClient conn)
     {
-        Debug.Log($"ClientID {conn.connectionId} disconnected.");
+       Debug.Log($"ClientID {conn.connectionId} disconnected.");
         
-       // if (server == null) return;
        Server.Instance.DisconnectClient(conn.connectionId);
     }
 

@@ -29,6 +29,8 @@ public partial class AnimationManager : MonoBehaviour
     }
     IEnumerator _mulliganAnim(Card c,HandCard newCard)
     {
+        c.GetComponent<BoxCollider2D>().enabled = false;
+
         Vector3 OP = c.transform.localPosition;
         c.Flip();
         LerpZoom(c.gameObject, Vector3.one);
@@ -37,6 +39,8 @@ public partial class AnimationManager : MonoBehaviour
         c.Set(newCard);
         LerpZoom(c.gameObject, Vector3.one*1.5f);
         yield return _lerpTo(c.gameObject, OP, 20);
+
+        c.GetComponent<BoxCollider2D>().enabled = true;
     }
     public void DrawAnim(GameObject obj, Vector3 tar1, Vector3 tar2, float f1, float f2, int delay, Vector3 rotation)
     {

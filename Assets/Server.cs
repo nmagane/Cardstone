@@ -287,10 +287,18 @@ public partial class Server : MonoBehaviour
     
     public void DisconnectClient(int clientID)
     {
-        if (clientConnections.ContainsKey(clientID) == false) return;
+        foreach(var kvp in clientConnections)
+        {
+            Debug.Log(kvp.Key);
+        }
+        if (clientConnections.ContainsKey(clientID) == false)
+        {
+            Debug.Log($"play {clientID} not present");
+            return;
+        }
         Match match = clientConnections[clientID];
 
-        //mirror.connections.Remove(clientID);
+        mirror.connections.Remove(clientID);
         EndMatch(match, match.FindClientID(clientID).opponent);
     }
 
