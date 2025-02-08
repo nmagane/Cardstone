@@ -137,7 +137,7 @@ public partial class Board
 
     Coroutine ConfirmMulliganVisual(VisualInfo message)
     {
-        return StartCoroutine(Wait(50));
+        return StartCoroutine(Wait(30));
     }
     Coroutine StartGameVisual(VisualInfo message)
     {

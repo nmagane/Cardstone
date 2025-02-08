@@ -2,24 +2,30 @@
 using System.Collections.Generic;
 
 public partial class Board
-{/*
-    public static Message CreateMessage(Server.MessageType type)
+{
+    public void ConfirmDisconnect()
     {
-        Message m = Message.Create(MessageSendMode.Reliable, (ushort)type);
-        m.ReserveBits(16);
-        return m;
+#if UNITY_EDITOR
+        if (playerID == 101) return;
+#endif
+        mainmenu.ConfirmDisconnect();
 
-    public void SendMessage(Message message, bool UNORDERED=false)
-    {
-        //todo: not sure if this check is ok. are there ever messages sent on enemy turn?
-        if (UNORDERED == false && currTurn == false)
-            return;
-        message.SetBits(matchMessageOrder, 16, 28);
-        client.Send(message);
-        if (UNORDERED == false)
-            matchMessageOrder++;
+        if (!gameStarted) return;
+        gameoverText.text = "DISCONNECTED.";
+        animationManager.LerpTo(this.gameObject, new Vector3(this.transform.position.x, 40), 10, 0.2f);
     }
-    }*/
+    
+    public void ConfirmConnection()
+    {
+#if UNITY_EDITOR
+        if (playerID == 101)
+        {
+            Debug.Log("101 connected!");
+            return;
+        }
+#endif
+        mainmenu.ConfirmConnection();
+    }
 
     public bool disableInput = false;
     public static Server.CustomMessage CreateMessage(Server.MessageType type)
@@ -35,11 +41,32 @@ public partial class Board
         if (UNORDERED == false && currTurn == false)
             return;
         message.order = matchMessageOrder;
+#if UNITY_EDITOR
+        message.clientID = playerID!=101? 100:(int)playerID;
+#else
         message.clientID = (int)playerID;
+#endif
         //client.Send(message);
         mirror.SendClient(message);
         if (UNORDERED == false)
             matchMessageOrder++;
+    }
+
+    bool gameStarted = false;
+    public void InitGame(ulong matchID, string enemyName)
+    {
+        Debug.Log("Player " + playerID + " entered game " + matchID);
+        Camera.main.transform.position = new Vector3(0, 0, -10);
+        gameStarted = true;
+        //TODO: ENEMY CLASS COMMUNICATED IN MESSAGE
+
+        playerNameText.text = playerName;
+        enemyNameText.text = enemyName;
+
+        heroPower.Set(Card.Cardname.Lifetap);
+        enemyHeroPower.Set(Card.Cardname.Lifetap);
+
+        currentMatchID = matchID;
     }
     void ConfirmMulligan(List<ushort> cards)
     {

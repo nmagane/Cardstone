@@ -382,20 +382,20 @@ namespace Mirror
         }
 
         /// <summary>Starts the client, connects it to the server with networkAddress.</summary>
-        public void StartClient()
+        public bool StartClient()
         {
             // Do checks and short circuits before setting anything up.
             // If / when we retry, we won't have conflict issues.
             if (NetworkClient.active)
             {
                 Debug.LogWarning("Client already started.");
-                return;
+                return false;
             }
 
             if (string.IsNullOrWhiteSpace(networkAddress))
             {
                 Debug.LogError("Must set the Network Address field in the manager");
-                return;
+                return false;
             }
 
             mode = NetworkManagerMode.ClientOnly;
@@ -410,6 +410,7 @@ namespace Mirror
             NetworkClient.Connect(networkAddress);
 
             OnStartClient();
+            return true;
         }
 
         /// <summary>Starts the client, connects it to the server via Uri</summary>

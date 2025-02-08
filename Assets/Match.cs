@@ -137,4 +137,19 @@ public partial class Match
     {
         return Opponent(FindOwner(minion));
     }
+
+    public Player FindClientID(int x)
+    {
+        if (players[0].connection.clientID == x)
+        {
+            return players[0];
+        }
+        if (players[1].connection.clientID == x)
+        {
+            return players[1];
+        }
+
+        Debug.LogError($"PLAYER WITH CLIENTID {x} NOT FOUND");
+        return null;
+    }
 }

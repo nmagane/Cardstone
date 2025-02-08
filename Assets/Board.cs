@@ -5,10 +5,12 @@ using System.Linq;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using TMPro;
+using Mirror;
 
 public partial class Board : MonoBehaviour
 {
     public AnimationManager animationManager;
+    public Mainmenu mainmenu;
     public GameObject gameAnchor;   
     public UIButton mulliganButton;
     public GameObject waitingEnemyMulliganMessage;
@@ -25,8 +27,6 @@ public partial class Board : MonoBehaviour
     public GameObject minionObject;
     public GameObject UISprite;
     public GameObject splashObject;
-
-    public Client client = new Client();
 
     public ulong playerID = 100;
     public string playerName = "Player";
@@ -81,14 +81,56 @@ public partial class Board : MonoBehaviour
         Destroy(o.gameObject);
     }
     public NetworkHandler mirror;
+
+    //===================
+    
+    private static Board _instance;
+    private static Board _instanceTest;
+
+    public static Board Instance { get { return _instance; } }
+    public static Board InstanceTest { get { return _instanceTest; } }
+
+
+    private void Awake()
+    {
+        if (playerID == 101)
+        {
+            if (_instanceTest != null && _instanceTest != this)
+            {
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                _instanceTest = this;
+            }
+        }
+        else
+        {
+            if (_instance != null && _instance != this)
+            {
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                _instance = this;
+            }
+        }
+    }
+    
+    //==================
     void Start()
     {
         Application.targetFrameRate = 60;
 #if (UNITY_EDITOR == false)
         playerID = (ulong)Random.Range(-1000000, 1000000);
 #endif
-        mirror.StartClient();
 
+        
+        if (mirror.StartClient() ==false)
+        {
+            ConfirmConnection();
+        }
+            
         currHand.board = this;
         currHand.server = false;
     }
@@ -328,21 +370,7 @@ public partial class Board : MonoBehaviour
         }
         return animation;
     }
-    public void InitGame(ulong matchID, string enemyName)
-    {
-        Debug.Log("Player " + playerID + " entered game " + matchID);
-        Camera.main.transform.position = new Vector3(0,0, -10);
 
-        //TODO: ENEMY CLASS COMMUNICATED IN MESSAGE
-
-        playerNameText.text = playerName;
-        enemyNameText.text = enemyName;
-
-        heroPower.Set(Card.Cardname.Lifetap);
-        enemyHeroPower.Set(Card.Cardname.Lifetap);
-
-        currentMatchID = matchID;
-    }
     public void InitHand(List<ushort> hand, int enemyCards=4)
     {
         if (hand.Contains((ushort)Card.Cardname.Coin))
@@ -645,14 +673,7 @@ public partial class Board : MonoBehaviour
     }
     void Tester(Server.CustomMessage m)
     {
-     Debug.Log(m.GetUShort()+" "+m.GetInt()+" "+m.GetBool());
-     //Debug.Log(" "+m.GetInt()+" "+m.GetBool());
     }
-    private void FixedUpdate()
-    {
-        client.Update();
-    }
-
 
     //todo: make UImanager monobehavior/class
     public void RestartScene()

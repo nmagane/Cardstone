@@ -25,14 +25,15 @@ public class NetworkHandler : NetworkBehaviour
         Debug.Log("Connection stopped.");
         
     }
-    public void StartClient()
+    public bool StartClient()
     {
         NetworkManager.singleton.networkAddress = serverAddress;
-        NetworkManager.singleton.StartClient();
+        bool b = NetworkManager.singleton.StartClient();
         NetworkManager.singleton.exceptionsDisconnect = false;
         //NetworkClient.Connect(serverAddress); // Connects the client to the server
         Debug.Log("Client Started and Connecting");
         RegisterMessages();
+        return b;
     }
     // Call this function during the initialization of your server/client
     public void RegisterMessages()

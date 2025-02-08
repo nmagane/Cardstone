@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -7,9 +8,12 @@ public class Mainmenu : MonoBehaviour
 {
     public Board board;
     public TMP_InputField textbox;
-    public void Start()
-    {
 
+    public UIButton findMatchButton;
+    public UIButton resetButton;
+    public void Awake()
+    {
+        findMatchButton.board = resetButton.board = board;
         if (PlayerPrefs.HasKey("name"))
         {
             string s = PlayerPrefs.GetString("name");
@@ -41,4 +45,20 @@ public class Mainmenu : MonoBehaviour
         board.StartMatchmaking();
     }
 
+
+    public GameObject disconnectedContainer;
+    public GameObject connectedContainer;
+    public void ConfirmConnection()
+    {
+        findMatchButton.transform.localScale = Vector3.one;
+        connectedContainer.transform.localScale = Vector3.one;
+        disconnectedContainer.transform.localScale = Vector3.zero;
+    }
+
+    public void ConfirmDisconnect()
+    {
+        findMatchButton.transform.localScale = Vector3.zero;
+        connectedContainer.transform.localScale = Vector3.zero;
+        disconnectedContainer.transform.localScale = Vector3.one;
+    }
 }
