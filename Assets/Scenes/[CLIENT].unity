@@ -4422,6 +4422,38 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1671318675257879375, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[12].x
+      value: 2.1766095
+      objectReference: {fileID: 0}
+    - target: {fileID: 1671318675257879375, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[12].y
+      value: -0.18515253
+      objectReference: {fileID: 0}
+    - target: {fileID: 1671318675257879375, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[13].x
+      value: 2.1664336
+      objectReference: {fileID: 0}
+    - target: {fileID: 1671318675257879375, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[13].y
+      value: 0.6426875
+      objectReference: {fileID: 0}
+    - target: {fileID: 1671318675257879375, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[14].x
+      value: 1.4767658
+      objectReference: {fileID: 0}
+    - target: {fileID: 1671318675257879375, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[14].y
+      value: 1.3584712
+      objectReference: {fileID: 0}
+    - target: {fileID: 1671318675257879375, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[15].x
+      value: 0.6828195
+      objectReference: {fileID: 0}
+    - target: {fileID: 1671318675257879375, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[15].y
+      value: 1.3620956
+      objectReference: {fileID: 0}
     - target: {fileID: 1775170452512210478, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: m_Name
       value: HeroEnemy

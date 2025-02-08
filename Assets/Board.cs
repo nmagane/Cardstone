@@ -84,25 +84,19 @@ public partial class Board : MonoBehaviour
         playerID = (ulong)Random.Range(-1000000, 1000000);
 #endif
         mirror.StartClient();
-        //client.Connect("127.0.0.1:8888",5,0,null,false);
-        //client.MessageReceived += OnMessageReceived;
+
         currHand.board = this;
         currHand.server = false;
     }
-    Queue<Server.CustomMessage> confirmedMessages = new Queue<Server.CustomMessage>();
+
     public ushort matchMessageOrder = 0;
     public ushort messageReceivedOrder = 0;
     List<(Server.MessageType, Server.CustomMessage, ushort)> messageQue = new();
 
-
     public void OnMessageReceived(Server.CustomMessage message)
     {
-
         Server.MessageType messageID = message.type;
-        //Message originalMessage = eventArgs.Message;
         ushort count = message.order;
-        //Debug.Log("Received Message " + count);
-        //Server.CustomMessage newMessage = CopyMessage(originalMessage, messageID);
         ReceiveMessage(message.type, message, count);
 
     }

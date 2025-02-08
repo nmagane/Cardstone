@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   card: {fileID: 7239044974342914001}
+  anim: 0
 --- !u!61 &3408025469719739103
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -80,6 +81,58 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2991324306074595054}
     m_Modifications:
+    - target: {fileID: 122233075964337583, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
+      propertyPath: m_SortingLayer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 122233075964337583, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1194144581
+      objectReference: {fileID: 0}
+    - target: {fileID: 566865459476446342, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
+      propertyPath: m_SortingLayer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 566865459476446342, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1194144581
+      objectReference: {fileID: 0}
+    - target: {fileID: 1285298382799778340, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
+      propertyPath: m_SortingLayer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1285298382799778340, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1194144581
+      objectReference: {fileID: 0}
+    - target: {fileID: 2670244061852006825, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
+      propertyPath: sortingLayer
+      value: shadowCardElevated
+      objectReference: {fileID: 0}
+    - target: {fileID: 3196792686632191057, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
+      propertyPath: m_SortingLayer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3196792686632191057, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1194144581
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299294510894343443, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
+      propertyPath: m_SortingLayer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299294510894343443, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1194144581
+      objectReference: {fileID: 0}
+    - target: {fileID: 4317927336061253282, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
+      propertyPath: m_SortingLayer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4317927336061253282, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1194144581
+      objectReference: {fileID: 0}
     - target: {fileID: 4505397687313927827, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
       propertyPath: m_Name
       value: Card
@@ -87,6 +140,22 @@ PrefabInstance:
     - target: {fileID: 6001180810905503547, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7187123306332122834, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
+      propertyPath: m_SortingLayer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7187123306332122834, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1194144581
+      objectReference: {fileID: 0}
+    - target: {fileID: 8174179713164967626, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
+      propertyPath: m_SortingLayer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8174179713164967626, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1194144581
       objectReference: {fileID: 0}
     - target: {fileID: 8767642050265229191, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
       propertyPath: m_RootOrder

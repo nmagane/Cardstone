@@ -144,6 +144,13 @@ public partial class Board
 
         waitingEnemyMulliganMessage.transform.localScale = Vector3.zero;
         currHand.ConfirmBothMulligans();
+
+        foreach (int i in enemyMulls)
+        {
+            animationManager.MulliganEnemyAnim(enemyHand.cardObjects[enemyHand[i]]);
+        }
+        enemyMulls.Clear();
+
         currHand.OrderInds();
         currMinions = new MinionBoard();
         enemyMinions = new MinionBoard();

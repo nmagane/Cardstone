@@ -57,12 +57,10 @@ public partial class Board
         anim.type = Server.MessageType.ConfirmMulligan;
         QueueAnimation(anim);
     }
+    List<int> enemyMulls;
     void ConfirmEnemyMulligan(List<int> inds)
     {
-        foreach (int i in inds)
-        {
-            animationManager.MulliganEnemyAnim(enemyHand.cardObjects[enemyHand[i]]);
-        }
+        enemyMulls = inds;
     }
     void StartGame(bool isTurn)
     {
