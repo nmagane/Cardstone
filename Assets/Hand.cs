@@ -124,7 +124,7 @@ public class Hand
         {
             Vector3 p;
             float count = enemyHand? board.enemyMinions.minionObjects.Count+1 : board.currMinions.minionObjects.Count + 1;
-            float dist = 4.7f;
+            float dist = enemyHand ? board.enemyMinions.dist : board.currMinions.dist;
             float offset = -((count - 1) / 2f * dist);
 
             if (pos >= 7) pos = (int)count-1;

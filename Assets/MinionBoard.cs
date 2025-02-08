@@ -125,7 +125,8 @@ public class MinionBoard
         OrderInds();
     }
 
-    float dist = 4.7f;
+    public static float _dist = 4.7f;
+    public float dist => _dist + Mathf.Max(0, 7 - (minionObjects.Count+(previewing?1:0))) * 0.3f;
     public void OrderInds()
     {
         int i = 0;
@@ -140,6 +141,7 @@ public class MinionBoard
 
     public void OrderCreatures()
     {
+        previewing = false;
         int i = 0;
 
         List<Creature> creatures = new();
@@ -193,7 +195,6 @@ public class MinionBoard
             board.DestroyObject(previewMinion);
             previewMinion = null;
         }
-        previewing = false;
         currPreview = -1;
     }
 
@@ -279,8 +280,10 @@ public class MinionBoard
     {
         float bounce = 0.1f;
 
-        if (Vector3.Distance(c.transform.localPosition, location) < dist) 
+        if (Vector3.Distance(c.transform.localPosition,location)< 0.2f)
+        {
             bounce = 0;
+        }
 
         board.animationManager.LerpTo(c, location, 5, bounce);
     }
