@@ -10,7 +10,11 @@ public class NetworkHandler : NetworkBehaviour
     public Board board_test;
     public bool CLIENT = false;
     public bool SERVER = false;
-    string serverAddress = "127.0.0.1"; 
+#if UNITY_EDITOR
+    string serverAddress = "127.0.0.1";
+#else
+    string serverAddress = "161.35.25.172";
+#endif
     public void StartServer()
     {
         //NetworkServer.Listen(100);

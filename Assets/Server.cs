@@ -287,13 +287,19 @@ public partial class Server : MonoBehaviour
     
     public void DisconnectClient(int clientID)
     {
-        foreach(var kvp in clientConnections)
+        //if player is in queue
+        List<PlayerConnection> removers = new List<PlayerConnection>();
+        foreach (PlayerConnection c in playerQueue)
         {
-            Debug.Log(kvp.Key);
+            if (c.clientID == clientID)
+                removers.Add(c);
         }
+        foreach (PlayerConnection c in removers)
+            playerQueue.Remove(c);
+
+        //if player is in game
         if (clientConnections.ContainsKey(clientID) == false)
         {
-            Debug.Log($"play {clientID} not present");
             return;
         }
         Match match = clientConnections[clientID];
