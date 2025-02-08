@@ -200,7 +200,7 @@ public class Hand
                 if (coinHand && c.card.card == Card.Cardname.Coin) continue;
                 c.transform.localScale = Vector3.one * 1.5f;
                 c.shadow.elevation = 1;
-                c.transform.localPosition = offset + new Vector3(dist * (c.card.index), 0, 0);
+                c.transform.localPosition = offset + new Vector3(dist * (c.card.index), 0, -3);
             }
 
             return;

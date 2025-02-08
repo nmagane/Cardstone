@@ -10,6 +10,7 @@ public partial class Board
     {
         Server.CustomMessage message = CreateMessage(Server.MessageType.Matchmaking);
         message.AddULong(playerID);
+        message.AddString(playerName);
         string deck = "";
         message.AddString(deck);
         //client.Send(message);

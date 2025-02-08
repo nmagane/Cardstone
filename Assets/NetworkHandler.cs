@@ -55,10 +55,10 @@ public class NetworkHandler : NetworkBehaviour
         //data.clientID = clientID;
         Server.CustomMessage message = new Server.CustomMessage(data);
 #if UNITY_EDITOR
-        if (message.clientID == 100)
-            board.OnMessageReceived(message);
-        else
+        if (message.clientID == 101)
             board_test.OnMessageReceived(message);
+        else
+            board.OnMessageReceived(message);
 #else
         board.OnMessageReceived(message);
 #endif

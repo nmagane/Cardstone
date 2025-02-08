@@ -78,8 +78,10 @@ public class UIButton : MonoBehaviour
 
     public void StartMatchmaking()
     {
-        board.StartMatchmaking();
-        Destroy(this.gameObject);
+        if (text.text == "IN QUEUE") return;
+        owner.GetComponent<Mainmenu>().StartMatchmaking();
+        text.text = "IN QUEUE";
+        //Destroy(this.gameObject);
     }
     public void RestartScene()
     {

@@ -390,6 +390,11 @@ public partial class AnimationManager : MonoBehaviour
         g.transform.localEulerAngles = new Vector3(0, 0, angle);
     }
 
+    public void SpriteFade(GameObject g, int frames, bool destroy=true)
+    {
+        StartCoroutine(_fadeout(g, frames, destroy));
+    }
+
     IEnumerator _fadeout(GameObject g, int frames, bool destroy=true)
     {
         SpriteRenderer s = g.GetComponent<SpriteRenderer>();

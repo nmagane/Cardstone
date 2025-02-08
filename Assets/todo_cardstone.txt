@@ -25,20 +25,19 @@ deathrattle/spawned source minions should pop up lerpzoom, not drop in
 FIX REPEAT CODE IN ANIMATOINMANAGER.CARDS?
 
 fix creatures swapping position too early before the one before it dies.
-	This issue happens when ordercreatures is called when minion indexes changed too much in the backend
+	This issue happens when ordercreatures is called when minion indexes changed too much in the backend - when lots deaths and other animations queued up.
 
-
-get a new font (maybe just numbers?) this shit sucks
 
 disconnect handling (end game immediately?)
-
-
-menu with playerid setting name/textbox 
 
 ===============================================
 =====================DONE======================
 ===============================================
 	
+menu with playerid setting name/textbox 
+
+get a new font (maybe just numbers?) this shit sucks
+
 no bounce in place
 
 concede button

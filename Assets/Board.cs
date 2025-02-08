@@ -29,6 +29,7 @@ public partial class Board : MonoBehaviour
     public Client client = new Client();
 
     public ulong playerID = 100;
+    public string playerName = "Player";
     public ulong currentMatchID;
 
     public Hand currHand = new Hand();
@@ -50,6 +51,9 @@ public partial class Board : MonoBehaviour
     public int currMana => mana.curr;
 
     public TMP_Text gameoverText;
+    public TMP_Text playerNameText;
+    public TMP_Text enemyNameText;
+    public SpriteRenderer mulliganBG;
     /*
     public int currMana = 0;
     public int maxMana = 0;
@@ -145,7 +149,8 @@ public partial class Board : MonoBehaviour
 
             case Server.MessageType.ConfirmMatch:
                 ulong matchID = message.GetULong();
-                InitGame(matchID);
+                string matchEnemyName = message.GetString();
+                InitGame(matchID, matchEnemyName);
                 break;
             case Server.MessageType.DrawHand:
                 List<ushort> hand = message.GetUShorts();
@@ -323,11 +328,15 @@ public partial class Board : MonoBehaviour
         }
         return animation;
     }
-    public void InitGame(ulong matchID)
+    public void InitGame(ulong matchID, string enemyName)
     {
         Debug.Log("Player " + playerID + " entered game " + matchID);
+        Camera.main.transform.position = new Vector3(0,0, -10);
 
         //TODO: ENEMY CLASS COMMUNICATED IN MESSAGE
+
+        playerNameText.text = playerName;
+        enemyNameText.text = enemyName;
 
         heroPower.Set(Card.Cardname.Lifetap);
         enemyHeroPower.Set(Card.Cardname.Lifetap);
@@ -589,23 +598,19 @@ public partial class Board : MonoBehaviour
     void Update()
     {
 #if (UNITY_EDITOR)
-        if (Input.GetKeyDown(KeyCode.Q) && playerID==100)
+        if (Input.GetKeyDown(KeyCode.Q) && playerID!=101)
         {
             StartMatchmaking();
         }
-        if (Input.GetKeyDown(KeyCode.A) && playerID==100)
+        if (Input.GetKeyDown(KeyCode.A) && playerID!=101)
         {
             SubmitMulligan();
         }
-        if (Input.GetKeyDown(KeyCode.Z) && playerID==100)
+        if (Input.GetKeyDown(KeyCode.Z) && playerID!=101)
         {
             SubmitEndTurn();
         }
-        if (Input.GetKeyDown(KeyCode.R) && playerID==100)
-        {
-            PlayCard(currHand[0],-1,0);
-        }
-
+        //===============================
         if (Input.GetKeyDown(KeyCode.W) && playerID==101)
         {
             StartMatchmaking();
@@ -618,22 +623,7 @@ public partial class Board : MonoBehaviour
         {
             SubmitEndTurn();
         }
-        if (Input.GetKeyDown(KeyCode.R) && playerID == 101)
-        {
-            PlayCard(currHand[0], -1, 0);
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.J) && playerID==101)
-        {
-            Message m = Message.Create(MessageSendMode.Reliable, 1);
-
-            m.AddInt(123);
-            //m.AddInt(123);
-            
-            Debug.Log(m.GetInt());
-        }
-        
+        //===============================
         if (Input.GetKey(KeyCode.BackQuote))
         {
             RestartScene();

@@ -175,8 +175,10 @@ public partial class Server : MonoBehaviour
         {
             case MessageType.Matchmaking:
                 ulong queuePlayerID = message.GetULong();
+                string queuePlayerName = message.GetString();
+                string queuePlayerDeck = message.GetString();
                 int queueClientID = clientID;
-                AddToQueue(queueClientID, queuePlayerID);
+                AddToQueue(queueClientID, queuePlayerID, queuePlayerName,queuePlayerDeck);
                 break;
             case MessageType.SubmitMulligan:
                 ulong mullMatchID = message.GetULong();
@@ -233,13 +235,14 @@ public partial class Server : MonoBehaviour
     {
         public int clientID;
         public ulong playerID;
+        public string name;
         public string deck;
     }
 
     List<PlayerConnection> playerQueue = new List<PlayerConnection>();
     public Dictionary<ulong, Match> currentMatches = new Dictionary<ulong, Match>();
     public List<Match> matchList = new List<Match>();
-    void AddToQueue(int clientID, ulong playerID, string deck="")
+    void AddToQueue(int clientID, ulong playerID, string name,string deck)
     {
         foreach (PlayerConnection p in playerQueue)
         {
@@ -249,6 +252,7 @@ public partial class Server : MonoBehaviour
         PlayerConnection pc;
         pc.clientID = clientID;
         pc.playerID = playerID;
+        pc.name = name;
         pc.deck = deck;
         playerQueue.Add(pc);
 
@@ -270,11 +274,11 @@ public partial class Server : MonoBehaviour
 
         CustomMessage m1 = CreateMessage(MessageType.ConfirmMatch);
         m1.AddULong(currMatchID);
-        //server.Send(m1,p1.clientID);
+        m1.AddString(p2.name);
 
         CustomMessage m2 = CreateMessage(MessageType.ConfirmMatch);
-        m2.AddULong(currMatchID);
-        //server.Send(m2,p2.clientID);
+        m2.AddULong(currMatchID); 
+        m2.AddString(p1.name);
 
         match.InitMatch(p1, p2, currMatchID);
         SendMessage(m1, match.players[0]);
@@ -297,7 +301,6 @@ public partial class Server : MonoBehaviour
         {
             p = 1;
         }
-        Debug.Log(p);
         if (p == -1) return;
         PlayerConnection player = match.players[p].connection;
         PlayerConnection opponent = match.players[match.Opponent(p)].connection;
