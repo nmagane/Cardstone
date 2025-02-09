@@ -22,10 +22,11 @@ public partial class Minion
     {
         get
         {
-            return _canAttack && damage>0;
+            return _canAttack && damage>0 && HasAura(Aura.Type.NoAttack)==false;
         }
         set
         {
+            //TODO: windfury here maybe?
             _canAttack = value;
         }
     }
