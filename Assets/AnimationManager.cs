@@ -335,12 +335,16 @@ public partial class AnimationManager : MonoBehaviour
             c.alpha = Mathf.Lerp(e, target, (i + 1) / frames);
             yield return Wait(1);
         }
+
+        if (c == null) yield break;
         if (hider)
         {
             c.alpha = 0;
         }
         else
+        {
             Destroy(c.gameObject);
+        }
     }
     public void Unfade(Card c)
     {

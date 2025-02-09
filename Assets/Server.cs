@@ -8,11 +8,11 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() {Card.Cardname.Defender_of_Argus };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { };
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { }; 
 #else
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { };// Card.Cardname.Knife_Juggler, Card.Cardname.Flame_Imp, Card.Cardname.Soulfire};
-    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { }; //Card.Cardname.Argent_Squire};
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { };
+    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { };
 #endif
 
     public static CustomMessage CreateMessage(MessageType type)
