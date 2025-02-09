@@ -7,8 +7,13 @@ using UnityEngine;
 public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
+#if UNITY_EDITOR
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() {Card.Cardname.Defender_of_Argus };
+    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { }; 
+#else
     List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { };// Card.Cardname.Knife_Juggler, Card.Cardname.Flame_Imp, Card.Cardname.Soulfire};
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { }; //Card.Cardname.Argent_Squire};
+#endif
 
     public static CustomMessage CreateMessage(MessageType type)
     {
@@ -381,7 +386,7 @@ public partial class Server : MonoBehaviour
 
         matchList.Remove(match);
         currentMatches.Remove(match.matchID);
-
+        Debug.Log($"{match.matchID}: {winner.connection.name} defeats {winner.opponent.connection.name}");
         clientConnections.Remove(match.players[0].connection.clientID);
         clientConnections.Remove(match.players[1].connection.clientID);
     }
@@ -657,6 +662,10 @@ public partial class Server : MonoBehaviour
 
         if (card.MINION)
         {
+            /*
+            if (spell.position >=7)
+                spell.position = spell.player.board.Count();
+            */
             match.StartSequencePlayMinion(spell);
         }
     }

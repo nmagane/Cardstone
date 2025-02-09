@@ -25,9 +25,23 @@ deathrattle/spawned source minions should pop out lerpzoom, not drop in
 FIX REPEAT CODE IN ANIMATOINMANAGER.CARDS?
 
 fix creatures swapping position too early before the one before it dies.
-	This issue happens when ordercreatures is called when minion indexes changed too much in the backend - when lots deaths and other animations queued up.
-	
+	This issue happens when ordercreatures is called when minion indexes changed too much in the backend - when lots deaths and other animations queued up.	
 
+	
+Next mechanic implementation:
+= Mana cost changing auras.
+	- permanent auras on cards (Thaurissan)
+	- temporary auras on player (Loatheb, Millhouse)
+	- temporary aura for single casts (Prep) - Same as above?
+	- minion attached auras (Apprentice, Mana wraith)
+	
+TESTBUG:
+ARGUS DIDNT WORK ON GOLEM?
+happens on one minion and you play argus on the right
+turn indicator
+rope
+log
+	
 ===============================================
 =====================DONE======================
 ===============================================

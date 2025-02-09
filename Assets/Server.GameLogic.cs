@@ -316,7 +316,6 @@ public partial class Server
         {
             if (m.index == spell.position-1 || m.index == spell.position+1)
             {
-
                 match.server.AddAura(match, m, new Aura(Aura.Type.Health, 1));
                 match.server.AddAura(match, m, new Aura(Aura.Type.Damage, 1));
                 match.server.AddAura(match, m, new Aura(Aura.Type.Taunt));

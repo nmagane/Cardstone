@@ -160,6 +160,7 @@ public partial class Match
         if (minion == null) return;
 
         spell.minion = minion;
+        spell.position = minion.index;
 
         StartPhase(Phase.OnPlayCard, ref spell);
         StartPhase(Phase.OnPlayMinion, ref spell);
