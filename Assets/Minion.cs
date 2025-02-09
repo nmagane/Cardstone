@@ -17,7 +17,18 @@ public partial class Minion
     public int baseHealth;
     public int baseDamage;
 
-    public bool canAttack = false;
+    bool _canAttack = false;
+    public bool canAttack
+    {
+        get
+        {
+            return _canAttack && damage>0;
+        }
+        set
+        {
+            _canAttack = value;
+        }
+    }
 
     public bool DEAD = false;
 

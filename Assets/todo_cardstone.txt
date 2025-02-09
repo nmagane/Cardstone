@@ -20,7 +20,7 @@ different tooltip shape for hero power hover
 creature floating should hit scale vector3.one?
 creatures should be limited in ordercreatures to board edges, this is mostly because previews can make them go wider than 7 minion spaces //THIS IS FIXED?
 //move card animations to database.animations? static functions?
---board.phaseOngoing bool or something to disable input until server sends "phase over" message?
+--board.phaseOngoing bool or something to disable input until server sends "sequence over" message?
 deathrattle/spawned source minions should pop out lerpzoom, not drop in
 FIX REPEAT CODE IN ANIMATOINMANAGER.CARDS?
 triggers should return true/false to know whether or not to confirm anim
@@ -34,7 +34,10 @@ Next mechanic implementation:
 	- permanent auras on cards (Thaurissan)
 	- temporary auras on player (Loatheb, Millhouse)
 	- temporary aura for single casts (Prep) - Same as above?
+		-Implemented using Triggers on player?
 	- minion attached auras (Apprentice, Mana wraith)
+
+= Weapons & Player Attack
 	
 
 
@@ -52,6 +55,11 @@ set
 _canattack=value
 }
 	
+next decks to implement:
+	-Patron
+	-BRM/GvG Zoo
+	-Freeze
+	-Rogue
 ===============================================
 =====================DONE======================
 ===============================================
