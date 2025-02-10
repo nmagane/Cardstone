@@ -2260,7 +2260,6 @@ MonoBehaviour:
     maxHealth: 0
     baseHealth: 0
     baseDamage: 0
-    canAttack: 0
     DEAD: 0
     playOrder: 0
   targetingHero: {fileID: 0}
@@ -5387,6 +5386,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 325956713285658609, guid: de7ed2021eae97b4ab2bd8b902c5cee7, type: 3}
+      propertyPath: m_text
+      value: RETRY CONNECTION
+      objectReference: {fileID: 0}
+    - target: {fileID: 325956713285658609, guid: de7ed2021eae97b4ab2bd8b902c5cee7, type: 3}
+      propertyPath: m_fontSize
+      value: 9.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 325956713285658609, guid: de7ed2021eae97b4ab2bd8b902c5cee7, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 9.8
+      objectReference: {fileID: 0}
     - target: {fileID: 2652833640486502652, guid: de7ed2021eae97b4ab2bd8b902c5cee7, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -5777,7 +5788,6 @@ MonoBehaviour:
     maxHealth: 0
     baseHealth: 0
     baseDamage: 0
-    canAttack: 0
     DEAD: 0
     playOrder: 0
   targetingHero: {fileID: 0}

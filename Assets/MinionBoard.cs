@@ -81,7 +81,7 @@ public class MinionBoard
         
         foreach (Creature c in minionObjects.Values)
         {
-            c.order = m.index;
+            c.order = c.minion.index;
         }
 
         OrderCreatures();
@@ -93,10 +93,6 @@ public class MinionBoard
         minionObjects.Remove(m);
         board.animationManager.DeathAnim(c);
         
-        foreach (Creature cr in minionObjects.Values)
-        {
-            cr.order = m.index;
-        }
         OrderCreatures();
     }
 
@@ -142,7 +138,6 @@ public class MinionBoard
     public void OrderCreatures()
     {
         previewing = false;
-        int i = 0;
 
         List<Creature> creatures = new();
         foreach (var kvp in minionObjects)
@@ -150,7 +145,8 @@ public class MinionBoard
             creatures.Add(kvp.Value);
         }
 
-        creatures.Sort((x, y) => x.minion.index.CompareTo(y.minion.index));
+        //creatures.Sort((x, y) => x.minion.index.CompareTo(y.minion.index));
+        creatures.Sort((x, y) => x.order.CompareTo(y.order));
 
         if (this == board.currMinions)
         {
@@ -165,10 +161,13 @@ public class MinionBoard
         //todo: change count or whatever
         float count = creatures.Count;
         float offset = -((count - 1) / 2f * dist);
+
+        int i = 0;
         foreach (Creature c in creatures)
-        {  
+        {
             //todo: sort the minionobjects by kvp.key.index then have it be dist*i++ below,
             //so it doesnt move ahead of itself?
+            c.order = i;
             Vector3 targetPos = new Vector3(offset + dist * i++, this == board.currMinions ? -2.25f : 2.5f, 0);
 
             if (c.init == false && c.index == currPreview && previewMinion != null)
@@ -218,6 +217,7 @@ public class MinionBoard
             int ind = kvp.Key.index;
             if (ind >= gapIndex) ind++;
             kvp.Key.previewIndex = ind;
+            kvp.Value.order = ind;
             //c.transform.localPosition 
             Vector3 targetPos = new Vector3(offset + dist * (ind), this == board.currMinions ? -2.25f : 2.5f, 0);
             MoveCreature(c, targetPos);
