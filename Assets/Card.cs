@@ -165,15 +165,15 @@ public class Card : MonoBehaviour
 
         if (_manaCost < card.baseCost)
         {
-            manaCost.color = board.minionObject.GetComponent<Creature>().greenText;
+            manaCost.color = Board.Instance.minionObject.GetComponent<Creature>().greenText;
         }
         else if (_manaCost > card.baseCost)
         {
-            manaCost.color = board.minionObject.GetComponent<Creature>().redText;
+            manaCost.color = Board.Instance.minionObject.GetComponent<Creature>().redText;
         }
         else
         {
-            manaCost.color = board.minionObject.GetComponent<Creature>().baseText;
+            manaCost.color = Board.Instance.minionObject.GetComponent<Creature>().baseText;
         }
 
         manaCost.text = card.manaCost.ToString();

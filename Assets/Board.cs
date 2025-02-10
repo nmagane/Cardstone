@@ -236,14 +236,6 @@ public partial class Board : MonoBehaviour
                 int playedManaCost = message.GetInt();
                 int playedCard = message.GetInt();
                 int playedPos = message.GetInt();
-                if (playedPos != -1)
-                {
-                    if (playedFriendlySide && currMinions.previewMinion != null && currMinions.currPreview == playedPos)
-                    {
-                        animation = currMinions.previewMinion.index == playedPos? null : StartCoroutine(AnimationManager.Wait(10));
-                    }
-                    else animation = StartCoroutine(AnimationManager.Wait(10));
-                }
 
                 ConfirmPlayCard(playedFriendlySide, playedIndex, playedManaCost, (Card.Cardname)playedCard,playedPos);
                 break;
@@ -341,7 +333,8 @@ public partial class Board : MonoBehaviour
                 bool discardFriendly = message.GetBool();
                 int discardCardInd = message.GetInt();
                 int discardCardName = message.GetInt();
-                DiscardCard(discardFriendly, discardCardInd, (Card.Cardname)discardCardName);
+                int discardCardCost = message.GetInt();
+                DiscardCard(discardFriendly, discardCardInd, (Card.Cardname)discardCardName, discardCardCost);
                 break;
             case Server.MessageType.MillCard:
                 bool millFriendly = message.GetBool();
@@ -607,7 +600,7 @@ public partial class Board : MonoBehaviour
         QueueAnimation(anim);
     }
 
-    public void DiscardCard(bool friendly, int ind, Card.Cardname card)
+    public void DiscardCard(bool friendly, int ind, Card.Cardname card, int manaCost)
     {
         Hand hand = friendly ? currHand : enemyHand;
         HandCard c = hand[ind];
@@ -617,6 +610,7 @@ public partial class Board : MonoBehaviour
         anim.type = Server.MessageType.DiscardCard;
         anim.handCards.Add(c);
         anim.names.Add(card);
+        anim.ints.Add(manaCost);
         anim.isFriendly = friendly;
 
         QueueAnimation(anim);

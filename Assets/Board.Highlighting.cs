@@ -4,9 +4,11 @@ public partial class Board
 {
     public Tooltip enemyPlayTip;
     public Tooltip hoverTip;
-    public void ShowEnemyPlay(Card.Cardname c)
+    public void ShowEnemyPlay(Card.Cardname c,int manaCost)
     {
         enemyPlayTip.Set(c,90);
+        enemyPlayTip.card.card.manaCost = manaCost;
+        enemyPlayTip.card.UpdateManaCost(true);
     }
 
     public void ShowHoverTip(Creature c)

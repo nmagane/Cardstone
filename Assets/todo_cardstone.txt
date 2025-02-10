@@ -41,6 +41,8 @@ Next mechanic implementation:
 		-Implemented using Triggers on player?
 		
 	- minion attached auras (Apprentice, Mana wraith)
+	
+	- communicate manacost in discarded/played cards from opponent //DONE
 
 = Weapons & Player Attack
 	

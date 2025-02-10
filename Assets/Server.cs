@@ -987,6 +987,9 @@ public partial class Server : MonoBehaviour
         messageOwner.AddInt((int)discardAction.card.card);
         messageOpponent.AddInt((int)discardAction.card.card);
 
+        messageOwner.AddInt((int)discardAction.card.manaCost);
+        messageOpponent.AddInt((int)discardAction.card.manaCost);
+
         SendMessage(messageOwner, player);
         SendMessage(messageOpponent, player.opponent);
     }

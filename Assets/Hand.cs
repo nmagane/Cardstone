@@ -115,7 +115,7 @@ public class Hand
         }
         return c;
     }
-    public void RemoveCard(HandCard card, RemoveCardType type = RemoveCardType.Play, Card.Cardname name = Card.Cardname.Coin, int pos = -1)
+    public void RemoveCard(HandCard card, RemoveCardType type = RemoveCardType.Play, Card.Cardname name = Card.Cardname.Coin, int pos = -1, int manaCost=-1)
     {
         Card c = cardObjects[card];
         cardObjects.Remove(card);
@@ -144,7 +144,7 @@ public class Hand
                 board.DestroyObject(c);
         }
         else
-            FadeCard(c, enemyHand == false, type == RemoveCardType.Discard, name);
+            FadeCard(c, enemyHand == false, type == RemoveCardType.Discard, name, manaCost);
 
         OrderCards();
     }
@@ -299,9 +299,10 @@ public class Hand
         board.animationManager.LerpRotate(c.gameObject, rotation, 5);
     }
 
-    public void FadeCard(Card c, bool friendly, bool discard=false, Card.Cardname name =Card.Cardname.Coin)
+    public void FadeCard(Card c, bool friendly, bool discard=false, Card.Cardname name =Card.Cardname.Coin, int cost=-1)
     {
         c.noReturn = true;
-        board.animationManager.FadeCard(c, friendly, discard, name);
+        if (cost == -1) cost = c.card.manaCost;
+        board.animationManager.FadeCard(c, friendly, discard, name, cost);
     }
 }

@@ -254,7 +254,7 @@ public partial class AnimationManager : MonoBehaviour
         if (activeRotates.ContainsKey(obj)) activeRotates.Remove(obj);
     }
 
-    public void FadeCard(Card c, bool friendly, bool discard = false, Card.Cardname name = Card.Cardname.Coin)
+    public void FadeCard(Card c, bool friendly, bool discard = false, Card.Cardname name = Card.Cardname.Coin, int cost=-1)
     {
         if (discard)
         {
@@ -263,6 +263,8 @@ public partial class AnimationManager : MonoBehaviour
                 c.back.enabled = false;
                 
                 c.Set(new HandCard(name,0));
+                c.card.manaCost = cost;
+                c.UpdateManaCost(true);
                 LerpTo(c, c.transform.localPosition + new Vector3(0, -7), 120);
             }
             else
