@@ -42,6 +42,16 @@ public class Player
     public void FindAura(Aura.Type t) => sentinel.FindAura(t);
     public bool HasAura(Aura.Type t) => sentinel.HasAura(t);
 
+    //=============================
+    public void AddTrigger(Trigger.Type type, Trigger.Side side, Trigger.Ability ability, int playOrder)
+    {
+        Trigger t = sentinel.AddTrigger(type, side, ability);
+        t.playOrder = playOrder;
+    }
+    public void RemoveTrigger(Trigger t) => sentinel.RemoveTrigger(t);
+    public void RemoveMatchingTrigger(Trigger g) => sentinel.RemoveMatchingTrigger(g);
+    public List<Trigger> CheckTriggers(Trigger.Type type, Trigger.Side side, CastInfo spell) => sentinel.CheckTriggers(type, side, spell);
+
     public Player()
     {
         sentinel.board = board;
