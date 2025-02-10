@@ -43,6 +43,10 @@ Next mechanic implementation:
 	- minion attached auras (Apprentice, Mana wraith) //done
 	
 	- communicate manacost in discarded/played cards from opponent //DONE
+	
+	-temporary trigger for loatheb start of turn trigger? idk
+	
+	-aura.source should be another aura instead of minion so you can stack loathebs?
 
 = Weapons & Player Attack
 	- class Weapon? have one in Player class and one in Hero?

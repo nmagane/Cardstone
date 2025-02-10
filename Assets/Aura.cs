@@ -99,7 +99,7 @@ public class Aura
                 AuraEffects.Mana_Wraith(match, minion);
                 break;
             case Type.Loatheb:
-                AuraEffects.Mana_Wraith(match, minion);
+                AuraEffects.Loatheb(match, minion);
                 break;
         }
     }

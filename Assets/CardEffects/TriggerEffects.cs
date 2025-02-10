@@ -1,3 +1,4 @@
+using Mirror.Examples.CharacterSelection;
 using UnityEngine;
 
 public class TriggerEffects
@@ -69,4 +70,12 @@ public class TriggerEffects
             match.server.AddCardAura(match, c, new Aura(Aura.Type.Cost, -1));
         }
     }
+    public static void Loatheb(Match match, Minion minion, Trigger t)
+    {
+        Player p = minion.player;
+
+        p.AddAura(new Aura(Aura.Type.Loatheb, 0, true));
+        p.RemoveTrigger(t);
+    }
+
 }

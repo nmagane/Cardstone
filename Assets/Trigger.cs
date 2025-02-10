@@ -60,6 +60,7 @@ public class Trigger
         YoungPriestess,
         HarvestGolem,
         Emperor_Thaurissan,
+        Loatheb,
     }
     public enum Side
     {
@@ -123,6 +124,9 @@ public class Trigger
                 break;
             case Ability.Emperor_Thaurissan:
                 TriggerEffects.Emperor_Thaurissan(match, minion);
+                break;
+            case Ability.Loatheb:
+                TriggerEffects.Loatheb(match, minion, this);
                 break;
         }
 

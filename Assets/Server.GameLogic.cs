@@ -385,6 +385,6 @@ public partial class Server
     void Loatheb(CastInfo spell)
     {
         Player opponent = spell.player.opponent;
-        opponent.AddAura(new Aura(Aura.Type.Loatheb, 0, true));
+        opponent.AddTrigger(Trigger.Type.StartTurn, Trigger.Side.Friendly, Trigger.Ability.Loatheb, spell.minion.playOrder);
     }
 }

@@ -278,6 +278,9 @@ public partial class Match
             triggerBuffer.AddRange(minion.CheckTriggers(phaseTrigger, p1Side, spell));
         }
 
+        triggerBuffer.AddRange(players[0].CheckTriggers(phaseTrigger, p0Side, spell));
+        triggerBuffer.AddRange(players[1].CheckTriggers(phaseTrigger, p1Side, spell));
+
         ResolveTriggerQueue(ref spell);
 
         return spell;
@@ -295,7 +298,10 @@ public partial class Match
 
             Trigger t = triggerQueue[0];
             triggerQueue.Remove(t);
-            server.ConfirmBattlecry(this, t.minion,true,t.type==Trigger.Type.Deathrattle);
+            if (t.minion != t.minion.player.sentinel)
+            {
+                server.ConfirmBattlecry(this, t.minion, true, t.type == Trigger.Type.Deathrattle);
+            }
             t.ActivateTrigger(this, ref spell);
         }
 

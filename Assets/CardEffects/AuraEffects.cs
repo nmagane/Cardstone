@@ -42,4 +42,11 @@ public static class AuraEffects
                     match.server.AddCardAura(match, c, new Aura(Aura.Type.Cost, 1, false, true, sourceMinion));
         }    
     }
+
+    public static void Loatheb(Match match, Minion sourceMinion)
+    {
+        foreach (HandCard c in sourceMinion.player.hand)
+            if (c.SPELL)
+                match.server.AddCardAura(match, c, new Aura(Aura.Type.Cost, 5, false, true, sourceMinion));
+    }
 }

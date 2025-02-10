@@ -97,11 +97,11 @@ public partial class Minion
         }
         return result;
     }
-    public void AddTrigger(Trigger.Type type, Trigger.Side side, Trigger.Ability ability)
+    public Trigger AddTrigger(Trigger.Type type, Trigger.Side side, Trigger.Ability ability)
     {
         Trigger t = new Trigger(type, side, ability, this, playOrder);
         triggers.Add(t);
-
+        return t;
     }
     public void RemoveTrigger(Trigger t)
     {

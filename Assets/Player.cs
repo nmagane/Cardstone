@@ -29,7 +29,7 @@ public class Player
 
     public ushort messageCount = 0; //Server messages sent to player 
 
-    Minion sentinel= new Minion(Card.Cardname.Shieldbearer,0,null,0);
+    public Minion sentinel= new Minion(Card.Cardname.Shieldbearer,0,null,0);
     public List<Aura> auras => sentinel.auras;
     public List<Trigger> triggers => sentinel.triggers;
 

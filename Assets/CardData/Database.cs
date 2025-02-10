@@ -404,13 +404,12 @@ public partial class Database
         c.name = "Loatheb";
         c.text = "Battlecry: Enemy spells cost 5 more next turn.";
 
-        c.manaCost = 2;
-        c.damage = 2;
-        c.health = 2;
+        c.manaCost = 1;
+        c.damage = 5;
+        c.health = 5;
 
         c.MINION = true;
-
-        c.auras.Add(Aura.Type.Mana_Wraith);
+        c.BATTLECRY = true;
         return c;
     }
 
