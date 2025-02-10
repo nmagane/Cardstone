@@ -8,7 +8,7 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Emperor_Thaurissan };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Emperor_Thaurissan, Card.Cardname.Mana_Wraith, Card.Cardname.Mana_Wraith,Card.Cardname.Dire_Wolf_Alpha,Card.Cardname.Dire_Wolf_Alpha };
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { }; 
 #else
     List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { };
@@ -895,7 +895,6 @@ public partial class Server : MonoBehaviour
             if (card.RemoveAura(aura) == false) return;
         }
         else card.AddAura(aura);
-        //match.auraChanges.Add((minion, aura, REMOVE));
     }
     public void ConfirmAuraChange(Match match, Minion minion, Aura aura, bool REMOVE = false)
     {

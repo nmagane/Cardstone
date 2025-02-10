@@ -101,7 +101,13 @@ public partial class Database
                 return Ping();
 
             case Card.Cardname.Emperor_Thaurissan:
-                return Thaurissan();
+                return Emperor_Thaurissan();
+
+            case Card.Cardname.Mana_Wraith:
+                return Mana_Wraith();
+                
+            case Card.Cardname.Loatheb:
+                return Loatheb();
 
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
@@ -358,7 +364,7 @@ public partial class Database
         return c;
     }
     
-    static CardInfo Thaurissan()
+    static CardInfo Emperor_Thaurissan()
     { 
         CardInfo c = new();
 
@@ -372,6 +378,39 @@ public partial class Database
         c.MINION = true;
 
         c.triggers.Add((Trigger.Type.EndTurn, Trigger.Side.Friendly, Trigger.Ability.Emperor_Thaurissan));
+        return c;
+    }
+    static CardInfo Mana_Wraith()
+    { 
+        CardInfo c = new();
+
+        c.name = "Mana Wraith";
+        c.text = "ALL minions cost 1 more.";
+
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 2;
+
+        c.MINION = true;
+
+        c.auras.Add(Aura.Type.Mana_Wraith);
+        return c;
+    }
+    
+    static CardInfo Loatheb()
+    { 
+        CardInfo c = new();
+
+        c.name = "Loatheb";
+        c.text = "Battlecry: Enemy spells cost 5 more next turn.";
+
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 2;
+
+        c.MINION = true;
+
+        c.auras.Add(Aura.Type.Mana_Wraith);
         return c;
     }
 

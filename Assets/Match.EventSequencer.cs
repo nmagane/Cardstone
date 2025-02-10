@@ -55,6 +55,8 @@ public partial class Match
         Player player = spell.player;
         Player opponent = player.opponent;
 
+        //===============
+        //minion auras
         foreach (var m in player.board)
         {
             m.RemoveTemporaryAuras();
@@ -63,6 +65,20 @@ public partial class Match
         {
             m.RemoveTemporaryAuras();
         }
+        //================
+        //card auras
+        foreach (var c in player.hand)
+        {
+            c.RemoveTemporaryAuras();
+        }
+        foreach (var c in opponent.hand)
+        {
+            c.RemoveTemporaryAuras();
+        }
+        //=====================
+        //player auras
+        players[0].RemoveTemporaryAuras();
+        players[1].RemoveTemporaryAuras();
 
         ResolveTriggerQueue(ref spell);
     }
@@ -315,7 +331,7 @@ public partial class Match
         if (auraChanges.Count > 0) auraChanges.Clear();
         
         //====================
-        //Maybe just updated all cards in each players hand and call it a day?
+        //cards
         foreach (HandCard c in players[0].hand)
         {
             server.UpdateCard(this, c, players[0]);
@@ -394,6 +410,7 @@ public partial class Match
             foreach (var aura in auras)
                 aura.ActivateAura(this);
         }
+
         foreach (Minion minion in players[1].board)
         {
             List<Aura> auras = new List<Aura>(minion.auras);
@@ -411,10 +428,33 @@ public partial class Match
             minion.RefreshForeignAuras();
         }
 
-        //TODO: HAND CARD AURAS
+
+        //HAND CARD AURAS
         //=====================================
 
+        //no activatable auras on individual cards implemented.
 
+        foreach (HandCard card in players[0].hand)
+        {
+            card.RefreshForeignAuras();
+        }
+        foreach (HandCard card in players[1].hand)
+        {
+            card.RefreshForeignAuras();
+        }
+        //=====================================
+
+        foreach (Player p in players)
+        {
+            List<Aura> pAuras = new List<Aura>(p.auras);
+            foreach (var aura in pAuras)
+                aura.ActivateAura(this);
+        }
+
+        foreach (Player p in players)
+        {
+            p.RefreshForeignAuras();
+        }
         //=====================================
         UpdateStats();
         //todo: check gameover

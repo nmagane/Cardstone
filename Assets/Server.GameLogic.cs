@@ -175,6 +175,9 @@ public partial class Server
             case Card.Cardname.Flame_Imp:
                 Flame_Imp(spell);
                 break;
+            case Card.Cardname.Loatheb:
+                Loatheb(spell);
+                break;
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);
                 break;
@@ -377,5 +380,11 @@ public partial class Server
         Damage(spell, 4);
         spell.match.ResolveTriggerQueue(ref spell);
         Discard(spell, 1);
+    }
+
+    void Loatheb(CastInfo spell)
+    {
+        Player opponent = spell.player.opponent;
+        opponent.AddAura(new Aura(Aura.Type.Loatheb, 0, true));
     }
 }

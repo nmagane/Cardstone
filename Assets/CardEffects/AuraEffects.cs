@@ -31,4 +31,15 @@ public static class AuraEffects
     {
         match.server.AddAura(match, sourceMinion, new Aura(Aura.Type.Damage, 3, false, true, sourceMinion));
     }
+
+    public static void Mana_Wraith(Match match, Minion sourceMinion)
+    {
+        Player owner = match.FindOwner(sourceMinion);
+        foreach (Player p in match.players)
+        {
+            foreach (HandCard c in p.hand)
+                if (c.MINION)
+                    match.server.AddCardAura(match, c, new Aura(Aura.Type.Cost, 1, false, true, sourceMinion));
+        }    
+    }
 }

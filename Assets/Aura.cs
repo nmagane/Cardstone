@@ -21,6 +21,9 @@ public class Aura
         Amani,
         StormwindChampion,
         DireWolfAlpha,
+        Mana_Wraith,
+        Sorcerers_Apprentice,
+        Loatheb,
     }
 
     public Type type = Type.Health;
@@ -84,13 +87,19 @@ public class Aura
         switch (type)
         {
             case Type.StormwindChampion:
-                AuraEffects.StormwindChampion(match, this.minion);
+                AuraEffects.StormwindChampion(match, minion);
                 break;
             case Type.DireWolfAlpha:
-                AuraEffects.DireWolfAlpha(match, this.minion);
+                AuraEffects.DireWolfAlpha(match, minion);
                 break;
             case Type.Amani:
-                AuraEffects.Amani(match, this.minion);
+                AuraEffects.Amani(match, minion);
+                break;
+            case Type.Mana_Wraith:
+                AuraEffects.Mana_Wraith(match, minion);
+                break;
+            case Type.Loatheb:
+                AuraEffects.Mana_Wraith(match, minion);
                 break;
         }
     }

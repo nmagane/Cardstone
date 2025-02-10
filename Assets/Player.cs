@@ -28,4 +28,23 @@ public class Player
     public Match match;
 
     public ushort messageCount = 0; //Server messages sent to player 
+
+    Minion sentinel= new Minion(Card.Cardname.Shieldbearer,0,null,0);
+    public List<Aura> auras => sentinel.auras;
+    public List<Trigger> triggers => sentinel.triggers;
+
+    public void AddAura(Aura a) => sentinel.AddAura(a);
+    public void RemoveAura(Aura a) => sentinel.RemoveAura(a);
+    public void RemoveAura(Aura.Type t) => sentinel.RemoveAura(t);
+    public void RefreshForeignAuras() => sentinel.RefreshForeignAuras();
+    public void RemoveTemporaryAuras() => sentinel.RemoveTemporaryAuras();
+    public void RemoveMatchingAura(Aura a) => sentinel.RemoveMatchingAura(a);
+    public void FindAura(Aura.Type t) => sentinel.FindAura(t);
+    public bool HasAura(Aura.Type t) => sentinel.HasAura(t);
+
+    public Player()
+    {
+        sentinel.board = board;
+        sentinel.player = this;
+    }
 }

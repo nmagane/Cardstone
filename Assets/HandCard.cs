@@ -146,5 +146,31 @@ public class HandCard
         }
         return true;
     }
+    public void RefreshForeignAuras()
+    {
+        List<Aura> removeList = new List<Aura>();
+        foreach (var aura in auras)
+        {
+            if (aura.foreignSource && aura.refreshed == false)
+                removeList.Add(aura);
+            else if (aura.foreignSource && aura.refreshed == true)
+            {
+                aura.refreshed = false;
+            }
+        }
+        foreach (var aura in removeList)
+            RemoveAura(aura);
+    }
+    public void RemoveTemporaryAuras()
+    {
+        List<Aura> removeList = new List<Aura>();
+        foreach (var aura in auras)
+        {
+            if (aura.temporary)
+                removeList.Add(aura);
 
+        }
+        foreach (var aura in removeList)
+            RemoveAura(aura);
+    }
 }

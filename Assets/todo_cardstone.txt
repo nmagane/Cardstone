@@ -40,11 +40,14 @@ Next mechanic implementation:
 	- temporary aura for single casts (Prep) - Same as above?
 		-Implemented using Triggers on player?
 		
-	- minion attached auras (Apprentice, Mana wraith)
+	- minion attached auras (Apprentice, Mana wraith) //done
 	
 	- communicate manacost in discarded/played cards from opponent //DONE
 
 = Weapons & Player Attack
+	- class Weapon? have one in Player class and one in Hero?
+	- Swing messages and confirmations
+	
 	
 
 
