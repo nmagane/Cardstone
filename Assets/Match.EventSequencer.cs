@@ -313,6 +313,19 @@ public partial class Match
             server.ConfirmAuraChange(this, a.Item1, a.Item2, a.Item3);
         }
         if (auraChanges.Count > 0) auraChanges.Clear();
+        
+        //====================
+        //Maybe just updated all cards in each players hand and call it a day?
+        foreach (HandCard c in players[0].hand)
+        {
+            server.UpdateCard(this, c, players[0]);
+        }
+        foreach (HandCard c in players[1].hand)
+        {
+            server.UpdateCard(this, c, players[1]);
+        }
+        
+        //====================
 
         foreach (Minion minion in players[0].board)
         {

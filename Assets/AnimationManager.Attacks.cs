@@ -21,6 +21,7 @@ public partial class AnimationManager
     int attackFrames = 12;
     public Coroutine PreAttackMinion(Creature c, Vector3 target)
     {
+        if (c.isElevated == false) LiftMinion(c);
         c.boardPos = c.transform.localPosition;
         Vector3 dir = (target - c.transform.localPosition).normalized;
         float ang = Mathf.Atan2(c.boardPos.y - target.y, c.boardPos.x - target.x);

@@ -23,18 +23,23 @@ creatures should be limited in ordercreatures to board edges, this is mostly bec
 --board.phaseOngoing bool or something to disable input until server sends "sequence over" message?
 deathrattle/spawned source minions should pop out lerpzoom, not drop in
 FIX REPEAT CODE IN ANIMATOINMANAGER.CARDS?
-triggers should return true/false to know whether or not to confirm anim
 
-fix creatures swapping position too early before the one before it dies.
-	This issue happens when ordercreatures is called when minion indexes changed too much in the backend - when lots deaths and other animations queued up.	
+triggers should return true/false to know whether or not to confirm anim 
+	(priestess anim only when theres other minions, hobgoblin anim only when its 1-cost, etc)
+	-this might involve changing it so confirmtrigger is called within each triggereffects function? boring solution
 
+
+messageReceivedOrder should be an int. ushort is too small
 	
 Next mechanic implementation:
 = Mana cost changing auras.
-	- permanent auras on cards (Thaurissan)
+	- permanent auras on cards (Thaurissan) //DONE
+	
 	- temporary auras on player (Loatheb, Millhouse)
+	
 	- temporary aura for single casts (Prep) - Same as above?
 		-Implemented using Triggers on player?
+		
 	- minion attached auras (Apprentice, Mana wraith)
 
 = Weapons & Player Attack
@@ -44,16 +49,6 @@ Next mechanic implementation:
 - turn indicator (end turn button color)
 - rope
 
-elevate card on enemy attacks
-
-canattack
-{
-get _canattack && (attack>0) && !hasaura noatatck?
-}
-set
-{
-_canattack=value
-}
 	
 next decks to implement:
 	-Patron
@@ -63,7 +58,14 @@ next decks to implement:
 ===============================================
 =====================DONE======================
 ===============================================
-	
+
+elevate card on enemy attacks
+
+fix creatures swapping position too early before the one before it dies.
+ This issue happens when ordercreatures is called when minion indexes changed too much in the backend - when lots deaths and other animations queued up.	
+
+canattack property for 0attack and noattackaura
+
 fix that issue where one time the mulligan cards froze mid air during mulligan end anim. //It was mull visualanim being too short
 
 disconnect handling (end game immediately?)

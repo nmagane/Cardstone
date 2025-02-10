@@ -60,4 +60,13 @@ public class TriggerEffects
     {
         match.server.SummonToken(match, match.FindOwner(minion), Card.Cardname.Damaged_Golem, minion.index);
     }
+    
+    public static void Emperor_Thaurissan(Match match, Minion minion)
+    {
+        Player p = minion.player;
+        foreach(HandCard c in p.hand)
+        {
+            match.server.AddCardAura(match, c, new Aura(Aura.Type.Cost, -1));
+        }
+    }
 }

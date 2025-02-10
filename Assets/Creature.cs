@@ -128,7 +128,7 @@ public class Creature : MonoBehaviour
     public Color redText;
     int prevDmg = 0;
     int prevHP = 0;
-    public IEnumerator txtBounce(TMP_Text text)
+    public static IEnumerator txtBounce(TMP_Text text)
     {
         int frames = 5;
         for (float i=0;i<frames;i++)

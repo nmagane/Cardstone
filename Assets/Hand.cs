@@ -56,6 +56,8 @@ public class Hand
         cardObjects.Add(card, c);
         c.transform.parent = board.transform;
 
+        card.cardObject = c;
+
         switch (source)
         {
             case CardSource.Deck:

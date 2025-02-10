@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -84,6 +85,12 @@ public class Card : MonoBehaviour
 
         //UNIMPLEMENTED
         Voodoo_Doctor,
+
+        Emperor_Thaurissan,
+        Preparation,
+        Loatheb,
+        Mana_Wraith,
+        Sorcerers_Apprentice,
     }
 
     public enum Class
@@ -129,7 +136,8 @@ public class Card : MonoBehaviour
         Database.CardInfo cardInfo = Database.GetCardData(c.card);
         name.text = cardInfo.name;
         text.text = cardInfo.text;
-        manaCost.text = c.manaCost.ToString(); ;
+        _manaCost = c.manaCost;
+        manaCost.text = c.manaCost.ToString();
         if (c.MINION)
         {
             damage.text = c.damage.ToString();
@@ -145,6 +153,32 @@ public class Card : MonoBehaviour
             highlight.sprite = highlightSpell;
         }
     }
+    int _manaCost = 0;
+    public void UpdateManaCost(bool noAnim =false)
+    {
+        if (card.manaCost!=_manaCost && !noAnim)
+        {
+            StartCoroutine(Creature.txtBounce(manaCost));
+        }
+        _manaCost = card.manaCost;
+
+
+        if (_manaCost < card.baseCost)
+        {
+            manaCost.color = board.minionObject.GetComponent<Creature>().greenText;
+        }
+        else if (_manaCost > card.baseCost)
+        {
+            manaCost.color = board.minionObject.GetComponent<Creature>().redText;
+        }
+        else
+        {
+            manaCost.color = board.minionObject.GetComponent<Creature>().baseText;
+        }
+
+        manaCost.text = card.manaCost.ToString();
+    }
+
     public void Highlight()
     {
         highlight.enabled = true;

@@ -100,6 +100,9 @@ public partial class Database
             case Card.Cardname.Ping:
                 return Ping();
 
+            case Card.Cardname.Emperor_Thaurissan:
+                return Thaurissan();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 break;
@@ -352,6 +355,23 @@ public partial class Database
 
         c.MINION = true;
 
+        return c;
+    }
+    
+    static CardInfo Thaurissan()
+    { 
+        CardInfo c = new();
+
+        c.name = "Emperor Thaurissan";
+        c.text = "End of Turn: Reduce the cost of cards in your hand by 1.";
+
+        c.manaCost = 1;
+        c.damage = 2;
+        c.health = 1;
+
+        c.MINION = true;
+
+        c.triggers.Add((Trigger.Type.EndTurn, Trigger.Side.Friendly, Trigger.Ability.Emperor_Thaurissan));
         return c;
     }
 

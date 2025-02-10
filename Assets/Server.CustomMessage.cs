@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using Mirror;
 
@@ -94,6 +96,14 @@ public partial class Server
         public void AddUShort(ushort x)
         {
             ushorts.Enqueue(x);
+        }
+        public void AddUShort(short x)
+        {
+            if (x<0)
+            {
+
+            }
+            ushorts.Enqueue((ushort)x);
         }
         public void AddBool(bool x)
         {

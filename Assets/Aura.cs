@@ -16,6 +16,8 @@ public class Aura
         NoAttack,
         Silence,
 
+        Cost,
+
         Amani,
         StormwindChampion,
         DireWolfAlpha,
@@ -26,9 +28,13 @@ public class Aura
     public bool foreignSource = false;
     public bool trigger = false;
     public bool stackable = false;
-    public ushort value = 0;
+    public int value = 0;
     [System.NonSerialized]
     public Minion minion;
+
+    [System.NonSerialized]
+    public HandCard card;
+
     [System.NonSerialized]
     public Minion source;
     public bool enrage = false;
@@ -54,6 +60,10 @@ public class Aura
             case Type.Taunt:
                 break;
             case Type.Shield:
+                break;
+
+            case Type.Cost:
+                card.manaCost += value;
                 break;
 
             case Type.Amani: //ENRAGE AURAS GO HERE?
@@ -90,7 +100,7 @@ public class Aura
         return minion.health < minion.maxHealth;
     }
 
-    public Aura(Type t, ushort val = 0, bool temp = false, bool foreign = false, Minion provider = null)
+    public Aura(Type t, int val = 0, bool temp = false, bool foreign = false, Minion provider = null)
     {
         type = t;
         value = val;
@@ -101,9 +111,8 @@ public class Aura
         switch (type)
         {
             case Type.Health:
-                stackable = true;
-                break;
             case Type.Damage:
+            case Type.Cost:
                 stackable = true;
                 break;
         }

@@ -8,7 +8,7 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Knife_Juggler,Card.Cardname.Knife_Juggler,Card.Cardname.Knife_Juggler};
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Emperor_Thaurissan };
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { }; 
 #else
     List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { };
@@ -66,8 +66,7 @@ public partial class Server : MonoBehaviour
 
         UpdateMinion,
         UpdateHero,
-
-        TriggerMinion,
+        UpdateCard,
 
         DiscardCard,
         MillCard,
@@ -884,6 +883,20 @@ public partial class Server : MonoBehaviour
         else minion.AddAura(aura);
         match.auraChanges.Add((minion, aura, REMOVE));
     }
+
+    public void RemoveCardAura(Match match, HandCard card, Aura aura)
+    {
+        AddCardAura(match, card, aura, true);
+    }
+    public void AddCardAura(Match match, HandCard card, Aura aura, bool REMOVE=false)
+    {
+        if (REMOVE)
+        {
+            if (card.RemoveAura(aura) == false) return;
+        }
+        else card.AddAura(aura);
+        //match.auraChanges.Add((minion, aura, REMOVE));
+    }
     public void ConfirmAuraChange(Match match, Minion minion, Aura aura, bool REMOVE = false)
     {
 
@@ -900,12 +913,12 @@ public partial class Server : MonoBehaviour
         messageOpponent.AddBool(false);
 
         messageOwner.AddUShort((ushort)aura.type);
-        messageOwner.AddUShort(aura.value);
+        messageOwner.AddInt(aura.value);
         messageOwner.AddBool(aura.temporary);
         messageOwner.AddBool(aura.foreignSource);
 
         messageOpponent.AddUShort((ushort)aura.type);
-        messageOpponent.AddUShort(aura.value);
+        messageOpponent.AddInt(aura.value);
         messageOpponent.AddBool(aura.temporary);
         messageOpponent.AddBool(aura.foreignSource);
 
@@ -927,6 +940,15 @@ public partial class Server : MonoBehaviour
         }
         SendMessage(messageOwner, owner);
         SendMessage(messageOpponent, opponent);
+    }
+    public void UpdateCard(Match match, HandCard card, Player owner)
+    {
+        CustomMessage message = CreateMessage(MessageType.UpdateCard);
+
+        message.AddInt(card.index);
+        message.AddInt(card.manaCost);
+
+        SendMessage(message, owner);
     }
     public void MillCard(Match match, Player player)
     {

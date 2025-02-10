@@ -101,6 +101,9 @@ public partial class Board
             case Server.MessageType.UpdateHero:
                 return UpdateHeroVisual(message);
 
+            case Server.MessageType.UpdateCard:
+                return UpdateCardVisual(message);
+
             case Server.MessageType.ConfirmBattlecry:
                 return ConfirmBattlecryVisual(message);
 
@@ -297,6 +300,12 @@ public partial class Board
         {
             CreateSplash(message.isFriendly ? currHero : enemyHero, message.damage);
         }
+        return null;
+    }
+    Coroutine UpdateCardVisual(VisualInfo message)
+    {
+        Card c = message.handCards[0].cardObject;
+        c.UpdateManaCost();
         return null;
     }
 

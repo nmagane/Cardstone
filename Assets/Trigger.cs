@@ -59,6 +59,7 @@ public class Trigger
         AcolyteOfPain,
         YoungPriestess,
         HarvestGolem,
+        Emperor_Thaurissan,
     }
     public enum Side
     {
@@ -119,6 +120,9 @@ public class Trigger
                 break;
             case Ability.HarvestGolem:
                 TriggerEffects.HarvestGolem(match, minion);
+                break;
+            case Ability.Emperor_Thaurissan:
+                TriggerEffects.Emperor_Thaurissan(match, minion);
                 break;
         }
 
