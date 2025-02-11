@@ -94,6 +94,8 @@ public class Card : MonoBehaviour
         Stormwind_Champion, 
         Millhouse_Manastorm,
         Hunters_Mark,
+        Crazed_Alchemist,
+        Chillwind_Yeti
     }
 
     public enum Class

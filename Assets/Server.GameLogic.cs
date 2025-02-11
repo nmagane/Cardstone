@@ -81,14 +81,16 @@ public partial class Server
         int externalHealth = 0;
         foreach (Aura a in minion.auras)
         {
-            if (a.foreignSource && a.type == Aura.Type.Health)
+            if (a.foreignSource && a.type == Aura.Type.Health && a.sourceAura != null)
             {
                 externalHealth += a.value;
             }
         }
 
         int diff = value - (minion.maxHealth - externalHealth);
+        //Debug.Log($"hp {diff}={value}-({minion.maxHealth}-{externalHealth})");
         match.server.AddAura(match, minion, new Aura(Aura.Type.Health,diff));
+        minion.health = minion.maxHealth;
     }
 
     public void SetDamage(Match match, Minion minion, int value)
@@ -98,13 +100,15 @@ public partial class Server
         int externalDamage = 0;
         foreach (Aura a in minion.auras)
         {
-            if (a.foreignSource && a.type ==Aura.Type.Damage)
+            if (a.foreignSource && a.type ==Aura.Type.Damage && a.sourceAura!=null)
             {
+                //if (a.sourceAura.minion != minion)
                 externalDamage += a.value;
             }
         }
 
         int diff = value - (minion.damage-externalDamage);
+        //Debug.Log($"atk {diff}={value}-({minion.damage}-{externalDamage})");
         match.server.AddAura(match, minion, new Aura(Aura.Type.Damage,diff));
     }
 
@@ -221,6 +225,9 @@ public partial class Server
                 break;
             case Card.Cardname.Hunters_Mark:
                 Hunters_Mark(spell);
+                break;
+            case Card.Cardname.Crazed_Alchemist:
+                Crazed_Alchemist(spell);
                 break;
 
             default:
@@ -453,5 +460,14 @@ public partial class Server
     {
         Minion m = spell.GetTargetMinion();
         SetHealth(spell.match, m, 1);
+    }
+
+    void Crazed_Alchemist(CastInfo spell)
+    {
+        Minion m = spell.GetTargetMinion();
+        int att = m.damage;
+        int hp = m.health;
+        SetDamage(spell.match, m, hp);
+        SetHealth(spell.match, m, att);
     }
 }

@@ -221,6 +221,7 @@ public partial class Board
     {
         foreach (var m in currMinions)
         {
+            if (m.creature == null) continue;
             m.creature.Highlight(true);
         }
     }

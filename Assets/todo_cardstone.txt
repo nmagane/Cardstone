@@ -54,6 +54,8 @@ need cost/stat "setting" effects like followtherules and millhouse, and crazed a
 
 NOTE: millhouse/loatheb etc are currently set to minion costs for testing instead of spells
 	
+BUG: shield and other auras are not updating visually
+
 = Weapons & Player Attack
 	- class Weapon? have one in Player class and one in Hero?
 	- Swing messages and confirmations

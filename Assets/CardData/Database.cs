@@ -121,6 +121,12 @@ public partial class Database
             case Card.Cardname.Hunters_Mark:
                 return Hunters_Mark();
 
+            case Card.Cardname.Crazed_Alchemist:
+                return Crazed_Alchemist();
+
+            case Card.Cardname.Chillwind_Yeti:
+                return Chillwind_Yeti();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 break;
@@ -452,6 +458,36 @@ public partial class Database
 
         c.MINION = true;
         c.BATTLECRY = true;
+        return c;
+    }
+    static CardInfo Crazed_Alchemist()
+    { 
+        CardInfo c = new();
+
+        c.name = "Crazed Alchemist";
+        c.text = "Battlecry: Swap health and attack of target minion.";
+
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 2;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+        c.TARGETED = true;
+        return c;
+    }
+    static CardInfo Chillwind_Yeti()
+    { 
+        CardInfo c = new();
+
+        c.name = "Chillwind Yeti";
+        c.text = "";
+
+        c.manaCost = 4;
+        c.damage = 4;
+        c.health = 5;
+
+        c.MINION = true;
         return c;
     }
 }
