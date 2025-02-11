@@ -189,8 +189,15 @@ public partial class Minion
         {
             case Aura.Type.Health:
                 maxHealth -= a.value;
-                if (health > maxHealth)
-                    health = maxHealth;
+                if (a.value > 0)
+                {
+                    if (health > maxHealth)
+                        health = maxHealth;
+                }
+                else
+                {
+                    health -= a.value;
+                }
                 break;
             case Aura.Type.Damage:
                 damage -= a.value;

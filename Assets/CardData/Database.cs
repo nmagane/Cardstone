@@ -118,6 +118,9 @@ public partial class Database
             case Card.Cardname.Millhouse_Manastorm:
                 return Millhouse_Manastorm();
 
+            case Card.Cardname.Hunters_Mark:
+                return Hunters_Mark();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 break;

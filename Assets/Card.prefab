@@ -820,9 +820,10 @@ MonoBehaviour:
   board: {fileID: 0}
   card:
     index: 0
-    manaCost: 0
+    _manaCost: 0
     health: 0
     damage: 0
+    baseCost: 0
     card: 0
     eligibleTargets: 0
     SPELL: 0
@@ -833,6 +834,7 @@ MonoBehaviour:
     COMBO: 0
     BATTLECRY: 0
     played: 0
+    cardObject: {fileID: 0}
   shadow: {fileID: 2670244061852006825}
   cardSprites:
   - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
@@ -855,6 +857,26 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a119986025af1934794e51cf6a41ceec, type: 3}
   - {fileID: 21300000, guid: aaf9d853b7985ae429643096fee93c47, type: 3}
   - {fileID: 21300000, guid: 8f8c9f497168a334da4508c215b9bfe0, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
+  - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
   - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
   - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}
   - {fileID: 21300000, guid: abdde5c6ff1b10443bc142a9a487301b, type: 3}

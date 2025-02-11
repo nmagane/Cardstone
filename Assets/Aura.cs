@@ -56,8 +56,14 @@ public class Aura
         switch (type)
         {
             case Type.Health:
-                minion.health += value;
                 minion.maxHealth += value;
+                if (value>0)
+                    minion.health += value;
+                else
+                {
+                    if (minion.health > minion.maxHealth)
+                        minion.health = minion.maxHealth;
+                }
                 break;
             case Type.Damage:
                 minion.damage += value;

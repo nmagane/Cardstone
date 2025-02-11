@@ -219,6 +219,9 @@ public partial class Server
             case Card.Cardname.Millhouse_Manastorm:
                 Millhouse_Manastorm(spell);
                 break;
+            case Card.Cardname.Hunters_Mark:
+                Hunters_Mark(spell);
+                break;
 
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);
@@ -444,5 +447,11 @@ public partial class Server
     {
         spell.player.AddAura(new Aura(Aura.Type.Preparation, 0, true));
         spell.player.AddTrigger(Trigger.Type.OnPlaySpell, Trigger.Side.Friendly, Trigger.Ability.Preparation_Cast, spell.playOrder);
+    }
+
+    void Hunters_Mark(CastInfo spell)
+    {
+        Minion m = spell.GetTargetMinion();
+        SetHealth(spell.match, m, 1);
     }
 }

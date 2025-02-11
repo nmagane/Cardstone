@@ -92,7 +92,8 @@ public class Card : MonoBehaviour
         Mana_Wraith,
         Sorcerers_Apprentice,
         Stormwind_Champion, 
-        Millhouse_Manastorm
+        Millhouse_Manastorm,
+        Hunters_Mark,
     }
 
     public enum Class
