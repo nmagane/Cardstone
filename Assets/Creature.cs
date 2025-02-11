@@ -146,7 +146,7 @@ public class Creature : MonoBehaviour
     {
     }
 
-    public int hp, dmg;
+    public int hp, dmg, maxhp;
 
     public void UpdateDisplay()
     {
@@ -166,9 +166,9 @@ public class Creature : MonoBehaviour
         //==================== 
         //TODO: THESE minion. VALUES SHOULD BE STORED AND BUFFERED IN CREATURE PER UPDATE TOO
         //TO PREVENT COLOR CHANGING BEFORE IT SHOULD
-        if (hp < minion.maxHealth)
+        if (hp < maxhp)
             health.color = redText;
-        else if (hp > minion.baseHealth && hp == minion.maxHealth)
+        else if (hp > minion.baseHealth && hp == maxhp)
         {
             health.color = greenText;
         }

@@ -424,6 +424,15 @@ public partial class Match
                 aura.ActivateAura(this);
         }
 
+        //activate player auras
+        foreach (Player p in players)
+        {
+            List<Aura> pAuras = new List<Aura>(p.auras);
+            foreach (var aura in pAuras)
+                aura.ActivateAura(this);
+        }
+        //==================
+
         //Remove foreign effects if no longer refreshed
         foreach (Minion minion in players[0].board)
         {
@@ -435,6 +444,12 @@ public partial class Match
         }
 
 
+        //=====================================
+        //player
+        foreach (Player p in players)
+        {
+            p.RefreshForeignAuras();
+        }
         //HAND CARD AURAS
         //=====================================
 
@@ -447,19 +462,6 @@ public partial class Match
         foreach (HandCard card in players[1].hand)
         {
             card.RefreshForeignAuras();
-        }
-        //=====================================
-
-        foreach (Player p in players)
-        {
-            List<Aura> pAuras = new List<Aura>(p.auras);
-            foreach (var aura in pAuras)
-                aura.ActivateAura(this);
-        }
-
-        foreach (Player p in players)
-        {
-            p.RefreshForeignAuras();
         }
         //=====================================
         UpdateStats();

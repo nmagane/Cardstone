@@ -9,6 +9,7 @@ public class CastInfo
     public bool isHero;
     public AttackInfo attack = null;
     public Minion minion;
+    public int playOrder = 0;
 
     public CastInfo(Match m, Player p, HandCard name, int t, int s, bool fri, bool hero)
     {

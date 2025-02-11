@@ -47,7 +47,11 @@ Next mechanic implementation:
 	-temporary trigger for loatheb start of turn trigger? idk
 	
 	-aura.source should be another aura instead of minion so you can stack loathebs?
+	
+	-move triggereffects and auraeffects into trigger and aura class?
 
+need cost/stat "setting" effects like followtherules and millhouse.
+	
 = Weapons & Player Attack
 	- class Weapon? have one in Player class and one in Hero?
 	- Swing messages and confirmations

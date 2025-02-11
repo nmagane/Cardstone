@@ -24,6 +24,7 @@ public class Aura
         Mana_Wraith,
         Sorcerers_Apprentice,
         Loatheb,
+        Preparation,
     }
 
     public Type type = Type.Health;
@@ -32,6 +33,7 @@ public class Aura
     public bool trigger = false;
     public bool stackable = false;
     public int value = 0;
+    public Card.Cardname name;
     [System.NonSerialized]
     public Minion minion;
 
@@ -39,7 +41,8 @@ public class Aura
     public HandCard card;
 
     [System.NonSerialized]
-    public Minion source;
+    public Aura sourceAura;
+
     public bool enrage = false;
     public bool refreshed = false;
 
@@ -55,7 +58,6 @@ public class Aura
                 minion.damage += value;
                 break;
             case Type.NoAttack:
-                minion.canAttack = false;
                 break;
             case Type.Charge:
                 minion.canAttack = true;
@@ -66,7 +68,7 @@ public class Aura
                 break;
 
             case Type.Cost:
-                card.manaCost += value;
+                card._manaCost += value;
                 break;
 
             case Type.Amani: //ENRAGE AURAS GO HERE?
@@ -77,29 +79,30 @@ public class Aura
 
     public void ActivateAura(Match match)
     {
-        //Debug.Log("active");
         if (enrage == true && EnrageCheck() == false)
         {
-            //Debug.Log("failenrage");
             return;
         }
 
         switch (type)
         {
             case Type.StormwindChampion:
-                AuraEffects.StormwindChampion(match, minion);
+                AuraEffects.StormwindChampion(match, minion, this);
                 break;
             case Type.DireWolfAlpha:
-                AuraEffects.DireWolfAlpha(match, minion);
+                AuraEffects.DireWolfAlpha(match, minion, this);
                 break;
             case Type.Amani:
-                AuraEffects.Amani(match, minion);
+                AuraEffects.Amani(match, minion, this);
                 break;
             case Type.Mana_Wraith:
-                AuraEffects.Mana_Wraith(match, minion);
+                AuraEffects.Mana_Wraith(match, minion, this);
                 break;
             case Type.Loatheb:
-                AuraEffects.Loatheb(match, minion);
+                AuraEffects.Loatheb(match, minion, this);
+                break;
+            case Type.Preparation:
+                AuraEffects.Preparation(match, minion, this);
                 break;
         }
     }
@@ -109,19 +112,21 @@ public class Aura
         return minion.health < minion.maxHealth;
     }
 
-    public Aura(Type t, int val = 0, bool temp = false, bool foreign = false, Minion provider = null)
+    public Aura(Type t, int val = 0, bool temp = false, bool foreign = false, Aura source=null, Card.Cardname cardname=Card.Cardname.Cardback)
     {
         type = t;
         value = val;
         temporary = temp;
         foreignSource = foreign;
-        source = provider;
+        sourceAura = source;
+        name = cardname;
 
         switch (type)
         {
             case Type.Health:
             case Type.Damage:
             case Type.Cost:
+            case Type.Loatheb:
                 stackable = true;
                 break;
         }

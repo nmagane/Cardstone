@@ -109,6 +109,12 @@ public partial class Database
             case Card.Cardname.Loatheb:
                 return Loatheb();
 
+            case Card.Cardname.Stormwind_Champion:
+                return Stormwind_Champion();
+
+            case Card.Cardname.Preparation:
+                return Preparation();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 break;
@@ -412,6 +418,19 @@ public partial class Database
         c.BATTLECRY = true;
         return c;
     }
+    static CardInfo Stormwind_Champion()
+    { 
+        CardInfo c = new();
 
+        c.name = "Stormwind Champion";
+        c.text = "Ally minions have +1/+1";
 
+        c.manaCost = 1;
+        c.damage = 6;
+        c.health = 6;
+
+        c.MINION = true;
+        c.auras.Add(Aura.Type.StormwindChampion);
+        return c;
+    }
 }

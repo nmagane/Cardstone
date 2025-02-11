@@ -137,10 +137,9 @@ public partial class Minion
         finder = FindForeignAura(a);
         if (finder != null)
         {
-            if (finder.foreignSource && finder.source == a.source)
+            if (finder.foreignSource && finder.sourceAura == a.sourceAura)
             {
                 //Refresh and don't re-add.
-
                 finder.refreshed = true;
                 return;
             }
@@ -149,7 +148,6 @@ public partial class Minion
         if (finder == null && a.foreignSource)
         {
             //First time application of foreign aura. Add and considered it refreshed.
-
             a.refreshed = true;
         }
 
@@ -177,7 +175,7 @@ public partial class Minion
 
         foreach (Aura x in auras)
         {
-            if (a.type == x.type && x.foreignSource && a.source == x.source)
+            if (a.type == x.type && x.foreignSource && a.sourceAura == x.sourceAura && a.name==x.name)//is checking names ok?
                 return x;
         }
         return null;
@@ -230,7 +228,7 @@ public partial class Minion
                 && a.temporary == aura.temporary
                 && a.value == aura.value
                 && a.foreignSource == aura.foreignSource
-                && a.source == aura.source)
+                && a.name == aura.name)
             {
                 removers.Add(aura);
                 break;

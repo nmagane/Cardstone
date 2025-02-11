@@ -306,14 +306,13 @@ public partial class Board : MonoBehaviour
                 int addAuraValue = message.GetInt();
                 bool addAuraTemp = message.GetBool();
                 bool addAuraForeign = message.GetBool();
-                int addAuraSourceInd = message.GetInt();
-                bool addAuraSourceFriendly = message.GetBool();
+                Card.Cardname addAuraSourceCard = (Card.Cardname)message.GetInt();
                 if (messageID==Server.MessageType.RemoveAura)
                 {
-                    RemoveAura(addAuraMinionIndex, addAuraFriendly, addAuraType, addAuraValue, addAuraTemp, addAuraForeign, addAuraSourceInd, addAuraSourceFriendly);
+                    RemoveAura(addAuraMinionIndex, addAuraFriendly, addAuraType, addAuraValue, addAuraTemp, addAuraForeign, addAuraSourceCard);
                     break;
                 }
-                AddAura(addAuraMinionIndex, addAuraFriendly, addAuraType, addAuraValue, addAuraTemp, addAuraForeign, addAuraSourceInd, addAuraSourceFriendly);
+                AddAura(addAuraMinionIndex, addAuraFriendly, addAuraType, addAuraValue, addAuraTemp, addAuraForeign, addAuraSourceCard);
                 break;
             case Server.MessageType.AddTrigger:
             case Server.MessageType.RemoveTrigger:
@@ -498,11 +497,13 @@ public partial class Board : MonoBehaviour
 
         int diff = updatedMinion.health - minion.health;
         minion.health = updatedMinion.health;
+        minion.maxHealth = updatedMinion.maxHealth;
         minion.damage = updatedMinion.damage;
 
         VisualInfo anim = new VisualInfo();
         anim.ints.Add(minion.health);
         anim.ints.Add(minion.damage);
+        anim.ints.Add(minion.maxHealth);
         anim.type = Server.MessageType.UpdateMinion;
         anim.minions.Add(minion);
         if (damaged || healed)
@@ -556,11 +557,12 @@ public partial class Board : MonoBehaviour
         QueueAnimation(anim);
         CheckHighlights();
     }
-    public void AddAura(int minionIndex,bool friendly, ushort auraType, int value, bool temp, bool foreign,int sourceInd, bool sourceFriendly)
+    public void AddAura(int minionIndex,bool friendly, ushort auraType, int value, bool temp, bool foreign,Card.Cardname source)
     {
         Minion target = friendly? currMinions[minionIndex] : enemyMinions[minionIndex];
-        Minion source = sourceInd == -1 ? null : (sourceFriendly ? currMinions[sourceInd] : enemyMinions[sourceInd]);
-        target.AddAura(new Aura((Aura.Type)auraType, value, temp, foreign, source));
+        
+        target.AddAura(new Aura((Aura.Type)auraType, value, temp, foreign,null, source));
+
 
         VisualInfo anim = new VisualInfo();
         anim.type = Server.MessageType.AddAura;
@@ -568,11 +570,11 @@ public partial class Board : MonoBehaviour
         QueueAnimation(anim);
         
     }
-    public void RemoveAura(int minionIndex,bool friendly, ushort auraType, int value, bool temp, bool foreign,int sourceInd, bool sourceFriendly)
+    public void RemoveAura(int minionIndex,bool friendly, ushort auraType, int value, bool temp, bool foreign,Card.Cardname source)
     {
         Minion target = friendly? currMinions[minionIndex] : enemyMinions[minionIndex];
-        Minion source = sourceInd == -1 ? null : (sourceFriendly ? currMinions[sourceInd] : enemyMinions[sourceInd]);
-        target.RemoveMatchingAura(new Aura((Aura.Type)auraType, value, temp, foreign, source));
+        
+        target.RemoveMatchingAura(new Aura((Aura.Type)auraType, value, temp, foreign, null, source));
 
         VisualInfo anim = new VisualInfo();
         anim.type = Server.MessageType.RemoveAura;

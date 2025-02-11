@@ -5,7 +5,7 @@ using UnityEngine;
 public class HandCard
 {
     public int index = 0;
-    int _manaCost = 1;
+    public int _manaCost = 1;
     public int manaCost
     {
         get
@@ -88,28 +88,25 @@ public class HandCard
         finder = FindForeignAura(a);
         if (finder != null)
         {
-            if (finder.foreignSource && finder.source == a.source)
+            if (finder.foreignSource && finder.sourceAura == a.sourceAura)
             {
                 //Refresh and don't re-add.
-
                 finder.refreshed = true;
                 return;
-            }
+            } 
         }
 
         if (finder == null && a.foreignSource)
         {
-            //First time application of foreign aura. Add and considered it refreshed.
-
+            //First time application of foreign aura. Add and considered it refreshed
             a.refreshed = true;
         }
 
         a.card = this;
-
         a.InitAura();
         auras.Add(a);
-
     }
+
     public bool HasAura(Aura.Type t)
     {
         return (FindAura(t) != null);
@@ -129,11 +126,12 @@ public class HandCard
 
         foreach (Aura x in auras)
         {
-            if (a.type == x.type && x.foreignSource && a.source == x.source)
+            if (a.type == x.type && x.foreignSource && a.sourceAura == x.sourceAura && a.name == x.name)//is checking names ok?
                 return x;
         }
         return null;
     }
+
 
     public bool RemoveAura(Aura a)
     {
@@ -141,7 +139,7 @@ public class HandCard
         switch (a.type)
         {
             case Aura.Type.Cost:
-                manaCost += -a.value;
+                _manaCost += -a.value;
                 break;
         }
         return true;

@@ -178,6 +178,10 @@ public partial class Server
             case Card.Cardname.Loatheb:
                 Loatheb(spell);
                 break;
+            case Card.Cardname.Preparation:
+                Preparation(spell);
+                break;
+
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);
                 break;
@@ -237,7 +241,8 @@ public partial class Server
         List<Trigger> triggers = new List<Trigger>(minion.triggers);
         foreach (var a in auras)
         {
-            if (a.foreignSource && a.source != minion) continue;
+            //if (a.foreignSource && a.source != minion) continue;
+            if (a.foreignSource) continue;
             match.server.RemoveAura(match, minion, a);
         }
         foreach (var t in triggers)
@@ -386,5 +391,11 @@ public partial class Server
     {
         Player opponent = spell.player.opponent;
         opponent.AddTrigger(Trigger.Type.StartTurn, Trigger.Side.Friendly, Trigger.Ability.Loatheb, spell.minion.playOrder);
+    }
+
+    void Preparation(CastInfo spell)
+    {
+        spell.player.AddAura(new Aura(Aura.Type.Preparation, 0, true));
+        spell.player.AddTrigger(Trigger.Type.OnPlaySpell, Trigger.Side.Friendly, Trigger.Ability.Preparation_Cast, spell.playOrder);
     }
 }

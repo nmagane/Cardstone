@@ -272,6 +272,7 @@ public partial class Board
     Coroutine UpdateMinionVisual(VisualInfo message)
     {
         message.minions[0].creature.hp = message.ints[0]; 
+        message.minions[0].creature.maxhp = message.ints[2]; 
         message.minions[0].creature.dmg = message.ints[1];
         message.minions[0].creature.UpdateDisplay(); 
 

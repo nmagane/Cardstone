@@ -91,6 +91,7 @@ public class Card : MonoBehaviour
         Loatheb,
         Mana_Wraith,
         Sorcerers_Apprentice,
+        Stormwind_Champion,
     }
 
     public enum Class

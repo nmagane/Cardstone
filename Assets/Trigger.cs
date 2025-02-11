@@ -61,6 +61,8 @@ public class Trigger
         HarvestGolem,
         Emperor_Thaurissan,
         Loatheb,
+
+        Preparation_Cast,
     }
     public enum Side
     {
@@ -127,6 +129,9 @@ public class Trigger
                 break;
             case Ability.Loatheb:
                 TriggerEffects.Loatheb(match, minion, this);
+                break;
+            case Ability.Preparation_Cast:
+                TriggerEffects.Prep_Cast(match, minion, this);
                 break;
         }
 

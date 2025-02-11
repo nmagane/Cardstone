@@ -8,8 +8,9 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Loatheb, Card.Cardname.Mana_Wraith, Card.Cardname.Loatheb,Card.Cardname.Loatheb};
-    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { }; 
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Preparation,Card.Cardname.Loatheb,Card.Cardname.Loatheb};
+    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Preparation,Card.Cardname.Loatheb,Card.Cardname.Loatheb};
+    
 #else
     List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { };
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { };
@@ -654,6 +655,7 @@ public partial class Server : MonoBehaviour
         match.playOrder++;
 
         CastInfo spell = new CastInfo(match, match.players[p], card, target,position, friendlySide, isHero);
+        spell.playOrder = match.playOrder;
         if (card.SPELL)
         {
             match.StartSequencePlaySpell(spell);
@@ -921,21 +923,15 @@ public partial class Server : MonoBehaviour
         messageOpponent.AddBool(aura.temporary);
         messageOpponent.AddBool(aura.foreignSource);
 
-        if (aura.source == null)
+        if (aura.sourceAura == null || aura.minion == null)
         {
             messageOwner.AddInt(-1);
-            messageOwner.AddBool(false);
-
             messageOpponent.AddInt(-1);
-            messageOpponent.AddBool(false);
         }
         else
         {
-            messageOwner.AddInt(aura.source.index);
-            messageOwner.AddBool(owner.board.Contains(aura.source));
-
-            messageOpponent.AddInt(aura.source.index);
-            messageOpponent.AddBool(opponent.board.Contains(aura.source));
+            messageOwner.AddInt((int)aura.minion.card);
+            messageOpponent.AddInt((int)aura.minion.card);
         }
         SendMessage(messageOwner, owner);
         SendMessage(messageOpponent, opponent);
