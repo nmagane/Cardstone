@@ -135,18 +135,18 @@ public partial class Board : MonoBehaviour
         currHand.server = false;
     }
 
-    public ushort matchMessageOrder = 0;
-    public ushort messageReceivedOrder = 0;
-    List<(Server.MessageType, Server.CustomMessage, ushort)> messageQue = new();
+    public int matchMessageOrder = 0;
+    public int messageReceivedOrder = 0;
+    List<(Server.MessageType, Server.CustomMessage, int)> messageQue = new();
 
     public void OnMessageReceived(Server.CustomMessage message)
     {
         Server.MessageType messageID = message.type;
-        ushort count = message.order;
+        int count = message.order;
         ReceiveMessage(message.type, message, count);
 
     }
-    public void ReceiveMessage(Server.MessageType type, Server.CustomMessage message, ushort order)
+    public void ReceiveMessage(Server.MessageType type, Server.CustomMessage message, int order)
     {
         if (order == messageReceivedOrder)
         {
@@ -224,7 +224,7 @@ public partial class Board : MonoBehaviour
 
                 int startMaxMana = message.GetInt();
                 int startCurrMana = message.GetInt();
-                ushort startMessageCount = message.GetUShort();
+                int startMessageCount = message.GetInt();
                 StartTurn(startAllyTurn,startMaxMana,startCurrMana,startMessageCount);
                 break;
             case Server.MessageType.EndTurn:
@@ -411,7 +411,7 @@ public partial class Board : MonoBehaviour
         currTurn = false;
         CheckHighlights();
     }
-    public void StartTurn(bool allyTurn, int maxMana, int currMana, ushort messageCount)
+    public void StartTurn(bool allyTurn, int maxMana, int currMana, int messageCount)
     {
         matchMessageOrder = messageCount;
 

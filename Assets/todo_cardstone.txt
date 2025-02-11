@@ -29,15 +29,39 @@ triggers should return true/false to know whether or not to confirm anim
 	-this might involve changing it so confirmtrigger is called within each triggereffects function? boring solution
 
 
-messageReceivedOrder should be an int. ushort is too small
 	
+NOTE: millhouse/loatheb etc are currently set to minion costs for testing instead of spells
+	
+-move triggereffects and auraeffects into trigger and aura class?
+
+next decks to implement:
+	-Patron
+	-BRM/GvG Zoo
+	-Freeze
+	-Rogue
+
 Next mechanic implementation:
+= Weapons & Player Attack
+	- class Weapon? have one in Player class and one in Hero?
+	- Swing messages and confirmations	
+	- Weapon battlecry, deathrattle, triggers (truesilver, hunter eaglehorn bow)
+
+= Player Armor
+
+- turn indicator (end turn button color)
+- rope
+===============================================
+=====================DONE======================
+===============================================
+
+messageReceivedOrder should be an int. ushort is too small
+
 = Mana cost changing auras.
 	- permanent auras on cards (Thaurissan) //DONE
 	
-	- temporary auras on player (Loatheb, Millhouse)
+	- temporary auras on player (Loatheb, Millhouse) //done
 	
-	- temporary aura for single casts (Prep) - Same as above?
+	- temporary aura for single casts (Prep) - Same as above? //done
 		-Implemented using Triggers on player?
 		
 	- minion attached auras (Apprentice, Mana wraith) //done
@@ -46,36 +70,11 @@ Next mechanic implementation:
 	
 	-temporary trigger for loatheb start of turn trigger? idk
 	
-	-aura.source should be another aura instead of minion so you can stack loathebs?
+	-aura.source should be another aura instead of minion so you can stack loathebs? //done
 	
-	-move triggereffects and auraeffects into trigger and aura class?
-
 need cost/stat "setting" effects like followtherules and millhouse, and crazed alchemist.
 
-NOTE: millhouse/loatheb etc are currently set to minion costs for testing instead of spells
-	
-BUG: shield and other auras are not updating visually
-
-= Weapons & Player Attack
-	- class Weapon? have one in Player class and one in Hero?
-	- Swing messages and confirmations
-	
-	
-
-
-- turn indicator (end turn button color)
-- rope
-
-	
-next decks to implement:
-	-Patron
-	-BRM/GvG Zoo
-	-Freeze
-	-Rogue
-===============================================
-=====================DONE======================
-===============================================
-
+BUG: shield and other auras are not updating visually //removeaura mismatch msg, fixed
 elevate card on enemy attacks
 
 fix creatures swapping position too early before the one before it dies.

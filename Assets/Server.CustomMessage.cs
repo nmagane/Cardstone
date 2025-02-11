@@ -18,7 +18,7 @@ public partial class Server
     {
         public MessageType type;
         public int clientID;
-        public ushort order;
+        public int order;
         public List<int> ints = new List<int>();
         public List<ulong> ulongs = new List<ulong>();
         public List<ushort> ushorts = new List<ushort>();
@@ -47,7 +47,7 @@ public partial class Server
     {
         public MessageType type=MessageType.Matchmaking;
         public int clientID=0;
-        public ushort order=0;
+        public int order=0;
         public Queue<int> ints = new Queue<int>();
         public Queue<ulong> ulongs = new Queue<ulong>();
         public Queue<ushort> ushorts = new Queue<ushort>();

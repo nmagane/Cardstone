@@ -27,7 +27,7 @@ public class Player
     [System.NonSerialized]
     public Match match;
 
-    public ushort messageCount = 0; //Server messages sent to player 
+    public int messageCount = 0; //Server messages sent to player 
 
     public Minion sentinel= new Minion(Card.Cardname.Damaged_Golem,0,null,0);
     public List<Aura> auras => sentinel.auras;

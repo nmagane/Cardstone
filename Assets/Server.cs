@@ -142,7 +142,7 @@ public partial class Server : MonoBehaviour
     {
         MessageType messageID = message.type;
         int clientID = message.clientID;
-        ushort count = message.order;
+        int count = message.order;
         //CustomMessage message;
         bool orderedMessage = false;
         //UNORDERED MESSAGES, OUT OF GAME (NO MATCH ID ATTACHED)
@@ -545,11 +545,11 @@ public partial class Server : MonoBehaviour
         message.AddBool(true);
         message.AddInt(match.currPlayer.maxMana);
         message.AddInt(match.currPlayer.currMana);
-        message.AddUShort(match.messageCount);
+        message.AddInt(match.messageCount);
         messageEnemy.AddBool(false);
         messageEnemy.AddInt(match.currPlayer.maxMana);
         messageEnemy.AddInt(match.currPlayer.currMana);
-        messageEnemy.AddUShort(match.messageCount);
+        messageEnemy.AddInt(match.messageCount);
 
         //server.Send(message, match.currPlayer.connection.clientID);
         SendMessage(message, match.currPlayer);

@@ -13,8 +13,8 @@ public partial class Match
     public Server server;
     public int playOrder = 0;
     public bool started = false;
-    public ushort messageCount = 0;
-    List<(Server.MessageType, int, Server.CustomMessage, ushort)> messageQue = new();
+    public int messageCount = 0;
+    List<(Server.MessageType, int, Server.CustomMessage, int)> messageQue = new();
     //todo: secrets
     //todo: graveyards
 
@@ -70,7 +70,7 @@ public partial class Match
         players[1].board.server = true;
     }
 
-    public void ReceiveMessage(Server.MessageType messageID, int clientID, Server.CustomMessage message, ushort count)
+    public void ReceiveMessage(Server.MessageType messageID, int clientID, Server.CustomMessage message, int count)
     {
         if (count == messageCount)
         {
