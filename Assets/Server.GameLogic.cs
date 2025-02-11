@@ -87,7 +87,7 @@ public partial class Server
             }
         }
 
-        int diff = value - (minion.maxHealth + externalHealth);
+        int diff = value - (minion.maxHealth - externalHealth);
         match.server.AddAura(match, minion, new Aura(Aura.Type.Health,diff));
     }
 

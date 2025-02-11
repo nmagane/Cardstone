@@ -166,7 +166,7 @@ public class Creature : MonoBehaviour
         //==================== 
         if (hp < maxhp)
             health.color = redText;
-        else if (hp > minion.baseHealth && hp == maxhp)
+        else if (hp > minion.baseHealth) //TODO: color should factor in max hp when its reduced then buffed by external
         {
             health.color = greenText;
         }
