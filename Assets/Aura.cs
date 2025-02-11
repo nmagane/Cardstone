@@ -16,7 +16,11 @@ public class Aura
         NoAttack,
         Silence,
 
+        SetHealth,
+        SetDamage,
+
         Cost,
+        SetCost,
 
         Amani,
         StormwindChampion,
@@ -25,6 +29,7 @@ public class Aura
         Sorcerers_Apprentice,
         Loatheb,
         Preparation,
+        Millhouse,
     }
 
     public Type type = Type.Health;
@@ -71,6 +76,10 @@ public class Aura
                 card._manaCost += value;
                 break;
 
+            case Type.SetCost:
+                card._manaCost = value;
+                break;
+
             case Type.Amani: //ENRAGE AURAS GO HERE?
                 enrage = true;
                 break;
@@ -104,6 +113,9 @@ public class Aura
             case Type.Preparation:
                 AuraEffects.Preparation(match, minion, this);
                 break;
+            case Type.Millhouse:
+                AuraEffects.Millhouse(match, minion, this);
+                break;
         }
     }
 
@@ -126,6 +138,7 @@ public class Aura
             case Type.Health:
             case Type.Damage:
             case Type.Cost:
+            case Type.SetCost:
             case Type.Loatheb:
                 stackable = true;
                 break;

@@ -115,6 +115,9 @@ public partial class Database
             case Card.Cardname.Preparation:
                 return Preparation();
 
+            case Card.Cardname.Millhouse_Manastorm:
+                return Millhouse_Manastorm();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 break;
@@ -431,6 +434,21 @@ public partial class Database
 
         c.MINION = true;
         c.auras.Add(Aura.Type.StormwindChampion);
+        return c;
+    }
+    static CardInfo Millhouse_Manastorm()
+    { 
+        CardInfo c = new();
+
+        c.name = "Millhouse Manastorm";
+        c.text = "Battlecry: Enemy spells cost 0 next turn.";
+
+        c.manaCost = 2;
+        c.damage = 4;
+        c.health = 4;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
         return c;
     }
 }

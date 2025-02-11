@@ -47,7 +47,7 @@ public static class AuraEffects
     public static void Loatheb(Match match, Minion sourceMinion, Aura sourceAura)
     {
         foreach (HandCard c in sourceMinion.player.hand)
-            if (c.SPELL)
+            if (c.MINION)
             {
                 match.server.AddCardAura(match, c, new Aura(Aura.Type.Cost, 5, false, true, sourceAura));
             }
@@ -60,5 +60,15 @@ public static class AuraEffects
             if (c.SPELL)
                 match.server.AddCardAura(match, c, new Aura(Aura.Type.Cost, -3, false, true, sourceAura));
         
+    }
+
+    public static void Millhouse(Match match, Minion sourceMinion, Aura sourceAura)
+    {
+        Player owner = match.FindOwner(sourceMinion);
+
+        foreach (HandCard c in owner.hand)
+            if (c.MINION)
+                match.server.AddCardAura(match, c, new Aura(Aura.Type.SetCost, 0, false, true, sourceAura));
+
     }
 }

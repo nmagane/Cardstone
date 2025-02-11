@@ -162,11 +162,12 @@ public partial class Minion
     }
     public Aura FindAura(Aura.Type t)
     {
+        Aura result = null;
         foreach (Aura a in auras)
         {
-            if (a.type == t) return a;
+            if (a.type == t) result = a;
         }
-        return null;
+        return result;
     }
 
     public Aura FindForeignAura(Aura a)
@@ -200,6 +201,23 @@ public partial class Minion
                 break;
         }
         return true;
+    }
+
+    void RecalculateAuras()
+    {
+        damage = baseDamage;
+        maxHealth = baseHealth;
+        foreach (Aura a in auras)
+        {
+            switch (a.type)
+            {
+                case Aura.Type.Health:
+                    break;
+                case Aura.Type.Damage:
+                    damage += a.value;
+                    break;
+            }
+        }
     }
 
     public void RemoveAura(Aura.Type t)
@@ -262,6 +280,18 @@ public partial class Minion
         foreach (var aura in auras)
         {
             if (aura.temporary)
+                removeList.Add(aura);
+
+        }
+        foreach (var aura in removeList)
+            RemoveAura(aura);
+    }
+    public void RemoveTemporaryAuras(Aura.Type t)
+    {
+        List<Aura> removeList = new List<Aura>();
+        foreach (var aura in auras)
+        {
+            if (aura.temporary && aura.type==t)
                 removeList.Add(aura);
 
         }

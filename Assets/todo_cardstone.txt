@@ -50,7 +50,9 @@ Next mechanic implementation:
 	
 	-move triggereffects and auraeffects into trigger and aura class?
 
-need cost/stat "setting" effects like followtherules and millhouse.
+need cost/stat "setting" effects like followtherules and millhouse, and crazed alchemist.
+
+NOTE: millhouse/loatheb etc are currently set to minion costs for testing instead of spells
 	
 = Weapons & Player Attack
 	- class Weapon? have one in Player class and one in Hero?

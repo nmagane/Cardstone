@@ -6,6 +6,7 @@ public class Tooltip : MonoBehaviour
 {
     public Card card;
     public bool anim = false;
+    Coroutine hider = null;
     public void Set(Card.Cardname name, int delay=-1)
     {
         card.SetSortingOrder(11);
@@ -13,7 +14,15 @@ public class Tooltip : MonoBehaviour
         card.Set(new HandCard(name, 1));
 
         if (delay != -1)
-            StartCoroutine(disappear(delay));
+        {
+            if (hider!=null)
+            {
+                StopCoroutine(hider);
+                hider = null;
+            }
+            
+            hider = StartCoroutine(disappear(delay));
+        }
 
     }
 

@@ -164,8 +164,6 @@ public class Creature : MonoBehaviour
         health.text = hp.ToString();
 
         //==================== 
-        //TODO: THESE minion. VALUES SHOULD BE STORED AND BUFFERED IN CREATURE PER UPDATE TOO
-        //TO PREVENT COLOR CHANGING BEFORE IT SHOULD
         if (hp < maxhp)
             health.color = redText;
         else if (hp > minion.baseHealth && hp == maxhp)

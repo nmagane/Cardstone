@@ -74,6 +74,41 @@ public partial class Server
 
         DamageFace(match, target, target.fatigue);
     }
+    public void SetHealth(Match match, Minion minion, int value)
+    {
+        minion.RemoveTemporaryAuras(Aura.Type.Health);
+
+        int externalHealth = 0;
+        foreach (Aura a in minion.auras)
+        {
+            if (a.foreignSource && a.type == Aura.Type.Health)
+            {
+                externalHealth += a.value;
+            }
+        }
+
+        int diff = value - (minion.maxHealth + externalHealth);
+        match.server.AddAura(match, minion, new Aura(Aura.Type.Health,diff));
+    }
+
+    public void SetDamage(Match match, Minion minion, int value)
+    {
+        minion.RemoveTemporaryAuras(Aura.Type.Damage);
+
+        int externalDamage = 0;
+        foreach (Aura a in minion.auras)
+        {
+            if (a.foreignSource && a.type ==Aura.Type.Damage)
+            {
+                externalDamage += a.value;
+            }
+        }
+
+        int diff = value - (minion.damage-externalDamage);
+        match.server.AddAura(match, minion, new Aura(Aura.Type.Damage,diff));
+    }
+
+
 
     public bool ExecuteAttack(ref CastInfo action)
     {
@@ -181,6 +216,9 @@ public partial class Server
             case Card.Cardname.Preparation:
                 Preparation(spell);
                 break;
+            case Card.Cardname.Millhouse_Manastorm:
+                Millhouse_Manastorm(spell);
+                break;
 
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);
@@ -222,14 +260,15 @@ public partial class Server
             spell.match.server.DiscardCard(spell.match, player, rand);
         }
     }
-    public void Draw(CastInfo spell, int count, bool enemyDraw=false)
+    public void Draw(CastInfo spell, int count, bool enemyDraw = false)
     {
         for (int i = 0; i < count; i++)
         {
-            if (enemyDraw)  spell.player =spell.player.opponent;
+            if (enemyDraw) spell.player = spell.player.opponent;
             spell.match.StartSequenceDrawCard(spell);
         }
     }
+
     public void SilenceMinion(CastInfo spell)
     {
         Player p = spell.player;
@@ -252,6 +291,9 @@ public partial class Server
 
         match.server.AddAura(match, minion, new Aura(Aura.Type.Silence));
     }
+
+
+
     void Coin(CastInfo spell)
     {
         spell.player.currMana++;
@@ -391,6 +433,11 @@ public partial class Server
     {
         Player opponent = spell.player.opponent;
         opponent.AddTrigger(Trigger.Type.StartTurn, Trigger.Side.Friendly, Trigger.Ability.Loatheb, spell.minion.playOrder);
+    }
+    void Millhouse_Manastorm(CastInfo spell)
+    {
+        Player opponent = spell.player.opponent;
+        opponent.AddTrigger(Trigger.Type.StartTurn, Trigger.Side.Friendly, Trigger.Ability.Millhouse, spell.minion.playOrder);
     }
 
     void Preparation(CastInfo spell)

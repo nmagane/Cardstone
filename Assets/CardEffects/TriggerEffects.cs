@@ -74,11 +74,16 @@ public class TriggerEffects
     public static void Loatheb(Match match, Minion minion, Trigger t)
     {
         Player p = minion.player;
-        Debug.Log("trigger loatheb");
         p.AddAura(new Aura(Aura.Type.Loatheb, 0, true));
-        Debug.Log(p.auras.Count);
         p.RemoveTrigger(t);
     }
+    public static void Millhouse(Match match, Minion minion, Trigger t)
+    {
+        Player p = minion.player;
+        p.AddAura(new Aura(Aura.Type.Millhouse, 0, true));
+        p.RemoveTrigger(t);
+    }
+
     public static void Prep_Cast(Match m, Minion minion, Trigger t)
     {
         Player p = minion.player;

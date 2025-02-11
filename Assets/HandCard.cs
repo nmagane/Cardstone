@@ -79,7 +79,7 @@ public class HandCard
         Aura finder = FindAura(a.type);
         if (finder != null)
         {
-            if (finder.stackable == false)
+            if (finder.stackable == false && a.foreignSource==false)
             {
                 return;
             }
@@ -113,11 +113,12 @@ public class HandCard
     }
     public Aura FindAura(Aura.Type t)
     {
+        Aura result = null;
         foreach (Aura a in auras)
         {
-            if (a.type == t) return a;
+            if (a.type == t) result = a;
         }
-        return null;
+        return result;
     }
 
     public Aura FindForeignAura(Aura a)
@@ -141,8 +142,33 @@ public class HandCard
             case Aura.Type.Cost:
                 _manaCost += -a.value;
                 break;
+            case Aura.Type.SetCost:
+                RecalculateAuras();
+                break;
         }
         return true;
+    }
+    void RecalculateAuras()
+    {
+        _manaCost = baseCost;
+        Aura setter = FindAura(Aura.Type.SetCost);
+
+        //override recalculation with another cost setting aura
+        if (setter != null)
+        {
+            setter.InitAura();
+            return;
+        }
+
+        foreach (Aura a in auras)
+        {
+            switch (a.type)
+            {
+                case Aura.Type.Cost:
+                    _manaCost += a.value;
+                    break;
+            }
+        }
     }
     public void RefreshForeignAuras()
     {
