@@ -29,7 +29,8 @@ triggers should return true/false to know whether or not to confirm anim
 	-this might involve changing it so confirmtrigger is called within each triggereffects function? boring solution
 
 
-	
+-dynamic mana cost cards (giants) - use special auras that are added from database?
+
 NOTE: millhouse/loatheb etc are currently set to minion costs for testing instead of spells
 	
 -move triggereffects and auraeffects into trigger and aura class?
@@ -44,7 +45,7 @@ Next mechanic implementation:
 = Weapons & Player Attack
 	- class Weapon? have one in Player class and one in Hero?
 	- Swing messages and confirmations	
-	- Weapon battlecry, deathrattle, triggers (truesilver, hunter eaglehorn bow)
+	- Weapon battlecry, deathrattle/triggers (truesilver, hunter eaglehorn bow)
 
 = Player Armor
 

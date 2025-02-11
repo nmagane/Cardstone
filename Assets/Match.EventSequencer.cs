@@ -379,11 +379,11 @@ public partial class Match
 
         foreach (Minion minion in players[0].board)
         {
-            if (minion.health <= 0) destroyList.Add(minion);
+            if (minion.health <= 0 || minion.DEAD) destroyList.Add(minion);
         }
         foreach (Minion minion in players[1].board)
         {
-            if (minion.health <= 0) destroyList.Add(minion);
+            if (minion.health <= 0 || minion.DEAD) destroyList.Add(minion);
         }
 
         //death resolution phase

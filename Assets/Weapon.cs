@@ -1,60 +1,64 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class Player
+public class Weapon
 {
-    public Server.PlayerConnection connection = new Server.PlayerConnection();
-
-    public int health = 30;
-    public int maxHealth = 30;
-
-    public int armor = 0;
-    int _damage = 0;
-
-    public bool canAttack = false;
     public int damage
     {
         get
         {
-            if (weapon != null) return _damage + weapon.damage;
-            return _damage;
+            return sentinel.damage;
         }
         set
         {
-            _damage = value;
+            sentinel.damage = value;
         }
     }
-
-    public int maxMana = 0;
-    public int currMana = 0;
-
-    public int fatigue = 0;
-
-    public Card.Cardname heroPower = Card.Cardname.Lifetap;
-    public int heroPowerCost = 2;
-
-    public Weapon weapon=null;
-
-    public bool turn = false;
-    public List<Card.Cardname> deck = new List<Card.Cardname>();
-    public Hand hand = new Hand();
-    public MinionBoard board = new MinionBoard();
-    
-
-    public bool mulligan = false;
-
-    public Player opponent;
+    public int durability
+    {
+        get 
+        {
+            return sentinel.health;
+        }
+        set 
+        {
+            sentinel.health = value;
+        }
+    }
+    public int playOrder=0;
+    public Card.Cardname card => sentinel.card;
 
     [System.NonSerialized]
-    public Match match;
+    public Player player=null;
 
-    public int messageCount = 0; //Server messages sent to player 
+    public List<Trigger> triggers;
 
-    public Minion sentinel= new Minion(Card.Cardname.Damaged_Golem,0,null,0);
-    public List<Aura> auras => sentinel.auras;
-    public List<Trigger> triggers => sentinel.triggers;
+    public Minion sentinel;
+
+    public void Set(Card.Cardname c)
+    {
+        sentinel = new Minion(c, 0, null, playOrder);
+        if (player != null)
+        {
+            sentinel.board = player.board;
+            sentinel.player = player;
+        }
+
+    }
+
+    public Weapon(Card.Cardname c, Player p=null, int order=0)
+    {
+        playOrder = order;
+        player = p;
+        Set(c);
+    }
+
+
+
+
+
+
 
     public void AddAura(Aura a) => sentinel.AddAura(a);
     public void RemoveAura(Aura a) => sentinel.RemoveAura(a);
@@ -75,9 +79,4 @@ public class Player
     public void RemoveMatchingTrigger(Trigger g) => sentinel.RemoveMatchingTrigger(g);
     public List<Trigger> CheckTriggers(Trigger.Type type, Trigger.Side side, CastInfo spell) => sentinel.CheckTriggers(type, side, spell);
 
-    public Player()
-    {
-        sentinel.board = board;
-        sentinel.player = this;
-    }
 }
