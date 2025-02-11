@@ -76,6 +76,7 @@ public class Creature : MonoBehaviour
     public void Set(Minion c)
     {
         minion = c;
+        name = c.card + " (Creature)";
         SetSortingOrder(minion.index);
 
         Database.CardInfo info = Database.GetCardData(c.card);
