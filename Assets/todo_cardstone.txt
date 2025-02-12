@@ -5,11 +5,11 @@ First demo goal:
 Vanilla Zoo mirror.
 players in que counter in menu
 
+only way to run server in background? ctrl+z and & stops the server for some reason
+	screen -d -m -s "card server" ./cardserver.x86_64
+
 todo: 
 	
-
-
-
 addcard message to client for stuff like sap
 
 auras in hover tooltip

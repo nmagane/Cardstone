@@ -26,13 +26,25 @@ public class Weapon
             sentinel.health = value;
         }
     }
+    public bool DEAD 
+    {
+        get 
+        {
+            return sentinel.DEAD;
+        }
+        set 
+        {
+            sentinel.DEAD = value;
+        }
+    }
     public int playOrder=0;
     public Card.Cardname card => sentinel.card;
 
     [System.NonSerialized]
     public Player player=null;
 
-    public List<Trigger> triggers;
+    public List<Trigger> triggers => sentinel.triggers;
+    public List<Aura> auras => sentinel.auras;
 
     public Minion sentinel;
 
@@ -55,11 +67,6 @@ public class Weapon
     }
 
 
-
-
-
-
-
     public void AddAura(Aura a) => sentinel.AddAura(a);
     public void RemoveAura(Aura a) => sentinel.RemoveAura(a);
     public void RemoveAura(Aura.Type t) => sentinel.RemoveAura(t);
@@ -70,7 +77,7 @@ public class Weapon
     public bool HasAura(Aura.Type t) => sentinel.HasAura(t);
 
     //=============================
-    public void AddTrigger(Trigger.Type type, Trigger.Side side, Trigger.Ability ability, int playOrder)
+    public void AddTrigger(Trigger.Type type, Trigger.Side side, Trigger.Ability ability)
     {
         Trigger t = sentinel.AddTrigger(type, side, ability);
         t.playOrder = playOrder;

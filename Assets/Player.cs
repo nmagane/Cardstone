@@ -11,9 +11,20 @@ public class Player
     public int maxHealth = 30;
 
     public int armor = 0;
-    int _damage = 0;
+    public int _damage = 0;
 
-    public bool canAttack = false;
+    bool _canAttack = false;
+    public bool canAttack
+    {
+        get
+        {
+            return (_canAttack && damage > 0);
+        }
+        set
+        {
+            _canAttack = value;
+        }
+    }
     public int damage
     {
         get
@@ -35,8 +46,8 @@ public class Player
     public Card.Cardname heroPower = Card.Cardname.Lifetap;
     public int heroPowerCost = 2;
 
-    public Weapon weapon=null;
-
+    public Weapon weapon => weaponList.Count == 0? null : weaponList[weaponList.Count-1];
+    public List<Weapon> weaponList;
     public bool turn = false;
     public List<Card.Cardname> deck = new List<Card.Cardname>();
     public Hand hand = new Hand();

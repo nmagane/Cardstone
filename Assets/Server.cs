@@ -88,6 +88,9 @@ public partial class Server : MonoBehaviour
         
         AddCard,
 
+        EquipWeapon,
+        DestroyWeapon,
+
         Concede,
 
         EndGame,
@@ -663,11 +666,12 @@ public partial class Server : MonoBehaviour
 
         if (card.MINION)
         {
-            /*
-            if (spell.position >=7)
-                spell.position = spell.player.board.Count();
-            */
             match.StartSequencePlayMinion(spell);
+        }
+        
+        if (card.WEAPON)
+        {
+            match.StartSequencePlayWeapon(spell);
         }
     }
     public Minion SummonMinion(Match match, Player player, Card.Cardname minion,MinionBoard.MinionSource source, int position=-1)
@@ -776,10 +780,36 @@ public partial class Server : MonoBehaviour
         SendMessage(messageOwner, owner);
         //server.Send(messageOpponent, opponent.connection.clientID);
         SendMessage(messageOpponent, opponent);
-        
-        //TODO: ON MINION DEATH TRIGGERS
-        //TODO: DEATHRATTLE TRIGGERS
     }
+
+    public Weapon EquipWeapon(Match match, Player player, Card.Cardname card)
+    {
+        Weapon weapon = new Weapon(card, player, match.playOrder);
+
+        foreach(Weapon w in player.weaponList)
+        {
+            w.DEAD = true;
+        }
+        player.weaponList.Add(weapon);
+
+        //TODO: messages
+
+        return weapon;
+    }
+    public void DestroyWeapon(Match match, Weapon weapon)
+    {
+        Player player = weapon.player;
+        player.weaponList.Remove(weapon);
+
+        if (player.weapon != null)
+        {
+          //the weapon has been replaced with something else already
+            return;
+        }
+
+        //todo: send message to remove weapon to players
+    }
+
     public void AttackFace(ulong matchID, int clientID, ulong playerID, int attackerInd)
     {
         if (currentMatches.ContainsKey(matchID) == false) return;

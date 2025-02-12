@@ -40,6 +40,12 @@ public partial class Match
         OnFatigue,
 
         AfterHeroPower,
+
+        OnPlayWeapon,
+        AfterPlayWeapon,
+
+        OnEquipWeapon,
+        AfterEquipWeapon,
     }
 
     public void StartSequenceEndTurn(CastInfo spell)
@@ -170,6 +176,37 @@ public partial class Match
         WinCheck();
     }
 
+    public void StartSequencePlayWeapon(CastInfo spell)
+    {
+        Weapon weapon=server.EquipWeapon(this, spell.player, spell.card.card);
+        spell.weapon = weapon;
+
+        StartPhase(Phase.OnPlayCard, ref spell);
+        StartPhase(Phase.OnPlayWeapon, ref spell);
+
+        if (spell.card.BATTLECRY)
+        {
+            //DONT TRIGGER IF NO TARGET WAS CHOSEN (this cant happen normally)
+            if ((spell.card.TARGETED && spell.target == -1) == false)
+            {
+                //server.ConfirmBattlecry(spell.match, minion); 
+                //server.CastSpell(spell);
+                server.CastSpell(spell);
+                ResolveTriggerQueue(ref spell);
+            }
+        }
+
+        StartPhase(Phase.AfterPlayWeapon, ref spell);
+        StartPhase(Phase.AfterPlayCard, ref spell);
+
+        WinCheck();
+    }
+
+    public void StartSequenceEquipWeapon()
+    {
+        //TODO: Equipping Token weapon from non-play sources
+    }
+
     public void StartSequencePlayMinion(CastInfo spell)
     {
         Minion minion = server.SummonMinion(this, spell.player, spell.card.card,MinionBoard.MinionSource.Play, spell.position);
@@ -220,16 +257,25 @@ public partial class Match
         cast.minion = target;
         triggerBuffer.AddRange(target.CheckTriggers(type, Trigger.Side.Both, cast));
     }
+    public void TriggerWeapon(Trigger.Type type, Weapon target)
+    {
+        CastInfo cast = new CastInfo();
+        cast.weapon = target;
+        triggerBuffer.AddRange(target.CheckTriggers(type, Trigger.Side.Both, cast));
+    }
 
-    public void AddTrigger(Trigger.Type type, CastInfo spell = null, Minion source = null)
+    public void AddTrigger(Trigger.Type type, CastInfo spell = null, Minion source = null, Weapon wep = null)
     {
         //todo: check secrets for triggers
-        Player owner = FindOwner(source);
+        Player owner = players[0];
+        if (source!=null) owner = FindOwner(source);
+        if (wep!=null) owner = wep.player;
         Trigger.Side p0Side = owner == players[0] ? Trigger.Side.Friendly : Trigger.Side.Enemy;
         Trigger.Side p1Side = owner == players[1] ? Trigger.Side.Friendly : Trigger.Side.Enemy;
 
         if (spell == null) spell = new CastInfo();
         spell.minion = source;
+        spell.weapon = wep;
         spell.player = owner;
 
         foreach (Minion minion in players[0].board)
@@ -298,7 +344,7 @@ public partial class Match
 
             Trigger t = triggerQueue[0];
             triggerQueue.Remove(t);
-            if (t.minion != t.minion.player.sentinel)
+            if (players[0].board.Contains(t.minion) || players[1].board.Contains(t.minion))
             {
                 server.ConfirmBattlecry(this, t.minion, true, t.type == Trigger.Type.Deathrattle);
             }
@@ -327,6 +373,7 @@ public partial class Match
     public List<Minion> healedMinions = new List<Minion>();
     public List<Player> damagedPlayers = new List<Player>();
     public List<Player> healedPlayers = new List<Player>();
+ 
     public void UpdateStats()
     {
 
@@ -376,14 +423,19 @@ public partial class Match
         //=====================================
         //MINION DEATHS
         List<Minion> destroyList = new List<Minion>();
+        List<Weapon> destroyListWeapon = new List<Weapon>();
 
-        foreach (Minion minion in players[0].board)
+        foreach(Player p in players)
         {
-            if (minion.health <= 0 || minion.DEAD) destroyList.Add(minion);
-        }
-        foreach (Minion minion in players[1].board)
-        {
-            if (minion.health <= 0 || minion.DEAD) destroyList.Add(minion);
+            foreach (Minion minion in p.board)
+            {
+                if (minion.health <= 0 || minion.DEAD) destroyList.Add(minion);
+            }
+
+            foreach (Weapon weapon in p.weaponList)
+            {
+                if (weapon.durability <= 0 || weapon.DEAD) destroyListWeapon.Add(weapon);
+            }
         }
 
         //death resolution phase
@@ -392,6 +444,12 @@ public partial class Match
             AddTrigger(Trigger.Type.OnMinionDeath, null, m);
             server.DestroyMinion(this, m);
         }
+        foreach (Weapon w in destroyListWeapon)
+        {
+            AddTrigger(Trigger.Type.OnWeaponDeath, null, null,w);
+            server.DestroyWeapon(this, w);
+        }
+
         if (triggerBuffer.Count > 0 || triggerQueue.Count > 0)
         {
             CastInfo deathResolution = new CastInfo();
@@ -399,9 +457,13 @@ public partial class Match
         }
 
         //deathrattles happen after "on deaths"
-        foreach (var m in destroyList)
+        foreach (Minion m in destroyList)
         {
             TriggerMinion(Trigger.Type.Deathrattle, m);
+        }
+        foreach (Weapon w in destroyListWeapon)
+        {
+            TriggerWeapon(Trigger.Type.Deathrattle, w);
         }
         if (triggerBuffer.Count > 0 || triggerQueue.Count > 0)
         {

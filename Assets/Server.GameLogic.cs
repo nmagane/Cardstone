@@ -13,6 +13,12 @@ public partial class Server
         //else
         m.canAttack = false;
     }
+    public static void ConsumeAttackCharge(Player p)
+    {
+        //if (m.WINDFURY) m.WINDFURY = false;
+        //else
+        p.canAttack = false;
+    }
     public void DamageMinionsAOE()
     {
         //TODO: AOE EFFECTS DONT ACTIVATE TRIGGERS UNTIL ALL UNITS TAKE DAMAGE
