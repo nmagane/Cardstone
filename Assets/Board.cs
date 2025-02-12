@@ -294,9 +294,11 @@ public partial class Board : MonoBehaviour
                 int UpdateHeroDeckCount = message.GetInt();
                 int UpdateHeroCurrMana = message.GetInt();
                 int UpdateHeroMaxMana = message.GetInt();
+                int UpdateHeroDamage = message.GetInt();
+                int UpdateHeroArmor = message.GetInt();
                 bool UpdateHeroDamaged = message.GetBool();
                 bool UpdateHeroHealed = message.GetBool();
-                UpdateHero(UpdateHeroHP,UpdateHeroFriendly, UpdateHeroDeckCount,UpdateHeroCurrMana,UpdateHeroMaxMana, UpdateHeroDamaged, UpdateHeroHealed);
+                UpdateHero(UpdateHeroHP,UpdateHeroFriendly, UpdateHeroDeckCount,UpdateHeroCurrMana,UpdateHeroMaxMana, UpdateHeroDamage, UpdateHeroArmor,UpdateHeroDamaged, UpdateHeroHealed);
                 break;
             case Server.MessageType.AddAura:
             case Server.MessageType.RemoveAura:
@@ -524,7 +526,7 @@ public partial class Board : MonoBehaviour
         //todo: splash damage/heal
         
     }
-    public void UpdateHero(int hp, bool friendly, int deckCount, int currMana,int maxMana, bool damaged, bool healed)
+    public void UpdateHero(int hp, bool friendly, int deckCount, int currMana,int maxMana, int damage, int armor, bool damaged, bool healed)
     {
         int diff = 0;
 
@@ -536,8 +538,8 @@ public partial class Board : MonoBehaviour
             deck.Set(deckCount);
             mana.SetCurrent(currMana);
             mana.SetMax(maxMana);
-
-            //if (damaged || healed) CreateSplash(currHero, diff);
+            currHero.damage = damage;
+            currHero.armor = armor;
         }
         else
         {
@@ -547,8 +549,8 @@ public partial class Board : MonoBehaviour
             enemyDeck.Set(deckCount);
             enemyMana.SetCurrent(currMana);
             enemyMana.SetMax(maxMana);
-
-            //if (damaged || healed) CreateSplash(enemyHero, diff);
+            enemyHero.damage = damage;
+            enemyHero.armor = armor;
         }
 
         VisualInfo anim = new VisualInfo();
@@ -558,6 +560,8 @@ public partial class Board : MonoBehaviour
         anim.ints.Add(deckCount);
         anim.ints.Add(currMana);
         anim.ints.Add(maxMana);
+        anim.ints.Add(damage);
+        anim.ints.Add(armor);
         if (damaged || healed)
         {
             anim.trigger = true;

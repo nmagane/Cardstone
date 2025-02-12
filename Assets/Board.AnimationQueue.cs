@@ -310,13 +310,13 @@ public partial class Board
     {
         if (message.isFriendly)
         {
-            currHero.UpdateText(message.ints[0]);
+            currHero.UpdateText(message.ints[0], message.ints[4], message.ints[5]);
             deck.UpdateDisplay(message.ints[1]);
             mana.UpdateDisplay(message.ints[2], message.ints[3]);
         }
         else
         {
-            enemyHero.UpdateText(message.ints[0]);
+            enemyHero.UpdateText(message.ints[0], message.ints[4], message.ints[5]);
             enemyDeck.UpdateDisplay(message.ints[1]);
             enemyMana.UpdateDisplay(message.ints[2], message.ints[3]);
         }

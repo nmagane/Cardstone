@@ -10,8 +10,6 @@ only way to run server in background? ctrl+z and & stops the server for some rea
 
 todo: 
 	
-addcard message to client for stuff like sap
-
 auras in hover tooltip
 replace all fade effects with some shader (FAR FUTURE TODO)
 get a new color pallette this shit sucks ( future todo )
@@ -41,16 +39,20 @@ next decks to implement:
 	-Freeze
 	-Rogue
 
+-addcard message to client for stuff like sap
+
 Next mechanic implementation:
 = Weapons & Player Attack
 	- class Weapon? have one in Player class and one in Hero?
 	- Swing messages and confirmations	
 	- Weapon battlecry, deathrattle/triggers (truesilver, hunter eaglehorn bow)
-
+	- animations for all the wep/hero damage stuff
+	
 = Player Armor
 
 - turn indicator (end turn button color)
 - rope
+
 ===============================================
 =====================DONE======================
 ===============================================

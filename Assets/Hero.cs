@@ -12,6 +12,7 @@ public class Hero : MonoBehaviour
     public int maxHealth = 30;
 
     public int damage = 0;
+    public int armor = 0;
     
     public Weapon weapon;
 
@@ -31,10 +32,6 @@ public class Hero : MonoBehaviour
     public TMP_Text weaponDamage;
     public TMP_Text weaponDurability;
 
-    public void Damage(int x)
-    {
-        health -= x;
-    }
     public void SetHealth(int x)
     {
         health = x;
@@ -65,15 +62,28 @@ public class Hero : MonoBehaviour
         weaponFrame.transform.localScale = Vector3.zero;
     }
 
-    public void UpdateText(int hp=-1)
+    public void UpdateText(int hp=-1, int dmg = -1, int arm = -1)
     {
-        int x = hp == -1 ? health : hp;
+        int xHp = hp == -1 ? health : hp;
+        int xDmg = hp == -1 ? damage : dmg;
+        int xArmor = hp == -1 ? armor : arm;
 
-        hpText.text = hp.ToString();
+        hpText.text = xHp.ToString();
+        damageText.text = xDmg.ToString();
+
         if (hp < maxHealth) 
             hpText.color = board.minionObject.GetComponent<Creature>().redText;
         else 
             hpText.color = board.minionObject.GetComponent<Creature>().baseText;
+
+        if (damage<=0)
+        {
+            damageSpriteRenderer.transform.localScale = Vector3.zero;
+        }
+        else
+        {
+            damageSpriteRenderer.transform.localScale = Vector3.one;
+        }
     }
 
     public void Highlight(bool target=false)

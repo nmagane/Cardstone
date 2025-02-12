@@ -869,6 +869,12 @@ public partial class Server : MonoBehaviour
         messageOpponent.AddInt(player.currMana);
         messageOpponent.AddInt(player.maxMana);
 
+        messageOwner.AddInt(player.damage);
+        messageOwner.AddInt(player.armor);
+
+        messageOpponent.AddInt(player.damage);
+        messageOpponent.AddInt(player.armor);
+
         messageOwner.AddBool(damaged);
         messageOpponent.AddBool(damaged);
 
