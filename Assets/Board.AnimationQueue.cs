@@ -75,6 +75,13 @@ public partial class Board
             case Server.MessageType.DestroyMinion:
                 return DestroyMinionVisual(message);
             
+                
+            case Server.MessageType.EquipWeapon:
+                return EquipWeaponVisual(message);
+           
+            case Server.MessageType.DestroyWeapon:
+                return DestroyWeaponVisual(message);
+            
             case Server.MessageType.DrawCards:
                 return DrawVisual(message);
 
@@ -260,6 +267,23 @@ public partial class Board
             enemyHand.AddCard(c, Hand.CardSource.Deck);
         return StartCoroutine(Wait(15));
     }
+
+    Coroutine EquipWeaponVisual(VisualInfo message)
+    {
+        Hero hero = message.isFriendly ? currHero : enemyHero;
+        hero.DisplayWeapon();
+
+        return StartCoroutine(Wait(10));
+    }
+
+    Coroutine DestroyWeaponVisual(VisualInfo message)
+    {
+        Hero hero = message.isFriendly ? currHero : enemyHero;
+        hero.HideWeapon();
+
+        return StartCoroutine(Wait(15));
+    }
+
     Coroutine PreAttackMinionVisual(VisualInfo message)
     {
         return animationManager.PreAttackMinion(message.creatures[0], message.vectors[0]);

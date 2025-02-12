@@ -95,7 +95,8 @@ public class Card : MonoBehaviour
         Millhouse_Manastorm,
         Hunters_Mark,
         Crazed_Alchemist,
-        Chillwind_Yeti
+        Chillwind_Yeti,
+        Dagger
     }
 
     public enum Class
@@ -281,6 +282,7 @@ public class Card : MonoBehaviour
         if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED == true)
         {
             //TARGETED NON-MINION
+            //THIS IS PLAYED THROUGH THE BOARD TARGETING SYSTEM SO THERE'S NOTHING HERE.
         }
 
 

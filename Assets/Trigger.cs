@@ -12,7 +12,6 @@ public class Trigger
     }
     public enum Type
     {
-        //=============PHASES
         NONE,
 
         OnPlayCard,
@@ -41,6 +40,12 @@ public class Trigger
         OnFatigue,
 
         AfterHeroPower,
+
+        OnPlayWeapon,
+        AfterPlayWeapon,
+
+        OnEquipWeapon,
+        AfterEquipWeapon,
         //==============
         _PHASELIMIT,
         //=============SPECIAL EVENTS

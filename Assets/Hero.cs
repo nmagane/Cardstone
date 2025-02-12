@@ -7,15 +7,19 @@ using UnityEngine.PlayerLoop;
 public class Hero : MonoBehaviour
 {
     public Board board;
-    public SpriteRenderer spriteRenderer;
-    public SpriteRenderer damageSpriteRenderer;
-    public TMP_Text hpText;
-    public TMP_Text damageText;
+
     public int health = 30;
     public int maxHealth = 30;
 
     public int damage = 0;
     
+    public Weapon weapon;
+
+    public SpriteRenderer spriteRenderer;
+    public SpriteRenderer damageSpriteRenderer;
+
+    public TMP_Text hpText;
+    public TMP_Text damageText;
 
     public SpriteRenderer highlight;
 
@@ -24,7 +28,6 @@ public class Hero : MonoBehaviour
 
     public SpriteRenderer weaponFrame;
     public SpriteRenderer weaponArt;
-    public Weapon weapon;
     public TMP_Text weaponDamage;
     public TMP_Text weaponDurability;
 
@@ -35,6 +38,31 @@ public class Hero : MonoBehaviour
     public void SetHealth(int x)
     {
         health = x;
+    }
+
+    public void EquipWeapon(Card.Cardname c)
+    {
+        weapon = new Weapon(c);
+        //DisplayWeapon();
+    }
+
+    public void DisplayWeapon()
+    {
+        weaponFrame.transform.localScale = Vector3.one;
+        weaponDamage.text = weapon.damage.ToString();
+        weaponDurability.text = weapon.durability.ToString();
+
+        weaponArt.sprite = board.cardObject.GetComponent<Card>().cardSprites[(int)weapon.card];
+    }
+
+    public void DestroyWeapon()
+    {
+        weapon = null;
+    }
+
+    public void HideWeapon()
+    {
+        weaponFrame.transform.localScale = Vector3.zero;
     }
 
     public void UpdateText(int hp=-1)

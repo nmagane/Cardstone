@@ -125,7 +125,8 @@ public partial class Board
         }
         if (card.WEAPON)
         {
-
+            currHero.EquipWeapon(card.card);
+            currHero.DisplayWeapon();
         }
     }
     public Dictionary<int, Minion> prePlayMinions = new Dictionary<int, Minion>();
@@ -174,11 +175,37 @@ public partial class Board
 
     public void EquipWeapon(bool friendlySide, Card.Cardname card)
     {
+        if (friendlySide)
+        {
+            if (currHero.weapon.card == card) //preplay confirmed correct
+                return;
+            //currHero.EquipWeapon(card);
+        }
+        else
+        {
+            enemyHero.EquipWeapon(card);
+        }
 
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.EquipWeapon;
+        anim.isFriendly = friendlySide;
+        QueueAnimation(anim);
     }
     public void DestroyWeapon(bool friendlySide)
     {
+        if (friendlySide)
+        {
+            currHero.DestroyWeapon();
+        }
+        else
+        {
+            enemyHero.DestroyWeapon();
+        }
 
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.DestroyWeapon;
+        anim.isFriendly = friendlySide;
+        QueueAnimation(anim);
     }
 
     public void ConfirmPlayCard(bool friendlySide, int index, int manaCost, Card.Cardname card, int pos)

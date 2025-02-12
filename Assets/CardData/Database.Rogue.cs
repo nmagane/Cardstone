@@ -15,4 +15,21 @@
         c.TARGETED = false;
         return c;
     }
+
+    static CardInfo Dagger()
+    {
+        CardInfo c = new();
+
+        c.name = "Dagger";
+        c.text = "";
+
+        c.classType = Card.Class.Rogue;
+
+        c.manaCost = 2;
+        c.damage = 1;
+        c.health = 2;
+
+        c.WEAPON = true;
+        return c;
+    }
 }

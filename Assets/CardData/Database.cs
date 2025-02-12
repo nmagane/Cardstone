@@ -129,6 +129,9 @@ public partial class Database
             case Card.Cardname.Chillwind_Yeti:
                 return Chillwind_Yeti();
 
+            case Card.Cardname.Dagger:
+                return Dagger();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 break;
