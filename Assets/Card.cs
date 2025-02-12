@@ -144,11 +144,13 @@ public class Card : MonoBehaviour
         text.text = cardInfo.text;
         _manaCost = c.manaCost;
         manaCost.text = c.manaCost.ToString();
-        if (c.MINION)
+        if (c.MINION || c.WEAPON)
         {
             damage.text = c.damage.ToString();
             health.text = c.health.ToString();
-            frame.sprite = minionCards[(int)cardInfo.classType];
+            if (c.WEAPON)
+                Debug.LogWarning("wep cardframe sprite missing");
+            else frame.sprite = minionCards[(int)cardInfo.classType];
             highlight.sprite = highlightMinion;
         }
         if (c.SPELL)

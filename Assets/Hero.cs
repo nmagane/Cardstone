@@ -45,6 +45,7 @@ public class Hero : MonoBehaviour
 
     public void DisplayWeapon()
     {
+        //drop anim like creatures TODO
         weaponFrame.transform.localScale = Vector3.one;
         weaponDamage.text = weapon.damage.ToString();
         weaponDurability.text = weapon.durability.ToString();
@@ -59,7 +60,7 @@ public class Hero : MonoBehaviour
 
     public void HideWeapon()
     {
-        weaponFrame.transform.localScale = Vector3.zero;
+        board.animationManager.LerpZoom(weaponFrame.gameObject, Vector3.zero, 10, 0.1f);
     }
 
     public void UpdateText(int hp=-1, int dmg = -1, int arm = -1)
@@ -68,6 +69,20 @@ public class Hero : MonoBehaviour
         int xDmg = hp == -1 ? damage : dmg;
         int xArmor = hp == -1 ? armor : arm;
 
+        if (hpText.text!= xHp.ToString())
+        {
+            StartCoroutine(Creature.txtBounce(hpText));
+        }
+        if (damageText.text!= xDmg.ToString())
+        {
+            StartCoroutine(Creature.txtBounce(damageText));
+        }
+        /*
+        if (armorText.text!= xArmor.ToString())
+        {
+            StartCoroutineCreature.txtBounce(armorText));
+        }
+        */
         hpText.text = xHp.ToString();
         damageText.text = xDmg.ToString();
 
@@ -76,13 +91,13 @@ public class Hero : MonoBehaviour
         else 
             hpText.color = board.minionObject.GetComponent<Creature>().baseText;
 
-        if (damage<=0)
+        if (xDmg <= 0)
         {
-            damageSpriteRenderer.transform.localScale = Vector3.zero;
+            board.animationManager.LerpZoom(damageSpriteRenderer.gameObject, Vector3.zero, 10);
         }
         else
         {
-            damageSpriteRenderer.transform.localScale = Vector3.one;
+            board.animationManager.LerpZoom(damageSpriteRenderer.gameObject, Vector3.one, 10, 0.1f);
         }
     }
 
