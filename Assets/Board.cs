@@ -344,6 +344,15 @@ public partial class Board : MonoBehaviour
                 bool heroPowerFriendly = message.GetBool();
                 ConfirmHeroPower(heroPowerFriendly);
                 break;
+            case Server.MessageType.EquipWeapon:
+                bool weaponFriendly = message.GetBool();
+                Card.Cardname weaponCard = (Card.Cardname)message.GetInt();
+                EquipWeapon(weaponFriendly, weaponCard);
+                break;
+            case Server.MessageType.DestroyWeapon:
+                bool destroyWeaponFriendly = message.GetBool();
+                DestroyWeapon(destroyWeaponFriendly);
+                break;
             case Server.MessageType.ConfirmBattlecry: 
             case Server.MessageType.ConfirmTrigger:
                 bool battlecryFriendly = message.GetBool();

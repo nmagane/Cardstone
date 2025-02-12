@@ -22,9 +22,11 @@ public partial class Database
         public bool SECRET = false;
         public bool WEAPON = false;
 
+        public bool BATTLECRY = false;
         public bool TARGETED = false;
         public bool COMBO = false;
-        public bool BATTLECRY = false;
+        public bool COMBO_TARGETED = false; //for cards that are only targeted when combo is active (SI7)
+        public bool CHOOSE = false;
 
         public Board.EligibleTargets eligibleTargets = Board.EligibleTargets.AllCharacters;
 

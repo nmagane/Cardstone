@@ -122,6 +122,9 @@ public partial class Board
             Minion m = new Minion(card.card, pos, currMinions);
             prePlayMinions.Add(p, m);
             currMinions.AddCreature(m);
+        }
+        if (card.WEAPON)
+        {
 
         }
     }
@@ -168,6 +171,16 @@ public partial class Board
 
         QueueAnimation(anim);
     }
+
+    public void EquipWeapon(bool friendlySide, Card.Cardname card)
+    {
+
+    }
+    public void DestroyWeapon(bool friendlySide)
+    {
+
+    }
+
     public void ConfirmPlayCard(bool friendlySide, int index, int manaCost, Card.Cardname card, int pos)
     {
         if (friendlySide) return;

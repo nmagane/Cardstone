@@ -792,7 +792,17 @@ public partial class Server : MonoBehaviour
         }
         player.weaponList.Add(weapon);
 
-        //TODO: messages
+        CustomMessage messageOwner = CreateMessage(MessageType.EquipWeapon);
+        CustomMessage messageOpponent = CreateMessage(MessageType.EquipWeapon);
+
+        messageOwner.AddBool(true);
+        messageOpponent.AddBool(false);
+
+        messageOwner.AddInt((int)card);
+        messageOpponent.AddInt((int)card);
+
+        SendMessage(messageOwner, player);
+        SendMessage(messageOpponent, player.opponent);
 
         return weapon;
     }
@@ -803,11 +813,17 @@ public partial class Server : MonoBehaviour
 
         if (player.weapon != null)
         {
-          //the weapon has been replaced with something else already
+            //the weapon has been replaced with something else already
             return;
         }
+        CustomMessage messageOwner = CreateMessage(MessageType.DestroyWeapon);
+        CustomMessage messageOpponent = CreateMessage(MessageType.DestroyWeapon);
 
-        //todo: send message to remove weapon to players
+        messageOwner.AddBool(true);
+        messageOpponent.AddBool(false);
+
+        SendMessage(messageOwner, player);
+        SendMessage(messageOpponent, player.opponent);
     }
 
     public void AttackFace(ulong matchID, int clientID, ulong playerID, int attackerInd)

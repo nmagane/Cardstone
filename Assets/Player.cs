@@ -47,7 +47,7 @@ public class Player
     public int heroPowerCost = 2;
 
     public Weapon weapon => weaponList.Count == 0? null : weaponList[weaponList.Count-1];
-    public List<Weapon> weaponList;
+    public List<Weapon> weaponList = new List<Weapon>();
     public bool turn = false;
     public List<Card.Cardname> deck = new List<Card.Cardname>();
     public Hand hand = new Hand();

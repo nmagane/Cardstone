@@ -8,27 +8,25 @@ public class Hero : MonoBehaviour
 {
     public Board board;
     public SpriteRenderer spriteRenderer;
+    public SpriteRenderer damageSpriteRenderer;
     public TMP_Text hpText;
+    public TMP_Text damageText;
     public int health = 30;
     public int maxHealth = 30;
+
+    public int damage = 0;
+    
 
     public SpriteRenderer highlight;
 
     public Sprite highlightNormal;
     public Sprite highlightTarget;
 
-    public enum Class
-    {
-        Mage,
-        Warrior,
-        Warlock,
-        Rogue,
-        Druid,
-        Hunter,
-        Priest,
-        Shaman,
-        Paladin
-    }
+    public SpriteRenderer weaponFrame;
+    public SpriteRenderer weaponArt;
+    public Weapon weapon;
+    public TMP_Text weaponDamage;
+    public TMP_Text weaponDurability;
 
     public void Damage(int x)
     {
