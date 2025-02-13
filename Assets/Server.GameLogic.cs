@@ -177,11 +177,12 @@ public partial class Server
                 DamageFace(match, targetPlayer, action.player.damage);
                 return true;
             }
+
+            //Minion to face
             //Check for failed attacks
             if (attack.attacker.DEAD) 
                 return false;
 
-            //Minion to face
             ConsumeAttackCharge(attack.attacker);
             DamageFace(match, targetPlayer, attack.attacker.damage);
             return true;

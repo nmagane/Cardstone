@@ -6,6 +6,15 @@ using UnityEngine.PlayerLoop;
 
 public class Hero : MonoBehaviour
 {
+    public bool isElevated = false;
+    public void SetElevated(bool elevated)
+    {
+        isElevated = elevated;
+        string x = elevated ? "creatureElevated" : "top1";
+        string s = elevated ? " shadowCreatureElevated" : "shadow";
+        
+    }
+
     public Board board;
 
     public int health = 30;

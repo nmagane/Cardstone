@@ -357,6 +357,40 @@ public partial class Board
 
         QueueAnimation(anim);
     }
+    public void ConfirmPreSwingFace(bool allyAttack)
+    {
+        Hero attacker = allyAttack ? currHero : enemyHero;
+
+        Hero tarHero = allyAttack ? enemyHero : currHero;
+
+        CheckHighlights();
+
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.ConfirmPreSwingFace;
+        anim.isFriendly = allyAttack;
+        anim.vectors.Add(tarHero.transform.localPosition);
+
+        QueueAnimation(anim);
+    }
+    public void ConfirmSwingFace(bool allyAttack, bool canAttack, bool friendlyFire=false)
+    {
+        Hero attacker = allyAttack ? currHero : enemyHero;
+
+        Hero tarHero = allyAttack && !friendlyFire ? enemyHero : currHero;
+
+        if (allyAttack)
+        {
+            attacker.canAttack = canAttack;
+        }
+        CheckHighlights();
+
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.ConfirmSwingFace;
+        anim.isFriendly = allyAttack;
+        anim.vectors.Add(tarHero.transform.localPosition);
+
+        QueueAnimation(anim);
+    }
 
     public Coroutine ConfirmBattlecry(bool friendly, int index)
     {

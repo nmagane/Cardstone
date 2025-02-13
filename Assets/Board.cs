@@ -301,8 +301,14 @@ public partial class Board : MonoBehaviour
                 break;
 
             case Server.MessageType.ConfirmPreSwingFace:
+                bool preSwingFaceFriendly = message.GetBool();
+                ConfirmPreSwingFace(preSwingFaceFriendly);
                 break;
             case Server.MessageType.ConfirmSwingFace:
+                bool swingFaceFriendly = message.GetBool();
+                bool swingFaceCanAttack = message.GetBool();
+                bool swingFaceFriendlyFire = message.GetBool();
+                ConfirmSwingFace(swingFaceFriendly, swingFaceCanAttack, swingFaceFriendlyFire);
                 break;
             case Server.MessageType.DestroyMinion:
 

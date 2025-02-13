@@ -25,7 +25,9 @@ public partial class Server
     public bool ValidAttackFace(Match match,Player attacker,Player defender, int attackerInd)
     {
 
-        if (attacker.board[attackerInd].canAttack == false) return false;
+        if (attackerInd >= 0) if (attacker.board[attackerInd].canAttack == false) return false;
+        else if (match.currPlayer.canAttack == false) return false;
+
         foreach (var minion in defender.board)
         {
             if (minion.HasAura(Aura.Type.Taunt) && minion.HasAura(Aura.Type.Stealth)==false) 
@@ -139,6 +141,14 @@ public partial class Server
         CustomMessage mOwner = CreateMessage(phase);
         CustomMessage mOpp = CreateMessage(phase);
 
+        mOwner.AddBool(true);
+        mOpp.AddBool(false);
+
+        mOwner.AddBool(canAttack);
+        mOpp.AddBool(canAttack);
+
+        mOwner.AddBool(friendlyFire);
+        mOpp.AddBool(friendlyFire);
         SendMessage(mOwner, match.currPlayer);
         SendMessage(mOpp, match.enemyPlayer);
     }

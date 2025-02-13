@@ -239,6 +239,27 @@ public partial class Match
         WinCheck();
     }
 
+    public void StartSequenceSwingFace(CastInfo spell)
+    {
+        StartPhase(Phase.BeforeSwingFace, ref spell); if (WinCheck()) return;
+
+        if (WinCheck()) return;
+
+        bool successfulAttack = server.ExecuteAttack(ref spell);
+        ResolveTriggerQueue(ref spell);
+
+        if (successfulAttack == false)
+        {
+            return;
+        }
+
+        //Consume weapon durability after attack.
+        spell.player.ConsumeDurability();
+
+        StartPhase(Phase.AfterSwingFace, ref spell);
+        WinCheck();
+    }
+
     public void StartSequencePlayMinion(CastInfo spell)
     {
         Minion minion = server.SummonMinion(this, spell.player, spell.card.card,MinionBoard.MinionSource.Play, spell.position);

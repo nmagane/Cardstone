@@ -116,6 +116,7 @@ public class Card : MonoBehaviour
 
     public Sprite[] minionCards;
     public Sprite[] spellCards;
+    public Sprite[] weaponCards;
 
     void Awake()
     {
@@ -149,11 +150,11 @@ public class Card : MonoBehaviour
             damage.text = c.damage.ToString();
             health.text = c.health.ToString();
             if (c.WEAPON)
-                Debug.LogWarning("wep cardframe sprite missing");
+                frame.sprite = weaponCards[(int)cardInfo.classType];
             else frame.sprite = minionCards[(int)cardInfo.classType];
             highlight.sprite = highlightMinion;
         }
-        if (c.SPELL)
+        if (c.SPELL || c.SECRET)
         {
             damage.text = "";
             health.text = "";

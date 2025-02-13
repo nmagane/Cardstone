@@ -925,6 +925,17 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f7b51ba1ae27d75458f0c0ae9dea2e99, type: 3}
   - {fileID: 21300000, guid: f7b51ba1ae27d75458f0c0ae9dea2e99, type: 3}
   - {fileID: 21300000, guid: f7b51ba1ae27d75458f0c0ae9dea2e99, type: 3}
+  weaponCards:
+  - {fileID: 21300000, guid: 31e2e8f38b2cc9a4ab732073dc32a9b4, type: 3}
+  - {fileID: 21300000, guid: 31e2e8f38b2cc9a4ab732073dc32a9b4, type: 3}
+  - {fileID: 21300000, guid: 31e2e8f38b2cc9a4ab732073dc32a9b4, type: 3}
+  - {fileID: 21300000, guid: 31e2e8f38b2cc9a4ab732073dc32a9b4, type: 3}
+  - {fileID: 21300000, guid: 31e2e8f38b2cc9a4ab732073dc32a9b4, type: 3}
+  - {fileID: 21300000, guid: 31e2e8f38b2cc9a4ab732073dc32a9b4, type: 3}
+  - {fileID: 21300000, guid: 31e2e8f38b2cc9a4ab732073dc32a9b4, type: 3}
+  - {fileID: 21300000, guid: 31e2e8f38b2cc9a4ab732073dc32a9b4, type: 3}
+  - {fileID: 21300000, guid: 31e2e8f38b2cc9a4ab732073dc32a9b4, type: 3}
+  - {fileID: 21300000, guid: 31e2e8f38b2cc9a4ab732073dc32a9b4, type: 3}
   hidden: 0
   handPos: {x: 0, y: 0, z: 0}
   handRot: {x: 0, y: 0, z: 0}

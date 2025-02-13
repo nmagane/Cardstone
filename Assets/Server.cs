@@ -233,6 +233,8 @@ public partial class Server : MonoBehaviour
                 SwingMinion(matchID, clientID, swingMinionPlayerID, swingTargetMinionInd);
                 break;
             case MessageType.SwingFace:
+                ulong swingFacePlayerID = message.GetULong();
+                SwingFace(matchID, clientID, swingFacePlayerID);
                 break;
             case MessageType.HeroPower:
                 ulong heroPowerPlayerID = message.GetULong();
@@ -759,6 +761,26 @@ public partial class Server : MonoBehaviour
         ConfirmAttackGeneral(attackAction, true);
 
         match.StartSequenceSwingMinion(attackAction);
+    }
+
+    public void SwingFace(ulong matchID, int clientID, ulong playerID)
+    {
+        if (currentMatches.ContainsKey(matchID) == false) return;
+        Match match = currentMatches[matchID];
+
+        PlayerConnection player = match.currPlayer.connection;
+        PlayerConnection enemy = match.enemyPlayer.connection;
+        if (player.clientID != clientID || player.playerID != playerID) return;
+
+        if (ValidAttackFace(match, match.currPlayer, match.enemyPlayer,-10) == false) return;
+
+        AttackInfo attackInfo = new AttackInfo(match.currPlayer, null, null, true, true, false);
+        CastInfo attackAction = new CastInfo(match, attackInfo);
+
+        //preattack confirmation -> start sequence
+        ConfirmAttackGeneral(attackAction, true);
+
+        match.StartSequenceSwingFace(attackAction);
     }
 
     public void SwingFace()
