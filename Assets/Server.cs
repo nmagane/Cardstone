@@ -551,6 +551,7 @@ public partial class Server : MonoBehaviour
             RefreshAttackCharge(m);
         }
         RefreshAttackCharge(match.currPlayer);
+        match.currPlayer.comboCounter = 0;
         //TODO: start of turn effects
         message.AddBool(true);
         message.AddInt(match.currPlayer.maxMana);
@@ -661,7 +662,7 @@ public partial class Server : MonoBehaviour
         SendMessage(confirmPlayOpponent, match.players[p].opponent);
 
         //summon minion or execute spell effects
-
+        match.players[p].comboCounter++;
         match.playOrder++;
 
         CastInfo spell = new CastInfo(match, match.players[p], card, target,position, friendlySide, isHero);

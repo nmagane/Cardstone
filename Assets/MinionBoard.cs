@@ -87,12 +87,13 @@ public class MinionBoard
         OrderCreatures();
     }
 
-    public void RemoveCreature(Minion m)
+    public void RemoveCreature(Minion m, bool noAnim=false)
     {
         Creature c = minionObjects[m];
         minionObjects.Remove(m);
         board.animationManager.DeathAnim(c);
-        
+
+        if (noAnim) return;
         OrderCreatures();
     }
 

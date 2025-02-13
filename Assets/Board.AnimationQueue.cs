@@ -41,6 +41,7 @@ public partial class Board
     IEnumerator ExecuteAnimationQueue()
     {
         exec = true;
+        yield return null;
         while (visualMessageQueue.Count>0)
         {
             VisualInfo info = visualMessageQueue.Dequeue();
@@ -229,13 +230,19 @@ public partial class Board
     Coroutine DestroyMinionVisual(VisualInfo message)
     {
         MinionBoard board = message.isFriendly ? currMinions : enemyMinions;
-        board.RemoveCreature(message.minions[0]);
-
+        bool chain = false;
         if (visualMessageQueue.Count == 0)
         {
-            return null;//StartCoroutine(Wait(15));
+            chain = false;
         }
-        else if (visualMessageQueue.Peek().type == Server.MessageType.DestroyMinion) return null;
+        else
+        {
+            if (visualMessageQueue.Peek().type == Server.MessageType.DestroyMinion) chain = true;
+        }
+
+        board.RemoveCreature(message.minions[0], chain);
+
+        if (chain) return null;
         else return StartCoroutine(Wait(15));
     }
 

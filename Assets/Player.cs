@@ -42,6 +42,10 @@ public class Player
 
     public int fatigue = 0;
 
+    public bool combo => comboCounter > 0;
+
+    public int comboCounter = 0;
+
     public Card.Cardname heroPower = Card.Cardname.Lifetap;
     public int heroPowerCost = 2;
 
