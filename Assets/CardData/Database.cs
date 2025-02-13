@@ -132,6 +132,9 @@ public partial class Database
             case Card.Cardname.Dagger:
                 return Dagger();
 
+            case Card.Cardname.Heroic_Strike:
+                return Heroic_Strike();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 break;

@@ -96,7 +96,8 @@ public class Card : MonoBehaviour
         Hunters_Mark,
         Crazed_Alchemist,
         Chillwind_Yeti,
-        Dagger
+        Dagger,
+        Heroic_Strike
     }
 
     public enum Class

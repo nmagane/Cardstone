@@ -11,7 +11,6 @@ public class Player
     public int maxHealth = 30;
 
     public int armor = 0;
-    public int _damage = 0;
 
     bool _canAttack = false;
     public bool canAttack
@@ -29,12 +28,12 @@ public class Player
     {
         get
         {
-            if (weapon != null) return _damage + weapon.damage;
-            return _damage;
+            if (weapon != null) return sentinel.damage + weapon.damage;
+            return sentinel.damage;
         }
         set
         {
-            _damage = value;
+            sentinel.damage = value;
         }
     }
 
@@ -96,5 +95,9 @@ public class Player
     {
         sentinel.board = board;
         sentinel.player = this;
+        sentinel.damage = 0;
+        sentinel.baseDamage = 0;
+        sentinel.health = 0;
+        sentinel.baseHealth = sentinel.maxHealth = 0;
     }
 }

@@ -47,11 +47,17 @@ Next mechanic implementation:
 	- Swing messages and confirmations	 //done
 	- Weapon battlecry, deathrattle/triggers (truesilver, hunter eaglehorn bow) //done
 	- animations for all the wep/hero damage stuff //done
-	- weapon sheathe visuals 
-	- weapon equip animation
-	- weapon hover tooltip
+	- weapon sheathe visuals //done
+	- weapon equip animation //done
+	- weapon hover tooltip //done
+	
+= "Weapon target" spells like Deadly poison and Blade Flurry (can't be played without weapon)
 	
 = Player Armor
+
+= Stealth
+
+= Secrets
 
 - turn indicator (end turn button color)
 - rope

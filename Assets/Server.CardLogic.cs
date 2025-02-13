@@ -235,4 +235,8 @@ public partial class Server
         SetDamage(spell.match, m, hp);
         SetHealth(spell.match, m, att);
     }
+    private void Heroic_Strike(CastInfo spell)
+    {
+        spell.player.AddAura(new Aura(Aura.Type.Damage, 4, true));
+    }
 }

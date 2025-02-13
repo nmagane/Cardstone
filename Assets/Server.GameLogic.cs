@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 public partial class Server
@@ -275,7 +276,9 @@ public partial class Server
             case Card.Cardname.Crazed_Alchemist:
                 Crazed_Alchemist(spell);
                 break;
-
+            case Card.Cardname.Heroic_Strike:
+                Heroic_Strike(spell);
+                break;
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);
                 break;
