@@ -43,11 +43,13 @@ next decks to implement:
 
 Next mechanic implementation:
 = Weapons & Player Attack
-	- class Weapon? have one in Player class and one in Hero?
-	- Swing messages and confirmations	
-	- Weapon battlecry, deathrattle/triggers (truesilver, hunter eaglehorn bow)
-	- animations for all the wep/hero damage stuff
-	- weapon sheathe visuals
+	- class Weapon? have one in Player class and one in Hero? //done
+	- Swing messages and confirmations	 //done
+	- Weapon battlecry, deathrattle/triggers (truesilver, hunter eaglehorn bow) //done
+	- animations for all the wep/hero damage stuff //done
+	- weapon sheathe visuals 
+	- weapon equip animation
+	- weapon hover tooltip
 	
 = Player Armor
 

@@ -450,6 +450,7 @@ public partial class Board : MonoBehaviour
     {
         if (!currTurn) return;
         currTurn = false;
+        currHero.DisableWeapon();
         CheckHighlights();
     }
     public void StartTurn(bool allyTurn, int maxMana, int currMana, int messageCount)

@@ -70,8 +70,12 @@ public class Hero : MonoBehaviour
     public Sprite highlightNormal;
     public Sprite highlightTarget;
 
+    public Sprite weaponDisabled;
+    public Sprite weaponEnabled;
+
     public SpriteRenderer weaponFrame;
     public SpriteRenderer weaponArt;
+    public SpriteRenderer weaponDamageSprite;
     public SpriteRenderer weaponDeathrattleSprite;
     public SpriteRenderer weaponTriggerSprite;
     public TMP_Text weaponDamage;
@@ -85,6 +89,43 @@ public class Hero : MonoBehaviour
     public void EquipWeapon(Card.Cardname c)
     {
         weapon = new Weapon(c);
+    }
+
+    public bool weaponActive = true;
+    public void DisableWeapon()
+    {
+        weaponActive = false;
+        weaponFrame.sprite = weaponDisabled;
+
+        weaponArt.enabled = false;
+        weaponDamage.transform.localScale = Vector3.zero;
+
+        board.animationManager.LerpZoom(damageSpriteRenderer.gameObject, Vector3.zero, 5);
+    }    
+
+    public void EnableWeapon()
+    {
+        weaponActive = true;
+        weaponFrame.sprite = weaponEnabled;
+
+        weaponDamageSprite.enabled = false;
+        weaponArt.enabled = true; 
+        board.animationManager.LerpZoom(weaponDamage.gameObject, Vector3.one, 5, 0.2f);
+
+        //board.animationManager.LerpZoom(damageSpriteRenderer.gameObject, Vector3.zero, 10);
+    }
+
+    Coroutine popper = null;
+    public void PopWeaponDamage()
+    {
+        weaponDamageSprite.enabled = true;
+        popper = board.animationManager.LerpZoom(weaponDamage.gameObject, Vector3.one, 5, 0.2f);
+    }
+    public void HideWeaponDamage()
+    {
+        if (popper != null) StopCoroutine(popper);
+        weaponDamageSprite.enabled = false;
+        weaponDamage.transform.localScale = Vector3.zero;
     }
 
     public void DisplayWeapon()
@@ -146,13 +187,16 @@ public class Hero : MonoBehaviour
         else 
             hpText.color = board.minionObject.GetComponent<Creature>().baseText;
 
-        if (xDmg <= 0)
+        if (weaponActive)
         {
-            board.animationManager.LerpZoom(damageSpriteRenderer.gameObject, Vector3.zero, 10);
-        }
-        else
-        {
-            board.animationManager.LerpZoom(damageSpriteRenderer.gameObject, Vector3.one, 10, 0.1f);
+            if (xDmg <= 0)
+            {
+                board.animationManager.LerpZoom(damageSpriteRenderer.gameObject, Vector3.zero, 5);
+            }
+            else
+            {
+                board.animationManager.LerpZoom(damageSpriteRenderer.gameObject, Vector3.one, 5, 0.2f);
+            }
         }
     }
 

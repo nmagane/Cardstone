@@ -24,9 +24,14 @@ public partial class Server
     }
     public bool ValidAttackFace(Match match,Player attacker,Player defender, int attackerInd)
     {
-
-        if (attackerInd >= 0) if (attacker.board[attackerInd].canAttack == false) return false;
-        else if (match.currPlayer.canAttack == false) return false;
+        if (attackerInd >= 0)
+        {
+            if (attacker.board[attackerInd].canAttack == false) return false;
+        }
+        else if (match.currPlayer.canAttack == false)
+        {
+            return false;
+        }
 
         foreach (var minion in defender.board)
         {

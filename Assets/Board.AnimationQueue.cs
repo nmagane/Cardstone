@@ -193,7 +193,8 @@ public partial class Board
             enemyMana.SetMax(message.ints[1]);
             enemyMana.SetCurrent(message.ints[0]);
             enemyHeroPower.Enable();
-
+            enemyHero.EnableWeapon();
+            //currHero.DisableWeapon();
             CheckHighlights();
             return null;
         }
@@ -206,6 +207,9 @@ public partial class Board
         mana.SetCurrent(message.ints[0]);
 
         heroPower.Enable();
+        currHero.EnableWeapon();
+        enemyHero.DisableWeapon();
+
         foreach (Minion m in currMinions)
         {
             m.canAttack = true;

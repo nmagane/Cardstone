@@ -38,6 +38,19 @@ public partial class Board
         animationManager.LerpZoom(hoverTip.gameObject,Vector3.one, 5,0.1f);
         hoverTip.Set(p.card.card);
     }
+    public void ShowHoverTip(GameObject wep, Card.Cardname c)
+    {
+        if (wep.transform.position.y<0)
+        {
+            hoverTip.transform.position = wep.transform.position + new Vector3(-6, 6);
+        }
+        else
+            hoverTip.transform.position = wep.transform.position + new Vector3(-6, -6);
+
+        hoverTip.transform.localScale = Vector3.one * 0.3f;
+        animationManager.LerpZoom(hoverTip.gameObject,Vector3.one, 5,0.1f);
+        hoverTip.Set(c);
+    }
     public void HideHoverTip()
     {
         hoverTip.Hide();
