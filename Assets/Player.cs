@@ -73,7 +73,7 @@ public class Player
     public void RefreshForeignAuras() => sentinel.RefreshForeignAuras();
     public void RemoveTemporaryAuras() => sentinel.RemoveTemporaryAuras();
     public void RemoveMatchingAura(Aura a) => sentinel.RemoveMatchingAura(a);
-    public void FindAura(Aura.Type t) => sentinel.FindAura(t);
+    public Aura FindAura(Aura.Type t) => sentinel.FindAura(t);
     public bool HasAura(Aura.Type t) => sentinel.HasAura(t);
 
     //=============================

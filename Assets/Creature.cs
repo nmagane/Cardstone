@@ -329,7 +329,7 @@ public class Creature : MonoBehaviour
     }
 
     int dragCounter = 0;
-    int dragTime = 8;
+    const int dragTime = 8;
     private void OnMouseDrag()
     {
         if (preview) return;

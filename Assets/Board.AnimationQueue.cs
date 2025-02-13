@@ -202,6 +202,7 @@ public partial class Board
         {
             m.canAttack = true;
         }
+        currHero.canAttack = true;
         CheckHighlights();
         return null;
     }

@@ -46,6 +46,12 @@ public partial class Match
 
         OnEquipWeapon,
         AfterEquipWeapon,
+
+        BeforeSwingMinion,
+        AfterSwingMinion,
+
+        BeforeSwingFace,
+        AfterSwingFace,
     }
 
     public void StartSequenceEndTurn(CastInfo spell)
@@ -206,7 +212,21 @@ public partial class Match
     {
         //TODO: Equipping Token weapon from non-play sources
     }
+    public void StartSequenceSwingMinion(CastInfo spell)
+    {
+        StartPhase(Phase.BeforeSwingMinion, ref spell); if (WinCheck()) return;
 
+        bool successfulAttack = server.ExecuteAttack(ref spell);
+        ResolveTriggerQueue(ref spell);
+
+        if (successfulAttack == false)
+        {
+            return;
+        }
+
+        StartPhase(Phase.AfterSwingMinion, ref spell);
+        WinCheck();
+    }
     public void StartSequencePlayMinion(CastInfo spell)
     {
         Minion minion = server.SummonMinion(this, spell.player, spell.card.card,MinionBoard.MinionSource.Play, spell.position);

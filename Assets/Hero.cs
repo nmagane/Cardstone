@@ -13,7 +13,19 @@ public class Hero : MonoBehaviour
 
     public int damage = 0;
     public int armor = 0;
-    
+
+    bool _canAttack = false;
+    public bool canAttack
+    {
+        get
+        {
+            return _canAttack && damage > 0;
+        }
+        set
+        {
+            _canAttack = value;
+        }
+    }
     public Weapon weapon;
 
     public SpriteRenderer spriteRenderer;
@@ -80,7 +92,7 @@ public class Hero : MonoBehaviour
         /*
         if (armorText.text!= xArmor.ToString())
         {
-            StartCoroutineCreature.txtBounce(armorText));
+            StartCoroutineCreature.txtBounce(armorText) );
         }
         */
         hpText.text = xHp.ToString();
@@ -146,6 +158,7 @@ public class Hero : MonoBehaviour
         }
     }
 
+    Vector3 clickPos = Vector3.zero;
     private void OnMouseDown()
     {
         if (board.targeting)
@@ -160,6 +173,10 @@ public class Hero : MonoBehaviour
             board.TargetHero(this);
             return;
         }
+        if (this != board.currHero) return;
+        if (canAttack == false) return;
+        board.StartTargetingSwing(this);
+        clickPos = Card.GetMousePos();
     }
 
     private void OnMouseEnter()
@@ -176,6 +193,27 @@ public class Hero : MonoBehaviour
 
         if (highlight.enabled)
             board.HideSkulls();
+    }
+
+    int dragCounter = 0;
+    const int dragTime = 8;
+    private void OnMouseDrag()
+    {
+
+        if (board.currTurn == false) return;
+        if (board.disableInput) return;
+        if (board.targetingHero == this)
+        {
+            if (dragCounter < dragTime) dragCounter++;
+            if (dragCounter >= dragTime)
+            {
+                if (Vector3.Distance(Card.GetMousePos(), clickPos) > 0.2f)
+                {
+                    board.dragTargeting = true;
+                    //Debug.Log("drag");
+                }
+            }
+        }
     }
     public Hero()
     {

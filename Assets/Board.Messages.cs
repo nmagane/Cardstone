@@ -88,7 +88,7 @@ public partial class Board
         //todo: valid attack function
         foreach (Minion m in enemyMinions)
         {
-            if (m.HasAura(Aura.Type.Taunt)) enemyTaunting = true;
+            if (m.HasAura(Aura.Type.Taunt) && m.HasAura(Aura.Type.Stealth)==false) enemyTaunting = true;
         }
         if (enemyTaunting && target.HasAura(Aura.Type.Taunt) == false)
         {
@@ -123,7 +123,7 @@ public partial class Board
 
         foreach (Minion m in enemyMinions)
         {
-            if (m.HasAura(Aura.Type.Taunt)) enemyTaunting = true;
+            if (m.HasAura(Aura.Type.Taunt) && m.HasAura(Aura.Type.Stealth)==false) enemyTaunting = true;
         }
         if (enemyTaunting)
         {
@@ -163,4 +163,59 @@ public partial class Board
         SendMessage(message);
     }
 
+    public void SwingMinion(Hero targetingHero, bool isFriendly ,Minion target)
+    {
+
+        bool enemyTaunting = false;
+
+        //todo: valid attack function
+        foreach (Minion m in enemyMinions)
+        {
+            if (m.HasAura(Aura.Type.Taunt) && m.HasAura(Aura.Type.Stealth)==false) enemyTaunting = true;
+        }
+        if (enemyTaunting && target.HasAura(Aura.Type.Taunt) == false)
+        {
+            //can't attack non taunter
+            Debug.Log("Taunt in the way");
+            return;
+        }
+
+        EndTargeting();
+        Server.CustomMessage message = CreateMessage(Server.MessageType.SwingMinion);
+
+        message.AddULong(currentMatchID);
+        message.AddULong(playerID);
+        message.AddInt(target.index); 
+        
+        SendMessage(message);
+    }
+    public void SwingFace(Hero targetingHero, Hero h)
+    {
+        bool enemyTaunting = false;
+
+        if (CheckTargetEligibility(h) == false)
+        {
+            //invalid target todo:check these on server
+            Debug.Log("Invalid target");
+            return;
+        }
+        //todo: valid attack function
+        foreach (Minion m in enemyMinions)
+        {
+            if (m.HasAura(Aura.Type.Taunt) && m.HasAura(Aura.Type.Stealth)==false) enemyTaunting = true;
+        }
+        if (enemyTaunting)
+        {
+            //can't attack non taunter
+            Debug.Log("Taunt in the way");
+            return;
+        }
+
+        EndTargeting();
+        Server.CustomMessage message = CreateMessage(Server.MessageType.SwingFace);
+
+        message.AddULong(currentMatchID);
+        message.AddULong(playerID);
+        SendMessage(message);
+    }
 }

@@ -46,6 +46,13 @@ public class Trigger
 
         OnEquipWeapon,
         AfterEquipWeapon,
+
+        BeforeSwingMinion,
+        AfterSwingMinion,
+
+        BeforeSwingFace,
+        AfterSwingFace,
+
         //==============
         _PHASELIMIT,
         //=============SPECIAL EVENTS

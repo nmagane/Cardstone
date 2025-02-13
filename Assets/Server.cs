@@ -227,6 +227,13 @@ public partial class Server : MonoBehaviour
                 int attackerIndFace = message.GetInt();
                 AttackFace(matchID, clientID,playerIDFace,attackerIndFace);
                 break;
+            case MessageType.SwingMinion:
+                ulong swingMinionPlayerID = message.GetULong();
+                int swingTargetMinionInd = message.GetInt();
+                SwingMinion(matchID, clientID, swingMinionPlayerID, swingTargetMinionInd);
+                break;
+            case MessageType.SwingFace:
+                break;
             case MessageType.HeroPower:
                 ulong heroPowerPlayerID = message.GetULong();
                 ushort heroPower = message.GetUShort();
@@ -542,8 +549,9 @@ public partial class Server : MonoBehaviour
         match.currPlayer.currMana = match.currPlayer.maxMana;
         foreach (var m in match.currPlayer.board)
         {
-            m.canAttack = true;
+            RefreshAttackCharge(m);
         }
+        RefreshAttackCharge(match.currPlayer);
         //TODO: start of turn effects
         message.AddBool(true);
         message.AddInt(match.currPlayer.maxMana);
@@ -728,6 +736,35 @@ public partial class Server : MonoBehaviour
         ConfirmAttackGeneral(attackAction, true);
 
         match.StartSequenceAttackMinion(attackAction);
+
+    }
+    public void SwingMinion(ulong matchID, int clientID, ulong playerID, int targetInd)
+    {
+        Debug.Log("swing min");
+        if (currentMatches.ContainsKey(matchID) == false) return;
+        Match match = currentMatches[matchID];
+
+        PlayerConnection player = match.currPlayer.connection;
+        PlayerConnection enemy = match.enemyPlayer.connection;
+        if (player.clientID != clientID || player.playerID != playerID) return;
+
+        if (targetInd >= match.enemyPlayer.board.Count()) return;
+
+        Minion target = match.enemyPlayer.board[targetInd];
+        if (ValidAttackMinion(match, -10, targetInd) == false) return;
+
+        Debug.Log("swing min0");
+        AttackInfo attackInfo = new AttackInfo(match.currPlayer, null, target, true, false, false);
+        CastInfo attackAction = new CastInfo(match, attackInfo);
+
+        //preattack confirmation -> start sequence
+        ConfirmAttackGeneral(attackAction, true);
+
+        match.StartSequenceSwingMinion(attackAction);
+    }
+
+    public void SwingFace()
+    {
 
     }
 

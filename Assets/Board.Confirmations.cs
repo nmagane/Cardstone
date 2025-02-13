@@ -257,7 +257,7 @@ public partial class Board
 
         return null;
     }
-    public Coroutine ConfirmAttackMinion(bool allyAttack, int attackerIndex, int targetIndex)
+    public Coroutine ConfirmAttackMinion(bool allyAttack, int attackerIndex, int targetIndex, bool canAttack)
     {
         
         Minion attacker = allyAttack ? currMinions[attackerIndex] : enemyMinions[attackerIndex];
@@ -268,7 +268,7 @@ public partial class Board
 
         if (allyAttack)
         {
-            Server.ConsumeAttackCharge(attacker);
+            attacker.canAttack = canAttack;
         }
 
         CheckHighlights();
@@ -301,7 +301,7 @@ public partial class Board
         CheckHighlights();
         return null;
     }
-    public Coroutine ConfirmAttackFace(bool allyAttack, int attackerIndex)
+    public Coroutine ConfirmAttackFace(bool allyAttack, int attackerIndex, bool canAttack)
     {
 
         Minion attacker = allyAttack ? currMinions[attackerIndex] : enemyMinions[attackerIndex];
@@ -309,7 +309,7 @@ public partial class Board
         Hero tar = allyAttack ? enemyHero : currHero;
         if (allyAttack)
         {
-            Server.ConsumeAttackCharge(attacker);
+            attacker.canAttack = canAttack;
         }
 
         VisualInfo anim = new VisualInfo();

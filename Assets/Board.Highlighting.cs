@@ -108,7 +108,10 @@ public partial class Board
             }
         }
 
-        //todo: WEAPON SWING
+        if (currHero.canAttack)
+        {
+            currHero.Highlight();
+        }
     }
     public void HighlightTargets()
     {

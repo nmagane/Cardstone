@@ -106,6 +106,7 @@ public partial class Board
                 CastHeroPower(targetingCard.card, minion.index, friendly,false);
                 break;
             case TargetMode.Weapon:
+                SwingMinion(targetingHero,friendly, minion);
                 break;
             case TargetMode.None:
                 EndTargeting();
@@ -136,6 +137,7 @@ public partial class Board
                 CastHeroPower(targetingCard.card, -1, friendly, true);
                 break;
             case TargetMode.Weapon:
+                SwingFace(targetingHero,hero);
                 break;
             case TargetMode.None:
                 EndTargeting();
@@ -161,6 +163,17 @@ public partial class Board
         animationManager.LiftMinion(currMinions.minionObjects[source]);
 
         StartTargetingAnim(currMinions.minionObjects[source]);
+    }
+    public void StartTargetingSwing(Hero source)
+    {
+        targeting = true;
+        targetMode = TargetMode.Weapon;
+        eligibleTargets = EligibleTargets.EnemyCharacters;
+        targetingHero = source;
+
+        //animationManager.LiftMinion(currMinions.minionObjects[source]);
+
+        StartTargetingAnim(source);
     }
 
     public void StartTargetingCard(HandCard source, MonoBehaviour customPos=null)

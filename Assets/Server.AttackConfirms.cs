@@ -6,15 +6,17 @@ public partial class Server
     public bool ValidAttackMinion(Match m, int attackerInd, int targetInd)
     {
         //TODO: reuse this function in board code
-        Minion attacker = m.currPlayer.board[attackerInd];
+        Minion attacker = attackerInd <0 ? null:m.currPlayer.board[attackerInd];
         Minion target = m.enemyPlayer.board[targetInd];
 
-        if (attacker.canAttack == false) return false;
-        //if (target.STEALTH) return false;
+        if (attacker!=null) if (attacker.canAttack == false) return false;
+        if (attacker == null) if (m.currPlayer.canAttack == false) return false;
+        if (target.HasAura(Aura.Type.Stealth)) return false;
+
         bool enemyTaunting = false;
         foreach (var minion in m.enemyPlayer.board)
         {
-            if (minion.HasAura(Aura.Type.Taunt)) { enemyTaunting = true; break; }
+            if (minion.HasAura(Aura.Type.Taunt) && minion.HasAura(Aura.Type.Stealth)==false) { enemyTaunting = true; break; }
         }
         if (target.HasAura(Aura.Type.Taunt) == false && enemyTaunting) return false;
 
@@ -26,7 +28,7 @@ public partial class Server
         if (attacker.board[attackerInd].canAttack == false) return false;
         foreach (var minion in defender.board)
         {
-            if (minion.HasAura(Aura.Type.Taunt)) 
+            if (minion.HasAura(Aura.Type.Taunt) && minion.HasAura(Aura.Type.Stealth)==false) 
             {
                 return false;
             }
@@ -44,11 +46,12 @@ public partial class Server
             if (attack.weaponSwing)
             {
                 //Face to face
+                ConfirmSwingFace(match, attack.friendlyFire, preattack, action.player.canAttack);
             }
             else
             {
                 //Minion to face
-                ConfirmAttackFace(match, attack.attacker.index, attack.friendlyFire,preattack);
+                ConfirmAttackFace(match, attack.attacker.index, attack.friendlyFire,preattack, attack.attacker.canAttack);
             }
         }
         else
@@ -56,16 +59,17 @@ public partial class Server
             if (attack.weaponSwing)
             {
                 //Face to minion
+                ConfirmSwingMinion(match, attack.target.index, attack.friendlyFire, preattack, action.player.canAttack);
             }
             else
             {
                 //Minion to minion
-                ConfirmAttackMinion(match, attack.attacker.index, attack.target.index, attack.friendlyFire,preattack);
+                ConfirmAttackMinion(match, attack.attacker.index, attack.target.index, attack.friendlyFire,preattack, attack.attacker.canAttack);
             }
         }
     }
 
-    public void ConfirmAttackMinion(Match match, int attackerInd, int targetInd, bool friendlyFire, bool PREATTACK)
+    public void ConfirmAttackMinion(Match match, int attackerInd, int targetInd, bool friendlyFire, bool PREATTACK, bool canAttack)
     {
         MessageType phase = PREATTACK ? MessageType.ConfirmPreAttackMinion : MessageType.ConfirmAttackMinion;
         CustomMessage mOwner = CreateMessage(phase);
@@ -79,10 +83,13 @@ public partial class Server
         mOwner.AddInt(targetInd);
         mOpp.AddInt(targetInd);
 
+        mOwner.AddBool(canAttack);
+        mOpp.AddBool(canAttack);
+
         SendMessage(mOwner, match.currPlayer);
         SendMessage(mOpp, match.enemyPlayer);
     }
-    public void ConfirmAttackFace(Match match, int attackerInd,bool friendlyFire, bool PREATTACK)
+    public void ConfirmAttackFace(Match match, int attackerInd,bool friendlyFire, bool PREATTACK, bool canAttack)
     {
         MessageType phase = PREATTACK ? MessageType.ConfirmPreAttackFace : MessageType.ConfirmAttackFace;
         CustomMessage mOwner = CreateMessage(phase);
@@ -93,16 +100,29 @@ public partial class Server
         mOwner.AddInt(attackerInd);
         mOpp.AddInt(attackerInd);
 
+        mOwner.AddBool(canAttack);
+        mOpp.AddBool(canAttack);
+
         SendMessage(mOwner, match.currPlayer);
         SendMessage(mOpp, match.enemyPlayer);
     }
-    public void ConfirmSwingMinion()
+    public void ConfirmSwingMinion(Match match, int targetInd, bool friendlyFire, bool PREATTACK, bool canAttack)
     {
+        MessageType phase = PREATTACK ? MessageType.ConfirmPreSwingMinion : MessageType.ConfirmSwingMinion;
+        CustomMessage mOwner = CreateMessage(phase);
+        CustomMessage mOpp = CreateMessage(phase);
 
+        SendMessage(mOwner, match.currPlayer);
+        SendMessage(mOpp, match.enemyPlayer);
     }
-    public void ConfirmSwingFace()
+    public void ConfirmSwingFace(Match match, bool friendlyFire, bool PREATTACK, bool canAttack)
     {
+        MessageType phase = PREATTACK ? MessageType.ConfirmPreSwingFace : MessageType.ConfirmSwingFace;
+        CustomMessage mOwner = CreateMessage(phase);
+        CustomMessage mOpp = CreateMessage(phase);
 
+        SendMessage(mOwner, match.currPlayer);
+        SendMessage(mOpp, match.enemyPlayer);
     }
 
     public void ConfirmHeroPower(CastInfo spell)

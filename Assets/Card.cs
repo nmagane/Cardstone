@@ -426,7 +426,7 @@ public class Card : MonoBehaviour
     }
 
     int dragCounter = 0;
-    int dragTime = 5;
+    const int dragTime = 5;
     private void OnMouseDrag()
     {
         if (card.card == Cardname.Cardback) return;

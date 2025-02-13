@@ -270,7 +270,8 @@ public partial class Board : MonoBehaviour
                 bool minionAllyAttack = message.GetBool();
                 int minionAttackerIndex = message.GetInt();
                 int minionTargetIndex = message.GetInt();
-                animation = ConfirmAttackMinion(minionAllyAttack, minionAttackerIndex, minionTargetIndex);
+                bool minionCanAttack = message.GetBool();
+                animation = ConfirmAttackMinion(minionAllyAttack, minionAttackerIndex, minionTargetIndex, minionCanAttack);
                 break;
             case Server.MessageType.ConfirmPreAttackFace:
                 bool preFaceAllyAttack = message.GetBool();
@@ -280,7 +281,18 @@ public partial class Board : MonoBehaviour
             case Server.MessageType.ConfirmAttackFace:
                 bool faceAllyAttack = message.GetBool();
                 int faceAttackerIndex = message.GetInt();
-                animation = ConfirmAttackFace(faceAllyAttack, faceAttackerIndex);
+                bool faceAttackCanAttack = message.GetBool();
+                animation = ConfirmAttackFace(faceAllyAttack, faceAttackerIndex, faceAttackCanAttack);
+                break;
+
+            case Server.MessageType.ConfirmPreSwingMinion:
+                break;
+            case Server.MessageType.ConfirmSwingMinion:
+                break;
+
+            case Server.MessageType.ConfirmPreSwingFace:
+                break;
+            case Server.MessageType.ConfirmSwingFace:
                 break;
             case Server.MessageType.DestroyMinion:
 
