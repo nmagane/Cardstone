@@ -29,7 +29,7 @@ public class Creature : MonoBehaviour
     {
         isElevated = elevated;
         string x = elevated ? "creatureElevated" : "creature";
-        string s = elevated ? " shadowCreatureElevated" : "shadowCreature";
+        string s = elevated ? "shadowCreatureElevated" : "shadowCreature";
         battlecrySprite.sortingLayerName = x;
         highlight.sortingLayerName = x;
         spriteRenderer.sortingLayerName = x;

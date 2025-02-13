@@ -70,8 +70,8 @@ public partial class AnimationManager
         if (c.isElevated == false) LiftHero(c);
         target -= c.transform.localPosition;
         Vector3 dir = (target - c.spriteRenderer.transform.localPosition).normalized;
-        float ang = Mathf.Atan2(0 - target.y, 0 - target.x);
-        float diff = 1.4375f * Mathf.Sin(ang);
+        float ang = Mathf.Atan2(c.transform.localPosition.y-target.y,c.transform.localPosition.x -target.x);
+        float diff = 1.1f * Mathf.Sin(ang);
         target = target + dir * diff*2;
         return StartCoroutine(preSwing(c,target));
     }
@@ -88,9 +88,9 @@ public partial class AnimationManager
     {
 
         target -= c.transform.localPosition;
-        Vector3 dir = (target - c.spriteRenderer.transform.localPosition).normalized;
-        float ang = Mathf.Atan2(0 - target.y, 0 - target.x);
-        float diff = 1.4375f * Mathf.Sin(ang);
+        Vector3 dir = (target - c.spriteRenderer.transform.localPosition).normalized; 
+        float ang = Mathf.Atan2(c.transform.localPosition.y - target.y, c.transform.localPosition.x - target.x);
+        float diff = Mathf.Sign(target.y - c.transform.localPosition.y) * 1.1f * Mathf.Sin(ang);
         target = target + dir * diff * 2;
 
         yield return _lerpAccel(c.spriteRenderer.gameObject, target, (int)(attackFrames* 0.75));

@@ -11,7 +11,7 @@ public class Hero : MonoBehaviour
     {
         isElevated = elevated;
         string x = elevated ? "creatureElevated" : "top1";
-        string s = elevated ? " shadowCreatureElevated" : "shadow";
+        string s = elevated ? "shadowCreatureElevated" : "shadow";
         shadow.sortingLayer = s;
 
         spriteRenderer.sortingLayerName = x;
@@ -184,6 +184,7 @@ public class Hero : MonoBehaviour
 
     public void Highlight(bool target=false)
     {
+        if (isElevated) return;
         highlight.enabled = true;
         if (target) highlight.sprite = highlightTarget;
         else highlight.sprite = highlightNormal;

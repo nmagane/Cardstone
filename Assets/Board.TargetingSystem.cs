@@ -394,6 +394,23 @@ public partial class Board
                     targetingMinion.creature.ShowSkull();
             }
         }
+        if (targetMode == TargetMode.Weapon)
+        {
+            if (targetingHero.weapon != null)
+            {
+                if (targetingHero.damage >= target.minion.health)
+                {
+                    if (target.minion.HasAura(Aura.Type.Shield) == false)
+                        target.ShowSkull();
+                }
+            }
+            if (target.minion.damage >= targetingHero.health)
+            {
+                //if (targetingMinion.HasAura(Aura.Type.Immune)==false)
+                targetingHero.ShowSkull();
+            }
+        }
+
         if (targetMode == TargetMode.Spell || targetMode == TargetMode.Battlecry || targetMode == TargetMode.HeroPower)
         {
             if (Database.GetCardData(targetingCard.card).spellDamage >= target.minion.health)
@@ -408,6 +425,13 @@ public partial class Board
         if (targetMode == TargetMode.Attack)
         {
             if (targetingMinion.damage >= target.health)
+            {
+                  target.ShowSkull();
+            }
+        }
+        if (targetMode == TargetMode.Weapon)
+        {
+            if (targetingHero.damage >= target.health)
             {
                   target.ShowSkull();
             }

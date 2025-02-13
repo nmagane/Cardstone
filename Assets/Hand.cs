@@ -302,7 +302,7 @@ public class Hand
     public void FadeCard(Card c, bool friendly, bool discard=false, Card.Cardname name =Card.Cardname.Coin, int cost=-1)
     {
         c.noReturn = true;
-        if (cost == -1) cost = c.card.manaCost;
+        if (friendly==false && cost == -1) cost = c.card.manaCost;
         board.animationManager.FadeCard(c, friendly, discard, name, cost);
     }
 }
