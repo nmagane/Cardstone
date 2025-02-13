@@ -233,7 +233,7 @@ public partial class Board
 
         if (visualMessageQueue.Count == 0)
         {
-            return StartCoroutine(Wait(15));
+            return null;//StartCoroutine(Wait(15));
         }
         else if (visualMessageQueue.Peek().type == Server.MessageType.DestroyMinion) return null;
         else return StartCoroutine(Wait(15));

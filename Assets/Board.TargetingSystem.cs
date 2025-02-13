@@ -398,14 +398,12 @@ public partial class Board
         }
         if (targetMode == TargetMode.Weapon)
         {
-            if (targetingHero.weapon != null)
+            if (targetingHero.damage >= target.minion.health)
             {
-                if (targetingHero.damage >= target.minion.health)
-                {
-                    if (target.minion.HasAura(Aura.Type.Shield) == false)
-                        target.ShowSkull();
-                }
+                if (target.minion.HasAura(Aura.Type.Shield) == false)
+                    target.ShowSkull();
             }
+            
             if (target.minion.damage >= targetingHero.health)
             {
                 //if (targetingMinion.HasAura(Aura.Type.Immune)==false)

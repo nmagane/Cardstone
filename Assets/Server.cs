@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Riptide;
-using Riptide.Utils;
 using UnityEngine;
 
 public partial class Server : MonoBehaviour
@@ -103,7 +101,6 @@ public partial class Server : MonoBehaviour
 
     void Start()
     {
-        RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
         mirror.StartServer();
     }
 
