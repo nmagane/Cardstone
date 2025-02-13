@@ -110,6 +110,8 @@ public partial class Match
         {
             server.FatiguePlayer(spell.match, spell.player);
             StartPhase(Phase.OnFatigue,ref spell);
+
+            WinCheck();
             return;
         }
         if (spell.player.hand.Count()>=10)
@@ -313,6 +315,7 @@ public partial class Match
     public void TriggerWeapon(Trigger.Type type, Weapon target)
     {
         CastInfo cast = new CastInfo();
+        cast.minion = target.sentinel;
         cast.weapon = target;
         triggerBuffer.AddRange(target.CheckTriggers(type, Trigger.Side.Both, cast));
     }
@@ -379,6 +382,12 @@ public partial class Match
 
         triggerBuffer.AddRange(players[0].CheckTriggers(phaseTrigger, p0Side, spell));
         triggerBuffer.AddRange(players[1].CheckTriggers(phaseTrigger, p1Side, spell));
+
+        if (players[0].weapon!=null)
+            triggerBuffer.AddRange(players[0].weapon.CheckTriggers(phaseTrigger, p0Side, spell));
+
+        if (players[1].weapon!=null)
+            triggerBuffer.AddRange(players[1].weapon.CheckTriggers(phaseTrigger, p1Side, spell));
 
         ResolveTriggerQueue(ref spell);
 

@@ -49,6 +49,7 @@ public class TriggerEffects
         Player p = match.FindOwner(minion);
 
         //Skip trigger if no targets available
+        if (p.board.Count() == 0) return;
         if (p.board.Count() == 1 && p.board[0] == minion) return;
 
         Minion m = p.board[Random.Range(0, p.board.Count())];

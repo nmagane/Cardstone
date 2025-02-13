@@ -953,7 +953,6 @@ MonoBehaviour:
     maxHealth: 0
     baseHealth: 0
     baseDamage: 0
-    canAttack: 0
     DEAD: 0
     playOrder: 0
   frameSprites:
@@ -976,6 +975,7 @@ MonoBehaviour:
   redText: {r: 0.9607843, g: 0.627451, b: 0.5921569, a: 1}
   hp: 0
   dmg: 0
+  maxhp: 0
   skull: {fileID: 4526808237381591547}
   boardPos: {x: 0, y: 0, z: 0}
   floatEnabled: 1

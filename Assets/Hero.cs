@@ -72,6 +72,8 @@ public class Hero : MonoBehaviour
 
     public SpriteRenderer weaponFrame;
     public SpriteRenderer weaponArt;
+    public SpriteRenderer weaponDeathrattleSprite;
+    public SpriteRenderer weaponTriggerSprite;
     public TMP_Text weaponDamage;
     public TMP_Text weaponDurability;
 
@@ -83,17 +85,21 @@ public class Hero : MonoBehaviour
     public void EquipWeapon(Card.Cardname c)
     {
         weapon = new Weapon(c);
-        //DisplayWeapon();
     }
 
     public void DisplayWeapon()
     {
+        if (weapon!=null)
+        {
+            HideWeapon();
+        }
         //drop anim like creatures TODO
         if (hider!=null) StopCoroutine(hider);
         weaponFrame.transform.localScale = Vector3.one;
         weaponDamage.text = weapon.damage.ToString();
         weaponDurability.text = weapon.durability.ToString();
 
+        CheckTriggers();
         weaponArt.sprite = board.cardObject.GetComponent<Card>().cardSprites[(int)weapon.card];
     }
     Coroutine hider = null;
@@ -103,7 +109,8 @@ public class Hero : MonoBehaviour
     }
     
     public void HideWeapon()
-    { 
+    {
+        if (weaponDeathrattleSprite.enabled) StartCoroutine(board.animationManager.deathrattleAnimWeapon(this));
         hider = StartCoroutine(wepHide());
     }
     IEnumerator wepHide()
@@ -180,6 +187,30 @@ public class Hero : MonoBehaviour
             weaponDamage.color = board.minionObject.GetComponent<Creature>().greenText;
         else
             weaponDamage.color = board.minionObject.GetComponent<Creature>().baseText;
+    }
+
+    public void CheckTriggers()
+    {
+        if (weapon == null) return;
+        if (weapon.triggers.Count > 0)
+        {
+            bool d = false;
+            foreach (Trigger t in weapon.triggers)
+            {
+                if (t.type == Trigger.Type.Deathrattle)
+                {
+                    weaponDeathrattleSprite.enabled = true;
+                    d = true;
+                }
+            }
+            if (d == false)
+                weaponTriggerSprite.enabled = true;
+        }
+        else
+        {
+            weaponTriggerSprite.enabled = false;
+            weaponDeathrattleSprite.enabled = false;
+        }
     }
 
     public void Highlight(bool target=false)

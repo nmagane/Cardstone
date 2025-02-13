@@ -26,10 +26,11 @@
         c.classType = Card.Class.Rogue;
 
         c.manaCost = 2;
-        c.damage = 3;
-        c.health = 5;
+        c.damage = 1;
+        c.health = 2;
 
         c.WEAPON = true;
+
         return c;
     }
 }

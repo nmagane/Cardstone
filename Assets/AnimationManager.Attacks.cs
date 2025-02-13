@@ -206,6 +206,33 @@ public partial class AnimationManager
         }
         Destroy(s.gameObject);
     }
+    public IEnumerator deathrattleAnimWeapon(Hero c)
+    {
+        SpriteRenderer s = Instantiate(c.board.UISprite).GetComponent<SpriteRenderer>();
+        s.sprite = c.weaponDeathrattleSprite.sprite;
+        s.transform.parent = c.transform.parent;
+        s.transform.localScale = Vector3.one*2;
+        s.transform.position = c.weaponFrame.transform.position;
+        s.sortingLayerName = c.weaponArt.sortingLayerName;
+        s.sortingOrder = c.weaponArt.sortingOrder + 4;
+        s.color = new Color(1, 1, 1, 0);
+        yield return Wait(10);
+        float f = 5;
+        for (int i = 0; i < f; i++)
+        {
+            s.color += new Color(0, 0, 0, 1 / f);
+            yield return Wait(1);
+        }
+
+        LerpZoom(s.gameObject, Vector3.one * 3, 80);
+        f = 25;
+        for (int i=0;i<f;i++)
+        {
+            s.color += new Color(0, 0, 0, -1 /f);
+            yield return Wait(1);
+        }
+        Destroy(s.gameObject);
+    }
     IEnumerator _death(Creature c)
     {
         //yield return Wait(5);
