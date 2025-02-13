@@ -171,7 +171,7 @@ public partial class Board
         eligibleTargets = EligibleTargets.EnemyCharacters;
         targetingHero = source;
 
-        //animationManager.LiftMinion(currMinions.minionObjects[source]);
+        animationManager.LiftHero(source);
 
         StartTargetingAnim(source);
     }
@@ -208,6 +208,10 @@ public partial class Board
             {
                 if (currMinions.minionObjects.ContainsKey(targetingMinion)==true)
                     animationManager.CancelLiftMinion(currMinions.minionObjects[targetingMinion]);
+            }
+            if (targetingHero != null)
+            {
+                animationManager.CancelLiftHero(targetingHero);
             }
         }
         targeting = false;

@@ -783,11 +783,6 @@ public partial class Server : MonoBehaviour
         match.StartSequenceSwingFace(attackAction);
     }
 
-    public void SwingFace()
-    {
-
-    }
-
     public void UpdateMinion(Match match, Minion minion, bool damaged = false, bool healed=false)
     {
         CustomMessage messageOwner = CreateMessage(MessageType.UpdateMinion);

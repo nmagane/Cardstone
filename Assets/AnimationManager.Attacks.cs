@@ -18,6 +18,19 @@ public partial class AnimationManager
         StartCoroutine(elevator(c, 1.025f, 0.4f, 10,true));
     }
 
+    public void LiftHero(Hero h)
+    {
+        h.shadowSpriteRenderer.enabled = true;
+        h.SetElevated(true);
+        StartCoroutine(elevatorHero(h, 1.05f, 0.6f, 5));
+    }
+    public void CancelLiftHero(Hero h)
+    {
+        h.isElevated = false;
+        StartCoroutine(elevatorHero(h, 1, 0, 5,true));
+    }
+
+
     int attackFrames = 12;
     public Coroutine PreAttackMinion(Creature c, Vector3 target)
     {
@@ -52,6 +65,43 @@ public partial class AnimationManager
         LerpTo(c.gameObject, c.boardPos, 5);
 
     }
+    public Coroutine PreSwing(Hero c, Vector3 target)
+    {
+        if (c.isElevated == false) LiftHero(c);
+        target -= c.transform.localPosition;
+        Vector3 dir = (target - c.spriteRenderer.transform.localPosition).normalized;
+        float ang = Mathf.Atan2(0 - target.y, 0 - target.x);
+        float diff = 1.4375f * Mathf.Sin(ang);
+        target = target + dir * diff*2;
+        return StartCoroutine(preSwing(c,target));
+    }
+    IEnumerator preSwing(Hero c, Vector3 target)
+    {
+        yield return Wait(10);
+        yield return LerpTo(c.spriteRenderer.gameObject, Vector3.Lerp(c.spriteRenderer.transform.localPosition, target, 0.25f), (int)(attackFrames * 0.25));
+    }
+    public Coroutine ConfirmSwing(Hero c, Vector3 target)
+    {
+        return StartCoroutine(swingConfirm(c, target));
+    }
+    public IEnumerator swingConfirm(Hero c, Vector3 target)
+    {
+
+        target -= c.transform.localPosition;
+        Vector3 dir = (target - c.spriteRenderer.transform.localPosition).normalized;
+        float ang = Mathf.Atan2(0 - target.y, 0 - target.x);
+        float diff = 1.4375f * Mathf.Sin(ang);
+        target = target + dir * diff * 2;
+
+        yield return _lerpAccel(c.spriteRenderer.gameObject, target, (int)(attackFrames* 0.75));
+        CancelLiftHero(c);
+        c.spriteRenderer.transform.localPosition = Vector3.Lerp(c.spriteRenderer.transform.localPosition, Vector3.zero, 0.075f);
+        LerpTo(c.spriteRenderer.gameObject, Vector3.zero, 5);
+
+    }
+    
+
+
      float v0 = 0.075f;
      float accel = 0.075f;
     public IEnumerator _lerpAccel(GameObject obj, Vector3 target, float frames)
@@ -94,6 +144,26 @@ public partial class AnimationManager
         else
         {
             c.SetSortingOrder(c.minion.index + 10);
+        }
+    }
+
+    IEnumerator elevatorHero(Hero c, float scale, float v, float frames, bool end = false)
+    {
+        float op = c.shadowElevation;
+        LerpZoom(c.spriteRenderer.gameObject, Vector3.one * scale, frames);
+        for (int i = 0; i < frames; i++)
+        {
+            if (c == null) yield break;
+            c.shadowElevation = Mathf.Lerp(op, v, (i + 1) / frames);
+            yield return null;
+        }
+
+        if (c == null) yield break;
+
+        if (end)
+        {
+            c.shadowSpriteRenderer.enabled = false;
+            c.SetElevated(false);
         }
     }
 

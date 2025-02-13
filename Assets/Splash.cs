@@ -15,7 +15,7 @@ public class Splash : MonoBehaviour
         Damage,
         Heal,
     }
-    public void Set(Type t, int value, MonoBehaviour obj)
+    public void Set(Type t, int value, GameObject obj)
     {
         string s = "";
         switch(t)
@@ -36,7 +36,7 @@ public class Splash : MonoBehaviour
         StartCoroutine(fader());
     }
 
-    IEnumerator follower(MonoBehaviour obj)
+    IEnumerator follower(GameObject obj)
     {
         while (obj!=null)
         {

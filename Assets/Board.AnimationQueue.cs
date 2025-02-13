@@ -102,6 +102,14 @@ public partial class Board
             case Server.MessageType.ConfirmAttackMinion:
                 return ConfirmAttackMinionVisual(message);
 
+            case Server.MessageType.ConfirmPreSwingFace:
+            case Server.MessageType.ConfirmPreSwingMinion:
+                return PreSwingVisual(message);
+
+            case Server.MessageType.ConfirmSwingFace:
+            case Server.MessageType.ConfirmSwingMinion:
+                return ConfirmSwingVisual(message);
+
             case Server.MessageType.UpdateMinion:
                 return UpdateMinionVisual(message);
 
@@ -283,6 +291,7 @@ public partial class Board
         hero.HideWeapon();
 
         return StartCoroutine(Wait(15));
+        //return null;
     }
 
     Coroutine PreAttackMinionVisual(VisualInfo message)
@@ -292,6 +301,14 @@ public partial class Board
     Coroutine ConfirmAttackMinionVisual(VisualInfo message)
     {
         return animationManager.ConfirmAttackMinion(message.creatures[0], message.vectors[0]);
+    }
+    Coroutine PreSwingVisual(VisualInfo message)
+    {
+        return animationManager.PreSwing(message.isFriendly? currHero:enemyHero, message.vectors[0]);
+    }
+    Coroutine ConfirmSwingVisual(VisualInfo message)
+    {
+        return animationManager.ConfirmSwing(message.isFriendly ? currHero : enemyHero, message.vectors[0]);
     }
 
     Coroutine UpdateMinionVisual(VisualInfo message)
@@ -303,7 +320,7 @@ public partial class Board
 
         if (message.trigger)
         {
-            CreateSplash(message.minions[0].creature, message.damage);
+            CreateSplash(message.minions[0].creature.gameObject, message.damage);
         }
         return null;
     }
@@ -324,11 +341,11 @@ public partial class Board
             enemyMana.UpdateDisplay(message.ints[2], message.ints[3]);
         }
 
-        if (hero.weapon!=null) hero.UpdateWeaponText(message.ints[6], message.ints[7]);
+        hero.UpdateWeaponText(message.ints[6], message.ints[7]);
 
         if (message.trigger)
         {
-            CreateSplash(hero, message.damage);
+            CreateSplash(hero.spriteRenderer.gameObject, message.damage);
         }
         return null;
     }

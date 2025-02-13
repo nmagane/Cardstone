@@ -64,11 +64,11 @@ public partial class Board : MonoBehaviour
         Card c = Instantiate(cardObject).GetComponent<Card>();
         return c;
     }
-    public Splash CreateSplash(MonoBehaviour obj,int value)
+    public Splash CreateSplash(GameObject obj,int value)
     {
         Splash splash = Instantiate(splashObject).GetComponent<Splash>();
         Splash.Type type = value < 0 ? Splash.Type.Damage : Splash.Type.Heal;
-        splash.Set(type, value, obj);
+        splash.Set(type, value, obj.gameObject);
         return splash;
     }
     public Creature CreateCreature()

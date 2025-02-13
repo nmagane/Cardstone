@@ -12,7 +12,14 @@ public class Hero : MonoBehaviour
         isElevated = elevated;
         string x = elevated ? "creatureElevated" : "top1";
         string s = elevated ? " shadowCreatureElevated" : "shadow";
-        
+        shadow.sortingLayer = s;
+
+        spriteRenderer.sortingLayerName = x;
+        skull.sortingLayerName = x;
+        highlight.sortingLayerName = x;
+        damageSpriteRenderer.sortingLayerName = x;
+        damageText.GetComponent<MeshRenderer>().sortingLayerName = x;
+        hpText.GetComponent<MeshRenderer>().sortingLayerName = x;
     }
 
     public Board board;
@@ -39,6 +46,21 @@ public class Hero : MonoBehaviour
 
     public SpriteRenderer spriteRenderer;
     public SpriteRenderer damageSpriteRenderer;
+
+    public SpriteRenderer shadowSpriteRenderer;
+    public DropShadow shadow;
+
+    public float shadowElevation
+    {
+        get
+        {
+            return shadow.elevation;
+        }
+        set
+        {
+            shadow.elevation = value;
+        }
+    }
 
     public TMP_Text hpText;
     public TMP_Text damageText;
@@ -67,23 +89,28 @@ public class Hero : MonoBehaviour
     public void DisplayWeapon()
     {
         //drop anim like creatures TODO
+        if (hider!=null) StopCoroutine(hider);
         weaponFrame.transform.localScale = Vector3.one;
         weaponDamage.text = weapon.damage.ToString();
         weaponDurability.text = weapon.durability.ToString();
 
         weaponArt.sprite = board.cardObject.GetComponent<Card>().cardSprites[(int)weapon.card];
     }
-
+    Coroutine hider = null;
     public void DestroyWeapon()
     {
         weapon = null;
     }
-
+    
     public void HideWeapon()
+    { 
+        hider = StartCoroutine(wepHide());
+    }
+    IEnumerator wepHide()
     {
+        yield return Board.Wait(10);
         board.animationManager.LerpZoom(weaponFrame.gameObject, Vector3.zero, 10, 0.1f);
     }
-
     public void UpdateText(int hp=-1, int dmg = -1, int arm = -1)
     {
         int xHp = hp == -1 ? health : hp;
@@ -124,9 +151,8 @@ public class Hero : MonoBehaviour
 
     public void UpdateWeaponText(int dmg = -1, int dura = -1)
     {
-        if (weapon == null) return;
-        int xDura = dura == -1 ? weapon.durability : dura;
-        int xDmg = dmg == -1 ? weapon.damage : dmg;
+        int xDura = dura;
+        int xDmg = dmg;
 
         if (weaponDurability.text != xDura.ToString())
         {
@@ -136,6 +162,11 @@ public class Hero : MonoBehaviour
         {
             StartCoroutine(Creature.txtBounce(weaponDamage));
         }
+
+        weaponDurability.text = xDura.ToString();
+        weaponDamage.text = xDmg.ToString();
+
+        if (weapon == null) return;
 
         if (xDura < weapon.sentinel.baseHealth)
             weaponDurability.color = board.minionObject.GetComponent<Creature>().redText;
@@ -149,9 +180,6 @@ public class Hero : MonoBehaviour
             weaponDamage.color = board.minionObject.GetComponent<Creature>().greenText;
         else
             weaponDamage.color = board.minionObject.GetComponent<Creature>().baseText;
-
-        weaponDurability.text = xDura.ToString();
-        weaponDamage.text = xDmg.ToString();
     }
 
     public void Highlight(bool target=false)
@@ -191,7 +219,7 @@ public class Hero : MonoBehaviour
                 if (board.targetingHero == this)
                 {
                     //cancel by releasing on self
-                    board.EndTargeting();
+                    board.EndTargeting(true);
                     return;
                 }
                 board.TargetHero(this);
@@ -207,7 +235,7 @@ public class Hero : MonoBehaviour
             if (board.targetingHero == this)
             {
                 //cancel by clicking on self
-                board.EndTargeting();
+                board.EndTargeting(true);
                 return;
             }
 
