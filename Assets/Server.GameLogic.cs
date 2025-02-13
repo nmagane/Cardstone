@@ -247,7 +247,7 @@ public partial class Server
                 SilenceMinion(spell);
                 break;
             case Card.Cardname.Voodoo_Doctor:
-                Heal(spell, 2);
+                HealTarget(spell, 2);
                 break;
             case Card.Cardname.Soulfire:
                 Soulfire(spell);
@@ -278,6 +278,12 @@ public partial class Server
                 break;
             case Card.Cardname.Heroic_Strike:
                 Heroic_Strike(spell);
+                break;
+            case Card.Cardname.Deadly_Poison:
+                Deadly_Poison(spell);
+                break;
+            case Card.Cardname.Blade_Flurry:
+                Blade_Flurry(spell);
                 break;
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);

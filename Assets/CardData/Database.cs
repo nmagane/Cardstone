@@ -134,6 +134,12 @@ public partial class Database
 
             case Card.Cardname.Heroic_Strike:
                 return Heroic_Strike();
+                
+            case Card.Cardname.Deadly_Poison:
+                return Deadly_Poison();
+
+            case Card.Cardname.Blade_Flurry:
+                return Blade_Flurry();
 
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);

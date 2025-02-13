@@ -76,6 +76,8 @@ public partial class Board
         FriendlyHero,
         EnemyHero,
 
+        Weapon,
+
         DamagedMinion,
         HealthyMinion,
         Mech,

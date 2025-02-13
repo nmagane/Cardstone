@@ -42,6 +42,28 @@ next decks to implement:
 -addcard message to client for stuff like sap
 
 Next mechanic implementation:
+	
+= "Weapon target" spells like Deadly poison and Blade Flurry (can't be played without weapon)
+	
+= Player Armor
+
+= Stealth
+
+= Combo
+
+= Spell power
+
+= Secrets
+
+- turn indicator (end turn button color)
+- rope
+
+bug: destroying multiple minions together anim isnt smooth
+
+===============================================
+=====================DONE======================
+===============================================
+
 = Weapons & Player Attack
 	- class Weapon? have one in Player class and one in Hero? //done
 	- Swing messages and confirmations	 //done
@@ -50,21 +72,6 @@ Next mechanic implementation:
 	- weapon sheathe visuals //done
 	- weapon equip animation //done
 	- weapon hover tooltip //done
-	
-= "Weapon target" spells like Deadly poison and Blade Flurry (can't be played without weapon)
-	
-= Player Armor
-
-= Stealth
-
-= Secrets
-
-- turn indicator (end turn button color)
-- rope
-
-===============================================
-=====================DONE======================
-===============================================
 
 messageReceivedOrder should be an int. ushort is too small
 

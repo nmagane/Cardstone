@@ -97,7 +97,9 @@ public class Card : MonoBehaviour
         Crazed_Alchemist,
         Chillwind_Yeti,
         Dagger,
-        Heroic_Strike
+        Heroic_Strike,
+        Deadly_Poison,
+        Blade_Flurry
     }
 
     public enum Class
@@ -352,6 +354,12 @@ public class Card : MonoBehaviour
         {
             EndPlay();
             //TODO: Not your turn popup
+            return;
+        }
+
+        if (card.eligibleTargets==Board.EligibleTargets.Weapon && board.currHero.weapon==null)
+        {
+            EndPlay();
             return;
         }
 

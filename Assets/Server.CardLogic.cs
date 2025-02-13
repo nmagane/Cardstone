@@ -4,7 +4,7 @@ using UnityEngine;
 public partial class Server
 {
 
-    public void Heal(CastInfo spell, int heal)
+    public void HealTarget(CastInfo spell, int heal)
     {
         if (spell.isHero)
         {
@@ -14,9 +14,8 @@ public partial class Server
         }
         Minion minion = spell.GetTargetMinion();
         HealMinion(spell.match, minion, heal);
-        //TODO: TRIGGER ANIMATION
     }
-    public void Damage(CastInfo spell, int damage)
+    public void DamageTarget(CastInfo spell, int damage)
     {
         if (spell.isHero)
         {
@@ -26,7 +25,6 @@ public partial class Server
         }
         Minion minion = spell.GetTargetMinion();
         DamageMinion(spell.match, minion, damage);
-        //TODO: TRIGGER ANIMATION
 
     }
     public void Discard(CastInfo spell, int count = 1, bool enemyDiscard = false)
@@ -163,7 +161,7 @@ public partial class Server
 
         spell.isFriendly = true;
         spell.isHero = true;
-        Damage(spell, 3);
+        DamageTarget(spell, 3);
     }
 
     void Lifetap(CastInfo spell)
@@ -179,7 +177,7 @@ public partial class Server
 
         ConfirmAnimation(spell.match, spell.player, anim);
 
-        Damage(spell, 2);
+        DamageTarget(spell, 2);
         spell.match.ResolveTriggerQueue(ref spell);
         Draw(spell, 1);
     }
@@ -199,7 +197,7 @@ public partial class Server
 
         ConfirmAnimation(spell.match, spell.player, anim);
 
-        Damage(spell, 4);
+        DamageTarget(spell, 4);
         spell.match.ResolveTriggerQueue(ref spell);
         Discard(spell, 1);
     }
@@ -238,5 +236,23 @@ public partial class Server
     private void Heroic_Strike(CastInfo spell)
     {
         spell.player.AddAura(new Aura(Aura.Type.Damage, 4, true));
+    }
+    private void Deadly_Poison(CastInfo spell)
+    {
+        if (spell.player.weapon == null) return;
+        spell.player.weapon.AddAura(new Aura(Aura.Type.Damage, 2));
+    }
+    private void Blade_Flurry(CastInfo spell)
+    {
+        if (spell.player.weapon == null) return;
+        spell.player.weapon.DEAD = true;
+        int dmg = spell.player.weapon.damage;
+
+        MinionBoard b = spell.player.opponent.board;
+        foreach(Minion m in b)
+        {
+            DamageMinion(spell.match, m, dmg);
+        }
+        DamageFace(spell.match, spell.player.opponent, dmg);
     }
 }

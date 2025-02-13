@@ -92,6 +92,9 @@ public partial class Match
         players[0].RemoveTemporaryAuras();
         players[1].RemoveTemporaryAuras();
 
+        if (players[0].weapon!=null) players[0].weapon.RemoveTemporaryAuras();
+        if (players[1].weapon!=null) players[1].weapon.RemoveTemporaryAuras();
+
         ResolveTriggerQueue(ref spell);
     }
 
@@ -567,12 +570,12 @@ public partial class Match
             minion.RefreshForeignAuras();
         }
 
-
         //=====================================
         //player
         foreach (Player p in players)
         {
             p.RefreshForeignAuras();
+            if (p.weapon != null) p.weapon.RefreshForeignAuras();
         }
         //HAND CARD AURAS
         //=====================================
