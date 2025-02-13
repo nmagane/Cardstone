@@ -4801,6 +4801,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 291546836}
     m_Modifications:
+    - target: {fileID: 588236395604766097, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 773643968853852132, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1347480465045635269, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -4893,9 +4901,17 @@ PrefabInstance:
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[15].y
       value: 1.3620956
       objectReference: {fileID: 0}
+    - target: {fileID: 1694910332677552457, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1775170452512210478, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: m_Name
       value: HeroEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 1958049986736943678, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5465164441807936716, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: m_Name
@@ -4913,10 +4929,18 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: 1194144581
       objectReference: {fileID: 0}
+    - target: {fileID: 5999841447809215630, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6077507550258028750, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: -1391578826462515569, guid: 2c47b24953a7b6844913389d701d3204, type: 2}
+    - target: {fileID: 7671448487411066448, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8104312329991342393, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: board
       value: 

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6787899879142106940}
   - component: {fileID: 5320807951735829708}
   - component: {fileID: 7250200443538134910}
+  - component: {fileID: 697116481302684137}
   m_Layer: 0
   m_Name: WeaponDisplay
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1295764840299621089}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -4.375, y: -0.0625, z: 0.23}
-  m_LocalScale: {x: 0, y: 0, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5503404319159551889}
@@ -130,6 +131,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.125, y: 2.75}
   m_EdgeRadius: 0
+--- !u!114 &697116481302684137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1295764840299621089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26ded1f9c2c7f0349b39fae756d97ddf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 0}
+  offset: {x: 0, y: 0, z: 0}
+  enableCustomColor: 1
+  customColor: {r: 0.177, g: 0.177, b: 0.177, a: 0.5019608}
+  layerGap: 1
+  sortingLayer: shadow
+  elevation: 0
 --- !u!1 &1775170452512210478
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,7 +223,9 @@ MonoBehaviour:
   weaponDamage: {fileID: 5291704144250154042}
   weaponDurability: {fileID: 233212737874288075}
   weaponActive: 1
+  newWep: 0
   skull: {fileID: 6723630172251301611}
+  weaponShadow: {fileID: 697116481302684137}
 --- !u!60 &1671318675257879375
 PolygonCollider2D:
   m_ObjectHideFlags: 0

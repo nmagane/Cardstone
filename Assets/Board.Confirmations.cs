@@ -113,7 +113,7 @@ public partial class Board
     {
         //return;
         currHand.RemoveAt(card.index);
-        currHand.RemoveCard(card,Hand.RemoveCardType.Play,card.card,pos);
+        currHand.RemoveCard(card,Hand.RemoveCardType.Play,card.card,pos,-1,card.WEAPON);
         if (card.MINION)
         {
             int p = pos;
@@ -195,10 +195,12 @@ public partial class Board
     {
         if (friendlySide)
         {
+            currHero.newWep = false;
             currHero.DestroyWeapon();
         }
         else
         {
+            enemyHero.newWep = false;
             enemyHero.DestroyWeapon();
         }
 

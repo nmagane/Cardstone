@@ -159,8 +159,7 @@ public partial class Board
                 {
                     m.creature.Highlight(true);
 
-                    //bounce taunters (experimental)
-                    animationManager.LerpZoom(enemyMinions.minionObjects[m].gameObject, enemyMinions.minionObjects[m].transform.localScale, 5, 0.2f);
+                    //todo: bounce taunters?
                 }
             }
         }

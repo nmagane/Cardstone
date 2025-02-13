@@ -297,7 +297,25 @@ public partial class AnimationManager : MonoBehaviour
     {
         StartCoroutine(_dropper(c, frames));
     }
-    
+    public void BounceZoom(GameObject g, float bounce)
+    {
+        StartCoroutine(bounceZoom(g, bounce));
+    }
+    IEnumerator bounceZoom(GameObject g, float bounce)
+    {
+        for (int i = 0;i<3;i++)
+        {
+            if (g == null) yield break;
+            g.transform.localScale += Vector3.one * bounce / 3f;
+            yield return Wait(1);
+        }
+        for (int i = 0;i<3;i++)
+        {
+            if (g == null) yield break;
+            g.transform.localScale += Vector3.one * -bounce / 3f;
+            yield return Wait(1);
+        }
+    }
     public void DelayedDrop(Creature c, Vector3 loc, int delay, MinionBoard b)
     {
         StartCoroutine(_delayedDrop(c, loc, delay, b));
@@ -308,6 +326,15 @@ public partial class AnimationManager : MonoBehaviour
         if (c == null) yield break;
         c.transform.localScale = Vector3.one * 1.15f;
         b.DropCreature(c, loc, 0);
+    }
+    public void DelayedDropWeapon(int delay, Hero b)
+    {
+        StartCoroutine(_delayedDropWep(delay, b));
+    }
+    IEnumerator _delayedDropWep(int delay,Hero b)
+    {
+        yield return Wait(delay);
+        b.DropWeapon(0);
     }
     IEnumerator _dropper(Creature c, float f)
     {

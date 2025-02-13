@@ -12,7 +12,6 @@ public class Hero : MonoBehaviour
         isElevated = elevated;
         string x = elevated ? "creatureElevated" : "top1";
         string s = elevated ? "shadowCreatureElevated" : "shadow";
-        shadow.sortingLayer = s;
 
         spriteRenderer.sortingLayerName = x;
         skull.sortingLayerName = x;
@@ -20,6 +19,9 @@ public class Hero : MonoBehaviour
         damageSpriteRenderer.sortingLayerName = x;
         damageText.GetComponent<MeshRenderer>().sortingLayerName = x;
         hpText.GetComponent<MeshRenderer>().sortingLayerName = x;
+
+        shadow.sortingLayer = s;
+        shadow.spriteRenderer.sortingLayerName = s;
     }
 
     public Board board;
@@ -111,7 +113,7 @@ public class Hero : MonoBehaviour
         weaponDamageSprite.enabled = false;
         weaponArt.enabled = true; 
         board.animationManager.LerpZoom(weaponDamage.gameObject, Vector3.one, 5, 0.2f);
-
+        if (weaponFrame.transform.localScale !=Vector3.zero) board.animationManager.BounceZoom(weaponFrame.gameObject, 0.1f);
         //board.animationManager.LerpZoom(damageSpriteRenderer.gameObject, Vector3.zero, 10);
     }
 
@@ -130,19 +132,23 @@ public class Hero : MonoBehaviour
 
     public void DisplayWeapon()
     {
+        newWep = true;
         if (weapon!=null)
         {
-            HideWeapon();
+        //    HideWeapon();
         }
-        //drop anim like creatures TODO
+        
         if (hider!=null) StopCoroutine(hider);
-        weaponFrame.transform.localScale = Vector3.one;
         weaponDamage.text = weapon.damage.ToString();
         weaponDurability.text = weapon.durability.ToString();
 
         CheckTriggers();
         weaponArt.sprite = board.cardObject.GetComponent<Card>().cardSprites[(int)weapon.card];
+
+        DropWeapon(8);
+        //weaponFrame.transform.localScale = Vector3.one;
     }
+    public bool newWep = false;
     Coroutine hider = null;
     public void DestroyWeapon()
     {
@@ -151,6 +157,11 @@ public class Hero : MonoBehaviour
     
     public void HideWeapon()
     {
+        if (newWep)
+        {
+            newWep = false;
+            return;
+        }
         if (weaponDeathrattleSprite.enabled) StartCoroutine(board.animationManager.deathrattleAnimWeapon(this));
         hider = StartCoroutine(wepHide());
     }
@@ -363,5 +374,36 @@ public class Hero : MonoBehaviour
     public Hero()
     {
 
+    }
+
+    public void DropWeapon(int delay = 10)
+    {
+        Vector3 framePos = new Vector3(-4.375f, -0.0625f, 0.230000004f);
+        weaponFrame.transform.localPosition = framePos + new Vector3(0, 3);
+        //c.shadow.elevation = 2;
+        if (delay > 0)
+        {
+            weaponFrame.transform.localScale = Vector3.zero;
+            board.animationManager.DelayedDropWeapon(delay, this);
+            return;
+        }
+        //if (board.playerID == 100) Debug.Log("Dropping minion " + c.minion.card);
+        weaponFrame.transform.localScale = Vector3.one * 1.15f;
+        int F = 10;
+        board.animationManager.LerpTo(weaponFrame.gameObject, framePos, F);
+        if (dropper != null) StopCoroutine(dropper);
+        dropper = StartCoroutine(_dropper(F));
+        board.animationManager.LerpZoom(weaponFrame.gameObject, Vector3.one, F, 0);
+    }
+    public DropShadow weaponShadow;
+    Coroutine dropper = null;
+    IEnumerator _dropper(float f)
+    {
+        float e = weaponShadow.elevation;
+        for (float i = 0; i < f; i++)
+        {
+            weaponShadow.elevation -= e / f;
+            yield return Board.Wait(1);
+        }
     }
 }

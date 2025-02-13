@@ -115,7 +115,7 @@ public class Hand
         }
         return c;
     }
-    public void RemoveCard(HandCard card, RemoveCardType type = RemoveCardType.Play, Card.Cardname name = Card.Cardname.Coin, int pos = -1, int manaCost=-1)
+    public void RemoveCard(HandCard card, RemoveCardType type = RemoveCardType.Play, Card.Cardname name = Card.Cardname.Coin, int pos = -1, int manaCost = -1, bool weapon = false)
     {
         Card c = cardObjects[card];
         cardObjects.Remove(card);
@@ -125,26 +125,50 @@ public class Hand
         if (pos != -1)
         {
             Vector3 p;
-            float count = enemyHand? board.enemyMinions.minionObjects.Count+1 : board.currMinions.minionObjects.Count + 1;
+            float count = enemyHand ? board.enemyMinions.minionObjects.Count + 1 : board.currMinions.minionObjects.Count + 1;
             float dist = enemyHand ? board.enemyMinions.dist : board.currMinions.dist;
             float offset = -((count - 1) / 2f * dist);
 
-            if (pos >= 7) pos = (int)count-1;
+            if (pos >= 7) pos = (int)count - 1;
 
             if (enemyHand)
             {
                 c.SetElevated(true);
                 c.transform.localScale = Vector3.one * 1.25f;
             }
-            p = new Vector3(offset + dist * (pos), 3f + (enemyHand ? 2.5f: -2.25f));
+            p = new Vector3(offset + dist * (pos), 3f + (enemyHand ? 2.5f : -2.25f));
 
             if (c.hidden == false)
                 board.animationManager.PlayFade(c, p);
             else
                 board.DestroyObject(c);
         }
+        else if (weapon)
+        {
+            if (enemyHand)
+            {
+                c.SetElevated(true);
+                c.transform.localScale = Vector3.one * 1.25f;
+            }
+            Vector3 wep = enemyHand ? board.enemyHero.weaponFrame.transform.localPosition : board.currHero.weaponFrame.transform.localPosition;
+            c.transform.parent = enemyHand ? board.enemyHero.weaponFrame.transform.parent : board.currHero.weaponFrame.transform.parent;
+            if (c.hidden == false)
+                board.animationManager.PlayFade(c, wep + new Vector3(0, 2f));
+            else
+                board.DestroyObject(c);
+        }
         else
+        {
+            if (type!=RemoveCardType.Discard)
+            {
+                if (enemyHand)
+                {
+                    c.SetElevated(true);
+                    c.transform.localScale = Vector3.one * 1.25f;
+                }
+            }
             FadeCard(c, enemyHand == false, type == RemoveCardType.Discard, name, manaCost);
+        }
 
         OrderCards();
     }

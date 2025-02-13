@@ -242,7 +242,8 @@ public partial class Board
     Coroutine PlayCardVisual(VisualInfo message)
     {
         Hand h = message.isFriendly ? currHand : enemyHand;
-        h.RemoveCard(message.handCards[0], Hand.RemoveCardType.Play, message.names[0],message.index);
+        bool wep = Database.GetCardData(message.names[0]).WEAPON;
+        h.RemoveCard(message.handCards[0], Hand.RemoveCardType.Play, message.names[0],message.index,-1,wep);
 
         if (message.isFriendly == false)
         {
