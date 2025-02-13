@@ -257,14 +257,14 @@ public partial class Board
 
         return null;
     }
-    public Coroutine ConfirmAttackMinion(bool allyAttack, int attackerIndex, int targetIndex, bool canAttack)
+    public Coroutine ConfirmAttackMinion(bool allyAttack, int attackerIndex, int targetIndex, bool canAttack, bool friendlyFire)
     {
         
         Minion attacker = allyAttack ? currMinions[attackerIndex] : enemyMinions[attackerIndex];
-        Minion target = allyAttack ? enemyMinions[targetIndex] : currMinions[targetIndex];
-
         Creature atkCreature = allyAttack ? currMinions.minionObjects[attacker] : enemyMinions.minionObjects[attacker];
-        Creature tarCreature = allyAttack ? enemyMinions.minionObjects[target] : currMinions.minionObjects[target];
+
+        Minion target = allyAttack && !friendlyFire ? enemyMinions[targetIndex] : currMinions[targetIndex];
+        Creature tarCreature = allyAttack && !friendlyFire ? enemyMinions.minionObjects[target] : currMinions.minionObjects[target];
 
         if (allyAttack)
         {
@@ -301,12 +301,11 @@ public partial class Board
         CheckHighlights();
         return null;
     }
-    public Coroutine ConfirmAttackFace(bool allyAttack, int attackerIndex, bool canAttack)
+    public Coroutine ConfirmAttackFace(bool allyAttack, int attackerIndex, bool canAttack, bool friendlyFire)
     {
-
         Minion attacker = allyAttack ? currMinions[attackerIndex] : enemyMinions[attackerIndex];
         Creature atkCreature = allyAttack ? currMinions.minionObjects[attacker] : enemyMinions.minionObjects[attacker];
-        Hero tar = allyAttack ? enemyHero : currHero;
+        Hero tar = allyAttack && !friendlyFire ? enemyHero : currHero;
         if (allyAttack)
         {
             attacker.canAttack = canAttack;
@@ -320,6 +319,43 @@ public partial class Board
         QueueAnimation(anim);
 
         return null;
+    }
+
+    public void ConfirmPreSwingMinion(bool allyAttack, int targetIndex)
+    {
+        Hero attacker = allyAttack ? currHero : enemyHero;
+        Minion target = allyAttack ? enemyMinions[targetIndex] : currMinions[targetIndex];
+
+        Creature tarCreature = allyAttack ? enemyMinions.minionObjects[target] : currMinions.minionObjects[target];
+
+        CheckHighlights();
+
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.ConfirmPreSwingMinion;
+        anim.isFriendly = allyAttack;
+        anim.vectors.Add(tarCreature.transform.localPosition);
+
+        QueueAnimation(anim);
+    }
+    public void ConfirmSwingMinion(bool allyAttack, int targetIndex,bool canAttack, bool friendlyFire=false)
+    {
+        Hero attacker = allyAttack ? currHero : enemyHero;
+
+        Minion target = allyAttack && !friendlyFire ? enemyMinions[targetIndex] : currMinions[targetIndex];
+        Creature tarCreature = allyAttack && !friendlyFire ? enemyMinions.minionObjects[target] : currMinions.minionObjects[target];
+        
+        if (allyAttack)
+        {
+            attacker.canAttack = canAttack;
+        }
+        CheckHighlights();
+
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.ConfirmSwingMinion;
+        anim.isFriendly = allyAttack;
+        anim.vectors.Add(tarCreature.transform.localPosition);
+
+        QueueAnimation(anim);
     }
 
     public Coroutine ConfirmBattlecry(bool friendly, int index)

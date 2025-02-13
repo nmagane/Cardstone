@@ -86,6 +86,9 @@ public partial class Server
         mOwner.AddBool(canAttack);
         mOpp.AddBool(canAttack);
 
+        mOwner.AddBool(friendlyFire);
+        mOpp.AddBool(friendlyFire);
+
         SendMessage(mOwner, match.currPlayer);
         SendMessage(mOpp, match.enemyPlayer);
     }
@@ -103,6 +106,9 @@ public partial class Server
         mOwner.AddBool(canAttack);
         mOpp.AddBool(canAttack);
 
+        mOwner.AddBool(friendlyFire);
+        mOpp.AddBool(friendlyFire);
+
         SendMessage(mOwner, match.currPlayer);
         SendMessage(mOpp, match.enemyPlayer);
     }
@@ -111,6 +117,18 @@ public partial class Server
         MessageType phase = PREATTACK ? MessageType.ConfirmPreSwingMinion : MessageType.ConfirmSwingMinion;
         CustomMessage mOwner = CreateMessage(phase);
         CustomMessage mOpp = CreateMessage(phase);
+
+        mOwner.AddBool(true);
+        mOpp.AddBool(false);
+
+        mOwner.AddInt(targetInd);
+        mOpp.AddInt(targetInd);
+
+        mOwner.AddBool(canAttack);
+        mOpp.AddBool(canAttack);
+
+        mOwner.AddBool(friendlyFire);
+        mOpp.AddBool(friendlyFire);
 
         SendMessage(mOwner, match.currPlayer);
         SendMessage(mOpp, match.enemyPlayer);

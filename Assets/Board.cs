@@ -271,7 +271,8 @@ public partial class Board : MonoBehaviour
                 int minionAttackerIndex = message.GetInt();
                 int minionTargetIndex = message.GetInt();
                 bool minionCanAttack = message.GetBool();
-                animation = ConfirmAttackMinion(minionAllyAttack, minionAttackerIndex, minionTargetIndex, minionCanAttack);
+                bool minionFriendlyFire = message.GetBool();
+                animation = ConfirmAttackMinion(minionAllyAttack, minionAttackerIndex, minionTargetIndex, minionCanAttack, minionFriendlyFire);
                 break;
             case Server.MessageType.ConfirmPreAttackFace:
                 bool preFaceAllyAttack = message.GetBool();
@@ -282,12 +283,21 @@ public partial class Board : MonoBehaviour
                 bool faceAllyAttack = message.GetBool();
                 int faceAttackerIndex = message.GetInt();
                 bool faceAttackCanAttack = message.GetBool();
-                animation = ConfirmAttackFace(faceAllyAttack, faceAttackerIndex, faceAttackCanAttack);
+                bool faceAttackFriendlyFire = message.GetBool();
+                animation = ConfirmAttackFace(faceAllyAttack, faceAttackerIndex, faceAttackCanAttack, faceAttackFriendlyFire);
                 break;
 
             case Server.MessageType.ConfirmPreSwingMinion:
+                bool preSwingMinionAlly = message.GetBool();
+                int preSwingMinionTargetIndex = message.GetInt();
+                ConfirmPreSwingMinion(preSwingMinionAlly, preSwingMinionTargetIndex);
                 break;
             case Server.MessageType.ConfirmSwingMinion:
+                bool swingMinionAlly = message.GetBool();
+                int swingMinionTargetIndex = message.GetInt();
+                bool swingMinionCanAttack = message.GetBool();
+                bool swingMinionFriendlyFire = message.GetBool();
+                ConfirmSwingMinion(swingMinionAlly,swingMinionTargetIndex,swingMinionCanAttack,swingMinionFriendlyFire);
                 break;
 
             case Server.MessageType.ConfirmPreSwingFace:
@@ -308,9 +318,11 @@ public partial class Board : MonoBehaviour
                 int UpdateHeroMaxMana = message.GetInt();
                 int UpdateHeroDamage = message.GetInt();
                 int UpdateHeroArmor = message.GetInt();
+                int UpdateHeroWeaponDamage = message.GetInt();
+                int UpdateHeroWeaponDurability = message.GetInt();
                 bool UpdateHeroDamaged = message.GetBool();
                 bool UpdateHeroHealed = message.GetBool();
-                UpdateHero(UpdateHeroHP,UpdateHeroFriendly, UpdateHeroDeckCount,UpdateHeroCurrMana,UpdateHeroMaxMana, UpdateHeroDamage, UpdateHeroArmor,UpdateHeroDamaged, UpdateHeroHealed);
+                UpdateHero(UpdateHeroHP,UpdateHeroFriendly, UpdateHeroDeckCount,UpdateHeroCurrMana,UpdateHeroMaxMana, UpdateHeroDamage, UpdateHeroArmor,UpdateHeroWeaponDamage,UpdateHeroWeaponDurability,UpdateHeroDamaged, UpdateHeroHealed);
                 break;
             case Server.MessageType.AddAura:
             case Server.MessageType.RemoveAura:
@@ -538,7 +550,7 @@ public partial class Board : MonoBehaviour
         //todo: splash damage/heal
         
     }
-    public void UpdateHero(int hp, bool friendly, int deckCount, int currMana,int maxMana, int damage, int armor, bool damaged, bool healed)
+    public void UpdateHero(int hp, bool friendly, int deckCount, int currMana,int maxMana, int damage, int armor,int weaponDamage, int weaponDurability, bool damaged, bool healed)
     {
         int diff = 0;
 
@@ -552,6 +564,12 @@ public partial class Board : MonoBehaviour
             mana.SetMax(maxMana);
             currHero.damage = damage;
             currHero.armor = armor;
+
+            if (currHero.weapon!=null)
+            {
+                currHero.weapon.damage = weaponDamage;
+                currHero.weapon.durability = weaponDurability;
+            }
         }
         else
         {
@@ -563,6 +581,12 @@ public partial class Board : MonoBehaviour
             enemyMana.SetMax(maxMana);
             enemyHero.damage = damage;
             enemyHero.armor = armor;
+
+            if (enemyHero.weapon != null)
+            {
+                enemyHero.weapon.damage = weaponDamage;
+                enemyHero.weapon.durability = weaponDurability;
+            }
         }
 
         VisualInfo anim = new VisualInfo();
@@ -574,6 +598,8 @@ public partial class Board : MonoBehaviour
         anim.ints.Add(maxMana);
         anim.ints.Add(damage);
         anim.ints.Add(armor);
+        anim.ints.Add(weaponDamage);
+        anim.ints.Add(weaponDurability);
         if (damaged || healed)
         {
             anim.trigger = true;

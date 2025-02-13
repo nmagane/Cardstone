@@ -208,13 +208,21 @@ public partial class Match
         WinCheck();
     }
 
-    public void StartSequenceEquipWeapon()
+    public void StartSequenceEquipWeapon(CastInfo spell)
     {
         //TODO: Equipping Token weapon from non-play sources
+        Weapon weapon = server.EquipWeapon(this, spell.player, spell.card.card);
+        StartPhase(Phase.OnEquipWeapon, ref spell);
+
+        StartPhase(Phase.AfterEquipWeapon, ref spell);
+
+        WinCheck();
     }
     public void StartSequenceSwingMinion(CastInfo spell)
     {
         StartPhase(Phase.BeforeSwingMinion, ref spell); if (WinCheck()) return;
+
+        if (WinCheck()) return;
 
         bool successfulAttack = server.ExecuteAttack(ref spell);
         ResolveTriggerQueue(ref spell);
@@ -224,9 +232,13 @@ public partial class Match
             return;
         }
 
+        //Consume weapon durability after attack.
+        spell.player.ConsumeDurability();
+
         StartPhase(Phase.AfterSwingMinion, ref spell);
         WinCheck();
     }
+
     public void StartSequencePlayMinion(CastInfo spell)
     {
         Minion minion = server.SummonMinion(this, spell.player, spell.card.card,MinionBoard.MinionSource.Play, spell.position);

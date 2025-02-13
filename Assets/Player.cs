@@ -67,6 +67,12 @@ public class Player
     public List<Aura> auras => sentinel.auras;
     public List<Trigger> triggers => sentinel.triggers;
 
+    public void ConsumeDurability()
+    {
+        if (weapon == null) return;
+        weapon.durability--;
+    }
+
     public void AddAura(Aura a) => sentinel.AddAura(a);
     public void RemoveAura(Aura a) => sentinel.RemoveAura(a);
     public void RemoveAura(Aura.Type t) => sentinel.RemoveAura(t);

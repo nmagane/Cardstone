@@ -309,22 +309,26 @@ public partial class Board
     }
     Coroutine UpdateHeroVisual(VisualInfo message)
     {
+
+        Hero hero = message.isFriendly ? currHero : enemyHero;
         if (message.isFriendly)
         {
-            currHero.UpdateText(message.ints[0], message.ints[4], message.ints[5]);
+            hero.UpdateText(message.ints[0], message.ints[4], message.ints[5]);
             deck.UpdateDisplay(message.ints[1]);
             mana.UpdateDisplay(message.ints[2], message.ints[3]);
         }
         else
         {
-            enemyHero.UpdateText(message.ints[0], message.ints[4], message.ints[5]);
+            hero.UpdateText(message.ints[0], message.ints[4], message.ints[5]);
             enemyDeck.UpdateDisplay(message.ints[1]);
             enemyMana.UpdateDisplay(message.ints[2], message.ints[3]);
         }
 
+        if (hero.weapon!=null) hero.UpdateWeaponText(message.ints[6], message.ints[7]);
+
         if (message.trigger)
         {
-            CreateSplash(message.isFriendly ? currHero : enemyHero, message.damage);
+            CreateSplash(hero, message.damage);
         }
         return null;
     }

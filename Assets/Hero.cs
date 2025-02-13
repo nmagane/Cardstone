@@ -78,8 +78,8 @@ public class Hero : MonoBehaviour
     public void UpdateText(int hp=-1, int dmg = -1, int arm = -1)
     {
         int xHp = hp == -1 ? health : hp;
-        int xDmg = hp == -1 ? damage : dmg;
-        int xArmor = hp == -1 ? armor : arm;
+        int xDmg = dmg == -1 ? damage : dmg;
+        int xArmor = arm == -1 ? armor : arm;
 
         if (hpText.text!= xHp.ToString())
         {
@@ -111,6 +111,38 @@ public class Hero : MonoBehaviour
         {
             board.animationManager.LerpZoom(damageSpriteRenderer.gameObject, Vector3.one, 10, 0.1f);
         }
+    }
+
+    public void UpdateWeaponText(int dmg = -1, int dura = -1)
+    {
+        if (weapon == null) return;
+        int xDura = dura == -1 ? weapon.durability : dura;
+        int xDmg = dmg == -1 ? weapon.damage : dmg;
+
+        if (weaponDurability.text != xDura.ToString())
+        {
+            StartCoroutine(Creature.txtBounce(weaponDurability));
+        }
+        if (weaponDamage.text != xDmg.ToString())
+        {
+            StartCoroutine(Creature.txtBounce(weaponDamage));
+        }
+
+        if (xDura < weapon.sentinel.baseHealth)
+            weaponDurability.color = board.minionObject.GetComponent<Creature>().redText;
+        else if (xDura > weapon.sentinel.baseHealth)
+            weaponDurability.color = board.minionObject.GetComponent<Creature>().greenText;
+        else
+            weaponDurability.color = board.minionObject.GetComponent<Creature>().baseText;
+
+
+        if (xDmg > weapon.sentinel.baseDamage)
+            weaponDamage.color = board.minionObject.GetComponent<Creature>().greenText;
+        else
+            weaponDamage.color = board.minionObject.GetComponent<Creature>().baseText;
+
+        weaponDurability.text = xDura.ToString();
+        weaponDamage.text = xDmg.ToString();
     }
 
     public void Highlight(bool target=false)

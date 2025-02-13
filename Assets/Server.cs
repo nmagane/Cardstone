@@ -740,7 +740,6 @@ public partial class Server : MonoBehaviour
     }
     public void SwingMinion(ulong matchID, int clientID, ulong playerID, int targetInd)
     {
-        Debug.Log("swing min");
         if (currentMatches.ContainsKey(matchID) == false) return;
         Match match = currentMatches[matchID];
 
@@ -753,7 +752,6 @@ public partial class Server : MonoBehaviour
         Minion target = match.enemyPlayer.board[targetInd];
         if (ValidAttackMinion(match, -10, targetInd) == false) return;
 
-        Debug.Log("swing min0");
         AttackInfo attackInfo = new AttackInfo(match.currPlayer, null, target, true, false, false);
         CastInfo attackAction = new CastInfo(match, attackInfo);
 
@@ -911,6 +909,24 @@ public partial class Server : MonoBehaviour
 
         messageOpponent.AddInt(player.damage);
         messageOpponent.AddInt(player.armor);
+
+        if (player.weapon!=null)
+        {
+            messageOwner.AddInt(player.weapon.damage);
+            messageOpponent.AddInt(player.weapon.damage);
+
+            messageOwner.AddInt(player.weapon.durability);
+            messageOpponent.AddInt(player.weapon.durability);
+
+        }
+        else
+        {
+            messageOwner.AddInt(-1);
+            messageOpponent.AddInt(-1);
+
+            messageOwner.AddInt(-1);
+            messageOpponent.AddInt(-1);
+        }
 
         messageOwner.AddBool(damaged);
         messageOpponent.AddBool(damaged);
