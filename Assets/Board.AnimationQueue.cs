@@ -41,7 +41,7 @@ public partial class Board
     IEnumerator ExecuteAnimationQueue()
     {
         exec = true;
-        yield return null;
+        //yield return null;
         while (visualMessageQueue.Count>0)
         {
             VisualInfo info = visualMessageQueue.Dequeue();
@@ -229,21 +229,39 @@ public partial class Board
     }
     Coroutine DestroyMinionVisual(VisualInfo message)
     {
-        MinionBoard board = message.isFriendly ? currMinions : enemyMinions;
-        bool chain = false;
-        if (visualMessageQueue.Count == 0)
-        {
-            chain = false;
-        }
-        else
-        {
-            if (visualMessageQueue.Peek().type == Server.MessageType.DestroyMinion) chain = true;
-        }
+        destroyChainQueue.Enqueue(message);
+        bool going = destroying;
+        if (!going) StartCoroutine(DestroyChain());
 
-        board.RemoveCreature(message.minions[0], chain);
+        if (visualMessageQueue.Count>0)
+        {
+            if (visualMessageQueue.Peek().type!=Server.MessageType.DestroyMinion)
+            {
+                return StartCoroutine(Wait(15));
+            }
+        }
+        return null;
+    }
 
-        if (chain) return null;
-        else return StartCoroutine(Wait(15));
+    Queue<VisualInfo> destroyChainQueue = new Queue<VisualInfo>();
+    bool destroying = false;
+    IEnumerator DestroyChain()
+    {
+        destroying = true;
+        yield return null; //One frame delay to fill up the destroy queue
+        while (destroyChainQueue.Count>1)
+        {
+            VisualInfo message = destroyChainQueue.Dequeue();
+            MinionBoard board = message.isFriendly ? currMinions : enemyMinions;
+            board.RemoveCreature(message.minions[0], true);
+        }
+        if (destroyChainQueue.Count ==1)
+        {
+            VisualInfo message = destroyChainQueue.Dequeue();
+            MinionBoard board = message.isFriendly ? currMinions : enemyMinions;
+            board.RemoveCreature(message.minions[0], false);
+        }
+        destroying = false;
     }
 
     Coroutine PlayCardVisual(VisualInfo message)

@@ -43,8 +43,6 @@ next decks to implement:
 
 Next mechanic implementation:
 	
-= "Weapon target" spells like Deadly poison and Blade Flurry (can't be played without weapon)
-	
 = Player Armor
 
 = Stealth
@@ -58,11 +56,15 @@ Next mechanic implementation:
 - turn indicator (end turn button color)
 - rope
 
-bug: destroying multiple minions together anim isnt smooth
-
 ===============================================
 =====================DONE======================
 ===============================================
+
+-i dont like the 1 frame anim delay.. maybe this isnt needed if theres an animation before destroy messages? maybe we can make destroy messages start a new coroutine queue?
+
+= "Weapon target" spells like Deadly poison and Blade Flurry (can't be played without weapon)
+	
+bug: destroying multiple minions together anim isnt smooth
 
 = Weapons & Player Attack
 	- class Weapon? have one in Player class and one in Hero? //done
