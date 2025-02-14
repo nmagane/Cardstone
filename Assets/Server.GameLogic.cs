@@ -74,6 +74,9 @@ public partial class Server
             match.server.RemoveAura(match,minion,minion.FindAura(Aura.Type.Shield));
             return;
         }
+
+        if (minion.HasAura(Aura.Type.Immune)) return;
+
         minion.health -= damage;
 
         match.TriggerMinion(Trigger.Type.OnDamageTaken,minion);
@@ -86,6 +89,19 @@ public partial class Server
 
     public void DamageFace(Match match, Player target, int damage)
     {
+        if (target.health + target.armor <= damage)
+        {
+            match.AddTrigger(Trigger.Type.OnLethalFaceDamage, null, target);
+            CastInfo c = new CastInfo();
+            match.ResolveTriggerQueue(ref c);
+        }
+
+        if (target.HasAura(Aura.Type.Immune)) return;
+
+        int startingArmor = target.armor;
+        target.armor = Mathf.Max(0, target.armor - damage);
+        damage -= startingArmor;
+
         target.health -= damage;
 
         match.AddTrigger(Trigger.Type.OnFaceDamage, null, target);
@@ -284,6 +300,9 @@ public partial class Server
                 break;
             case Card.Cardname.Blade_Flurry:
                 Blade_Flurry(spell);
+                break;
+            case Card.Cardname.Armor_Up:
+                Armor_Up(spell);
                 break;
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);

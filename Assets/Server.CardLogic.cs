@@ -255,4 +255,8 @@ public partial class Server
         }
         DamageFace(spell.match, spell.player.opponent, dmg);
     }
+    private void Armor_Up(CastInfo spell)
+    {
+        spell.player.armor += 2;
+    }
 }

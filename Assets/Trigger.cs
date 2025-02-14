@@ -64,7 +64,8 @@ public class Trigger
         Deathrattle,
         OnMinionDeath,
 
-        OnWeaponDeath,
+        OnWeaponDeath, 
+        OnLethalFaceDamage
     }
 
     public enum Ability

@@ -345,6 +345,15 @@ public partial class Match
         {
             triggerBuffer.AddRange(minion.CheckTriggers(type, p1Side, spell));
         }
+        triggerBuffer.AddRange(players[0].CheckTriggers(type, p0Side, spell));
+        triggerBuffer.AddRange(players[1].CheckTriggers(type, p1Side, spell));
+
+        if (players[0].weapon != null)
+            triggerBuffer.AddRange(players[0].weapon.CheckTriggers(type, p0Side, spell));
+
+        if (players[1].weapon != null)
+            triggerBuffer.AddRange(players[1].weapon.CheckTriggers(type, p1Side, spell));
+
     }
     public void AddTrigger(Trigger.Type type, CastInfo spell = null, Player source = null)
     {
@@ -363,6 +372,15 @@ public partial class Match
         {
             triggerBuffer.AddRange(minion.CheckTriggers(type, p1Side, spell));
         }
+        triggerBuffer.AddRange(players[0].CheckTriggers(type, p0Side, spell));
+        triggerBuffer.AddRange(players[1].CheckTriggers(type, p1Side, spell));
+
+        if (players[0].weapon != null)
+            triggerBuffer.AddRange(players[0].weapon.CheckTriggers(type, p0Side, spell));
+
+        if (players[1].weapon != null)
+            triggerBuffer.AddRange(players[1].weapon.CheckTriggers(type, p1Side, spell));
+
     }
     public CastInfo StartPhase(Phase phase, ref CastInfo spell)
     {
@@ -370,7 +388,7 @@ public partial class Match
         List<Minion> triggeredMinions = new List<Minion>();
 
         //todo: check secrets for triggers
-        //todo: make this a call to addtrigger(type,player)? ^func above this
+        //todo: make this whole function a call to addtrigger(type,player)? ^func above this? idk
         Trigger.Side p0Side = spell.player == players[0] ? Trigger.Side.Friendly : Trigger.Side.Enemy;
         Trigger.Side p1Side = spell.player == players[1] ? Trigger.Side.Friendly : Trigger.Side.Enemy;
 

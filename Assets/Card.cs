@@ -99,7 +99,8 @@ public class Card : MonoBehaviour
         Dagger,
         Heroic_Strike,
         Deadly_Poison,
-        Blade_Flurry
+        Blade_Flurry,
+        Armor_Up
     }
 
     public enum Class

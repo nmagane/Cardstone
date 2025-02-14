@@ -15,6 +15,7 @@ public class Aura
         Windfury,
         NoAttack,
         Silence,
+        Immune,
 
         SetHealth,
         SetDamage,

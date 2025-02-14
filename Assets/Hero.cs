@@ -17,8 +17,10 @@ public class Hero : MonoBehaviour
         skull.sortingLayerName = x;
         highlight.sortingLayerName = x;
         damageSpriteRenderer.sortingLayerName = x;
+        armorSpriteRenderer.sortingLayerName = x;
         damageText.GetComponent<MeshRenderer>().sortingLayerName = x;
         hpText.GetComponent<MeshRenderer>().sortingLayerName = x;
+        armorText.GetComponent<MeshRenderer>().sortingLayerName = x;
 
         shadow.sortingLayer = s;
         shadow.spriteRenderer.sortingLayerName = s;
@@ -48,6 +50,7 @@ public class Hero : MonoBehaviour
 
     public SpriteRenderer spriteRenderer;
     public SpriteRenderer damageSpriteRenderer;
+    public SpriteRenderer armorSpriteRenderer;
 
     public SpriteRenderer shadowSpriteRenderer;
     public DropShadow shadow;
@@ -66,6 +69,7 @@ public class Hero : MonoBehaviour
 
     public TMP_Text hpText;
     public TMP_Text damageText;
+    public TMP_Text armorText;
 
     public SpriteRenderer highlight;
 
@@ -184,14 +188,15 @@ public class Hero : MonoBehaviour
         {
             StartCoroutine(Creature.txtBounce(damageText));
         }
-        /*
+        
         if (armorText.text!= xArmor.ToString())
         {
-            StartCoroutineCreature.txtBounce(armorText) );
+            StartCoroutine(Creature.txtBounce(armorText));
         }
-        */
+        
         hpText.text = xHp.ToString();
         damageText.text = xDmg.ToString();
+        armorText.text = xArmor.ToString();
 
         if (hp < maxHealth) 
             hpText.color = board.minionObject.GetComponent<Creature>().redText;
@@ -208,6 +213,15 @@ public class Hero : MonoBehaviour
             {
                 board.animationManager.LerpZoom(damageSpriteRenderer.gameObject, Vector3.one, 5, 0.2f);
             }
+        }
+
+        if (xArmor <= 0)
+        {
+            board.animationManager.LerpZoom(armorSpriteRenderer.gameObject, Vector3.zero, 5);
+        }
+        else
+        {
+            board.animationManager.LerpZoom(armorSpriteRenderer.gameObject, Vector3.one, 5, 0.2f);
         }
     }
 

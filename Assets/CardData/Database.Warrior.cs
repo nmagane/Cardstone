@@ -16,4 +16,19 @@
         c.TARGETED = false;
         return c;
     }
+    static CardInfo Armor_Up()
+    {
+        CardInfo c = new();
+
+        c.name = "Armor Up";
+        c.text = "Give your hero +2 armor.";
+
+        c.classType = Card.Class.Warrior;
+
+        c.manaCost = 2;
+
+        c.SPELL = true;
+        c.TARGETED = false;
+        return c;
+    }
 }

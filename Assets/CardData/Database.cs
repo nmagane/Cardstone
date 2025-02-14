@@ -141,6 +141,9 @@ public partial class Database
             case Card.Cardname.Blade_Flurry:
                 return Blade_Flurry();
 
+            case Card.Cardname.Armor_Up:
+                return Armor_Up();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 break;
