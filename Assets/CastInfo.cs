@@ -11,6 +11,7 @@ public class CastInfo
     public Minion minion;
     public Weapon weapon;
     public int playOrder = 0;
+    public bool combo => player.combo;
 
     public CastInfo(Match m, Player p, HandCard name, int t, int s, bool fri, bool hero)
     {

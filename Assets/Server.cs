@@ -6,7 +6,7 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() {Card.Cardname.Chillwind_Yeti, Card.Cardname.Deadly_Poison, Card.Cardname.Armor_Up, Card.Cardname.Dagger };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() {Card.Cardname.SI7_Agent, Card.Cardname.Deadly_Poison, Card.Cardname.Eviscerate, Card.Cardname.Eviscerate, Card.Cardname.Dagger };
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Heroic_Strike, Card.Cardname.Heroic_Strike };
     
 #else
@@ -662,7 +662,7 @@ public partial class Server : MonoBehaviour
         SendMessage(confirmPlayOpponent, match.players[p].opponent);
 
         //summon minion or execute spell effects
-        match.players[p].comboCounter++;
+
         match.playOrder++;
 
         CastInfo spell = new CastInfo(match, match.players[p], card, target,position, friendlySide, isHero);
@@ -681,6 +681,8 @@ public partial class Server : MonoBehaviour
         {
             match.StartSequencePlayWeapon(spell);
         }
+
+        match.players[p].comboCounter++;
     }
     public Minion SummonMinion(Match match, Player player, Card.Cardname minion,MinionBoard.MinionSource source, int position=-1)
     {

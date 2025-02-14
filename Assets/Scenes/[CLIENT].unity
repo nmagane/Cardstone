@@ -991,6 +991,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: -1391578826462515569, guid: 2c47b24953a7b6844913389d701d3204, type: 2}
+    - target: {fileID: 8047790175705413165, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8047790175705413165, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8104312329991342393, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: board
       value: 
@@ -2276,6 +2284,7 @@ MonoBehaviour:
     SECRET: 0
     WEAPON: 0
     TARGETED: 0
+    COMBO_TARGETED: 0
     COMBO: 0
     BATTLECRY: 0
     played: 0
@@ -5830,6 +5839,7 @@ MonoBehaviour:
     SECRET: 0
     WEAPON: 0
     TARGETED: 0
+    COMBO_TARGETED: 0
     COMBO: 0
     BATTLECRY: 0
     played: 0

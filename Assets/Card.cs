@@ -45,7 +45,9 @@ public class Card : MonoBehaviour
     public SpriteRenderer highlight;
     public Sprite cardback;
     public Sprite highlightMinion;
+    public Sprite highlightMinionSpecial;
     public Sprite highlightSpell;
+    public Sprite highlightSpellSpecial;
     public bool init = false;
     public bool starter = false;
     public bool noReturn = false;
@@ -100,7 +102,9 @@ public class Card : MonoBehaviour
         Heroic_Strike,
         Deadly_Poison,
         Blade_Flurry,
-        Armor_Up
+        Armor_Up,
+        SI7_Agent,
+        Eviscerate
     }
 
     public enum Class
@@ -157,6 +161,8 @@ public class Card : MonoBehaviour
                 frame.sprite = weaponCards[(int)cardInfo.classType];
             else frame.sprite = minionCards[(int)cardInfo.classType];
             highlight.sprite = highlightMinion;
+            baseHighlight = highlightMinion;
+            comboHighlight = highlightMinionSpecial;
         }
         if (c.SPELL || c.SECRET)
         {
@@ -164,6 +170,8 @@ public class Card : MonoBehaviour
             health.text = "";
             frame.sprite = spellCards[(int)cardInfo.classType]; ;
             highlight.sprite = highlightSpell;
+            baseHighlight = highlightSpell;
+            comboHighlight = highlightSpellSpecial;
         }
     }
     int _manaCost = 0;
@@ -192,8 +200,12 @@ public class Card : MonoBehaviour
         manaCost.text = card.manaCost.ToString();
     }
 
-    public void Highlight()
+    Sprite comboHighlight;
+    Sprite baseHighlight;
+    public void Highlight(bool special=false)
     {
+        if ((card.COMBO && board.combo)||special) highlight.sprite = comboHighlight;
+        else highlight.sprite = baseHighlight;
         highlight.enabled = true;
     }
     public void Unhighlight()
@@ -280,31 +292,25 @@ public class Card : MonoBehaviour
         frame.transform.localPosition = Vector3.zero;
         transform.localPosition += new Vector3(0, f);
 
+
+
+        if ((card.SPELL || card.SECRET || card.WEAPON) && (card.TARGETED || (card.COMBO && board.combo && card.COMBO_TARGETED)))
+        {
+            //TARGETED NON-MINION
+            //THIS IS PLAYED THROUGH THE BOARD TARGETING SYSTEM SO THERE'S NOTHING HERE.
+            return;
+        }
+
         if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED == false)
         {
             //UNTARGETED NON-MINION
             board.PlayCard(card);
-        }
-
-        if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED == true)
-        {
-            //TARGETED NON-MINION
-            //THIS IS PLAYED THROUGH THE BOARD TARGETING SYSTEM SO THERE'S NOTHING HERE.
-        }
-
-
-        if (card.MINION && card.TARGETED == false)
-        {
-            //SIMPLE MINION SUMMON
-            int position = FindMinionPosition();
-            board.PlayCard(card, -1, position);
-            EndDrag();
             return;
         }
 
-        if (card.MINION && card.TARGETED == true)
+        if (card.MINION && (card.TARGETED || (card.COMBO && board.combo && card.COMBO_TARGETED)))
         {
-            //MINION WITH TARGET ABILITY
+            //MINION WITH TARGET ABILITY or with COMBO TARGET (SI 7 agent)
             //place temporary minion and start targetining effect
 
             int position = FindMinionPosition();
@@ -317,10 +323,20 @@ public class Card : MonoBehaviour
                 HideCard(p);
             }
             else
+            {
                 board.PlayCard(card, -1, position);
+            }
+            return;
         }
 
-
+        if (card.MINION && card.TARGETED == false)
+        {
+            //SIMPLE MINION SUMMON
+            int position = FindMinionPosition();
+            board.PlayCard(card, -1, position);
+            EndDrag();
+            return;
+        }
     }
 
     int FindMinionPosition()
@@ -364,7 +380,7 @@ public class Card : MonoBehaviour
             return;
         }
 
-        if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED == true)
+        if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED || (card.COMBO && board.combo && card.COMBO_TARGETED))
         {
             if (preview) return;
             if (board.ValidTargetsAvailable(card.eligibleTargets) == false)

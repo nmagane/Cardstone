@@ -259,4 +259,15 @@ public partial class Server
     {
         spell.player.armor += 2;
     }
+    private void SI7_Agent(CastInfo spell)
+    {
+        if (spell.player.combo == false) return;
+        DamageTarget(spell, 2);
+    }
+    private void Eviscerate(CastInfo spell)
+    {
+        int dmg = 2;
+        if (spell.player.combo) dmg = 4;
+        DamageTarget(spell, dmg);
+    }
 }

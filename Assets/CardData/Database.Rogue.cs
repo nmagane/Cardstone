@@ -66,4 +66,39 @@
         c.TARGETED = false;
         return c;
     }
+    static CardInfo SI7_Agent()
+    {
+        CardInfo c = new();
+
+        c.name = "SI:7 Agent";
+        c.text = "Combo: Deal 2 damage to target.";
+
+        c.classType = Card.Class.Rogue;
+        c.eligibleTargets = Board.EligibleTargets.AllCharacters;
+
+        c.manaCost = 3;
+
+        c.damage = 3;
+        c.health = 3;
+
+        c.MINION = true;
+        c.COMBO = true;
+        c.COMBO_TARGETED = true;
+        return c;
+    }
+    static CardInfo Eviscerate()
+    {
+        CardInfo c = new();
+
+        c.name = "Eviscerate";
+        c.text = "Deal 2 damage. Combo: Deal 4 instead.";
+
+        c.classType = Card.Class.Rogue;
+        c.eligibleTargets = Board.EligibleTargets.AllCharacters;
+
+        c.SPELL = true;
+        c.TARGETED = true;
+        c.COMBO = true;
+        return c;
+    }
 }

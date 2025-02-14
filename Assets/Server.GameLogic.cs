@@ -309,6 +309,13 @@ public partial class Server
             case Card.Cardname.Armor_Up:
                 Armor_Up(spell);
                 break;
+            case Card.Cardname.SI7_Agent:
+                SI7_Agent(spell);
+                break;
+            case Card.Cardname.Eviscerate:
+                Eviscerate(spell);
+                break;
+
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);
                 break;

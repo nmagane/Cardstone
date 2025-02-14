@@ -831,6 +831,7 @@ MonoBehaviour:
     SECRET: 0
     WEAPON: 0
     TARGETED: 0
+    COMBO_TARGETED: 0
     COMBO: 0
     BATTLECRY: 0
     played: 0
@@ -899,7 +900,9 @@ MonoBehaviour:
   highlight: {fileID: 5105641997196815704}
   cardback: {fileID: 21300000, guid: 69ae6a1d6da941e4e85b23bf151a611b, type: 3}
   highlightMinion: {fileID: 21300000, guid: 29e8f61f77fcc1847ae98642f01e5e71, type: 3}
+  highlightMinionSpecial: {fileID: 21300000, guid: ef05220f481fd9141a628506c424b9f6, type: 3}
   highlightSpell: {fileID: 21300000, guid: 79c96449ef4cd1a439cf1084110630f1, type: 3}
+  highlightSpellSpecial: {fileID: 21300000, guid: 6caeb3295f21ca9478c9a6c8e0ef489f, type: 3}
   init: 0
   starter: 0
   noReturn: 0
@@ -917,14 +920,14 @@ MonoBehaviour:
   spellCards:
   - {fileID: 21300000, guid: e32d87570ad5fb14f8886b2264aea62d, type: 3}
   - {fileID: 21300000, guid: 4684abf4edeb36f4b809dcec303f344d, type: 3}
-  - {fileID: 21300000, guid: f7b51ba1ae27d75458f0c0ae9dea2e99, type: 3}
-  - {fileID: 21300000, guid: f7b51ba1ae27d75458f0c0ae9dea2e99, type: 3}
-  - {fileID: 21300000, guid: f7b51ba1ae27d75458f0c0ae9dea2e99, type: 3}
-  - {fileID: 21300000, guid: f7b51ba1ae27d75458f0c0ae9dea2e99, type: 3}
-  - {fileID: 21300000, guid: f7b51ba1ae27d75458f0c0ae9dea2e99, type: 3}
-  - {fileID: 21300000, guid: f7b51ba1ae27d75458f0c0ae9dea2e99, type: 3}
-  - {fileID: 21300000, guid: f7b51ba1ae27d75458f0c0ae9dea2e99, type: 3}
-  - {fileID: 21300000, guid: f7b51ba1ae27d75458f0c0ae9dea2e99, type: 3}
+  - {fileID: 21300000, guid: 4684abf4edeb36f4b809dcec303f344d, type: 3}
+  - {fileID: 21300000, guid: 4684abf4edeb36f4b809dcec303f344d, type: 3}
+  - {fileID: 21300000, guid: 4684abf4edeb36f4b809dcec303f344d, type: 3}
+  - {fileID: 21300000, guid: 4684abf4edeb36f4b809dcec303f344d, type: 3}
+  - {fileID: 21300000, guid: 4684abf4edeb36f4b809dcec303f344d, type: 3}
+  - {fileID: 21300000, guid: 4684abf4edeb36f4b809dcec303f344d, type: 3}
+  - {fileID: 21300000, guid: 4684abf4edeb36f4b809dcec303f344d, type: 3}
+  - {fileID: 21300000, guid: 4684abf4edeb36f4b809dcec303f344d, type: 3}
   weaponCards:
   - {fileID: 21300000, guid: 31e2e8f38b2cc9a4ab732073dc32a9b4, type: 3}
   - {fileID: 21300000, guid: 31e2e8f38b2cc9a4ab732073dc32a9b4, type: 3}

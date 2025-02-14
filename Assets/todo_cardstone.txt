@@ -43,15 +43,14 @@ next decks to implement:
 
 -confirm trigger anim for weapons
 
-Next mechanic implementation:
-	
-= Stealth
-
-= Combo
+Next mechanic implementation:	
 
 = Spell power
 
+= clean up healing/heal triggers
+
 = Secrets
+
 
 - turn indicator (end turn button color)
 - rope
@@ -63,6 +62,9 @@ refactor hasaura(taunt / stealth)
 ===============================================
 =====================DONE======================
 ===============================================
+= Combo
+
+= Stealth
 
 = Player Armor
 

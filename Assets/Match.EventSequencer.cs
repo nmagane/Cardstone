@@ -276,10 +276,10 @@ public partial class Match
         StartPhase(Phase.OnPlayCard, ref spell);
         StartPhase(Phase.OnPlayMinion, ref spell);
 
-        if (spell.card.BATTLECRY)
+        if (spell.card.BATTLECRY || (spell.card.COMBO && spell.player.combo))
         {
-            //DONT TRIGGER IF NO TARGET WAS CHOSEN
-            if ((spell.card.TARGETED && spell.target == -1) == false)
+            //DONT TRIGGER IF NO TARGET WAS CHOSEN - should never happen normally
+            if (!((spell.card.TARGETED ||spell.card.COMBO_TARGETED) && (!spell.isHero && spell.target==-1)))
             {
                 server.ConfirmBattlecry(spell.match, minion);
                 server.CastSpell(spell);

@@ -144,6 +144,12 @@ public partial class Database
             case Card.Cardname.Armor_Up:
                 return Armor_Up();
 
+            case Card.Cardname.SI7_Agent:
+                return SI7_Agent();
+                
+            case Card.Cardname.Eviscerate:
+                return Eviscerate();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 break;
