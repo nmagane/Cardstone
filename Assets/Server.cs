@@ -620,6 +620,43 @@ public partial class Server : MonoBehaviour
         return drawnCard;
 
     }
+
+    public HandCard AddCard(Match match, Player player, Card.Cardname card,Minion source=null)
+    {
+        if (player.hand.Count() >= 10) return new HandCard(card,0);
+        HandCard c = player.hand.Add(card);
+
+        CustomMessage messageOwner = CreateMessage(MessageType.AddCard);
+        CustomMessage messageOpponent = CreateMessage(MessageType.AddCard);
+
+        messageOwner.AddBool(true);
+        messageOpponent.AddBool(false);
+
+        messageOwner.AddInt((int)card);
+        messageOpponent.AddInt(0);
+
+        if (source!=null)
+        {
+            messageOwner.AddBool(source.player == player);
+            messageOpponent.AddBool(source.player == player.opponent);
+
+            messageOwner.AddInt(source.index);
+            messageOpponent.AddInt(source.index);
+        }
+        else
+        {
+            messageOwner.AddBool(false);
+            messageOpponent.AddBool(false);
+
+            messageOwner.AddInt(-1);
+            messageOpponent.AddInt(-1);
+        }
+
+        SendMessage(messageOwner, player);
+        SendMessage(messageOpponent, player.opponent);
+
+        return c;
+    }
         
     public void PlayCard(ulong matchID, int clientID, ulong playerID, int index, int target, int position, bool friendlySide, bool isHero)
     {

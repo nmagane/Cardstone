@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using TMPro;
 using Mirror;
+using System;
 
 public partial class Board : MonoBehaviour
 {
@@ -205,6 +206,13 @@ public partial class Board : MonoBehaviour
             case Server.MessageType.EnemyMulligan:
                 List<int> enemyMulligan = message.GetInts();
                 ConfirmEnemyMulligan(enemyMulligan);
+                break;
+            case Server.MessageType.AddCard:
+                bool addFriendly = message.GetBool();
+                Card.Cardname addCard = (Card.Cardname)message.GetInt();
+                bool addSourceFriendly = message.GetBool();
+                int addSourceIndex = message.GetInt();
+                AddCard(addFriendly, addCard, addSourceFriendly, addSourceIndex);
                 break;
             case Server.MessageType.DrawCards:
                 int draw = message.GetInt();
@@ -415,7 +423,7 @@ public partial class Board : MonoBehaviour
             currHand.coinHand = true;
         foreach (var c in hand)
         {
-            HandCard handcardPlayer = currHand.Add(((Card.Cardname)c),-1,Hand.CardSource.Start);
+            HandCard handcardPlayer = currHand.Add(((Card.Cardname)c),-1);
             currHand.AddCard(handcardPlayer, Hand.CardSource.Start);
         }
         //currHand = hand;
@@ -432,7 +440,7 @@ public partial class Board : MonoBehaviour
         enemyHand.server = false;
         for (int i = 0; i < enemyCards; i++)
         {
-            HandCard handcardEnemy = enemyHand.Add(Card.Cardname.Cardback, -1, Hand.CardSource.Start);
+            HandCard handcardEnemy = enemyHand.Add(Card.Cardname.Cardback, -1);
             enemyHand.AddCard(handcardEnemy, Hand.CardSource.Start);
         }
 

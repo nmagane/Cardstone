@@ -128,6 +128,9 @@ public partial class Board
 
             case Server.MessageType.MillCard:
                 return MillVisual(message);
+                
+            case Server.MessageType.AddCard:
+                return AddCardVisual(message);
 
             case Server.MessageType.ConfirmHeroPower:
                 return ConfirmHeroPowerVisual(message);
@@ -410,6 +413,14 @@ public partial class Board
         if (message.minions[0].creature == null) return null;
         Creature m = message.minions[0].creature; 
         return m.TriggerTrigger();
+    }
+
+    Coroutine AddCardVisual(VisualInfo message)
+    {
+        Hand hand = message.isFriendly ? currHand : enemyHand;
+        hand.AddCard(message.handCards[0], Hand.CardSource.Custom, message.vectors[0]);
+
+        return StartCoroutine(Wait(15));
     }
 
     Coroutine MillVisual(VisualInfo message)

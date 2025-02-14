@@ -45,10 +45,10 @@ public class Hand
     {
         Start,
         Deck,
-        Board,
         EnemyDeck,
+        Custom,
     }
-    public Card AddCard(HandCard card, CardSource source)
+    public Card AddCard(HandCard card, CardSource source, Vector3 pos = new Vector3())
     {
         Card c = board.CreateCard();
         c.board = board;
@@ -74,6 +74,13 @@ public class Hand
                     c.starter = true;
                 }
                 break;
+            case CardSource.Custom:
+                c.transform.position = pos;
+                c.transform.localScale = Vector3.one * 1.25f;
+                c.alpha = 0;
+                board.animationManager.Unfade(c);
+                //Delay ordercards by the unfade duration?
+                break;
         }
 
         OrderCards();
@@ -81,7 +88,7 @@ public class Hand
 
         return c;
     }
-    public HandCard Add(Card.Cardname x, int ind = -1, CardSource source = CardSource.Deck)
+    public HandCard Add(Card.Cardname x, int ind = -1)
     {
         int index = ind == -1 ? Count() : ind;
         HandCard newCard = new HandCard(x, index);
@@ -120,8 +127,6 @@ public class Hand
         Card c = cardObjects[card];
         cardObjects.Remove(card);
         c.GetComponent<BoxCollider2D>().enabled = false;
-        //board.DestroyObject(c);
-        //todo: show cards custom mana cost if its changed by freezing trap/loatheb etc
         if (pos != -1)
         {
             Vector3 p;

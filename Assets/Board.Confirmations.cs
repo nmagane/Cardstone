@@ -108,6 +108,28 @@ public partial class Board
         anim.ints.Add((int)result);
         QueueAnimation(anim);
     }
+    public void AddCard(bool friendly, Card.Cardname card, bool sourceFriendly, int sourceIndex)
+    {
+        Hand hand = friendly ? currHand : enemyHand;
+        HandCard c = hand.Add(card);
+
+        Vector3 pos = Vector3.zero;
+        if (sourceIndex != -1)
+        {
+            MinionBoard board = sourceFriendly ? currMinions : enemyMinions;
+            if (sourceIndex < board.Count())
+            {
+                if (board[sourceIndex].creature != null)
+                    pos = board[sourceIndex].creature.transform.position;
+            }
+        }
+        VisualInfo anim = new VisualInfo();
+        anim.type = Server.MessageType.AddCard;
+        anim.isFriendly = friendly;
+        anim.handCards.Add(c);
+        anim.vectors.Add(pos);
+        QueueAnimation(anim);
+    }
 
     public void ConfirmPlayPlayer(HandCard card, int pos)
     {

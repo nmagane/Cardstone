@@ -39,18 +39,18 @@ next decks to implement:
 	-Freeze
 	-Rogue
 
--addcard message to client for stuff like sap
 
 -confirm trigger anim for weapons
 
 Next mechanic implementation:	
+
+= addcard message to client for stuff like sap, shadowstep, antonidas
 
 = Spell power
 
 = clean up healing/heal triggers
 
 = Secrets
-
 
 - turn indicator (end turn button color)
 - rope
