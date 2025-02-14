@@ -390,6 +390,7 @@ public partial class Board
     Coroutine UpdateCardVisual(VisualInfo message)
     {
         Card c = message.handCards[0].cardObject;
+        if (c.card.played) return null;
         c.UpdateManaCost();
         return null;
     }
