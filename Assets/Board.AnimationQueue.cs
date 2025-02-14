@@ -298,7 +298,7 @@ public partial class Board
     Coroutine DiscardVisual(VisualInfo message)
     {
         Hand h = message.isFriendly ? currHand : enemyHand;
-        h.RemoveCard(message.handCards[0], Hand.RemoveCardType.Discard, message.names[0], -1, message.ints[0]);
+        h.RemoveCard(message.handCards[0], Hand.RemoveCardType.Discard, message.names[0], -1, message.isFriendly? -1 :message.ints[0]);
 
         return StartCoroutine(Wait(1));
     }
@@ -419,7 +419,7 @@ public partial class Board
     {
         Hand hand = message.isFriendly ? currHand : enemyHand;
         hand.AddCard(message.handCards[0], Hand.CardSource.Custom, message.vectors[0]);
-
+        CheckHighlights();
         return StartCoroutine(Wait(15));
     }
 

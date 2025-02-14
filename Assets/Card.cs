@@ -104,7 +104,8 @@ public class Card : MonoBehaviour
         Blade_Flurry,
         Armor_Up,
         SI7_Agent,
-        Eviscerate
+        Eviscerate,
+        Archmage_Antonidas
     }
 
     public enum Class
@@ -179,6 +180,7 @@ public class Card : MonoBehaviour
     {
         if (card.manaCost!=_manaCost && !noAnim)
         {
+            Debug.Log("cgn");
             StartCoroutine(Creature.txtBounce(manaCost));
         }
         _manaCost = card.manaCost;

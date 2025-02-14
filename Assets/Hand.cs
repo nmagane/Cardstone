@@ -78,6 +78,8 @@ public class Hand
                 c.transform.position = pos;
                 c.transform.localScale = Vector3.one * 1.25f;
                 c.alpha = 0;
+                c.init = true;
+                c.starter = false;
                 board.animationManager.Unfade(c);
                 //Delay ordercards by the unfade duration?
                 break;

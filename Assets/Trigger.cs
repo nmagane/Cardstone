@@ -78,6 +78,7 @@ public class Trigger
         Loatheb,
         Millhouse,
         Preparation_Cast,
+        Archmage_Antonidas,
     }
     public enum Side
     {
@@ -150,6 +151,9 @@ public class Trigger
                 break;
             case Ability.Preparation_Cast:
                 TriggerEffects.Prep_Cast(match, minion, this);
+                break;
+            case Ability.Archmage_Antonidas:
+                TriggerEffects.Archmage_Antonidas(match, minion, this);
                 break;
         }
 

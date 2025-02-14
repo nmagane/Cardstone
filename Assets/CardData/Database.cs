@@ -150,6 +150,9 @@ public partial class Database
             case Card.Cardname.Eviscerate:
                 return Eviscerate();
 
+            case Card.Cardname.Archmage_Antonidas:
+                return Archmage_Antonidas();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 break;
@@ -513,6 +516,22 @@ public partial class Database
         c.MINION = true;
 
         c.auras.Add(Aura.Type.Stealth);
+        return c;
+    }
+    static CardInfo Archmage_Antonidas()
+    { 
+        CardInfo c = new();
+
+        c.name = "Archmage Antonidas";
+        c.text = "Whenever you cast a spell, add a Fireball spell to your hand.";
+
+        c.manaCost = 1;
+        c.damage = 5;
+        c.health = 7;
+
+        c.MINION = true;
+
+        c.triggers.Add((Trigger.Type.OnPlaySpell,Trigger.Side.Friendly,Trigger.Ability.Archmage_Antonidas));
         return c;
     }
 }

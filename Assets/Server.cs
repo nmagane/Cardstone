@@ -6,7 +6,7 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() {Card.Cardname.SI7_Agent, Card.Cardname.Deadly_Poison, Card.Cardname.Eviscerate, Card.Cardname.Eviscerate, Card.Cardname.Dagger };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() {Card.Cardname.SI7_Agent, Card.Cardname.Deadly_Poison, Card.Cardname.Eviscerate, Card.Cardname.Archmage_Antonidas, Card.Cardname.Dagger };
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Heroic_Strike, Card.Cardname.Heroic_Strike };
     
 #else
@@ -1126,7 +1126,7 @@ public partial class Server : MonoBehaviour
 
 
         CastInfo discardAction = new CastInfo(match, player, player.hand[index], -1, -1, false, false);
-        player.hand.RemoveAt(index);
+        HandCard c = player.hand.RemoveAt(index);
         match.StartSequenceDiscardCard(discardAction);
 
         CustomMessage messageOwner = CreateMessage(MessageType.DiscardCard);
@@ -1137,12 +1137,12 @@ public partial class Server : MonoBehaviour
 
         messageOwner.AddInt(index);
         messageOpponent.AddInt(index);
+        
+        messageOwner.AddInt((int)c.card);
+        messageOpponent.AddInt((int)c.card);
 
-        messageOwner.AddInt((int)discardAction.card.card);
-        messageOpponent.AddInt((int)discardAction.card.card);
-
-        messageOwner.AddInt((int)discardAction.card.manaCost);
-        messageOpponent.AddInt((int)discardAction.card.manaCost);
+        messageOwner.AddInt(c.manaCost);
+        messageOpponent.AddInt(c.manaCost);
 
         SendMessage(messageOwner, player);
         SendMessage(messageOpponent, player.opponent);

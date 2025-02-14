@@ -90,4 +90,9 @@ public class TriggerEffects
         Player p = minion.player;
         p.RemoveAura(Aura.Type.Preparation);
     }
+    public static void Archmage_Antonidas(Match m, Minion minion, Trigger t)
+    {
+        Player p = minion.player;
+        m.server.AddCard(m, p, Card.Cardname.Soulfire, minion);
+    }
 }

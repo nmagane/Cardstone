@@ -45,7 +45,8 @@ next decks to implement:
 Next mechanic implementation:	
 
 = addcard message to client for stuff like sap, shadowstep, antonidas
-
+	remove minion with no deathrattle function
+	
 = Spell power
 
 = clean up healing/heal triggers
@@ -58,6 +59,8 @@ Next mechanic implementation:
 highlight hero with armorframe
 
 refactor hasaura(taunt / stealth)
+
+discard cost change bug?
 
 ===============================================
 =====================DONE======================
