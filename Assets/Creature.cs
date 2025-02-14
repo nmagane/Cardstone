@@ -118,8 +118,8 @@ public class Creature : MonoBehaviour
     }
     IEnumerator trigAnim()
     {
-        yield return board.animationManager.LerpZoom(triggerSprite.gameObject, Vector3.one*1.2f, 20);
-        yield return board.animationManager.LerpZoom(triggerSprite.gameObject, Vector3.one, 20);
+        yield return board.animationManager.LerpZoom(triggerSprite.gameObject, Vector3.one*1.7f, 10);
+        yield return board.animationManager.LerpZoom(triggerSprite.gameObject, Vector3.one, 10);
     }
     IEnumerator cryer()
     {

@@ -380,7 +380,7 @@ public class Card : MonoBehaviour
             return;
         }
 
-        if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED || (card.COMBO && board.combo && card.COMBO_TARGETED))
+        if ((card.SPELL || card.SECRET || card.WEAPON) && (card.TARGETED || (card.COMBO && board.combo && card.COMBO_TARGETED)))
         {
             if (preview) return;
             if (board.ValidTargetsAvailable(card.eligibleTargets) == false)
