@@ -114,6 +114,7 @@ public partial class Board
         //return;
         currHand.RemoveAt(card.index);
         currHand.RemoveCard(card,Hand.RemoveCardType.Play,card.card,pos,-1,card.WEAPON);
+        currHero.combo = true;
         if (card.MINION)
         {
             int p = pos;

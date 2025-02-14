@@ -249,18 +249,23 @@ public partial class Board
     {
         destroying = true;
         yield return null; //One frame delay to fill up the destroy queue
+        List<MinionBoard> boards = new List<MinionBoard>();
         while (destroyChainQueue.Count>1)
         {
             VisualInfo message = destroyChainQueue.Dequeue();
             MinionBoard board = message.isFriendly ? currMinions : enemyMinions;
+            if (!boards.Contains(board)) boards.Add(board);
             board.RemoveCreature(message.minions[0], true);
         }
         if (destroyChainQueue.Count ==1)
         {
             VisualInfo message = destroyChainQueue.Dequeue();
             MinionBoard board = message.isFriendly ? currMinions : enemyMinions;
-            board.RemoveCreature(message.minions[0], false);
+            if (!boards.Contains(board)) boards.Add(board);
+            board.RemoveCreature(message.minions[0], true);
         }
+        foreach (var b in boards)
+            b.OrderCreatures();
         destroying = false;
     }
 

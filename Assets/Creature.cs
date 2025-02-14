@@ -17,9 +17,10 @@ public class Creature : MonoBehaviour
         tauntSprite.sortingOrder = x;
         shieldSprite.sortingOrder = x+3;
         silenceSprite.sortingOrder = x+3;
-        triggerSprite.sortingOrder = x+4;
-        deathrattleSprite.sortingOrder = x+4;
-        skull.sortingOrder = x+4;
+        stealthSprite.sortingOrder = x+4;
+        triggerSprite.sortingOrder = x+5;
+        deathrattleSprite.sortingOrder = x+5;
+        skull.sortingOrder = x+5;
         testname.GetComponent<MeshRenderer>().sortingOrder = x + 3;
         health.GetComponent<MeshRenderer>().sortingOrder = x + 3;
         damage.GetComponent<MeshRenderer>().sortingOrder = x + 3;
@@ -37,6 +38,7 @@ public class Creature : MonoBehaviour
         tauntSprite.sortingLayerName = x;
         shieldSprite.sortingLayerName = x;
         silenceSprite.sortingLayerName = x;
+        stealthSprite.sortingLayerName = x;
         triggerSprite.sortingLayerName = x;
         deathrattleSprite.sortingLayerName = x;
         skull.sortingLayerName = x;
@@ -52,6 +54,7 @@ public class Creature : MonoBehaviour
     public SpriteRenderer tauntSprite;
     public SpriteRenderer shieldSprite;
     public SpriteRenderer silenceSprite;
+    public SpriteRenderer stealthSprite;
     public SpriteRenderer triggerSprite;
     public SpriteRenderer deathrattleSprite;
     public SpriteRenderer battlecrySprite;
@@ -250,6 +253,10 @@ public class Creature : MonoBehaviour
         {
             silenceSprite.enabled = true;
         }
+        else
+        {
+            silenceSprite.enabled = false;
+        }
         
         if (minion.HasAura(Aura.Type.Taunt))
         {
@@ -271,6 +278,21 @@ public class Creature : MonoBehaviour
         {
             if (shieldSprite.enabled == true)
                 DisableShield();
+        }
+
+        if (minion.STEALTH)
+        {
+            stealthSprite.enabled = true;
+            shieldSprite.color = new Color(1, 1, 1, 0.25f);
+            tauntSprite.color = new Color(1, 1, 1, 0.6f);
+            silenceSprite.color = new Color(1, 1, 1, 0.6f);
+        }
+        else
+        {
+            stealthSprite.enabled = false;
+            shieldSprite.color = new Color(1,1,1,0.45f);
+            tauntSprite.color = Color.white;
+            silenceSprite.color = Color.white;
         }
     }
     public SpriteRenderer skull;

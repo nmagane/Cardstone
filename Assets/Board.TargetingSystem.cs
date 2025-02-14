@@ -93,6 +93,11 @@ public partial class Board
             return;
         }
         bool friendly = IsFriendly(minion);
+        if (!friendly && minion.STEALTH)
+        {
+            Debug.Log("Invalid target");
+            return;
+        }
         switch (targetMode)
         {
             case TargetMode.Battlecry:

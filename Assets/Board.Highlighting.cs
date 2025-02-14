@@ -148,15 +148,15 @@ public partial class Board
         bool taunter = false;
         foreach (Minion m in enemyMinions)
         {
-            if (m.HasAura(Aura.Type.Taunt)) taunter = true;
+            if (m.TAUNT) taunter = true;
         }
         if (taunter)
         {
             foreach (Minion m in enemyMinions)
             {
-                if (m.HasAura(Aura.Type.Stealth)) continue;
+                if (m.STEALTH) continue;
 
-                if (m.HasAura(Aura.Type.Taunt))
+                if (m.TAUNT)
                 {
                     m.creature.Highlight(true);
 

@@ -505,6 +505,8 @@ public partial class Database
         c.health = 5;
 
         c.MINION = true;
+
+        c.auras.Add(Aura.Type.Stealth);
         return c;
     }
 }

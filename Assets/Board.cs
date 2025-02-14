@@ -49,15 +49,13 @@ public partial class Board : MonoBehaviour
     public Deck deck;
     public Deck enemyDeck;
     public int currMana => mana.curr;
+    public bool combo => currHero.combo;
 
     public TMP_Text gameoverText;
     public TMP_Text playerNameText;
     public TMP_Text enemyNameText;
     public SpriteRenderer mulliganBG;
-    /*
-    public int currMana = 0;
-    public int maxMana = 0;
-    */
+
 
     public Card CreateCard()
     {
@@ -450,6 +448,7 @@ public partial class Board : MonoBehaviour
     {
         if (!currTurn) return;
         currTurn = false;
+        currHero.combo = false;
         currHero.DisableWeapon();
         CheckHighlights();
     }

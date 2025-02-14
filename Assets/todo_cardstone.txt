@@ -41,10 +41,10 @@ next decks to implement:
 
 -addcard message to client for stuff like sap
 
+-confirm trigger anim for weapons
+
 Next mechanic implementation:
 	
-= Player Armor
-
 = Stealth
 
 = Combo
@@ -56,9 +56,15 @@ Next mechanic implementation:
 - turn indicator (end turn button color)
 - rope
 
+highlight hero with armorframe
+
+refactor hasaura(taunt / stealth)
+
 ===============================================
 =====================DONE======================
 ===============================================
+
+= Player Armor
 
 -i dont like the 1 frame anim delay.. maybe this isnt needed if theres an animation before destroy messages? maybe we can make destroy messages start a new coroutine queue?
 

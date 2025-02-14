@@ -21,8 +21,13 @@ public partial class Server
         p.canAttack = true;
     }
 
-    public static void ConsumeAttackCharge(Minion m)
+    public void ConsumeAttackCharge(Minion m)
     {
+        if (m.STEALTH)
+        {
+            RemoveAura(m.player.match, m, m.FindAura(Aura.Type.Stealth));
+        }
+
         Aura windfury = m.FindAura(Aura.Type.Windfury);
         if (windfury != null)
         {  

@@ -31,6 +31,9 @@ public partial class Minion
         }
     }
 
+    public bool TAUNT => HasAura(Aura.Type.Taunt) && !STEALTH;
+    public bool STEALTH => HasAura(Aura.Type.Stealth);
+
     public bool DEAD = false;
 
     public List<Aura> auras = new List<Aura>();

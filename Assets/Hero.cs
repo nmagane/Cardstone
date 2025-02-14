@@ -46,6 +46,7 @@ public class Hero : MonoBehaviour
             _canAttack = value;
         }
     }
+    public bool combo=false;
     public Weapon weapon;
 
     public SpriteRenderer spriteRenderer;
