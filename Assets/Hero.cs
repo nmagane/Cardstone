@@ -75,7 +75,9 @@ public class Hero : MonoBehaviour
     public SpriteRenderer highlight;
 
     public Sprite highlightNormal;
+    public Sprite highlightArmor;
     public Sprite highlightTarget;
+    public Sprite hightlightTargetArmor;
 
     public Sprite weaponDisabled;
     public Sprite weaponEnabled;
@@ -287,8 +289,14 @@ public class Hero : MonoBehaviour
     {
         if (isElevated) return;
         highlight.enabled = true;
-        if (target) highlight.sprite = highlightTarget;
-        else highlight.sprite = highlightNormal;
+        if (target)
+        {
+            highlight.sprite = armor>0? hightlightTargetArmor : highlightTarget;
+        }
+        else
+        {
+            highlight.sprite = armor>0? highlightArmor : highlightNormal;
+        }
     }
 
     public void Unhighlight()

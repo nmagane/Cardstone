@@ -224,10 +224,10 @@ public partial class Board
         targeting = false;
         targetMode = TargetMode.None;
         eligibleTargets = EligibleTargets.AllCharacters;
-        //targetSourceIndex = 0;
-        //targetIndex = 0;
+        
         targetingMinion = null;
         targetingCard = null;
+        targetingHero = null;
         dragTargeting = false;
 
 

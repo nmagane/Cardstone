@@ -64,6 +64,7 @@ public partial class Board : MonoBehaviour
     }
     public Splash CreateSplash(GameObject obj,int value)
     {
+        if (value == 0) return null;
         Splash splash = Instantiate(splashObject).GetComponent<Splash>();
         Splash.Type type = value < 0 ? Splash.Type.Damage : Splash.Type.Heal;
         splash.Set(type, value, obj.gameObject);
