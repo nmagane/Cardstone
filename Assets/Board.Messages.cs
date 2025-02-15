@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
-using Riptide;
 using UnityEngine;
-using System.Linq;
-using UnityEngine.SceneManagement;
-using System.Collections;
+
 public partial class Board
 {
     public void StartMatchmaking()

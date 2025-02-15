@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Riptide;
 using System.Reflection;
 using UnityEngine;
+using Mirror.BouncyCastle.Bcpg;
 [Serializable]
 public class MinionBoard
 {
@@ -87,11 +88,12 @@ public class MinionBoard
         OrderCreatures();
     }
 
-    public void RemoveCreature(Minion m, bool noAnim=false)
+    public void RemoveCreature(Minion m, bool noAnim=false, bool removal=false)
     {
         Creature c = minionObjects[m];
         minionObjects.Remove(m);
-        board.animationManager.DeathAnim(c);
+        if (removal) board.animationManager.RemoveMinion(c,10);
+        else board.animationManager.DeathAnim(c);
 
         if (noAnim) return;
         OrderCreatures();

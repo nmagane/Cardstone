@@ -148,6 +148,9 @@ public partial class Board
                 
             case Server.MessageType.ConfirmAnimation:
                 return ConfirmAnimationVisual(message);
+
+            case Server.MessageType.RemoveMinion:
+                return RemoveMinionVisual(message);
                 
             
             default:
@@ -229,6 +232,14 @@ public partial class Board
         CheckHighlights();
         return StartCoroutine(Wait(15));
     }
+
+    Coroutine RemoveMinionVisual(VisualInfo message)
+    {
+        MinionBoard board = message.isFriendly ? currMinions : enemyMinions;
+        board.RemoveCreature(message.minions[0], false,true);
+        return StartCoroutine(Wait(10));
+    }
+
     Coroutine DestroyMinionVisual(VisualInfo message)
     {
         destroyChainQueue.Enqueue(message);
@@ -427,6 +438,7 @@ public partial class Board
     Coroutine UpdateCardVisual(VisualInfo message)
     {
         Card c = message.handCards[0].cardObject;
+        if (c == null) return null;
         if (c.card.played) return null;
         c.UpdateManaCost();
         return null;
@@ -463,7 +475,8 @@ public partial class Board
 
         if (visualMessageQueue.Count > 0)
         {
-            if (visualMessageQueue.Peek().type != Server.MessageType.AddCard)
+            Server.MessageType t = visualMessageQueue.Peek().type;
+            if (t != Server.MessageType.AddCard && t!=Server.MessageType.RemoveMinion)
             {
                 return StartCoroutine(Wait(15));
             }

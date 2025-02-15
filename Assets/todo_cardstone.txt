@@ -44,8 +44,6 @@ next decks to implement:
 
 Next mechanic implementation:	
 
-= addcard message to client for stuff like sap, shadowstep, antonidas
-	remove minion with no deathrattle function
 	
 = Spell power
 
@@ -58,9 +56,15 @@ Next mechanic implementation:
 
 refactor hasaura(taunt / stealth)
 
+batch removecreature visual animation for Vanish when adding that
+
 ===============================================
 =====================DONE======================
 ===============================================
+
+= addcard message to client for stuff like sap, shadowstep, antonidas
+	remove minion with no deathrattle function
+
 
 ordercards fix with adding/discarding at the same time. delay on remove and add
 

@@ -105,7 +105,8 @@ public class Card : MonoBehaviour
         Armor_Up,
         SI7_Agent,
         Eviscerate,
-        Archmage_Antonidas
+        Archmage_Antonidas,
+        Sap
     }
 
     public enum Class
@@ -197,7 +198,7 @@ public class Card : MonoBehaviour
         {
             manaCost.color = Board.Instance.minionObject.GetComponent<Creature>().baseText;
         }
-
+        alpha = alpha;
         manaCost.text = card.manaCost.ToString();
     }
 
@@ -510,7 +511,7 @@ public class Card : MonoBehaviour
     {
         return GetMousePos() + offset;
     }
-    Coroutine dragCoroutine = null;
+    public Coroutine dragCoroutine = null;
     void StartDrag()
     {
         //HideHover();
@@ -615,11 +616,14 @@ public class Card : MonoBehaviour
         shadow.sortingLayer = s;
     }
     bool hov = false;
+    public bool noHover = false;
     public void ShowHover()
     {
         if (dragCoroutine != null) return;
         if (board.playingCard != null) return;
         if (noReturn) return;
+        if (transform.localPosition.y > -6) return;
+        if (noHover) return;
         if (board.currHand.mulliganMode != Hand.MulliganState.Done) return;
         hov = true;
         frame.transform.localScale = Vector3.one * 1.55f;

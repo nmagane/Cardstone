@@ -6,9 +6,9 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() {Card.Cardname.Soulfire,Card.Cardname.Doomguard,Card.Cardname.SI7_Agent, Card.Cardname.Deadly_Poison, Card.Cardname.Eviscerate, Card.Cardname.Archmage_Antonidas, Card.Cardname.Emperor_Thaurissan };
-    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Heroic_Strike, Card.Cardname.Heroic_Strike };
-    
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Sap,Card.Cardname.Sap, };
+    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Sap, Card.Cardname.Sap, };
+
 #else
     List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { };
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { };
@@ -85,6 +85,7 @@ public partial class Server : MonoBehaviour
         ConfirmAnimation,
         
         AddCard,
+        RemoveMinion,
 
         EquipWeapon,
         DestroyWeapon,
@@ -871,6 +872,27 @@ public partial class Server : MonoBehaviour
         //server.Send(messageOwner, owner.connection.clientID);
         SendMessage(messageOwner, owner);
         //server.Send(messageOpponent, opponent.connection.clientID);
+        SendMessage(messageOpponent, opponent);
+    }
+    public void RemoveMinion(Match match, Minion minion)
+    {
+        minion.DEAD = true;
+        Player owner = match.FindOwner(minion);
+        Player opponent = match.Opponent(owner);
+
+        int ind = minion.index;
+
+        owner.board.RemoveAt(ind);
+        CustomMessage messageOwner = CreateMessage(MessageType.RemoveMinion);
+        CustomMessage messageOpponent = CreateMessage(MessageType.RemoveMinion);
+
+        messageOwner.AddInt(ind);
+        messageOpponent.AddInt(ind);
+
+        messageOwner.AddBool(true);
+        messageOpponent.AddBool(false);
+
+        SendMessage(messageOwner, owner);
         SendMessage(messageOpponent, opponent);
     }
 

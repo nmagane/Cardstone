@@ -319,6 +319,7 @@ public class Hand
                 return;
             }
         }
+        if (c.dragCoroutine != null) return;
         board.animationManager.LerpTo(c, location, frames, 0);
         c.ElevateTo(0.1f, frames);
         RotateCard(c, rotation);

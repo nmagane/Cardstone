@@ -153,6 +153,9 @@ public partial class Database
             case Card.Cardname.Archmage_Antonidas:
                 return Archmage_Antonidas();
 
+            case Card.Cardname.Sap:
+                return Sap();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 break;

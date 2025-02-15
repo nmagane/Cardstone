@@ -270,4 +270,10 @@ public partial class Server
         if (spell.player.combo) dmg = 4;
         DamageTarget(spell, dmg);
     }
+    private void Sap(CastInfo spell)
+    {
+        Minion m = spell.GetTargetMinion();
+        spell.match.server.AddCard(spell.match, m.player, m.card, m, 0);
+        spell.match.server.RemoveMinion(spell.match,m);
+    }
 }

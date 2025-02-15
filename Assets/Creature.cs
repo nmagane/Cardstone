@@ -7,6 +7,34 @@ using UnityEngine.Networking.Types;
 
 public class Creature : MonoBehaviour
 {
+    float _alpha = 1;
+    public float alpha
+    {
+        get
+        {
+            return _alpha;
+        }
+        set
+        {
+            _alpha = value;
+            battlecrySprite.color = new Color(battlecrySprite.color.r, battlecrySprite.color.g, battlecrySprite.color.b, _alpha);
+            spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, _alpha);
+            icon.color = new Color(icon.color.r, icon.color.g, icon.color.b, _alpha);
+            highlight.color = new Color(highlight.color.r, highlight.color.g, highlight.color.b, _alpha);
+            tauntSprite.color = new Color(tauntSprite.color.r, tauntSprite.color.g, tauntSprite.color.b, _alpha);
+            shieldSprite.color = new Color(shieldSprite.color.r, shieldSprite.color.g, shieldSprite.color.b, _alpha*0.6f);
+            silenceSprite.color = new Color(silenceSprite.color.r, silenceSprite.color.g, silenceSprite.color.b, _alpha);
+            stealthSprite.color = new Color(stealthSprite.color.r, stealthSprite.color.g, stealthSprite.color.b, _alpha);
+            triggerSprite.color = new Color(triggerSprite.color.r, triggerSprite.color.g, triggerSprite.color.b, _alpha);
+            deathrattleSprite.color = new Color(deathrattleSprite.color.r, deathrattleSprite.color.g, deathrattleSprite.color.b, _alpha);
+            skull.color = new Color(skull.color.r, skull.color.g, skull.color.b, _alpha);
+            testname.color= new Color(testname.color.r, testname.color.g, testname.color.b, _alpha);
+            health.color= new Color(health.color.r, health.color.g, health.color.b, _alpha);
+            damage.color= new Color(damage.color.r, damage.color.g, damage.color.b, _alpha);
+
+        }
+    }
+    
     public void SetSortingOrder(int x)
     {
         x = x * 10;

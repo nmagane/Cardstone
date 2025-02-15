@@ -297,6 +297,11 @@ public partial class AnimationManager : MonoBehaviour
     {
         StartCoroutine(_dropper(c, frames));
     }
+    public void RemoveMinion(Creature c, float frames)
+    {
+        StartCoroutine(_remover(c, frames));
+    }
+
     public void BounceZoom(GameObject g, float bounce)
     {
         StartCoroutine(bounceZoom(g, bounce));
@@ -345,6 +350,20 @@ public partial class AnimationManager : MonoBehaviour
             yield return Wait(1);
         }
     }
+    IEnumerator _remover(Creature c, float f)
+    {
+        c.SetElevated(true);
+        LerpTo(c,c.transform.localPosition + new Vector3(0, 1.5f),(int)f);
+        LerpZoom(c.gameObject, Vector3.one * 1.15f, f);
+        float e = 2;
+        for (float i = 0; i < f; i++)
+        {
+            c.shadow.elevation -= e / f;
+            c.alpha += -1 / f;
+            yield return Wait(1);
+        }
+        Destroy(c.gameObject);
+    }
 
     Coroutine PlayFader = null;
     public void PlayFade(Card c, Vector3 location, bool hider=false)
@@ -386,12 +405,15 @@ public partial class AnimationManager : MonoBehaviour
     }
     IEnumerator _unfadeCard(Card c)
     {
+        //yield return Wait(5);
+        c.noHover = true;
         float x = c.alpha;
         for (int i = 0; i < 10;i++)
         {
             c.alpha = Mathf.Lerp(x, 1, (i + 1) / 10f);
             yield return Wait(1);
         }
+        c.noHover = false;
     }
 
     public Coroutine Spin(GameObject g, float speed, int frames=0)

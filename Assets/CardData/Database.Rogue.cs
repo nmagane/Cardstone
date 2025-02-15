@@ -96,9 +96,27 @@
         c.classType = Card.Class.Rogue;
         c.eligibleTargets = Board.EligibleTargets.AllCharacters;
 
+        c.manaCost = 2;
+
         c.SPELL = true;
         c.TARGETED = true;
         c.COMBO = true;
+        return c;
+    }
+    static CardInfo Sap()
+    {
+        CardInfo c = new();
+
+        c.name = "Sap";
+        c.text = "Return an enemy minion to your opponent's hand.";
+
+        c.classType = Card.Class.Rogue;
+        c.eligibleTargets = Board.EligibleTargets.AllMinions;
+
+        c.manaCost = 2;
+
+        c.SPELL = true;
+        c.TARGETED = true;
         return c;
     }
 }

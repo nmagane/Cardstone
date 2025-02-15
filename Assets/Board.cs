@@ -319,10 +319,10 @@ public partial class Board : MonoBehaviour
                 ConfirmSwingFace(swingFaceFriendly, swingFaceCanAttack, swingFaceFriendlyFire);
                 break;
             case Server.MessageType.DestroyMinion:
-
+            case Server.MessageType.RemoveMinion:
                 int DestroyInd = message.GetInt();
                 bool DestroyFriendly = message.GetBool();
-                DestroyMinion(DestroyInd, DestroyFriendly);
+                DestroyMinion(DestroyInd, DestroyFriendly,message.type==Server.MessageType.RemoveMinion);
                 break;
             case Server.MessageType.UpdateHero:
                 int UpdateHeroHP = message.GetInt();
@@ -503,7 +503,7 @@ public partial class Board : MonoBehaviour
         QueueAnimation(anim);
     }
 
-    public void DestroyMinion(int ind, bool friendlySide)
+    public void DestroyMinion(int ind, bool friendlySide, bool removal=false)
     {
         Minion m = null;
 
@@ -520,7 +520,7 @@ public partial class Board : MonoBehaviour
 
         //===========ANIM
         VisualInfo anim = new VisualInfo();
-        anim.type = Server.MessageType.DestroyMinion;
+        anim.type = removal? Server.MessageType.RemoveMinion:Server.MessageType.DestroyMinion;
         anim.minions.Add(m);
         anim.isFriendly = friendlySide;
 
