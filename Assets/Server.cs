@@ -6,7 +6,7 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() {Card.Cardname.SI7_Agent, Card.Cardname.Deadly_Poison, Card.Cardname.Eviscerate, Card.Cardname.Archmage_Antonidas, Card.Cardname.Emperor_Thaurissan };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() {Card.Cardname.Soulfire,Card.Cardname.Doomguard,Card.Cardname.SI7_Agent, Card.Cardname.Deadly_Poison, Card.Cardname.Eviscerate, Card.Cardname.Archmage_Antonidas, Card.Cardname.Emperor_Thaurissan };
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Heroic_Strike, Card.Cardname.Heroic_Strike };
     
 #else

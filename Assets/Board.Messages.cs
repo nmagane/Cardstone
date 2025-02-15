@@ -55,8 +55,6 @@ public partial class Board
         if (!currTurn) return;
         if (card.played) return;
         card.played = true;
-        EndTargeting();
-        playingCard = null;
         //Debug.Log("Playing card " + card.card);
         //send message to server to play card index
         Server.CustomMessage message = CreateMessage(Server.MessageType.PlayCard);
@@ -70,6 +68,9 @@ public partial class Board
 
         mana.Spend(card.manaCost);
         mana.UpdateDisplay();
+
+        EndTargeting();
+        playingCard = null;
 
         ConfirmPlayPlayer(card, position);
         //client.Send(message);

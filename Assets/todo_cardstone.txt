@@ -56,15 +56,16 @@ Next mechanic implementation:
 - turn indicator (end turn button color)
 - rope
 
-highlight hero with armorframe
-
 refactor hasaura(taunt / stealth)
-
-discard cost change bug?
 
 ===============================================
 =====================DONE======================
 ===============================================
+
+ordercards fix with adding/discarding at the same time. delay on remove and add
+
+discard cost change bug?
+
 = Combo
 
 = Stealth

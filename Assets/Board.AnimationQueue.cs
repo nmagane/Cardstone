@@ -75,7 +75,6 @@ public partial class Board
            
             case Server.MessageType.DestroyMinion:
                 return DestroyMinionVisual(message);
-            
                 
             case Server.MessageType.EquipWeapon:
                 return EquipWeaponVisual(message);
@@ -253,14 +252,7 @@ public partial class Board
         destroying = true;
         yield return null; //One frame delay to fill up the destroy queue
         List<MinionBoard> boards = new List<MinionBoard>();
-        while (destroyChainQueue.Count>1)
-        {
-            VisualInfo message = destroyChainQueue.Dequeue();
-            MinionBoard board = message.isFriendly ? currMinions : enemyMinions;
-            if (!boards.Contains(board)) boards.Add(board);
-            board.RemoveCreature(message.minions[0], true);
-        }
-        if (destroyChainQueue.Count ==1)
+        while (destroyChainQueue.Count>0)
         {
             VisualInfo message = destroyChainQueue.Dequeue();
             MinionBoard board = message.isFriendly ? currMinions : enemyMinions;
@@ -297,11 +289,56 @@ public partial class Board
     }
     Coroutine DiscardVisual(VisualInfo message)
     {
-        Hand h = message.isFriendly ? currHand : enemyHand;
-        h.RemoveCard(message.handCards[0], Hand.RemoveCardType.Discard, message.names[0], -1, message.isFriendly? -1 :message.ints[0]);
+        discardChainQueue.Enqueue(message);
+        bool going = discarding;
+        if (!going) StartCoroutine(DiscardChain());
 
-        return StartCoroutine(Wait(1));
+        if (visualMessageQueue.Count > 0)
+        {
+            Server.MessageType t = visualMessageQueue.Peek().type;
+            if (t!= Server.MessageType.DiscardCard && t != Server.MessageType.UpdateCard)
+            {
+                Debug.Log("waiting "+visualMessageQueue.Peek().type);
+                return StartCoroutine(Wait(15));
+            }
+        }
+        return null;
     }
+
+    Queue<VisualInfo> discardChainQueue = new Queue<VisualInfo>();
+    bool discarding = false;
+    IEnumerator DiscardChain()
+    {
+        discarding = true;
+        yield return null; //One frame delay to fill up the destroy queue
+        List<Hand> hands = new List<Hand>();
+        while (discardChainQueue.Count > 0)
+        {
+            VisualInfo message = discardChainQueue.Dequeue();
+            Hand hand = message.isFriendly ? currHand : enemyHand;
+            if (!hands.Contains(hand)) hands.Add(hand);
+            hand.RemoveCard(message.handCards[0], Hand.RemoveCardType.Discard, message.names[0], -1, message.isFriendly ? -1 : message.ints[0],false,true);
+        }
+
+        discarding = false;
+        foreach (var h in hands)
+        {
+            StartCoroutine(DelayedOrderCards(h));
+        }
+    }
+
+    bool orderDelay = false;
+    IEnumerator DelayedOrderCards(Hand h)
+    {
+        if (orderDelay) yield break;
+        orderDelay = true;
+        yield return Wait(20);
+        h.OrderCards();
+        CheckHighlights();
+        orderDelay = false;
+    }
+
+
     Coroutine DrawVisual(VisualInfo message)
     {
         currHand.AddCard(message.handCards[0],Hand.CardSource.Deck);
@@ -418,10 +455,42 @@ public partial class Board
 
     Coroutine AddCardVisual(VisualInfo message)
     {
-        Hand hand = message.isFriendly ? currHand : enemyHand;
-        hand.AddCard(message.handCards[0], Hand.CardSource.Custom, message.vectors[0]);
-        CheckHighlights();
-        return StartCoroutine(Wait(15));
+        //Hand hand = message.isFriendly ? currHand : enemyHand;
+        //hand.AddCard(message.handCards[0], Hand.CardSource.Custom, message.vectors[0]);
+        addChainQueue.Enqueue(message);
+        bool going = adding;
+        if (!going) StartCoroutine(AddChain());
+
+        if (visualMessageQueue.Count > 0)
+        {
+            if (visualMessageQueue.Peek().type != Server.MessageType.AddCard)
+            {
+                return StartCoroutine(Wait(15));
+            }
+        }
+        return null;
+    }
+
+    Queue<VisualInfo> addChainQueue = new Queue<VisualInfo>();
+    bool adding = false;
+    IEnumerator AddChain()
+    {
+        adding = true;
+        yield return null; //One frame delay to fill up the destroy queue
+        List<Hand> hands = new List<Hand>();
+        while (addChainQueue.Count > 0)
+        {
+            VisualInfo message = addChainQueue.Dequeue();
+            Hand hand = message.isFriendly ? currHand : enemyHand;
+            if (!hands.Contains(hand)) hands.Add(hand);
+            hand.AddCard(message.handCards[0], Hand.CardSource.Custom, message.vectors[0], true);
+        }
+
+        adding = false;
+        foreach (var h in hands)
+        {
+            StartCoroutine(DelayedOrderCards(h));
+        }
     }
 
     Coroutine MillVisual(VisualInfo message)

@@ -48,7 +48,7 @@ public class Hand
         EnemyDeck,
         Custom,
     }
-    public Card AddCard(HandCard card, CardSource source, Vector3 pos = new Vector3())
+    public Card AddCard(HandCard card, CardSource source, Vector3 pos = new Vector3(), bool noAnim=false)
     {
         Card c = board.CreateCard();
         c.board = board;
@@ -85,8 +85,7 @@ public class Hand
                 break;
         }
 
-        OrderCards();
-        //OrderInds();
+        if (!noAnim) OrderCards();
 
         return c;
     }
@@ -124,7 +123,7 @@ public class Hand
         }
         return c;
     }
-    public void RemoveCard(HandCard card, RemoveCardType type = RemoveCardType.Play, Card.Cardname name = Card.Cardname.Coin, int pos = -1, int manaCost = -1, bool weapon = false)
+    public void RemoveCard(HandCard card, RemoveCardType type = RemoveCardType.Play, Card.Cardname name = Card.Cardname.Coin, int pos = -1, int manaCost = -1, bool weapon = false, bool noAnim=false)
     {
         Card c = cardObjects[card];
         cardObjects.Remove(card);
@@ -177,7 +176,7 @@ public class Hand
             FadeCard(c, enemyHand == false, type == RemoveCardType.Discard, name, manaCost);
         }
 
-        OrderCards();
+        if (!noAnim) OrderCards();
     }
 
     public void MulliganReplace(int index, Card.Cardname c)
@@ -334,6 +333,7 @@ public class Hand
     {
         c.noReturn = true;
         if (friendly==false && cost == -1) cost = c.card.manaCost;
+        if (discard) c.SetElevated(true);
         board.animationManager.FadeCard(c, friendly, discard, name, cost);
     }
 }

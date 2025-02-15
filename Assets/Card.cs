@@ -180,7 +180,6 @@ public class Card : MonoBehaviour
     {
         if (card.manaCost!=_manaCost && !noAnim)
         {
-            Debug.Log("cgn");
             StartCoroutine(Creature.txtBounce(manaCost));
         }
         _manaCost = card.manaCost;

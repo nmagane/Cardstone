@@ -59,6 +59,7 @@ public partial class Board
 
     public void CheckHighlights()
     {
+        if (playerID!=101) Debug.Log("CECHK");
         UnhighlightAll();
 
         if (currTurn == false) return;
