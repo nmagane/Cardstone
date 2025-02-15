@@ -201,7 +201,6 @@ public partial class Match
             if ((spell.card.TARGETED && spell.target == -1) == false)
             {
                 //server.ConfirmBattlecry(spell.match, minion); 
-                //server.CastSpell(spell);
                 server.CastSpell(spell);
                 ResolveTriggerQueue(ref spell);
             }
@@ -428,14 +427,32 @@ public partial class Match
 
             Trigger t = triggerQueue[0];
             triggerQueue.Remove(t);
-            if (players[0].board.Contains(t.minion) || players[1].board.Contains(t.minion))
-            {
-                server.ConfirmBattlecry(this, t.minion, true, t.type == Trigger.Type.Deathrattle);
-            }
+            ConfirmTriggerAnim(t);
             t.ActivateTrigger(this, ref spell);
         }
 
         UpdateAuras();
+    }
+    void ConfirmTriggerAnim(Trigger t)
+    {
+        if (players[0].board.Contains(t.minion) || players[1].board.Contains(t.minion))
+        {
+            server.ConfirmBattlecry(this, t.minion, true, t.type == Trigger.Type.Deathrattle);
+        }
+        if (players[0].weapon != null)
+        {
+            if (t.minion == players[0].weapon.sentinel)
+            {
+                server.ConfirmBattlecry(this, t.minion, true, t.type == Trigger.Type.Deathrattle, true);
+            }
+        }
+        if (players[1].weapon != null)
+        {
+            if (t.minion == players[1].weapon.sentinel)
+            {
+                server.ConfirmBattlecry(this, t.minion, true, t.type == Trigger.Type.Deathrattle, true);
+            }
+        }
     }
     void ReadTriggerBuffer()
     {

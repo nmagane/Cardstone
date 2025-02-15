@@ -40,11 +40,9 @@ next decks to implement:
 	-Rogue
 
 
--confirm trigger anim for weapons
-
 Next mechanic implementation:	
 
-= clean up healing/heal triggers
+-confirm trigger anim for weapons
 
 = Freeze (Minions and players)
 
@@ -61,6 +59,8 @@ batch removecreature visual animation for Vanish when adding that
 ===============================================
 =====================DONE======================
 ===============================================
+= clean up healing/heal triggers
+
 = Spell power
 	-Spell power aura effect
 	-Spell power card text update

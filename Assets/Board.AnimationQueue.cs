@@ -457,6 +457,10 @@ public partial class Board
     {
         if (message.trigger==true)
         {
+            if (message.health == -1)
+            {
+                return message.isFriendly ? currHero.TriggerTrigger() : enemyHero.TriggerTrigger();
+            }
             return StartCoroutine(Wait(30));
         }
 

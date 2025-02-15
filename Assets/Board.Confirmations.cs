@@ -429,14 +429,24 @@ public partial class Board
         QueueAnimation(anim);
         return null;
     }
-    public Coroutine ConfirmTrigger(bool friendly, int index, bool deathrattle)
+    public Coroutine ConfirmTrigger(bool friendly, int index, bool deathrattle, bool weapon)
     {
+        if (weapon)
+        {
+            VisualInfo animWP = new();
+            animWP.type = Server.MessageType.ConfirmTrigger;
+            animWP.trigger = true;
+            animWP.isFriendly = friendly;
+            animWP.health = -1;
+
+            QueueAnimation(animWP);
+            return null;
+        }
         if (deathrattle)
         {
             VisualInfo animDR = new();
             animDR.type = Server.MessageType.ConfirmTrigger;
             animDR.trigger = true;
-            //anim.creatures.Add(m);
 
             QueueAnimation(animDR);
             return null;

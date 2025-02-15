@@ -405,7 +405,8 @@ public partial class Board : MonoBehaviour
                 if (messageID == Server.MessageType.ConfirmTrigger)
                 {
                     bool triggerDeathrattle = message.GetBool();
-                    animation = ConfirmTrigger(battlecryFriendly, battlecryIndex,triggerDeathrattle);
+                    bool triggerWeapon = message.GetBool();
+                    animation = ConfirmTrigger(battlecryFriendly, battlecryIndex,triggerDeathrattle,triggerWeapon);
                 }
                 else
                     animation = ConfirmBattlecry(battlecryFriendly, battlecryIndex);

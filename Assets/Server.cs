@@ -6,7 +6,7 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Ogre_Magi,Card.Cardname.SI7_Agent, Card.Cardname.Soulfire, Card.Cardname.Eviscerate};
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Ogre_Magi,Card.Cardname.SI7_Agent, Card.Cardname.Soulfire, Card.Cardname.Eviscerate, Card.Cardname.Dagger};
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Sap, Card.Cardname.Sap, };
 
 #else
@@ -1208,7 +1208,7 @@ public partial class Server : MonoBehaviour
         ConfirmHeroPower(spell);
     }
 
-    public void ConfirmBattlecry(Match match, Minion minion, bool trigger = false, bool deathrattle=false)
+    public void ConfirmBattlecry(Match match, Minion minion, bool trigger = false, bool deathrattle=false, bool isWeapon=false)
     {
         CustomMessage messageOwner = CreateMessage(MessageType.ConfirmBattlecry);
         CustomMessage messageOpponent = CreateMessage(MessageType.ConfirmBattlecry);
@@ -1218,12 +1218,16 @@ public partial class Server : MonoBehaviour
 
         messageOwner.AddInt(minion.index);
         messageOpponent.AddInt(minion.index);
-
+       
         if (trigger)
         {
             messageOwner.type = messageOpponent.type = MessageType.ConfirmTrigger;
             messageOwner.AddBool(deathrattle);
             messageOpponent.AddBool(deathrattle);
+            
+            messageOwner.AddBool(isWeapon);
+            messageOpponent.AddBool(isWeapon);
+
         }
         Player player = match.FindOwner(minion);
 

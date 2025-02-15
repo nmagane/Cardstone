@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -429,5 +430,15 @@ public class Hero : MonoBehaviour
             weaponShadow.elevation -= e / f;
             yield return Board.Wait(1);
         }
+    }
+
+    public Coroutine TriggerTrigger()
+    {
+        return StartCoroutine(trigAnim());
+    }
+    IEnumerator trigAnim()
+    {
+        yield return board.animationManager.LerpZoom(weaponTriggerSprite.gameObject, Vector3.one * 1.7f, 10);
+        yield return board.animationManager.LerpZoom(weaponTriggerSprite.gameObject, Vector3.one, 10);
     }
 }
