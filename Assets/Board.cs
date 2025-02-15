@@ -212,7 +212,8 @@ public partial class Board : MonoBehaviour
                 Card.Cardname addCard = (Card.Cardname)message.GetInt();
                 bool addSourceFriendly = message.GetBool();
                 int addSourceIndex = message.GetInt();
-                AddCard(addFriendly, addCard, addSourceFriendly, addSourceIndex);
+                int addCostChange = message.GetInt();
+                AddCard(addFriendly, addCard, addSourceFriendly, addSourceIndex, addCostChange);
                 break;
             case Server.MessageType.DrawCards:
                 int draw = message.GetInt();

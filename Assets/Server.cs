@@ -621,7 +621,7 @@ public partial class Server : MonoBehaviour
 
     }
 
-    public HandCard AddCard(Match match, Player player, Card.Cardname card,Minion source=null)
+    public HandCard AddCard(Match match, Player player, Card.Cardname card,Minion source=null, int costChange = 0)
     {
         if (player.hand.Count() >= 10) return new HandCard(card,0);
         HandCard c = player.hand.Add(card);
@@ -651,6 +651,9 @@ public partial class Server : MonoBehaviour
             messageOwner.AddInt(-1);
             messageOpponent.AddInt(-1);
         }
+
+        messageOwner.AddInt(costChange);
+        messageOpponent.AddInt(0);
 
         SendMessage(messageOwner, player);
         SendMessage(messageOpponent, player.opponent);

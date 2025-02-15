@@ -108,10 +108,12 @@ public partial class Board
         anim.ints.Add((int)result);
         QueueAnimation(anim);
     }
-    public void AddCard(bool friendly, Card.Cardname card, bool sourceFriendly, int sourceIndex)
+    public void AddCard(bool friendly, Card.Cardname card, bool sourceFriendly, int sourceIndex, int costChange)
     {
         Hand hand = friendly ? currHand : enemyHand;
         HandCard c = hand.Add(card);
+
+        if (costChange != 0) c.manaCost += costChange;
 
         Vector3 pos = Vector3.zero;
         if (sourceIndex != -1)

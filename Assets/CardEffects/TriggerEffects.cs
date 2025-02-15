@@ -93,6 +93,7 @@ public class TriggerEffects
     public static void Archmage_Antonidas(Match m, Minion minion, Trigger t)
     {
         Player p = minion.player;
-        m.server.AddCard(m, p, Card.Cardname.Soulfire, minion);
+        HandCard c = m.server.AddCard(m, p, Card.Cardname.Chillwind_Yeti, minion,-2);
+        m.server.AddCardAura(m, c, new Aura(Aura.Type.Cost, -2));
     }
 }

@@ -73,7 +73,6 @@ public partial class Board
         playingCard = null;
 
         ConfirmPlayPlayer(card, position);
-        //client.Send(message);
         SendMessage(message);
     }
 
