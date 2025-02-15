@@ -583,7 +583,14 @@ public partial class Board : MonoBehaviour
             mana.SetMax(maxMana);
             currHero.damage = damage;
             currHero.armor = armor;
-            currHero.spellpower = spellpower;
+            if (spellpower!=currHero.spellpower)
+            {
+                currHero.spellpower = spellpower;
+                foreach(Card c in currHand.cardObjects.Values)
+                {
+                    c.UpdateCardText();
+                }
+            }
 
             if (currHero.weapon!=null)
             {

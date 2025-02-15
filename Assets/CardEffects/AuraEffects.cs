@@ -5,6 +5,10 @@ using UnityEngine.Assertions.Must;
 
 public static class AuraEffects
 {
+    public static void Spellpower(Match m, Minion minion, Aura source)
+    {
+        minion.player.AddAura(new Aura(Aura.Type.SP_PLAYER_BUFF, 1, false, true,source));
+    }
     public static void StormwindChampion(Match match, Minion sourceMinion, Aura sourceAura)
     {
         Player owner = match.FindOwner(sourceMinion);

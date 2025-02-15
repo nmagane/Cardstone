@@ -19,6 +19,7 @@ public class Aura
         Spellpower,
         Freeze,
 
+        SP_PLAYER_BUFF,
         SetHealth,
         SetDamage,
 
@@ -71,10 +72,12 @@ public class Aura
             case Type.Damage:
                 minion.damage += value;
                 break;
-            case Type.Spellpower:
+
+            case Type.SP_PLAYER_BUFF:
                 if (minion.player!=null)
                     minion.player.spellpower += 1;
                 break;
+
             case Type.NoAttack:
                 break;
             case Type.Charge:
@@ -108,6 +111,9 @@ public class Aura
 
         switch (type)
         {
+            case Type.Spellpower:
+                AuraEffects.Spellpower(match, minion, this);
+                break;
             case Type.StormwindChampion:
                 AuraEffects.StormwindChampion(match, minion, this);
                 break;
@@ -154,6 +160,7 @@ public class Aura
             case Type.SetCost:
             case Type.Loatheb:
             case Type.Spellpower:
+            case Type.SP_PLAYER_BUFF:
                 stackable = true;
                 break;
         }

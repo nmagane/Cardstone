@@ -134,6 +134,7 @@ public class Card : MonoBehaviour
         shadow = frame.GetComponent<DropShadow>();
     }
 
+    int spellDamage = 0;
     public void Set(HandCard c)
     {
         card = c;
@@ -155,6 +156,7 @@ public class Card : MonoBehaviour
         name.text = cardInfo.name;
         text.text = cardInfo.text;
         _manaCost = c.manaCost;
+        spellDamage = cardInfo.spellDamage;
         manaCost.text = c.manaCost.ToString();
         if (c.MINION || c.WEAPON)
         {
@@ -176,8 +178,16 @@ public class Card : MonoBehaviour
             baseHighlight = highlightSpell;
             comboHighlight = highlightSpellSpecial;
         }
+        UpdateCardText();
     }
     int _manaCost = 0;
+
+    public void UpdateCardText()
+    {
+        if (board == null) return;
+        text.text = string.Format(text.text, spellDamage + board.currHero.spellpower);
+    }
+
     public void UpdateManaCost(bool noAnim =false)
     {
         if (card.manaCost!=_manaCost && !noAnim)
