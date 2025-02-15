@@ -81,6 +81,8 @@
         c.damage = 3;
         c.health = 3;
 
+        c.comboSpellDamage = 2;
+
         c.MINION = true;
         c.COMBO = true;
         c.COMBO_TARGETED = true;
@@ -97,6 +99,8 @@
         c.eligibleTargets = Board.EligibleTargets.AllCharacters;
 
         c.manaCost = 2;
+        c.spellDamage = 2;
+        c.comboSpellDamage = 2;
 
         c.SPELL = true;
         c.TARGETED = true;
@@ -111,9 +115,25 @@
         c.text = "Return an enemy minion to your opponent's hand.";
 
         c.classType = Card.Class.Rogue;
-        c.eligibleTargets = Board.EligibleTargets.AllMinions;
+        c.eligibleTargets = Board.EligibleTargets.EnemyMinions;
 
         c.manaCost = 2;
+
+        c.SPELL = true;
+        c.TARGETED = true;
+        return c;
+    }
+    static CardInfo Shadowstep()
+    {
+        CardInfo c = new();
+
+        c.name = "Shadowstep";
+        c.text = "Return a friendly minion to your hand.\nIt costs 2 less";
+
+        c.classType = Card.Class.Rogue;
+        c.eligibleTargets = Board.EligibleTargets.FriendlyMinions;
+
+        c.manaCost = 0;
 
         c.SPELL = true;
         c.TARGETED = true;

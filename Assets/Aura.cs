@@ -16,6 +16,8 @@ public class Aura
         NoAttack,
         Silence,
         Immune,
+        Spellpower,
+        Freeze,
 
         SetHealth,
         SetDamage,
@@ -68,6 +70,10 @@ public class Aura
                 break;
             case Type.Damage:
                 minion.damage += value;
+                break;
+            case Type.Spellpower:
+                if (minion.player!=null)
+                    minion.player.spellpower += value;
                 break;
             case Type.NoAttack:
                 break;

@@ -255,12 +255,15 @@ public partial class Board : MonoBehaviour
                 SummonMinion(summonedFriendlySide,(Card.Cardname)summonedMinion,summonedPos, (MinionBoard.MinionSource)summonedSource);
                 break;
             case Server.MessageType.UpdateMinion:
-                string minionUpdateJson = message.GetString();
+                int updateMinionHP = message.GetInt();
+                int updateMinionMax = message.GetInt();
+                int updateMinionDmg = message.GetInt();
+                int updateMinionInd = message.GetInt();
                 bool minionUpdateFriendly = message.GetBool();
                 bool UpdateMinionDamaged = message.GetBool();
                 bool UpdateMinionHealed = message.GetBool();
 
-                UpdateMinion(minionUpdateJson, minionUpdateFriendly, UpdateMinionDamaged, UpdateMinionHealed);
+                UpdateMinion(updateMinionHP,updateMinionMax,updateMinionDmg,updateMinionInd, minionUpdateFriendly, UpdateMinionDamaged, UpdateMinionHealed);
                 break;
             case Server.MessageType.UpdateCard:
                 int updateCardInd = message.GetInt();
@@ -334,9 +337,10 @@ public partial class Board : MonoBehaviour
                 int UpdateHeroArmor = message.GetInt();
                 int UpdateHeroWeaponDamage = message.GetInt();
                 int UpdateHeroWeaponDurability = message.GetInt();
+                int UpdateHeroSpellpower = message.GetInt();
                 bool UpdateHeroDamaged = message.GetBool();
                 bool UpdateHeroHealed = message.GetBool();
-                UpdateHero(UpdateHeroHP,UpdateHeroFriendly, UpdateHeroDeckCount,UpdateHeroCurrMana,UpdateHeroMaxMana, UpdateHeroDamage, UpdateHeroArmor,UpdateHeroWeaponDamage,UpdateHeroWeaponDurability,UpdateHeroDamaged, UpdateHeroHealed);
+                UpdateHero(UpdateHeroHP,UpdateHeroFriendly, UpdateHeroDeckCount,UpdateHeroCurrMana,UpdateHeroMaxMana, UpdateHeroDamage, UpdateHeroArmor,UpdateHeroWeaponDamage,UpdateHeroWeaponDurability,UpdateHeroSpellpower,UpdateHeroDamaged, UpdateHeroHealed);
                 break;
             case Server.MessageType.AddAura:
             case Server.MessageType.RemoveAura:
@@ -541,15 +545,14 @@ public partial class Board : MonoBehaviour
 
     }
 
-    public void UpdateMinion(string minionJson,bool friendly, bool damaged, bool healed)
+    public void UpdateMinion(int updatedHealth,int updatedMax, int updatedDamage,int index,bool friendly, bool damaged, bool healed)
     {
-        Minion updatedMinion = JsonUtility.FromJson<Minion>(minionJson);
-        Minion minion = friendly ? currMinions[updatedMinion.index] : enemyMinions[updatedMinion.index];
+        Minion minion = friendly ? currMinions[index] : enemyMinions[index];
 
-        int diff = updatedMinion.health - minion.health;
-        minion.health = updatedMinion.health;
-        minion.maxHealth = updatedMinion.maxHealth;
-        minion.damage = updatedMinion.damage;
+        int diff = updatedHealth - minion.health;
+        minion.health = updatedHealth;
+        minion.maxHealth = updatedMax;
+        minion.damage = updatedDamage;
 
         VisualInfo anim = new VisualInfo();
         anim.ints.Add(minion.health);
@@ -566,7 +569,7 @@ public partial class Board : MonoBehaviour
         //todo: splash damage/heal
         
     }
-    public void UpdateHero(int hp, bool friendly, int deckCount, int currMana,int maxMana, int damage, int armor,int weaponDamage, int weaponDurability, bool damaged, bool healed)
+    public void UpdateHero(int hp, bool friendly, int deckCount, int currMana,int maxMana, int damage, int armor,int weaponDamage, int weaponDurability, int spellpower, bool damaged, bool healed)
     {
         int diff = 0;
 
@@ -580,6 +583,7 @@ public partial class Board : MonoBehaviour
             mana.SetMax(maxMana);
             currHero.damage = damage;
             currHero.armor = armor;
+            currHero.spellpower = spellpower;
 
             if (currHero.weapon!=null)
             {
@@ -597,6 +601,7 @@ public partial class Board : MonoBehaviour
             enemyMana.SetMax(maxMana);
             enemyHero.damage = damage;
             enemyHero.armor = armor;
+            enemyHero.spellpower = spellpower;
 
             if (enemyHero.weapon != null)
             {

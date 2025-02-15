@@ -418,7 +418,12 @@ public partial class Board
 
         if (targetMode == TargetMode.Spell || targetMode == TargetMode.Battlecry || targetMode == TargetMode.HeroPower)
         {
-            if (Database.GetCardData(targetingCard.card).spellDamage >= target.minion.health)
+            Database.CardInfo c = Database.GetCardData(targetingCard.card);
+
+            int d = c.spellDamage;
+            if (c.COMBO && c.comboSpellDamage > 0 && currHero.combo) d = c.comboSpellDamage;
+            if (c.SPELL && targetingCard.card != heroPower.card.card) d += currHero.spellpower;
+            if (d >= target.minion.health)
             {
                 if (target.minion.HasAura(Aura.Type.Shield) == false)
                     target.ShowSkull();

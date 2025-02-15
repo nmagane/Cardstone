@@ -16,6 +16,7 @@ public partial class Database
         public int damage=1;
         public int health=1;
         public int spellDamage = 0;
+        public int comboSpellDamage = 0;
 
         public bool SPELL = false;
         public bool MINION = false;

@@ -33,6 +33,7 @@ public class Hero : MonoBehaviour
 
     public int damage = 0;
     public int armor = 0;
+    public int spellpower = 0;
 
     bool _canAttack = false;
     public bool canAttack

@@ -830,9 +830,18 @@ public partial class Server : MonoBehaviour
         CustomMessage messageOpponent = CreateMessage(MessageType.UpdateMinion);
 
         string jsonText = JsonUtility.ToJson(minion);
-        //Debug.Log(jsonText);
-        messageOwner.AddString(jsonText);
-        messageOpponent.AddString(jsonText);
+
+        messageOwner.AddInt(minion.health);
+        messageOpponent.AddInt(minion.health);
+
+        messageOwner.AddInt(minion.maxHealth);
+        messageOpponent.AddInt(minion.maxHealth);
+
+        messageOwner.AddInt(minion.damage);
+        messageOpponent.AddInt(minion.damage);
+
+        messageOwner.AddInt(minion.index);
+        messageOpponent.AddInt(minion.index);
 
         messageOwner.AddBool(true);
         messageOpponent.AddBool(false);
@@ -1006,6 +1015,9 @@ public partial class Server : MonoBehaviour
             messageOwner.AddInt(-1);
             messageOpponent.AddInt(-1);
         }
+
+        messageOwner.AddInt(player.spellpower);
+        messageOpponent.AddInt(player.spellpower);
 
         messageOwner.AddBool(damaged);
         messageOpponent.AddBool(damaged);

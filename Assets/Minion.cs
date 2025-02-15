@@ -205,6 +205,10 @@ public partial class Minion
             case Aura.Type.Damage:
                 damage -= a.value;
                 break;
+            case Aura.Type.Spellpower:
+                if (player != null)
+                    player.spellpower += a.value;
+                break;
             case Aura.Type.Taunt:
                 break;
             case Aura.Type.Shield:
