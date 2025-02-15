@@ -51,6 +51,7 @@ public partial class Board : MonoBehaviour
     public Deck enemyDeck;
     public int currMana => mana.curr;
     public bool combo => currHero.combo;
+    public int spellpower => currHero.spellpower;
 
     public TMP_Text gameoverText;
     public TMP_Text playerNameText;

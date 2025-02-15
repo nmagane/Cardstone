@@ -597,6 +597,10 @@ PrefabInstance:
       propertyPath: elevation
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7239044974342914001, guid: 0ac0b858c41824042a53e44ab9e3f0f4, type: 3}
+      propertyPath: board
+      value: 
+      objectReference: {fileID: 1733639530}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ac0b858c41824042a53e44ab9e3f0f4, type: 3}
 --- !u!4 &311286535 stripped
@@ -2116,6 +2120,10 @@ PrefabInstance:
       propertyPath: elevation
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7239044974342914001, guid: 0ac0b858c41824042a53e44ab9e3f0f4, type: 3}
+      propertyPath: board
+      value: 
+      objectReference: {fileID: 716059625}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ac0b858c41824042a53e44ab9e3f0f4, type: 3}
 --- !u!114 &703081525 stripped

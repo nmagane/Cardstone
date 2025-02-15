@@ -135,6 +135,7 @@ public class Card : MonoBehaviour
     }
 
     int spellDamage = 0;
+    int comboDamage = 0;
     public void Set(HandCard c)
     {
         card = c;
@@ -154,9 +155,11 @@ public class Card : MonoBehaviour
         icon.sprite = cardSprites[(int)c.card];
         Database.CardInfo cardInfo = Database.GetCardData(c.card);
         name.text = cardInfo.name;
+        originalText = cardInfo.text;
         text.text = cardInfo.text;
         _manaCost = c.manaCost;
         spellDamage = cardInfo.spellDamage;
+        comboDamage = cardInfo.comboSpellDamage;
         manaCost.text = c.manaCost.ToString();
         if (c.MINION || c.WEAPON)
         {
@@ -182,10 +185,17 @@ public class Card : MonoBehaviour
     }
     int _manaCost = 0;
 
+    string originalText="";
     public void UpdateCardText()
     {
+        if (card.SPELL == false) return; //no need to update non-spells
         if (board == null) return;
-        text.text = string.Format(text.text, spellDamage + board.currHero.spellpower);
+
+        int sp = (transform.parent == board.enemyPlayTip.transform) ? board.enemyHero.spellpower : board.spellpower;
+        string s = originalText;
+        s = originalText.Replace("{0}", (sp>0?"(":"")+(spellDamage+sp).ToString() + (sp > 0 ? ")" : ""));
+        s = s.Replace("{1}", (sp>0?"(":"")+(comboDamage+sp).ToString() + (sp > 0 ? ")" : ""));
+        text.text = s;
     }
 
     public void UpdateManaCost(bool noAnim =false)

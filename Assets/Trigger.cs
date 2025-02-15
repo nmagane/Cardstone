@@ -61,11 +61,17 @@ public class Trigger
 
         OnFaceDamage,
 
+        OnHealGiven,
+        OnMinionHealed,
+
+        OnFaceHealed,
+
         Deathrattle,
         OnMinionDeath,
 
         OnWeaponDeath, 
-        OnLethalFaceDamage
+
+        OnLethalFaceDamage,
     }
 
     public enum Ability

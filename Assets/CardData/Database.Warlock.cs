@@ -21,7 +21,7 @@
 
         c.classType = Card.Class.Warlock;
         c.name = "Soulfire";
-        c.text = "Deal 4 damage. Discard a random card.";
+        c.text = "Deal {0} damage. Discard a random card.";
         c.manaCost = 0;
         c.spellDamage = 4;
         c.SPELL = true;

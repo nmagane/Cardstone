@@ -4,17 +4,28 @@ using UnityEngine;
 public partial class Server
 {
 
-    public void HealTarget(CastInfo spell, int heal)
+
+    public void HealTarget(int heal, CastInfo spell)
     {
         if (spell.isHero)
         {
             Player player = spell.isFriendly ? spell.player : spell.player.opponent;
-            //HealFace(spell.match, player, damage);
+            Heal(player, heal, spell);
             return;
         }
         Minion minion = spell.GetTargetMinion();
-        HealMinion(spell.match, minion, heal);
+        Heal(minion, heal, spell);
+
     }
+    public void Heal(Minion target, int heal, CastInfo spell)
+    {
+        HealMinion(spell.match, target, heal);
+    }
+    public void Heal(Player target, int heal, CastInfo spell)
+    {
+        HealFace(spell.match, target, heal);
+    }
+
     public void DamageTarget(int damage, CastInfo spell)
     {
         if (spell.isHero)

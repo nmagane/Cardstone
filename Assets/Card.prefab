@@ -942,6 +942,7 @@ MonoBehaviour:
   hidden: 0
   handPos: {x: 0, y: 0, z: 0}
   handRot: {x: 0, y: 0, z: 0}
+  noHover: 0
 --- !u!61 &6001180810905503547
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -62,14 +62,35 @@ public partial class Server
 
     public void HealMinion(Match match, Minion minion, int heal)
     {
+        bool healed = false;
         if (minion.health<minion.maxHealth)
         {
-            //HEAL TRIGGERS HERE
+            healed = true;
         }
         minion.health = Mathf.Min(minion.health+heal,minion.maxHealth);
-
+        if (healed)
+        {
+            match.TriggerMinion(Trigger.Type.OnHealGiven, minion);
+            match.AddTrigger(Trigger.Type.OnMinionHealed, null, minion);
+        }
         //this is for the client to know if its not an aura change
         match.healedMinions.Add(minion);
+    }
+    public void HealFace(Match match, Player target, int heal)
+    {
+        bool healed = false;
+        if (target.health < target.maxHealth)
+            healed = true;
+
+        target.health = Mathf.Min(target.health + heal, target.maxHealth);
+
+        if (healed)
+        {
+            match.AddTrigger(Trigger.Type.OnFaceHealed, null, target);
+        }
+
+        //this is for the client to know if its not an aura change
+        match.healedPlayers.Add(target);
     }
 
     public void DamageMinion(Match match, Minion minion, int damage)
@@ -115,16 +136,6 @@ public partial class Server
         match.damagedPlayers.Add(target);
     }
     
-    public void HealFace(Match match, Player target, int heal)
-    {
-        target.health -= heal;
-
-        match.AddTrigger(Trigger.Type.OnFaceDamage, null, target);
-
-        //this is for the client to know if its not an aura change
-        match.healedPlayers.Add(target);
-    }
-
     public void FatiguePlayer(Match match, Player target)
     {
         target.fatigue++;
@@ -268,7 +279,7 @@ public partial class Server
                 SilenceMinion(spell);
                 break;
             case Card.Cardname.Voodoo_Doctor:
-                HealTarget(spell, 2);
+                HealTarget(2,spell);
                 break;
             case Card.Cardname.Soulfire:
                 Soulfire(spell);

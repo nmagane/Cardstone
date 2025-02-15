@@ -44,11 +44,6 @@ next decks to implement:
 
 Next mechanic implementation:	
 
-	
-= Spell power
-	-Spell power aura effect
-	-Spell power card text update
-
 = clean up healing/heal triggers
 
 = Freeze (Minions and players)
@@ -57,6 +52,7 @@ Next mechanic implementation:
 
 - turn indicator (end turn button color)
 - rope
+- screenshake on big hits (8+)
 
 refactor hasaura(taunt / stealth)
 
@@ -65,7 +61,10 @@ batch removecreature visual animation for Vanish when adding that
 ===============================================
 =====================DONE======================
 ===============================================
-
+= Spell power
+	-Spell power aura effect
+	-Spell power card text update
+	
 = addcard message to client for stuff like sap, shadowstep, antonidas
 	remove minion with no deathrattle function
 

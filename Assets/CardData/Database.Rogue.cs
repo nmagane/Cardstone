@@ -93,14 +93,14 @@
         CardInfo c = new();
 
         c.name = "Eviscerate";
-        c.text = "Deal {0} damage. Combo: Deal 4 instead.";
+        c.text = "Deal {0} damage. Combo: Deal {1} instead.";
+        c.spellDamage = 2;
+        c.comboSpellDamage = 4;
 
         c.classType = Card.Class.Rogue;
         c.eligibleTargets = Board.EligibleTargets.AllCharacters;
 
         c.manaCost = 2;
-        c.spellDamage = 2;
-        c.comboSpellDamage = 2;
 
         c.SPELL = true;
         c.TARGETED = true;
