@@ -12,7 +12,9 @@ public partial class Server
         public string jsonString;
     }
 
-
+/// <summary>
+/// Intermediate serializable CustomMessage that uses lists instead of queues.
+/// </summary>
     [System.Serializable]
     public class CustomMessageIntermediate
     {

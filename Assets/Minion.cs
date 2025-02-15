@@ -60,12 +60,13 @@ public partial class Minion
         index = ind;
         //manaCost
     }
-    public Minion(Card.Cardname c, int ind, MinionBoard _board, int order=0)
+    public Minion(Card.Cardname c, int ind, MinionBoard _board, int order=0, Player p=null)
     {
         board = _board;
         card = c;
         index = ind;
         playOrder = order;
+        player = p;
 
         Database.CardInfo info = Database.GetCardData(c);
         health = info.health;
@@ -207,7 +208,7 @@ public partial class Minion
                 break;
             case Aura.Type.Spellpower:
                 if (player != null)
-                    player.spellpower += a.value;
+                    player.spellpower -= 1;
                 break;
             case Aura.Type.Taunt:
                 break;

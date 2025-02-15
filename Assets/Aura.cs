@@ -73,7 +73,7 @@ public class Aura
                 break;
             case Type.Spellpower:
                 if (minion.player!=null)
-                    minion.player.spellpower += value;
+                    minion.player.spellpower += 1;
                 break;
             case Type.NoAttack:
                 break;
@@ -153,6 +153,7 @@ public class Aura
             case Type.Cost:
             case Type.SetCost:
             case Type.Loatheb:
+            case Type.Spellpower:
                 stackable = true;
                 break;
         }

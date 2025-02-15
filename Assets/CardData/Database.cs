@@ -157,6 +157,9 @@ public partial class Database
             case Card.Cardname.Sap:
                 return Sap();
 
+            case Card.Cardname.Ogre_Magi:
+                return Ogre_Magi();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 break;
@@ -536,6 +539,22 @@ public partial class Database
         c.MINION = true;
 
         c.triggers.Add((Trigger.Type.OnPlaySpell,Trigger.Side.Friendly,Trigger.Ability.Archmage_Antonidas));
+        return c;
+    }
+    static CardInfo Ogre_Magi()
+    { 
+        CardInfo c = new();
+
+        c.name = "Ogre Magi";
+        c.text = "+1 Spellpower.";
+
+        c.manaCost = 1;
+        c.damage = 4;
+        c.health = 4;
+
+        c.MINION = true;
+
+        c.auras.Add(Aura.Type.Spellpower);
         return c;
     }
 }

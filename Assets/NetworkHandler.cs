@@ -147,7 +147,6 @@ public class NetworkHandler : NetworkBehaviour
         Server.CustomMessageIntermediate mInter = new Server.CustomMessageIntermediate(m);
         mInter.clientID = player.connection.clientID;
         string s = JsonUtility.ToJson(mInter);
-        Debug.Log(s);
         Server.JsonMessage msg = new Server.JsonMessage
         {
             jsonString = s

@@ -29,7 +29,7 @@ public class MinionBoard
     {
         return minions.GetEnumerator();
     }
-    public Minion Add(Card.Cardname c, int ind = -1, int playOrder = 0)
+    public Minion Add(Card.Cardname c, int ind = -1, int playOrder = 0, Player player=null)
     {
         Minion newMinion = null;
         
@@ -39,17 +39,17 @@ public class MinionBoard
         }
         if (Count() == 0)
         {
-            newMinion = new Minion(c, 0, this, playOrder);
+            newMinion = new Minion(c, 0, this, playOrder,player);
             minions.Add(newMinion);
         }
         else if (Count() != 0 && ind >= Count())
         {
-            newMinion = new Minion(c, Count(), this, playOrder);
+            newMinion = new Minion(c, Count(), this, playOrder,player);
             minions.Add(newMinion);
         }
         else
         {
-            newMinion = new Minion(c, ind, this, playOrder);
+            newMinion = new Minion(c, ind, this, playOrder,player);
             minions.Insert(ind, newMinion);
         }
 

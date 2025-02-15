@@ -46,6 +46,8 @@ Next mechanic implementation:
 
 	
 = Spell power
+	-Spell power aura effect
+	-Spell power card text update
 
 = clean up healing/heal triggers
 

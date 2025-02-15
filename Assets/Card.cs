@@ -106,7 +106,8 @@ public class Card : MonoBehaviour
         SI7_Agent,
         Eviscerate,
         Archmage_Antonidas,
-        Sap
+        Sap,
+        Ogre_Magi
     }
 
     public enum Class

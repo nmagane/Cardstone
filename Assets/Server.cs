@@ -6,7 +6,7 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Sap,Card.Cardname.Sap, };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Ogre_Magi,Card.Cardname.SI7_Agent, Card.Cardname.Soulfire, Card.Cardname.Eviscerate};
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Sap, Card.Cardname.Sap, };
 
 #else
@@ -730,7 +730,7 @@ public partial class Server : MonoBehaviour
         if (player.board.Count() >= 7) return null;
 
         Player opponent = match.Opponent(player);
-        Minion m = player.board.Add(minion, position,match.playOrder);
+        Minion m = player.board.Add(minion, position,match.playOrder,player);
         m.player = player;
 
         CustomMessage message = CreateMessage(Server.MessageType.SummonMinion);
