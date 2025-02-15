@@ -97,6 +97,7 @@ public class Trigger
     public Ability ability;
     public Side side;
     public Minion minion;
+    public Secret secret;
 
     public bool CheckTrigger(Type t, Side s, CastInfo spell)
     {

@@ -37,20 +37,24 @@ next decks to implement:
 	-Patron
 	-BRM/GvG Zoo
 	-Freeze
-	-Rogue
+		aura temporary two turns
+	-Oil/Miracle Rogue
+	-Malygos lock?
 
 
-Next mechanic implementation:	
+Next mechanic implementation:
 
--confirm trigger anim for weapons
+= Secrets
 
 = Freeze (Minions and players)
 
-= Secrets
+= If holding dragon effects
+
 
 - turn indicator (end turn button color)
 - rope
 - screenshake on big hits (8+)
+- weapon class colors?
 
 refactor hasaura(taunt / stealth)
 
@@ -59,6 +63,8 @@ batch removecreature visual animation for Vanish when adding that
 ===============================================
 =====================DONE======================
 ===============================================
+-confirm trigger anim for weapons
+
 = clean up healing/heal triggers
 
 = Spell power

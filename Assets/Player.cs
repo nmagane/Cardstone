@@ -56,7 +56,7 @@ public class Player
     public List<Card.Cardname> deck = new List<Card.Cardname>();
     public Hand hand = new Hand();
     public MinionBoard board = new MinionBoard();
-    
+    public List<Secret> secrets = new List<Secret>();
 
     public bool mulligan = false;
 
@@ -76,7 +76,21 @@ public class Player
         if (weapon == null) return;
         weapon.durability--;
     }
+    //===========================
+    public Secret AddSecret(Card.Cardname card, int order)
+    {
+        Secret secret = new Secret(card, this, order);
+        secrets.Add(secret);
 
+        return secret;
+    }
+
+    public void RemoveSecret(Secret secret)
+    {
+        secrets.Remove(secret);
+    }
+
+    //===========================
     public void AddAura(Aura a) => sentinel.AddAura(a);
     public void RemoveAura(Aura a) => sentinel.RemoveAura(a);
     public void RemoveAura(Aura.Type t) => sentinel.RemoveAura(t);
@@ -94,7 +108,16 @@ public class Player
     }
     public void RemoveTrigger(Trigger t) => sentinel.RemoveTrigger(t);
     public void RemoveMatchingTrigger(Trigger g) => sentinel.RemoveMatchingTrigger(g);
-    public List<Trigger> CheckTriggers(Trigger.Type type, Trigger.Side side, CastInfo spell) => sentinel.CheckTriggers(type, side, spell);
+    public List<Trigger> CheckTriggers(Trigger.Type type, Trigger.Side side, CastInfo spell)
+    {
+        List<Trigger> trigs = new List<Trigger>();
+        foreach (Secret s in secrets)
+        {
+            trigs.AddRange(s.CheckTriggers(type,side,spell));
+        }
+        trigs.AddRange(sentinel.CheckTriggers(type, side, spell));
+        return trigs;
+    }
 
     public Player()
     {
