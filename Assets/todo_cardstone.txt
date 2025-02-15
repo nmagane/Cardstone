@@ -49,6 +49,8 @@ Next mechanic implementation:
 
 = clean up healing/heal triggers
 
+= Freeze (Minions and players)
+
 = Secrets
 
 - turn indicator (end turn button color)

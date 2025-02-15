@@ -305,6 +305,7 @@ public partial class Match
     }
     public void StartSequenceHeroPower(CastInfo spell)
     {
+        spell.card.SPELL = false; //hero powers arent spells
         server.CastSpell(spell);
         StartPhase(Phase.AfterHeroPower, ref spell);
         WinCheck();

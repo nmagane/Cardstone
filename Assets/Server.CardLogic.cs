@@ -15,18 +15,35 @@ public partial class Server
         Minion minion = spell.GetTargetMinion();
         HealMinion(spell.match, minion, heal);
     }
-    public void DamageTarget(CastInfo spell, int damage)
+    public void DamageTarget(int damage, CastInfo spell)
     {
         if (spell.isHero)
         {
             Player player = spell.isFriendly ? spell.player : spell.player.opponent;
-            DamageFace(spell.match, player, damage);
+            Damage(player, damage, spell);
             return;
         }
         Minion minion = spell.GetTargetMinion();
-        DamageMinion(spell.match, minion, damage);
+        Damage(minion, damage, spell);
 
     }
+    public void Damage(Minion target,int damage,CastInfo spell)
+    {
+        if (spell.card.SPELL)
+        {
+            damage += spell.player.spellpower;
+        }
+        DamageMinion(spell.match, target, damage);
+    }
+    public void Damage(Player target,int damage, CastInfo spell)
+    {
+        if (spell.card.SPELL)
+        {
+            damage += spell.player.spellpower;
+        }
+        DamageFace(spell.match, target,damage);
+    }
+
     public void Discard(CastInfo spell, int count = 1, bool enemyDiscard = false)
     {
         Player player = enemyDiscard ? spell.player.opponent : spell.player;
@@ -159,9 +176,7 @@ public partial class Server
 
         ConfirmAnimation(spell.match, spell.player, anim);
 
-        spell.isFriendly = true;
-        spell.isHero = true;
-        DamageTarget(spell, 3);
+        Damage(spell.player, 3, spell);
     }
 
     void Lifetap(CastInfo spell)
@@ -177,7 +192,7 @@ public partial class Server
 
         ConfirmAnimation(spell.match, spell.player, anim);
 
-        DamageTarget(spell, 2);
+        Damage(spell.player, 2,spell);
         spell.match.ResolveTriggerQueue(ref spell);
         Draw(spell, 1);
     }
@@ -197,7 +212,7 @@ public partial class Server
 
         ConfirmAnimation(spell.match, spell.player, anim);
 
-        DamageTarget(spell, 4);
+        DamageTarget(4,spell);
         spell.match.ResolveTriggerQueue(ref spell);
         Discard(spell, 1);
     }
@@ -251,9 +266,9 @@ public partial class Server
         MinionBoard b = spell.player.opponent.board;
         foreach(Minion m in b)
         {
-            DamageMinion(spell.match, m, dmg);
+            Damage(m, dmg,spell);
         }
-        DamageFace(spell.match, spell.player.opponent, dmg);
+        Damage(spell.player.opponent, dmg,spell);
     }
     private void Armor_Up(CastInfo spell)
     {
@@ -262,13 +277,13 @@ public partial class Server
     private void SI7_Agent(CastInfo spell)
     {
         if (spell.player.combo == false) return;
-        DamageTarget(spell, 2);
+        DamageTarget(2,spell);
     }
     private void Eviscerate(CastInfo spell)
     {
         int dmg = 2;
         if (spell.player.combo) dmg = 4;
-        DamageTarget(spell, dmg);
+        DamageTarget(dmg,spell);
     }
     private void Sap(CastInfo spell)
     {

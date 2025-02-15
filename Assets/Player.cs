@@ -11,6 +11,7 @@ public class Player
     public int maxHealth = 30;
 
     public int armor = 0;
+    public int spellpower = 0;
 
     bool _canAttack = false;
     public bool canAttack
