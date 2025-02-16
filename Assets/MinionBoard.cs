@@ -102,10 +102,11 @@ public class MinionBoard
     public Minion RemoveAt(int x)
     {
         Minion m = minions[x];
+        m.DEAD = true;
         minions.RemoveAt(x);
         OrderInds();
 
-        if (!server)
+        if (!server && m.creature!=null)
         {
             m.creature.GetComponent<BoxCollider2D>().enabled = false;
             m.creature.Unhighlight();

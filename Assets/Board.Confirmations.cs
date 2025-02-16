@@ -291,7 +291,7 @@ public partial class Board
         Creature atkCreature = allyAttack ? currMinions.minionObjects[attacker] : enemyMinions.minionObjects[attacker];
 
         Minion target = allyAttack && !friendlyFire ? enemyMinions[targetIndex] : currMinions[targetIndex];
-        Creature tarCreature = allyAttack && !friendlyFire ? enemyMinions.minionObjects[target] : currMinions.minionObjects[target];
+        //Creature tarCreature = allyAttack && !friendlyFire ? enemyMinions.minionObjects[target] : currMinions.minionObjects[target];
 
         if (allyAttack)
         {
@@ -304,7 +304,8 @@ public partial class Board
         VisualInfo anim = new VisualInfo();
         anim.type = Server.MessageType.ConfirmAttackMinion;
         anim.creatures.Add(atkCreature);
-        anim.vectors.Add(tarCreature.transform.localPosition);
+        anim.minions.Add(target);
+        //anim.vectors.Add(tarCreature.transform.localPosition);
 
         QueueAnimation(anim);
 

@@ -44,7 +44,7 @@ public partial class Server
         {
             damage += spell.player.spellpower;
         }
-        DamageMinion(spell.match, target, damage);
+        DamageMinion(spell.match, target, damage, spell.player);
     }
     public void Damage(Player target,int damage, CastInfo spell)
     {
@@ -52,7 +52,7 @@ public partial class Server
         {
             damage += spell.player.spellpower;
         }
-        DamageFace(spell.match, target,damage);
+        DamageFace(spell.match, target,damage,spell.player);
     }
 
     public void Discard(CastInfo spell, int count = 1, bool enemyDiscard = false)
@@ -109,16 +109,16 @@ public partial class Server
         if (spell.isHero)
         {
             if (spell.isFriendly)
-                DamageFace(spell.match, spell.player, damage);
+                DamageFace(spell.match, spell.player, damage, spell.player);
             else
-                DamageFace(spell.match, spell.match.Opponent(spell.player), damage);
+                DamageFace(spell.match, spell.match.Opponent(spell.player), damage, spell.player);
             return;
         }
 
         if (spell.isFriendly)
-            DamageMinion(spell.match, spell.player.board[spell.target], damage);
+            DamageMinion(spell.match, spell.player.board[spell.target], damage, spell.player);
         else
-            DamageMinion(spell.match, spell.match.Opponent(spell.player).board[spell.target], damage);
+            DamageMinion(spell.match, spell.match.Opponent(spell.player).board[spell.target], damage, spell.player);
 
     }
 
@@ -134,7 +134,7 @@ public partial class Server
         }
 
         foreach (var m in minions)
-            DamageMinion(spell.match, m, damage);
+            Damage(m, damage, spell);
     }
     void ShatteredSunCleric(CastInfo spell)
     {

@@ -386,6 +386,7 @@ public partial class Board
     }
     Coroutine ConfirmAttackMinionVisual(VisualInfo message)
     {
+        if (message.minions.Count > 0) message.vectors.Insert(0, message.minions[0].creature.transform.localPosition);
         return animationManager.ConfirmAttackMinion(message.creatures[0], message.vectors[0]);
     }
     Coroutine PreSwingVisual(VisualInfo message)

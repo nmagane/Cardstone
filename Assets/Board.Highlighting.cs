@@ -6,7 +6,7 @@ public partial class Board
     public Tooltip hoverTip;
     public void ShowEnemyPlay(Card.Cardname c,int manaCost)
     {
-        enemyPlayTip.Set(c,90);
+        enemyPlayTip.Set(c,120);
         enemyPlayTip.card.card.manaCost = manaCost;
         enemyPlayTip.card.UpdateManaCost(true);
     }

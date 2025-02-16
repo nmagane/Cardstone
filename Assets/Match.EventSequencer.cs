@@ -179,7 +179,14 @@ public partial class Match
         StartPhase(Phase.OnPlayCard, ref spell);
         StartPhase(Phase.OnPlaySpell, ref spell);
 
-        server.CastSpell(spell);
+        if (spell.card.SECRET)
+        {
+            //replace with server.AddSecret()
+            spell.player.AddSecret(spell.card.card, spell.playOrder);
+        }
+        else
+            server.CastSpell(spell);
+
         ResolveTriggerQueue(ref spell);
 
         StartPhase(Phase.AfterPlayCard, ref spell);

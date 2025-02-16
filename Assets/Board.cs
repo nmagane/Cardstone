@@ -123,7 +123,7 @@ public partial class Board : MonoBehaviour
     {
         Application.targetFrameRate = 60;
 #if (UNITY_EDITOR == false)
-        playerID = (ulong)Random.Range(-1000000, 1000000);
+        //playerID = (ulong)Random.Range(-1000000, 1000000);
 #endif
 
         

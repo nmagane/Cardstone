@@ -33,10 +33,10 @@ public class TriggerEffects
 
         if (tar==-1)
         {
-            match.server.DamageFace(match, opponent, damage);
+            match.server.DamageFace(match, opponent, damage,minion.player);
             return;
         }
-        match.server.DamageMinion(match, opponent.board[tar], damage);
+        match.server.DamageMinion(match, opponent.board[tar], damage, minion.player);
     }
 
     public static void AcolyteOfPain(Match match,Minion minion)
@@ -95,5 +95,22 @@ public class TriggerEffects
         Player p = minion.player;
         HandCard c = m.server.AddCard(m, p, Card.Cardname.Chillwind_Yeti, minion,-2);
         m.server.AddCardAura(m, c, new Aura(Aura.Type.Cost, -2));
+    }
+    public static void Ice_Block(Match m, Minion minion, Trigger t)
+    {
+        Player p = minion.player;
+        if (m.currPlayer == p) return;
+        Debug.Log("added sneed");
+        p.AddAura(new Aura(Aura.Type.Immune, 0, true));
+        
+    }
+    public static void Noble_Sacrifice(Match match, Trigger trigger, CastInfo spell)
+    {
+        Player owner = trigger.minion.player;
+        if (owner.board.Count() >= 7) return;
+        Minion sac = match.server.SummonMinion(match, owner, Card.Cardname.Damaged_Golem, MinionBoard.MinionSource.Summon, -1);
+
+        spell.attack.faceAttack = false;
+        spell.attack.target = sac;
     }
 }

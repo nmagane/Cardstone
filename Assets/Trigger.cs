@@ -85,6 +85,8 @@ public class Trigger
         Millhouse,
         Preparation_Cast,
         Archmage_Antonidas,
+        Ice_Block,
+        Noble_Sacrifice
     }
     public enum Side
     {
@@ -161,6 +163,13 @@ public class Trigger
                 break;
             case Ability.Archmage_Antonidas:
                 TriggerEffects.Archmage_Antonidas(match, minion, this);
+                break;
+            case Ability.Ice_Block:
+                //TriggerEffects.Ice_Block(match, minion, this);
+                TriggerEffects.Noble_Sacrifice(match, this, spell);
+                break;
+            case Ability.Noble_Sacrifice:
+                TriggerEffects.Noble_Sacrifice(match, this, spell);
                 break;
         }
 

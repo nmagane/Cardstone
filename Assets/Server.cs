@@ -6,7 +6,7 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Ogre_Magi,Card.Cardname.SI7_Agent, Card.Cardname.Soulfire, Card.Cardname.Eviscerate, Card.Cardname.Dagger};
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Ogre_Magi,Card.Cardname.SI7_Agent, Card.Cardname.Ice_Barrier, Card.Cardname.Eviscerate, Card.Cardname.Dagger};
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Sap, Card.Cardname.Sap, };
 
 #else
@@ -694,7 +694,16 @@ public partial class Server : MonoBehaviour
         confirmPlay.AddBool(true); confirmPlayOpponent.AddBool(false);
         confirmPlay.AddInt(index); confirmPlayOpponent.AddInt(index);
         confirmPlay.AddInt(card.manaCost); confirmPlayOpponent.AddInt(card.manaCost);
-        confirmPlay.AddInt((int)card.card); confirmPlayOpponent.AddInt((int)card.card);
+
+        confirmPlay.AddInt((int)card.card);
+        if (card.SECRET)
+        {
+            confirmPlayOpponent.AddInt(0);
+        }
+        else
+        {
+            confirmPlayOpponent.AddInt((int)card.card);
+        }
         confirmPlay.AddInt(position); confirmPlayOpponent.AddInt(position);
 
         //server.Send(confirmPlay, player.clientID);

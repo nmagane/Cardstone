@@ -159,6 +159,9 @@ public partial class Database
 
             case Card.Cardname.Ogre_Magi:
                 return Ogre_Magi();
+                
+            case Card.Cardname.Ice_Barrier:
+                return Ice_Barrier();
 
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);

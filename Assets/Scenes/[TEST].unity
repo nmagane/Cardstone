@@ -1336,7 +1336,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 525112925}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1361,9 +1361,9 @@ MonoBehaviour:
   m_RefResolutionY: 360
   m_UpscaleRT: 0
   m_PixelSnapping: 0
-  m_CropFrameX: 0
-  m_CropFrameY: 0
-  m_StretchFill: 0
+  m_CropFrameX: 1
+  m_CropFrameY: 1
+  m_StretchFill: 1
 --- !u!81 &525112928
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2262,15 +2262,15 @@ MonoBehaviour:
     maxHealth: 0
     baseHealth: 0
     baseDamage: 0
-    canAttack: 0
     DEAD: 0
     playOrder: 0
   targetingHero: {fileID: 0}
   targetingCard:
     index: 0
-    manaCost: 0
+    _manaCost: 0
     health: 0
     damage: 0
+    baseCost: 0
     card: 0
     eligibleTargets: 0
     SPELL: 0
@@ -2278,9 +2278,11 @@ MonoBehaviour:
     SECRET: 0
     WEAPON: 0
     TARGETED: 0
+    COMBO_TARGETED: 0
     COMBO: 0
     BATTLECRY: 0
     played: 0
+    cardObject: {fileID: 0}
   playingCard: {fileID: 0}
   dragTargeting: 0
   activeTargetingAnim: 0

@@ -93,7 +93,7 @@ public partial class Server
         match.healedPlayers.Add(target);
     }
 
-    public void DamageMinion(Match match, Minion minion, int damage)
+    public void DamageMinion(Match match, Minion minion, int damage, Player source)
     {
         if (minion.HasAura(Aura.Type.Shield))
         {
@@ -113,11 +113,11 @@ public partial class Server
     }
 
 
-    public void DamageFace(Match match, Player target, int damage)
+    public void DamageFace(Match match, Player target, int damage, Player source)
     {
         if (target.health + target.armor <= damage)
         {
-            match.AddTrigger(Trigger.Type.OnLethalFaceDamage, null, target);
+            match.AddTrigger(Trigger.Type.OnLethalFaceDamage, null, source);
             CastInfo c = new CastInfo();
             match.ResolveTriggerQueue(ref c);
         }
@@ -130,7 +130,7 @@ public partial class Server
 
         target.health -= damage;
 
-        match.AddTrigger(Trigger.Type.OnFaceDamage, null, target);
+        match.AddTrigger(Trigger.Type.OnFaceDamage, null, source);
 
         //this is for the client to know if its not an aura change
         match.damagedPlayers.Add(target);
@@ -140,7 +140,7 @@ public partial class Server
     {
         target.fatigue++;
 
-        DamageFace(match, target, target.fatigue);
+        DamageFace(match, target, target.fatigue, target);
     }
     public void SetHealth(Match match, Minion minion, int value)
     {
@@ -207,7 +207,7 @@ public partial class Server
                 }
 
                 ConsumeAttackCharge(action.player);
-                DamageFace(match, targetPlayer, action.player.damage);
+                DamageFace(match, targetPlayer, action.player.damage, action.player);
                 return true;
             }
 
@@ -217,7 +217,7 @@ public partial class Server
                 return false;
 
             ConsumeAttackCharge(attack.attacker);
-            DamageFace(match, targetPlayer, attack.attacker.damage);
+            DamageFace(match, targetPlayer, attack.attacker.damage,attack.attacker.player);
             return true;
         }
 
@@ -241,14 +241,14 @@ public partial class Server
         {
             //Face to Minion
             ConsumeAttackCharge(action.player);
-            DamageMinion(match, attack.target, action.player.damage);
-            DamageFace(match, action.player, attack.target.damage);
+            DamageMinion(match, attack.target, action.player.damage, action.player);
+            DamageFace(match, action.player, attack.target.damage, attack.target.player);
             return true;
         }
         //Minion to minion
         ConsumeAttackCharge(attack.attacker);
-        DamageMinion(match, attack.target, attack.attacker.damage);
-        DamageMinion(match, attack.attacker, attack.target.damage);
+        DamageMinion(match, attack.target, attack.attacker.damage, attack.attacker.player);
+        DamageMinion(match, attack.attacker, attack.target.damage, attack.target.player);
         return true;
     }
     public void CastSpell(CastInfo spell)
