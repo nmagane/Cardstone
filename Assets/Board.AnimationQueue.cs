@@ -465,7 +465,7 @@ public partial class Board
     }
     Coroutine TriggerSecretVisual(VisualInfo message)
     {
-        ShowEnemyPlay(message.secrets[0].card,-1,false);
+        ShowEnemyPlay(message.secrets[0].card,-1,!message.isFriendly);
         return StartCoroutine(message.secrets[0].TriggerAnim());
     }
     Coroutine RemoveSecretVisual(VisualInfo message)

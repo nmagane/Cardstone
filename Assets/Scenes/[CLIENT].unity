@@ -5843,7 +5843,7 @@ MonoBehaviour:
   customColor: {r: 0.177, g: 0.177, b: 0.177, a: 0.5019608}
   layerGap: 1
   sortingLayer: shadowCard
-  elevation: 0.1
+  elevation: 1
 --- !u!212 &1594704691
 SpriteRenderer:
   m_ObjectHideFlags: 0

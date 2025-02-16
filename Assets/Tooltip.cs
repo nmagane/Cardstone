@@ -9,7 +9,7 @@ public class Tooltip : MonoBehaviour
     Coroutine hider = null;
     public void Set(Card.Cardname name, int delay=-1)
     {
-        card.SetSortingOrder(11);
+        card.SetSortingOrder(delay !=-1? 11 : 12);
         if (!anim) transform.localScale = Vector3.one;
         card.Set(new HandCard(name, 1));
 

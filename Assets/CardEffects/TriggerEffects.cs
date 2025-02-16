@@ -110,6 +110,9 @@ public class TriggerEffects
     {
         Player p = minion.player;
         if (m.currPlayer == p) return;
+
+        m.server.TriggerSecret(t.secret);
+
         p.AddAura(new Aura(Aura.Type.Immune, 0, true));
         
     }
@@ -117,6 +120,9 @@ public class TriggerEffects
     {
         Player owner = trigger.minion.player;
         if (owner.board.Count() >= 7) return;
+
+        match.server.TriggerSecret(trigger.secret);
+
         Minion sac = match.server.SummonMinion(match, owner, Card.Cardname.Damaged_Golem, MinionBoard.MinionSource.Summon, -1);
 
         spell.attack.faceAttack = false;
