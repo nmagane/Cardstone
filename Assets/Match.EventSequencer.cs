@@ -181,8 +181,7 @@ public partial class Match
 
         if (spell.card.SECRET)
         {
-            //replace with server.AddSecret()
-            spell.player.AddSecret(spell.card.card, spell.playOrder);
+            server.AddSecret(spell.card.card, spell.player, this);
         }
         else
             server.CastSpell(spell);

@@ -398,6 +398,14 @@ public partial class Board : MonoBehaviour
                 bool destroyWeaponFriendly = message.GetBool();
                 DestroyWeapon(destroyWeaponFriendly);
                 break;
+            case Server.MessageType.AddSecret:
+                bool addSecretFriendly = message.GetBool();
+                Card.Cardname addSecretCard = (Card.Cardname)message.GetInt();
+                ConfirmAddSecret(addSecretFriendly, addSecretCard);
+                break;
+            case Server.MessageType.RemoveSecret:
+            case Server.MessageType.TriggerSecret:
+                break;
             case Server.MessageType.ConfirmBattlecry: 
             case Server.MessageType.ConfirmTrigger:
                 bool battlecryFriendly = message.GetBool();

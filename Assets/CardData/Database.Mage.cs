@@ -2,6 +2,22 @@
 
 public partial class Database
 {
+    static CardInfo Mage_Secret()
+    {
+        CardInfo c = new();
+
+        c.name = "Secret";
+        c.text = "Hidden effect until triggered.";
+
+        c.classType = Card.Class.Mage;
+
+        c.manaCost = 3;
+
+        c.SPELL = true;
+        c.SECRET = true;
+
+        return c;
+    }
     static CardInfo Ice_Barrier()
     {
         CardInfo c = new();

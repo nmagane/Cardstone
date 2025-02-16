@@ -79,6 +79,7 @@ public class Player
     //===========================
     public Secret AddSecret(Card.Cardname card, int order)
     {
+        if (secrets.Count >= 5) return null;
         Secret secret = new Secret(card, this, order);
         secrets.Add(secret);
 

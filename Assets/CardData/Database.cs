@@ -163,11 +163,50 @@ public partial class Database
             case Card.Cardname.Ice_Barrier:
                 return Ice_Barrier();
 
+            case Card.Cardname.Mage_Secret:
+                return Mage_Secret();
+
+            case Card.Cardname.Hunter_Secret:
+                return Hunter_Secret();
+
+            case Card.Cardname.Paladin_Secret:
+                return Paladin_Secret();
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 break;
         }
         return info;
+    }
+    public static Card.Cardname GetClassSecret(Card.Class c)
+    {
+        switch(c)
+        {
+            case Card.Class.Mage:
+                return Card.Cardname.Mage_Secret;
+
+            case Card.Class.Hunter:
+                return Card.Cardname.Hunter_Secret;
+
+            case Card.Class.Paladin:
+                return Card.Cardname.Paladin_Secret;
+            /*
+        case Card.Class.Warrior:
+            break;
+        case Card.Class.Rogue:
+            break;
+        case Card.Class.Warlock:
+            break;
+        case Card.Class.Priest:
+            break;
+        case Card.Class.Druid:
+            break;
+        case Card.Class.Shaman:
+            break;
+        case Card.Class.Neutral:*/
+            default:
+                Debug.LogError("CLASS SECRET UNKNOWN");
+                return Card.Cardname.Cardback;
+        }
     }
 
     static CardInfo Coin()

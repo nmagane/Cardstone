@@ -5,8 +5,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
-public class Hero : MonoBehaviour
+public partial class Hero : MonoBehaviour
 {
+    public GameObject secretObject;
     public bool isElevated = false;
     public void SetElevated(bool elevated)
     {
@@ -48,7 +49,7 @@ public class Hero : MonoBehaviour
             _canAttack = value;
         }
     }
-    public bool combo=false;
+    public bool combo = false;
     public Weapon weapon;
 
     public SpriteRenderer spriteRenderer;
@@ -112,7 +113,7 @@ public class Hero : MonoBehaviour
         weaponDamage.transform.localScale = Vector3.zero;
 
         board.animationManager.LerpZoom(damageSpriteRenderer.gameObject, Vector3.zero, 5);
-    }    
+    }
 
     public void EnableWeapon()
     {
@@ -120,9 +121,9 @@ public class Hero : MonoBehaviour
         weaponFrame.sprite = weaponEnabled;
 
         weaponDamageSprite.enabled = false;
-        weaponArt.enabled = true; 
+        weaponArt.enabled = true;
         board.animationManager.LerpZoom(weaponDamage.gameObject, Vector3.one, 5, 0.2f);
-        if (weaponFrame.transform.localScale !=Vector3.zero) board.animationManager.BounceZoom(weaponFrame.gameObject, 0.1f);
+        if (weaponFrame.transform.localScale != Vector3.zero) board.animationManager.BounceZoom(weaponFrame.gameObject, 0.1f);
         //board.animationManager.LerpZoom(damageSpriteRenderer.gameObject, Vector3.zero, 10);
     }
 
@@ -142,12 +143,12 @@ public class Hero : MonoBehaviour
     public void DisplayWeapon()
     {
         newWep = true;
-        if (weapon!=null)
+        if (weapon != null)
         {
-        //    HideWeapon();
+            //    HideWeapon();
         }
-        
-        if (hider!=null) StopCoroutine(hider);
+
+        if (hider != null) StopCoroutine(hider);
         weaponDamage.text = weapon.damage.ToString();
         weaponDurability.text = weapon.durability.ToString();
 
@@ -163,7 +164,7 @@ public class Hero : MonoBehaviour
     {
         weapon = null;
     }
-    
+
     public void HideWeapon()
     {
         if (newWep)
@@ -179,33 +180,33 @@ public class Hero : MonoBehaviour
         yield return Board.Wait(10);
         board.animationManager.LerpZoom(weaponFrame.gameObject, Vector3.zero, 10, 0.1f);
     }
-    public void UpdateText(int hp=-1, int dmg = -1, int arm = -1)
+    public void UpdateText(int hp = -1, int dmg = -1, int arm = -1)
     {
         int xHp = hp == -1 ? health : hp;
         int xDmg = dmg == -1 ? damage : dmg;
         int xArmor = arm == -1 ? armor : arm;
 
-        if (hpText.text!= xHp.ToString())
+        if (hpText.text != xHp.ToString())
         {
             StartCoroutine(Creature.txtBounce(hpText));
         }
-        if (damageText.text!= xDmg.ToString())
+        if (damageText.text != xDmg.ToString())
         {
             StartCoroutine(Creature.txtBounce(damageText));
         }
-        
-        if (armorText.text!= xArmor.ToString())
+
+        if (armorText.text != xArmor.ToString())
         {
             StartCoroutine(Creature.txtBounce(armorText));
         }
-        
+
         hpText.text = xHp.ToString();
         damageText.text = xDmg.ToString();
         armorText.text = xArmor.ToString();
 
-        if (hp < maxHealth) 
+        if (hp < maxHealth)
             hpText.color = board.minionObject.GetComponent<Creature>().redText;
-        else 
+        else
             hpText.color = board.minionObject.GetComponent<Creature>().baseText;
 
         if (weaponActive)
@@ -287,17 +288,17 @@ public class Hero : MonoBehaviour
         }
     }
 
-    public void Highlight(bool target=false)
+    public void Highlight(bool target = false)
     {
         if (isElevated) return;
         highlight.enabled = true;
         if (target)
         {
-            highlight.sprite = armor>0? hightlightTargetArmor : highlightTarget;
+            highlight.sprite = armor > 0 ? hightlightTargetArmor : highlightTarget;
         }
         else
         {
-            highlight.sprite = armor>0? highlightArmor : highlightNormal;
+            highlight.sprite = armor > 0 ? highlightArmor : highlightNormal;
         }
     }
 
@@ -318,7 +319,7 @@ public class Hero : MonoBehaviour
     }
     void Update()
     {
-        
+
     }
 
 

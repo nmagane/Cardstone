@@ -165,8 +165,7 @@ public class Trigger
                 TriggerEffects.Archmage_Antonidas(match, minion, this);
                 break;
             case Ability.Ice_Block:
-                //TriggerEffects.Ice_Block(match, minion, this);
-                TriggerEffects.Noble_Sacrifice(match, this, spell);
+                TriggerEffects.Ice_Block(match, minion, this);
                 break;
             case Ability.Noble_Sacrifice:
                 TriggerEffects.Noble_Sacrifice(match, this, spell);

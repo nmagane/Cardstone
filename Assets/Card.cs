@@ -108,7 +108,11 @@ public class Card : MonoBehaviour
         Archmage_Antonidas,
         Sap,
         Ogre_Magi,
-        Ice_Barrier
+        Ice_Barrier,
+
+        Mage_Secret,
+        Hunter_Secret,
+        Paladin_Secret,
     }
 
     public enum Class
@@ -397,7 +401,11 @@ public class Card : MonoBehaviour
             //TODO: Not your turn popup
             return;
         }
-
+        if (card.SECRET && board.currHero.HasSecret(card.card))
+        {
+            //EndPlay();
+            return;
+        }
         if (card.eligibleTargets==Board.EligibleTargets.Weapon && board.currHero.weapon==null)
         {
             EndPlay();

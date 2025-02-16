@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
+using Mirror.SimpleWeb;
 using UnityEngine;
 
 public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Ogre_Magi,Card.Cardname.SI7_Agent, Card.Cardname.Ice_Barrier, Card.Cardname.Eviscerate, Card.Cardname.Dagger};
-    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Sap, Card.Cardname.Sap, };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Ogre_Magi,Card.Cardname.SI7_Agent, Card.Cardname.Ice_Barrier, Card.Cardname.Eviscerate, Card.Cardname.Ice_Barrier, Card.Cardname.Ice_Barrier,Card.Cardname.Ice_Barrier,Card.Cardname.Ice_Barrier, };
+    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Ogre_Magi,Card.Cardname.SI7_Agent, Card.Cardname.Ice_Barrier, Card.Cardname.Eviscerate, Card.Cardname.Ice_Barrier, Card.Cardname.Ice_Barrier,Card.Cardname.Ice_Barrier,Card.Cardname.Ice_Barrier, };
+    
 
 #else
     List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { };
@@ -89,6 +91,10 @@ public partial class Server : MonoBehaviour
 
         EquipWeapon,
         DestroyWeapon,
+
+        AddSecret,
+        RemoveSecret,
+        TriggerSecret,
 
         Concede,
 
@@ -698,7 +704,9 @@ public partial class Server : MonoBehaviour
         confirmPlay.AddInt((int)card.card);
         if (card.SECRET)
         {
-            confirmPlayOpponent.AddInt(0);
+            Database.CardInfo c = Database.GetCardData(card.card);
+            int sc = (int)Database.GetClassSecret(c.classType);
+            confirmPlayOpponent.AddInt(sc);
         }
         else
         {
@@ -1258,6 +1266,31 @@ public partial class Server : MonoBehaviour
         
         SendMessage(messageOwner, player);
         SendMessage(messageOpponent, player.opponent);
+
+    }
+
+    public Secret AddSecret(Card.Cardname card, Player player, Match match)
+    {
+        if (player.secrets.Count >= 5) return null;
+        Secret s = player.AddSecret(card, match.playOrder);
+
+        Database.CardInfo info = Database.GetCardData(card);
+        CustomMessage messageOwner = CreateMessage(MessageType.AddSecret);
+        CustomMessage messageOpponent = CreateMessage(MessageType.AddSecret);
+
+        messageOwner.AddBool(true);
+        messageOpponent.AddBool(false);
+
+        messageOwner.AddInt((int)card);
+        messageOpponent.AddInt((int)Database.GetClassSecret(info.classType));
+
+        SendMessage(messageOwner, player);
+        SendMessage(messageOpponent, player.opponent);
+        return s;
+    }
+
+    public void RemoveSecret()
+    {
 
     }
 }

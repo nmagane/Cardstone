@@ -311,7 +311,7 @@ public partial class Board
 
         return null;
     }
-
+    
     public Coroutine ConfirmPreAttackFace(bool allyAttack, int attackerIndex)
     {
         Minion attacker = allyAttack ? currMinions[attackerIndex] : enemyMinions[attackerIndex];
@@ -471,6 +471,19 @@ public partial class Board
         QueueAnimation(anim);
 
         CheckHighlights();
+    }
+
+    void ConfirmAddSecret(bool ally, Card.Cardname card)
+    {
+        Hero h = ally ? currHero : enemyHero;
+        h.AddSecret(card, true);
+
+        VisualInfo anim = new();
+        anim.type = Server.MessageType.AddSecret;
+        anim.isFriendly = ally;
+        anim.names.Add(card);
+
+        QueueAnimation(anim);
     }
 
     void ConfirmAnimation(AnimationManager.AnimationInfo animInfo, bool friendly)

@@ -133,6 +133,9 @@ public partial class Board
 
             case Server.MessageType.ConfirmHeroPower:
                 return ConfirmHeroPowerVisual(message);
+
+            case Server.MessageType.AddSecret:
+                return AddSecretVisual(message);
                 
             case Server.MessageType.AddAura:
                 return AddAuraVisual(message);
@@ -443,6 +446,13 @@ public partial class Board
         if (c.card.played) return null;
         c.UpdateManaCost();
         return null;
+    }
+    Coroutine AddSecretVisual(VisualInfo message)
+    {
+        Hero h = message.isFriendly ? currHero : enemyHero;
+        //h.AddSecret(message.names[0]);
+        h.OrderSecrets();
+        return StartCoroutine(Wait(15));
     }
 
     Coroutine ConfirmBattlecryVisual(VisualInfo message)
