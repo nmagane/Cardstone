@@ -131,7 +131,12 @@ public class Card : MonoBehaviour
         Paladin,
         Hunter,
     }
-
+    public enum Tribe
+    {
+        Demon,
+        Dragon,
+        Mech,
+    }
     public Sprite[] minionCards;
     public Sprite[] spellCards;
     public Sprite[] weaponCards;

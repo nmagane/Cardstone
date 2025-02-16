@@ -5125,7 +5125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   disableInput: 0
-  animationManager: {fileID: 331482548}
+  animationManager: {fileID: 1382597164}
   mainmenu: {fileID: 839021285}
   gameAnchor: {fileID: 955974029}
   mulliganButton: {fileID: 1016520493}

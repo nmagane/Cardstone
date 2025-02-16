@@ -67,7 +67,7 @@ public partial class Match
         Player player = spell.player;
         Player opponent = player.opponent;
 
-
+        CheckUnfreeze(player);
         //===============
         //minion auras
         foreach (var m in player.board)
@@ -97,6 +97,15 @@ public partial class Match
         if (players[1].weapon!=null) players[1].weapon.RemoveTemporaryAuras();
 
         ResolveTriggerQueue(ref spell);
+    }
+
+    void CheckUnfreeze(Player p)
+    {
+        if (p.sentinel.Unfreezable()) p.RemoveAura(Aura.Type.Freeze);
+        foreach(Minion m in p.board)
+        {
+            if (m.Unfreezable()) server.RemoveAura(this, m, m.FindAura(Aura.Type.Freeze));
+        }
     }
 
     public void StartSequenceStartTurn(CastInfo spell)

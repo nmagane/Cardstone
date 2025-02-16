@@ -301,11 +301,9 @@ public partial class Minion
         foreach (var aura in removeList)
             RemoveAura(aura);
     }
-    void Unfreeze()
+    public bool Unfreezable()
     {
-        if (HasAura(Aura.Type.Freeze) == false) return;
-        if (_canAttack)
-            RemoveAura(Aura.Type.Freeze);
+        return _canAttack && HasAura(Aura.Type.Freeze);
     }
     public void RemoveTemporaryAuras(Aura.Type t)
     {
