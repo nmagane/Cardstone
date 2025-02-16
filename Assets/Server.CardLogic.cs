@@ -302,4 +302,23 @@ public partial class Server
         spell.match.server.AddCard(spell.match, m.player, m.card, m, 0);
         spell.match.server.RemoveMinion(spell.match,m);
     }
+
+    private void Frostbolt(CastInfo spell)
+    {
+        int damage = 3;
+        DamageTarget(damage, spell);
+
+        spell.match.ResolveTriggerQueue(ref spell);
+
+        if (spell.isHero)
+        {
+            Player p = spell.isFriendly ? spell.player : spell.player.opponent;
+            p.AddAura(new Aura(Aura.Type.Freeze));
+        }
+        else
+        {
+            Minion m = spell.GetTargetMinion();
+            spell.match.server.AddAura(spell.match, m, new Aura(Aura.Type.Freeze));
+        }
+    }
 }

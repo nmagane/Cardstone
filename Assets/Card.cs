@@ -113,6 +113,8 @@ public class Card : MonoBehaviour
         Mage_Secret,
         Hunter_Secret,
         Paladin_Secret,
+
+        Frostbolt,
     }
 
     public enum Class

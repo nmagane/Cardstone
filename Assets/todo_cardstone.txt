@@ -35,6 +35,12 @@ NOTE: millhouse/loatheb etc are currently set to minion costs for testing instea
 
 - change after attack events if target is changed to/from face/minion
 
+Mechanics for next-next demo:
+= Secret removal without trigger (Flare)
+= Overload
+= Choose one cards
+= Discover
+
 next decks to implement:
 	-Patron
 	-BRM/GvG Zoo
@@ -46,18 +52,9 @@ next decks to implement:
 
 Next mechanic implementation:
 
-= Secrets
-	=server secretplayed card "names"(mage secret, hunter secret, etc..);
-	=server addsecret, triggersecret, removesecret messages.
-	=board "Secret Triggered!" animation.
-
 = Freeze (Minions and players)
 
 = If holding dragon effects (highlighting in hand, use client-side aura?)
-= Overload
-= Choose one cards
-= Discover
-
 
 
 - turn indicator (end turn button color)
@@ -71,7 +68,12 @@ batch removecreature visual animation for Vanish when adding that
 
 ===============================================
 =====================DONE======================
-===============================================
+================================================ 
+Secrets
+	=server secretplayed card "names"(mage secret, hunter secret, etc..);
+	=server addsecret, triggersecret, removesecret messages.
+	=board "Secret Triggered!" animation.
+
 -confirm trigger anim for weapons
 
 = clean up healing/heal triggers

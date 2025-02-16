@@ -171,6 +171,9 @@ public partial class Database
 
             case Card.Cardname.Paladin_Secret:
                 return Paladin_Secret();
+
+            case Card.Cardname.Frostbolt:
+                return Frostbolt();
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 break;

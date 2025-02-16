@@ -25,6 +25,7 @@ public class Creature : MonoBehaviour
             shieldSprite.color = new Color(shieldSprite.color.r, shieldSprite.color.g, shieldSprite.color.b, _alpha*0.6f);
             silenceSprite.color = new Color(silenceSprite.color.r, silenceSprite.color.g, silenceSprite.color.b, _alpha);
             stealthSprite.color = new Color(stealthSprite.color.r, stealthSprite.color.g, stealthSprite.color.b, _alpha);
+            freezeSprite.color = new Color(stealthSprite.color.r, stealthSprite.color.g, stealthSprite.color.b, _alpha);
             triggerSprite.color = new Color(triggerSprite.color.r, triggerSprite.color.g, triggerSprite.color.b, _alpha);
             deathrattleSprite.color = new Color(deathrattleSprite.color.r, deathrattleSprite.color.g, deathrattleSprite.color.b, _alpha);
             skull.color = new Color(skull.color.r, skull.color.g, skull.color.b, _alpha);
@@ -46,6 +47,7 @@ public class Creature : MonoBehaviour
         shieldSprite.sortingOrder = x+3;
         silenceSprite.sortingOrder = x+3;
         stealthSprite.sortingOrder = x+4;
+        freezeSprite.sortingOrder = x+4;
         triggerSprite.sortingOrder = x+5;
         deathrattleSprite.sortingOrder = x+5;
         skull.sortingOrder = x+5;
@@ -67,6 +69,7 @@ public class Creature : MonoBehaviour
         shieldSprite.sortingLayerName = x;
         silenceSprite.sortingLayerName = x;
         stealthSprite.sortingLayerName = x;
+        freezeSprite.sortingLayerName = x;
         triggerSprite.sortingLayerName = x;
         deathrattleSprite.sortingLayerName = x;
         skull.sortingLayerName = x;
@@ -83,6 +86,7 @@ public class Creature : MonoBehaviour
     public SpriteRenderer shieldSprite;
     public SpriteRenderer silenceSprite;
     public SpriteRenderer stealthSprite;
+    public SpriteRenderer freezeSprite;
     public SpriteRenderer triggerSprite;
     public SpriteRenderer deathrattleSprite;
     public SpriteRenderer battlecrySprite;
@@ -252,6 +256,18 @@ public class Creature : MonoBehaviour
         board.animationManager.LerpZoom(shieldSprite.gameObject, Vector3.zero, 5, 0.1f);
     }
 
+    public void EnableFreeze()
+    {
+        freezeSprite.enabled = true;
+        freezeSprite.transform.localScale = Vector3.one * 1.15f;
+        board.animationManager.LerpZoom(freezeSprite.gameObject, Vector3.one, 10, 0.1f);
+    }
+    public void DisableFreeze()
+    {
+        freezeSprite.enabled = false;
+        board.animationManager.LerpZoom(freezeSprite.gameObject, Vector3.zero, 5, 0.1f);
+    }
+
     public void CheckTriggers()
     {
         if (minion.triggers.Count>0)
@@ -308,11 +324,23 @@ public class Creature : MonoBehaviour
                 DisableShield();
         }
 
+        if (minion.HasAura(Aura.Type.Freeze))
+        {
+            if (freezeSprite.enabled == false)
+                EnableFreeze();
+        }
+        else
+        {
+            if (freezeSprite.enabled == true)
+                DisableFreeze();
+        }
+
         if (minion.STEALTH)
         {
             stealthSprite.enabled = true;
             shieldSprite.color = new Color(1, 1, 1, 0.25f);
             tauntSprite.color = new Color(1, 1, 1, 0.6f);
+            freezeSprite.color = new Color(1, 1, 1, 0.6f);
             silenceSprite.color = new Color(1, 1, 1, 0.6f);
         }
         else
@@ -320,6 +348,7 @@ public class Creature : MonoBehaviour
             stealthSprite.enabled = false;
             shieldSprite.color = new Color(1,1,1,0.45f);
             tauntSprite.color = Color.white;
+            freezeSprite.color = Color.white;
             silenceSprite.color = Color.white;
         }
     }

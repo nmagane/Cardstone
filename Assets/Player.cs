@@ -18,11 +18,12 @@ public class Player
     {
         get
         {
-            return (_canAttack && damage > 0);
+            return _canAttack && damage > 0 && HasAura(Aura.Type.NoAttack) == false && HasAura(Aura.Type.Freeze) == false;
         }
         set
         {
             _canAttack = value;
+            sentinel.canAttack = value;
         }
     }
     public int damage

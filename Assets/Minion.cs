@@ -22,7 +22,7 @@ public partial class Minion
     {
         get
         {
-            return _canAttack && damage>0 && HasAura(Aura.Type.NoAttack)==false;
+            return _canAttack && damage>0 && HasAura(Aura.Type.NoAttack)==false && HasAura(Aura.Type.Freeze)==false;
         }
         set
         {
@@ -300,6 +300,12 @@ public partial class Minion
         }
         foreach (var aura in removeList)
             RemoveAura(aura);
+    }
+    void Unfreeze()
+    {
+        if (HasAura(Aura.Type.Freeze) == false) return;
+        if (_canAttack)
+            RemoveAura(Aura.Type.Freeze);
     }
     public void RemoveTemporaryAuras(Aura.Type t)
     {

@@ -67,6 +67,7 @@ public partial class Match
         Player player = spell.player;
         Player opponent = player.opponent;
 
+
         //===============
         //minion auras
         foreach (var m in player.board)

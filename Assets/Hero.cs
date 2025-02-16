@@ -38,6 +38,9 @@ public partial class Hero : MonoBehaviour
     public int armor = 0;
     public int spellpower = 0;
 
+    public bool FREEZE = false;
+    public bool IMMUNE = false;
+
     bool _canAttack = false;
     public bool canAttack
     {

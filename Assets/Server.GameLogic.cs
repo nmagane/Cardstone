@@ -329,6 +329,10 @@ public partial class Server
             case Card.Cardname.Sap:
                 Sap(spell);
                 break;
+                
+            case Card.Cardname.Frostbolt:
+                Frostbolt(spell);
+                break;
 
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);
