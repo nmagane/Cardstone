@@ -46,7 +46,7 @@ public partial class Hero : MonoBehaviour
     {
         get
         {
-            return _canAttack && damage > 0;
+            return _canAttack && damage > 0 && !FREEZE;
         }
         set
         {
@@ -235,6 +235,36 @@ public partial class Hero : MonoBehaviour
         {
             board.animationManager.LerpZoom(armorSpriteRenderer.gameObject, Vector3.one, 5, 0.2f);
         }
+
+        if (FREEZE)
+        {
+            if (freezeSprite.enabled == false) EnableEffect(freezeSprite);
+        }
+        else
+        {
+            DisableEffect(freezeSprite);
+        }
+        if (IMMUNE)
+        {
+            if (immuneSprite.enabled == false) EnableEffect(immuneSprite);
+        }
+        else
+        {
+            DisableEffect(immuneSprite);
+        }
+    }
+    public SpriteRenderer freezeSprite;
+    public SpriteRenderer immuneSprite;
+    public void EnableEffect(SpriteRenderer s)
+    {
+        s.enabled = true;
+        s.transform.localScale = Vector3.one * 1.15f;
+        board.animationManager.LerpZoom(s.gameObject, Vector3.one, 10, 0.1f);
+    }
+    public void DisableEffect(SpriteRenderer s)
+    {
+        s.enabled = false;
+        s.transform.localScale = Vector3.zero;
     }
 
     public void UpdateWeaponText(int dmg = -1, int dura = -1)
@@ -297,6 +327,7 @@ public partial class Hero : MonoBehaviour
     public void Highlight(bool target = false)
     {
         if (isElevated) return;
+        if (target && IMMUNE) return;
         highlight.enabled = true;
         if (target)
         {

@@ -93,9 +93,27 @@ public class Player
     }
 
     //===========================
-    public void AddAura(Aura a) => sentinel.AddAura(a);
-    public void RemoveAura(Aura a) => sentinel.RemoveAura(a);
-    public void RemoveAura(Aura.Type t) => sentinel.RemoveAura(t);
+    public void AddAura(Aura a)
+    {
+        if (a.type == Aura.Type.Freeze || a.type == Aura.Type.Immune)
+            match.server.AddPlayerAura(this, a);
+
+        sentinel.AddAura(a);
+    }
+    public void RemoveAura(Aura a)
+    {
+        if (a.type == Aura.Type.Freeze || a.type == Aura.Type.Immune)
+            match.server.RemovePlayerAura(this, a);
+
+        sentinel.RemoveAura(a);
+    }
+    public void RemoveAura(Aura.Type t)
+    {
+        if (t == Aura.Type.Freeze || t == Aura.Type.Immune)
+            match.server.RemovePlayerAura(this, new Aura(t));
+
+        sentinel.RemoveAura(t);
+    }
     public void RefreshForeignAuras() => sentinel.RefreshForeignAuras();
     public void RemoveTemporaryAuras() => sentinel.RemoveTemporaryAuras();
     public void RemoveMatchingAura(Aura a) => sentinel.RemoveMatchingAura(a);

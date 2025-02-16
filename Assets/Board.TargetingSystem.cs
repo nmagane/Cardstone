@@ -128,6 +128,12 @@ public partial class Board
             Debug.Log("Invalid target");
             return;
         }
+        if (hero.IMMUNE)
+        {
+            //immune target
+            Debug.Log("Invalid target");
+            return;
+        }
         bool friendly = IsFriendly(hero);
         switch (targetMode)
         {

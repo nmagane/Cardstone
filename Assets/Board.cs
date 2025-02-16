@@ -344,6 +344,12 @@ public partial class Board : MonoBehaviour
                 bool UpdateHeroHealed = message.GetBool();
                 UpdateHero(UpdateHeroHP,UpdateHeroFriendly, UpdateHeroDeckCount,UpdateHeroCurrMana,UpdateHeroMaxMana, UpdateHeroDamage, UpdateHeroArmor,UpdateHeroWeaponDamage,UpdateHeroWeaponDurability,UpdateHeroSpellpower,UpdateHeroDamaged, UpdateHeroHealed);
                 break;
+            case Server.MessageType.AddAuraPlayer:
+            case Server.MessageType.RemoveAuraPlayer:
+                bool playerAuraChange = message.GetBool();
+                Aura.Type playerAuraType = (Aura.Type)message.GetInt();
+                AuraPlayerChange(playerAuraChange, playerAuraType, messageID==Server.MessageType.RemoveAuraPlayer);
+                break;
             case Server.MessageType.AddAura:
             case Server.MessageType.RemoveAura:
                 int addAuraMinionIndex = message.GetInt();

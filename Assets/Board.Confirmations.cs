@@ -503,7 +503,19 @@ public partial class Board
     {
         //TODO: REMOVE SECRET WITHOUT TRIGGERING
     }
-
+    private void AuraPlayerChange(bool friendly, Aura.Type type, bool remove)
+    {
+        Hero h = friendly ? currHero : enemyHero;
+        switch (type)
+        {
+            case Aura.Type.Freeze:
+                h.FREEZE = !remove;
+                break;
+            case Aura.Type.Immune:
+                h.IMMUNE = !remove;
+                break;
+        }
+    }
     void ConfirmAnimation(AnimationManager.AnimationInfo animInfo, bool friendly)
     {
         AnimationManager.AnimationData data = TranslateAnimationInfo(animInfo,friendly);

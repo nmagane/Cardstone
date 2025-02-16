@@ -299,7 +299,11 @@ public partial class Minion
 
         }
         foreach (var aura in removeList)
-            RemoveAura(aura);
+        {
+            if (this.player.sentinel == this)
+                player.RemoveAura(aura);
+            else RemoveAura(aura);
+        }
     }
     public bool Unfreezable()
     {

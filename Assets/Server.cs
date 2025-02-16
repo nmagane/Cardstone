@@ -7,7 +7,7 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Chillwind_Yeti, Card.Cardname.Frostbolt, Card.Cardname.Dagger };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Ice_Barrier, Card.Cardname.Frostbolt, Card.Cardname.Dagger };
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Chillwind_Yeti, Card.Cardname.Frostbolt, Card.Cardname.Dagger };
     
     
@@ -74,7 +74,9 @@ public partial class Server : MonoBehaviour
         MillCard,
 
         AddAura,
+        AddAuraPlayer,
         RemoveAura,
+        RemoveAuraPlayer,
 
         AddTrigger,
         RemoveTrigger,
@@ -1050,10 +1052,33 @@ public partial class Server : MonoBehaviour
     public void AddPlayerAura(Player player, Aura a)
     {
         if (a.type != Aura.Type.Freeze && a.type != Aura.Type.Immune) return;
+        CustomMessage messageOwner = CreateMessage(MessageType.AddAuraPlayer);
+        CustomMessage messageOpponent = CreateMessage(MessageType.AddAuraPlayer);
+
+        messageOwner.AddInt((int)a.type);
+        messageOpponent.AddInt((int)a.type);
+
+        messageOwner.AddBool(true);
+        messageOpponent.AddBool(false);
+
+        SendMessage(messageOwner, player);
+        SendMessage(messageOpponent, player.opponent);
+
     }
     public void RemovePlayerAura(Player player, Aura a)
     {
+        if (a.type != Aura.Type.Freeze && a.type != Aura.Type.Immune) return;
+        CustomMessage messageOwner = CreateMessage(MessageType.RemoveAuraPlayer);
+        CustomMessage messageOpponent = CreateMessage(MessageType.RemoveAuraPlayer);
 
+        messageOwner.AddInt((int)a.type);
+        messageOpponent.AddInt((int)a.type);
+
+        messageOwner.AddBool(true);
+        messageOpponent.AddBool(false);
+
+        SendMessage(messageOwner, player);
+        SendMessage(messageOpponent, player.opponent);
     }
 
     public void RemoveTrigger(Match match, Minion minion, Trigger trigger)
