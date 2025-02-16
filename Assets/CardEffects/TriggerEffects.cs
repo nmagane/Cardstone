@@ -96,11 +96,20 @@ public class TriggerEffects
         HandCard c = m.server.AddCard(m, p, Card.Cardname.Chillwind_Yeti, minion,-2);
         m.server.AddCardAura(m, c, new Aura(Aura.Type.Cost, -2));
     }
+    public static void Ice_Barrier(Match m, Minion minion, Trigger t)
+    {
+        Player p = minion.player;
+        if (m.currPlayer == p) return;
+
+        m.server.TriggerSecret(t.secret);
+
+        p.armor += 8;
+        
+    }
     public static void Ice_Block(Match m, Minion minion, Trigger t)
     {
         Player p = minion.player;
         if (m.currPlayer == p) return;
-        Debug.Log("added sneed");
         p.AddAura(new Aura(Aura.Type.Immune, 0, true));
         
     }

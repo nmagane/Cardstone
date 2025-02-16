@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mirror.BouncyCastle.Bcpg;
 using TMPro;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
@@ -180,11 +181,13 @@ public partial class Hero : MonoBehaviour
         yield return Board.Wait(10);
         board.animationManager.LerpZoom(weaponFrame.gameObject, Vector3.zero, 10, 0.1f);
     }
+    public int armDisplay = 0;
     public void UpdateText(int hp = -1, int dmg = -1, int arm = -1)
     {
         int xHp = hp == -1 ? health : hp;
         int xDmg = dmg == -1 ? damage : dmg;
         int xArmor = arm == -1 ? armor : arm;
+        armDisplay = xArmor;
 
         if (hpText.text != xHp.ToString())
         {

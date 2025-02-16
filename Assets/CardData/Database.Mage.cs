@@ -23,7 +23,7 @@ public partial class Database
         CardInfo c = new();
 
         c.name = "Ice Barrier";
-        c.text = "";
+        c.text = "Secret: When your hero is attacked, gain 8 armor.";
 
         c.classType = Card.Class.Mage;
 
@@ -32,7 +32,8 @@ public partial class Database
         c.SPELL = true;
         c.SECRET = true;
 
-        c.triggers.Add((Trigger.Type.BeforeAttackFace, Trigger.Side.Enemy, Trigger.Ability.Ice_Block));
+        c.triggers.Add((Trigger.Type.BeforeAttackFace, Trigger.Side.Enemy, Trigger.Ability.Ice_Barrier));
+        c.triggers.Add((Trigger.Type.BeforeSwingFace, Trigger.Side.Enemy, Trigger.Ability.Ice_Barrier));
         return c;
     }
 }

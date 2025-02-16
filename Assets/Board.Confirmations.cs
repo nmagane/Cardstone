@@ -485,6 +485,24 @@ public partial class Board
 
         QueueAnimation(anim);
     }
+    void ConfirmTriggerSecret(bool ally, int index, Card.Cardname card)
+    {
+        Hero h = ally ? currHero : enemyHero;
+        if (ally & h.secrets[index].card != card) Debug.LogError("WRONG SECRET");
+        SecretDisplay s = h.RemoveAt(index,true);
+        s.Set(card);
+
+        VisualInfo anim = new();
+        anim.type = Server.MessageType.TriggerSecret;
+        anim.isFriendly = ally;
+        anim.secrets.Add(s);
+
+        QueueAnimation(anim);
+    }
+    void ConfirmRemoveSecret(bool ally, int index, Card.Cardname card)
+    {
+        //TODO: REMOVE SECRET WITHOUT TRIGGERING
+    }
 
     void ConfirmAnimation(AnimationManager.AnimationInfo animInfo, bool friendly)
     {

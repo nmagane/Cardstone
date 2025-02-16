@@ -19,11 +19,11 @@ public partial class Hero
 
         if (!noAnim) OrderSecrets();
     }
-    public SecretDisplay RemoveAt(int x)
+    public SecretDisplay RemoveAt(int x, bool noAnim=false)
     {
         SecretDisplay s = secrets[x];
         secrets.Remove(s);
-        OrderSecrets();
+        if (!noAnim)  OrderSecrets();
         return s;
     }
     public bool HasSecret(Card.Cardname card)

@@ -1289,8 +1289,37 @@ public partial class Server : MonoBehaviour
         return s;
     }
 
-    public void RemoveSecret()
+    public void TriggerSecret(Secret s)
     {
+        RemoveSecret(s, true);
+    }
+    public void RemoveSecret(Secret secret, bool trigger=false)
+    {
+        int i = 0;
+        foreach(Secret s in secret.player.secrets)
+        {
+            if (s == secret) break;
+            i++;
+        }
+        Player player = secret.player;
+
+        player.RemoveSecret(secret);
+
+        MessageType msg = trigger ? MessageType.TriggerSecret : MessageType.RemoveSecret;
+        CustomMessage messageOwner = CreateMessage(msg);
+        CustomMessage messageOpponent = CreateMessage(msg);
+
+        messageOwner.AddBool(true);
+        messageOpponent.AddBool(false);
+
+        messageOwner.AddInt(i);
+        messageOpponent.AddInt(i);
+
+        messageOwner.AddInt((int)secret.card);
+        messageOpponent.AddInt((int)secret.card);
+
+        SendMessage(messageOwner, player);
+        SendMessage(messageOpponent, player.opponent);
 
     }
 }

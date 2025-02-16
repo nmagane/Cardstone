@@ -15,6 +15,7 @@ public partial class Board : MonoBehaviour
     public GameObject gameAnchor;   
     public UIButton mulliganButton;
     public GameObject waitingEnemyMulliganMessage;
+    public SpriteRenderer secretPopup;
 
     public Card hoveredCard = null;
     public BoardSide hoveredSide = null;
@@ -405,6 +406,13 @@ public partial class Board : MonoBehaviour
                 break;
             case Server.MessageType.RemoveSecret:
             case Server.MessageType.TriggerSecret:
+                bool removeSecretFriendly = message.GetBool();
+                int removeSecretIndex = message.GetInt();
+                Card.Cardname removeSecretCard = (Card.Cardname)message.GetInt();
+                if (message.type == Server.MessageType.TriggerSecret)
+                    ConfirmTriggerSecret(removeSecretFriendly, removeSecretIndex, removeSecretCard);
+                else
+                    ConfirmRemoveSecret(removeSecretFriendly, removeSecretIndex, removeSecretCard);
                 break;
             case Server.MessageType.ConfirmBattlecry: 
             case Server.MessageType.ConfirmTrigger:

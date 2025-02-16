@@ -16,6 +16,7 @@ public partial class Board
         public List<Card.Cardname> names = new();
         public List<Vector3> vectors = new();
         public List<Card> cards = new();
+        public List<SecretDisplay> secrets = new();
         public List<Minion> minions = new List<Minion>();
         public List<HandCard> handCards = new();
         public List<string> strings = new();
@@ -136,6 +137,11 @@ public partial class Board
 
             case Server.MessageType.AddSecret:
                 return AddSecretVisual(message);
+
+            case Server.MessageType.TriggerSecret:
+                return TriggerSecretVisual(message);
+            case Server.MessageType.RemoveSecret:
+                return RemoveSecretVisual(message);
                 
             case Server.MessageType.AddAura:
                 return AddAuraVisual(message);
@@ -418,6 +424,8 @@ public partial class Board
     {
 
         Hero hero = message.isFriendly ? currHero : enemyHero;
+        bool armIncrease = false;
+        if (message.ints[5] > hero.armDisplay) armIncrease = true;
         if (message.isFriendly)
         {
             hero.UpdateText(message.ints[0], message.ints[4], message.ints[5]);
@@ -437,6 +445,7 @@ public partial class Board
         {
             CreateSplash(hero.spriteRenderer.gameObject, message.damage);
         }
+        if (armIncrease) return StartCoroutine(Wait(10));
         return null;
     }
     Coroutine UpdateCardVisual(VisualInfo message)
@@ -452,6 +461,16 @@ public partial class Board
         Hero h = message.isFriendly ? currHero : enemyHero;
         //h.AddSecret(message.names[0]);
         h.OrderSecrets();
+        return StartCoroutine(Wait(15));
+    }
+    Coroutine TriggerSecretVisual(VisualInfo message)
+    {
+        ShowEnemyPlay(message.secrets[0].card,-1,false);
+        return StartCoroutine(message.secrets[0].TriggerAnim());
+    }
+    Coroutine RemoveSecretVisual(VisualInfo message)
+    {
+        Debug.LogError("UNIMPLEMENTED REMOVESECRET");
         return StartCoroutine(Wait(15));
     }
 

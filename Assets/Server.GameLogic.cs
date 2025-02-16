@@ -127,8 +127,8 @@ public partial class Server
         int startingArmor = target.armor;
         target.armor = Mathf.Max(0, target.armor - damage);
         damage -= startingArmor;
-
-        target.health -= damage;
+        if (damage>0)
+            target.health -= damage;
 
         match.AddTrigger(Trigger.Type.OnFaceDamage, null, source);
 

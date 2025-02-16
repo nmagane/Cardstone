@@ -4,10 +4,16 @@ public partial class Board
 {
     public Tooltip enemyPlayTip;
     public Tooltip hoverTip;
-    public void ShowEnemyPlay(Card.Cardname c,int manaCost)
+    public void ShowEnemyPlay(Card.Cardname c, int manaCost = -1, bool enemy = true)
     {
+        enemyPlayTip.transform.position = enemy ? enemyHero.transform.position : currHero.transform.position;
+        enemyPlayTip.transform.localScale = Vector3.one * 0.3f;
+
+        animationManager.LerpZoom(enemyPlayTip.gameObject, Vector3.one, 5, 0.1f);
+        animationManager.LerpTo(enemyPlayTip, new Vector3(-13f, 0.610000014f, 0), 5);
+
         enemyPlayTip.Set(c,120);
-        enemyPlayTip.card.card.manaCost = manaCost;
+        if (manaCost!=-1) enemyPlayTip.card.card.manaCost = manaCost;
         enemyPlayTip.card.UpdateManaCost(true);
     }
 
