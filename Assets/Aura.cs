@@ -34,6 +34,7 @@ public class Aura
         Loatheb,
         Preparation,
         Millhouse,
+        Southsea_Deckhand,
     }
 
     public Type type = Type.Health;
@@ -81,7 +82,11 @@ public class Aura
             case Type.NoAttack:
                 break;
             case Type.Charge:
-                minion.canAttack = true;
+                if (minion.SICKNESS)
+                {
+                    //minion.SICKNESS = false;
+                    minion.canAttack = true;
+                }
                 break;
             case Type.Taunt:
                 break;
@@ -135,6 +140,9 @@ public class Aura
             case Type.Millhouse:
                 AuraEffects.Millhouse(match, minion, this);
                 break;
+            case Type.Southsea_Deckhand:
+                AuraEffects.Southsea_Deckhand(match, minion, this);
+                break;
         }
     }
 
@@ -161,6 +169,7 @@ public class Aura
             case Type.Loatheb:
             case Type.Spellpower:
             case Type.SP_PLAYER_BUFF:
+            case Type.Charge: //should this be stackable? idk
                 stackable = true;
                 break;
         }

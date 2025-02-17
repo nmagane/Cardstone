@@ -174,6 +174,16 @@ public partial class Database
 
             case Card.Cardname.Frostbolt:
                 return Frostbolt();
+
+            case Card.Cardname.Southsea_Deckhand:
+                return Southsea_Deckhand();
+
+            case Card.Cardname.Warsong_Commander:
+                return Warsong_Commander();
+
+            case Card.Cardname.Grim_Patron:
+                return Grim_Patron();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 break;
@@ -602,4 +612,38 @@ public partial class Database
         c.auras.Add(Aura.Type.Spellpower);
         return c;
     }
+    static CardInfo Southsea_Deckhand()
+    { 
+        CardInfo c = new();
+
+        c.name = "Southsea Deckhand";
+        c.text = "Has Change while you have a weapon equipped.";
+
+        c.manaCost = 1;
+        c.damage = 2;
+        c.health = 1;
+
+        c.MINION = true;
+
+        c.auras.Add(Aura.Type.Southsea_Deckhand);
+        return c;
+    }
+    static CardInfo Grim_Patron()
+    { 
+        CardInfo c = new();
+
+        c.name = "Grim Patron";
+        c.text = "Whenever this minion survives damage, summon a Grim Patron";
+
+        c.manaCost = 5;
+        c.damage = 3;
+        c.health = 3;
+
+        c.MINION = true;
+
+        c.triggers.Add((Trigger.Type.OnDamageTaken, Trigger.Side.Both, Trigger.Ability.Grim_Patron));
+        return c;
+    }
+
+    
 }

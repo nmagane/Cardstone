@@ -81,7 +81,10 @@ public partial class Board
         int targetInd = target.index;
         bool enemyTaunting = false;
 
-
+        if (attacker.canAttack == false)
+        {
+            animationManager.CancelLiftMinion(attacker.creature);
+        }
         //todo: valid attack function
         foreach (Minion m in enemyMinions)
         {
@@ -110,6 +113,11 @@ public partial class Board
 
         int attackerInd = minion.index;
         bool enemyTaunting = false;
+
+        if (minion.canAttack == false)
+        {
+            animationManager.CancelLiftMinion(minion.creature);
+        }
 
         if (CheckTargetEligibility(h) == false)
         {

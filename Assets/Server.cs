@@ -7,7 +7,7 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Ice_Barrier, Card.Cardname.Frostbolt, Card.Cardname.Dagger };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Southsea_Deckhand, Card.Cardname.Warsong_Commander, Card.Cardname.Frostbolt, Card.Cardname.Dagger,Card.Cardname.Grim_Patron };
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Chillwind_Yeti, Card.Cardname.Frostbolt, Card.Cardname.Dagger };
     
     
@@ -1149,7 +1149,7 @@ public partial class Server : MonoBehaviour
     }
     public void ConfirmAuraChange(Match match, Minion minion, Aura aura, bool REMOVE = false)
     {
-
+        if (minion.DEAD) return;
         CustomMessage messageOwner = CreateMessage(REMOVE ? MessageType.RemoveAura : MessageType.AddAura);
         CustomMessage messageOpponent = CreateMessage(REMOVE ? MessageType.RemoveAura : MessageType.AddAura);
 

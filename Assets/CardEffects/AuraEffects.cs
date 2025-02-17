@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Schema;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 
@@ -74,5 +76,14 @@ public static class AuraEffects
             if (c.MINION)
                 match.server.AddCardAura(match, c, new Aura(Aura.Type.SetCost, 0, false, true, sourceAura));
 
+    }
+
+    internal static void Southsea_Deckhand(Match match, Minion minion, Aura aura)
+    {
+        if (minion.player.match.currPlayer != minion.player) minion.RemoveAura(aura);
+        if (minion.player.weapon!=null && minion.SICKNESS)
+        {
+            match.server.AddAura(match, minion, new Aura(Aura.Type.Charge,0,false,true,aura));
+        }
     }
 }

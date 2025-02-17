@@ -115,6 +115,9 @@ public class Card : MonoBehaviour
         Paladin_Secret,
 
         Frostbolt,
+        Southsea_Deckhand,
+        Warsong_Commander,
+        Grim_Patron,
     }
 
     public enum Class

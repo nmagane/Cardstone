@@ -305,6 +305,10 @@ public partial class Server
 
     private void Frostbolt(CastInfo spell)
     {
+        Minion m = null;
+        if (!spell.isHero)
+            m = spell.GetTargetMinion();
+
         int damage = 3;
         DamageTarget(damage, spell);
 
@@ -317,7 +321,6 @@ public partial class Server
         }
         else
         {
-            Minion m = spell.GetTargetMinion();
             spell.match.server.AddAura(spell.match, m, new Aura(Aura.Type.Freeze));
         }
     }

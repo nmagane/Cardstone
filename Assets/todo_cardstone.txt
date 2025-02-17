@@ -26,6 +26,7 @@ triggers should return true/false to know whether or not to confirm anim
 	(priestess anim only when theres other minions, hobgoblin anim only when its 1-cost, etc)
 	-this might involve changing it so confirmtrigger is called within each triggereffects function? boring solution
 
+batch removecreature visual animation for Vanish when adding that
 
 -dynamic mana cost cards (giants) - use special auras that are added from database?
 
@@ -34,6 +35,7 @@ NOTE: millhouse/loatheb etc are currently set to minion costs for testing instea
 -move triggereffects and auraeffects into trigger and aura class?
 
 - change after attack events if target is changed to/from face/minion
+
 
 Mechanics for next-next demo:
 = Secret removal without trigger (Flare)
@@ -52,8 +54,6 @@ next decks to implement:
 
 Next mechanic implementation:
 
-= Freeze (Minions and players)
-
 = If holding dragon effects (highlighting in hand, use client-side aura?)
 
 
@@ -64,11 +64,13 @@ Next mechanic implementation:
 
 refactor hasaura(taunt / stealth)
 
-batch removecreature visual animation for Vanish when adding that
-
 ===============================================
 =====================DONE======================
 ================================================ 
+= southsea and warsong [charge giving], rework charge initaura (bool summoning sickness?)
+
+= Freeze (Minions and players)
+
 Secrets
 	=server secretplayed card "names"(mage secret, hunter secret, etc..);
 	=server addsecret, triggersecret, removesecret messages.

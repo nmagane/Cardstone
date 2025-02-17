@@ -227,6 +227,7 @@ public partial class Board
 
         foreach (Minion m in currMinions)
         {
+            m.SICKNESS = false;
             m.canAttack = true;
         }
         currHero.canAttack = true;

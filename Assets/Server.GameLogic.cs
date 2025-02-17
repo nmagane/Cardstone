@@ -10,6 +10,7 @@ public partial class Server
         if (windfury != null)
             windfury.trigger = true;
 
+        m.SICKNESS = false;
         m.canAttack = true;
     }
     public static void RefreshAttackCharge(Player p)
@@ -23,6 +24,7 @@ public partial class Server
 
     public void ConsumeAttackCharge(Minion m)
     {
+        m.SICKNESS = false;
         if (m.STEALTH)
         {
             RemoveAura(m.player.match, m, m.FindAura(Aura.Type.Stealth));

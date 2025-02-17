@@ -128,4 +128,18 @@ public class TriggerEffects
         spell.attack.faceAttack = false;
         spell.attack.target = sac;
     }
+    public static void Warsong_Commander(Match match, Trigger trigger, CastInfo spell)
+    {
+        if (spell.minion.damage<=3)
+        {
+            spell.match.server.AddAura(spell.match, spell.minion, new Aura(Aura.Type.Charge));
+        }
+    }
+    public static void Grim_Patron(Match match, Trigger trigger, CastInfo spell)
+    {
+        if (trigger.minion.health>0 && trigger.minion.DEAD == false)
+        {
+            spell.match.server.SummonToken(spell.match, spell.player, Card.Cardname.Grim_Patron, trigger.minion.index + 1);
+        }
+    }
 }

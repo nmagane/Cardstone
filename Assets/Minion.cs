@@ -22,11 +22,11 @@ public partial class Minion
     {
         get
         {
+            //canattck or sickness+has charge?
             return _canAttack && damage>0 && HasAura(Aura.Type.NoAttack)==false && HasAura(Aura.Type.Freeze)==false;
         }
         set
         {
-            //TODO: windfury here maybe?
             _canAttack = value;
         }
     }
@@ -35,6 +35,7 @@ public partial class Minion
     public bool STEALTH => HasAura(Aura.Type.Stealth);
 
     public bool DEAD = false;
+    public bool SICKNESS = true;
 
     public List<Aura> auras = new List<Aura>();
     public List<Trigger> triggers = new List<Trigger>();
@@ -210,6 +211,13 @@ public partial class Minion
                 if (player != null)
                     player.spellpower -= 1;
                 break;
+
+            case Aura.Type.Charge:
+                if (SICKNESS && _canAttack)
+                {
+                    _canAttack = false;
+                }
+                break;
             case Aura.Type.Taunt:
                 break;
             case Aura.Type.Shield:
@@ -287,7 +295,15 @@ public partial class Minion
             }
         }
         foreach (var aura in removeList)
-            RemoveAura(aura);
+        {
+            if (this.player.sentinel == this)
+                player.RemoveAura(aura);
+            else if (this.player.board.Contains(this))
+            {
+                player.match.server.RemoveAura(player.match, this, aura);
+            }
+            else RemoveAura(aura);
+        }
     }
     public void RemoveTemporaryAuras()
     {

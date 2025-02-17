@@ -3155,6 +3155,7 @@ MonoBehaviour:
     baseHealth: 0
     baseDamage: 0
     DEAD: 0
+    SICKNESS: 0
     playOrder: 0
   targetingHero: {fileID: 0}
   targetingCard:
@@ -5204,6 +5205,7 @@ MonoBehaviour:
     baseHealth: 0
     baseDamage: 0
     DEAD: 0
+    SICKNESS: 0
     playOrder: 0
   targetingHero: {fileID: 0}
   targetingCard:
@@ -5552,7 +5554,7 @@ MonoBehaviour:
   - {fileID: 2473487087288080458, guid: 4c8ef42eeb995da43b6bd0f37c0022ff, type: 3}
   - {fileID: 2473487087288080458, guid: 47b9ce870c92de046b46c6a382d3db03, type: 3}
   shadowMat: {fileID: 2100000, guid: ab167aeb60df8ca4cb7736e375cabbc2, type: 2}
-  board: {fileID: 0}
+  board: {fileID: 1287994307}
 --- !u!1001 &1390587137
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5561,6 +5563,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 58236536}
     m_Modifications:
     - target: {fileID: 588236395604766097, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 604494820347861040, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
@@ -5672,13 +5678,17 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4142025672553206692, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5465164441807936716, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: m_Name
       value: HeroPowerEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 5465164441807936718, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5652826871360112596, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: m_SortingLayer
@@ -5690,7 +5700,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5999841447809215630, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6077507550258028750, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -5708,6 +5718,10 @@ PrefabInstance:
       propertyPath: board
       value: 
       objectReference: {fileID: 1287994307}
+    - target: {fileID: 8347500950426656727, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
 --- !u!1 &1421786286
@@ -5949,6 +5963,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 588236395604766097, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 604494820347861040, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 773643968853852132, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
@@ -6059,13 +6077,17 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4142025672553206692, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5465164441807936716, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: m_Name
       value: HeroPowerEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 5465164441807936718, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5652826871360112596, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: m_SortingLayer
@@ -6077,7 +6099,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5999841447809215630, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6077507550258028750, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -6095,6 +6117,10 @@ PrefabInstance:
       propertyPath: board
       value: 
       objectReference: {fileID: 716059625}
+    - target: {fileID: 8347500950426656727, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de4f25a7ee79bf447bc371cc8f946246, type: 3}
 --- !u!114 &1455071358 stripped

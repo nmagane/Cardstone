@@ -236,7 +236,7 @@ public partial class Board
         targetingHero = null;
         dragTargeting = false;
 
-
+        if (cancel) CheckHighlights();
         EndTargetingAnim();
     }
 
@@ -327,7 +327,6 @@ public partial class Board
     public void EndTargetingAnim()
     {
         HideSkulls();
-        CheckHighlights();
         activeTargetingAnim = false;
     }
 

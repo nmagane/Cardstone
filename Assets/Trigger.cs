@@ -87,7 +87,9 @@ public class Trigger
         Archmage_Antonidas,
         Ice_Block,
         Noble_Sacrifice,
-        Ice_Barrier
+        Ice_Barrier,
+        Warsong_Commander,
+        Grim_Patron
     }
     public enum Side
     {
@@ -173,6 +175,15 @@ public class Trigger
                 break;
             case Ability.Noble_Sacrifice:
                 TriggerEffects.Noble_Sacrifice(match, this, spell);
+                break;
+            case Ability.Warsong_Commander:
+                TriggerEffects.Warsong_Commander(match, this, spell);
+                break;
+            case Ability.Grim_Patron:
+                TriggerEffects.Grim_Patron(match, this, spell);
+                break;
+            default:
+                Debug.LogError("MISSING TRIGGER ABILITY");
                 break;
         }
 
