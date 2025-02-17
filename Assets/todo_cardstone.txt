@@ -68,8 +68,29 @@ next decks to implement:
 -Show tribe on card
 
 ====================================
+Patron warrior Decklist:
 
+1x Inner Rage                      -- DONE
+2x Execute                         -- DONE
+2x Whirlwind                       -- DONE
+2x Fiery War Axe                   -- DONE
+2x Battle Rage                     -- DONE
+2x Slam                            -- DONE
+2x Armorsmith                      -- DONE
+1x Cruel Taskmaster                -- DONE
+2x Unstable Ghoul                  -- DONE
+2x Acolyte of Pain                 -- DONE
+2x Forthing Berserker              -- DONE
+2x Warsong Commander               -- DONE
+2x Death's Bite                    -- DONE
+1x Dread Corsair                   -- DONE
+2x Gnomish Inventor                -- DONE
+2x Grim Patron                     -- DONE
+1x Emperor Thaurissan              -- DONE
+
+====================================
 Oil rogue Decklist:
+
 2x Backstab                        -- DONE
 2x Prep                            -- DONE
 2x Deadly poison                   -- DONE
@@ -87,7 +108,7 @@ Oil rogue Decklist:
 2x Azure Drake                     -- DONE
 1x Loatheb                         -- DONE
 2x Sprint                          -- DONE
-1x Dr. Boom                        -- NO
+1x Dr. Boom                        -- DONE
 
 
 ===============================================

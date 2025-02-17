@@ -371,6 +371,34 @@ public partial class Server
                 Dr_Boom(spell);
                 break;
 
+            case Card.Cardname.Inner_Rage:
+                Inner_Rage(spell);
+                break;
+
+            case Card.Cardname.Execute:
+                Execute(spell);
+                break;
+                
+            case Card.Cardname.Whirlwind:
+                Whirlwind(spell);
+                break;
+
+            case Card.Cardname.Battle_Rage:
+                Battle_Rage(spell);
+                break;
+
+            case Card.Cardname.Slam:
+                Slam(spell);
+                break;
+
+            case Card.Cardname.Cruel_Taskmaster:
+                Cruel_Taskmaster(spell);
+                break;
+
+            case Card.Cardname.Gnomish_Inventor:
+                Gnomish_Inventor(spell);
+                break;
+
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);
                 break;

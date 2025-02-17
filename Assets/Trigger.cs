@@ -79,7 +79,7 @@ public class Trigger
         DrawCard,
 
         KnifeJuggler,
-        AcolyteOfPain,
+        Acolyte_of_Pain,
         YoungPriestess,
         HarvestGolem,
         Emperor_Thaurissan,
@@ -94,6 +94,9 @@ public class Trigger
         Grim_Patron,
         Violet_Teacher,
         Boom_Bot,
+        Armorsmith,
+        Unstable_Ghoul,
+        Frothing_Berserker,
     }
     public enum Side
     {
@@ -150,7 +153,7 @@ public class Trigger
             case Ability.KnifeJuggler:
                 TriggerEffects.KnifeJuggler(match, minion);
                 break;
-            case Ability.AcolyteOfPain:
+            case Ability.Acolyte_of_Pain:
                 TriggerEffects.AcolyteOfPain(match, minion);
                 break;
             case Ability.YoungPriestess:
@@ -192,9 +195,17 @@ public class Trigger
             case Ability.Violet_Teacher:
                 TriggerEffects.Violet_Teacher(match, this, spell);
                 break;
-
             case Ability.Boom_Bot:
                 TriggerEffects.Boom_Bot(match, this, spell);
+                break;
+            case Ability.Armorsmith:
+                TriggerEffects.Armorsmith(match, this, spell);
+                break;
+            case Ability.Unstable_Ghoul:
+                TriggerEffects.Unstable_Ghoul(match, this, spell);
+                break;
+            case Ability.Frothing_Berserker:
+                TriggerEffects.Frothing_Berserker(match, this, spell);
                 break;
             default:
                 Debug.LogError("MISSING TRIGGER ABILITY");

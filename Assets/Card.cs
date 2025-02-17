@@ -136,6 +136,20 @@ public class Card : MonoBehaviour
         Sprint,
         Dr_Boom,
         Boom_Bot,
+        Inner_Rage,
+        Execute,
+        Whirlwind,
+        Fiery_War_Axe,
+        Battle_Rage,
+        Slam,
+        Armorsmith,
+        Cruel_Taskmaster,
+        Unstable_Ghoul,
+        Acolyte_of_Pain,
+        Frothing_Berserker,
+        Deaths_Bite,
+        Gnomish_Inventor,
+        Dread_Corsair,
     }
 
     public enum Class

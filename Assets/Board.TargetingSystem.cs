@@ -265,6 +265,11 @@ public partial class Board
             if (m.health == m.maxHealth) return true;
             else return false;
         }
+        if (eligibleTargets == EligibleTargets.DamagedMinions)
+        {
+            if (m.health < m.maxHealth) return true;
+            else return false;
+        }
         return false;
 
     }
@@ -316,6 +321,16 @@ public partial class Board
                 foreach(Minion m in enemyMinions)
                 {
                     if (m.health == m.maxHealth) return true;
+                }
+                return false;
+            case EligibleTargets.DamagedMinions:
+                foreach(Minion m in currMinions)
+                {
+                    if (m.health < m.maxHealth) return true;
+                }
+                foreach(Minion m in enemyMinions)
+                {
+                    if (m.health < m.maxHealth) return true;
                 }
                 return false;
             default:

@@ -231,6 +231,48 @@ public partial class Database
             case Card.Cardname.Boom_Bot:
                 return Boom_Bot();
 
+            case Card.Cardname.Inner_Rage:
+                return Inner_Rage();
+
+            case Card.Cardname.Execute:
+                return Execute();
+
+            case Card.Cardname.Whirlwind:
+                return Whirlwind();
+
+            case Card.Cardname.Fiery_War_Axe:
+                return Fiery_War_Axe();
+
+            case Card.Cardname.Battle_Rage:
+                return Battle_Rage();
+
+            case Card.Cardname.Slam:
+                return Slam();
+            
+            case Card.Cardname.Armorsmith:
+                return Armorsmith();
+            
+            case Card.Cardname.Cruel_Taskmaster:
+                return Cruel_Taskmaster();
+
+            case Card.Cardname.Unstable_Ghoul:
+                return Unstable_Ghoul();
+            
+            case Card.Cardname.Acolyte_of_Pain:
+                return Acolyte_of_Pain();
+                
+            case Card.Cardname.Frothing_Berserker:
+                return Frothing_Berserker();
+                
+            case Card.Cardname.Deaths_Bite:
+                return Deaths_Bite();
+            
+            case Card.Cardname.Gnomish_Inventor:
+                return Gnomish_Inventor();
+            
+            case Card.Cardname.Dread_Corsair:
+                return Dread_Corsair();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 break;
@@ -561,9 +603,9 @@ public partial class Database
         c.name = "Emperor Thaurissan";
         c.text = "End of Turn: Reduce the cost of cards in your hand by 1.";
 
-        c.manaCost = 1;
-        c.damage = 2;
-        c.health = 1;
+        c.manaCost = 6;
+        c.damage = 5;
+        c.health = 5;
 
         c.MINION = true;
 
@@ -905,7 +947,7 @@ public partial class Database
         CardInfo c = new();
 
         c.name = "Boom Bot";
-        c.text = "Deathrattle: Deal 1-4 damage to a random enemy.";
+        c.text = "Deathrattle:\nDeal 1-4 damage to a random enemy.";
 
         c.manaCost = 1;
         c.damage = 1;
@@ -914,6 +956,74 @@ public partial class Database
         c.MINION = true;
 
         c.triggers.Add((Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.Boom_Bot));
+
+        return c;
+    }
+    private static CardInfo Unstable_Ghoul()
+    {
+        CardInfo c = new();
+
+        c.name = "Unstable Ghoul";
+        c.text = "Taunt.\nDeathrattle:\nDeal 1 damage to all minions.";
+
+        c.manaCost = 2;
+        c.damage = 1;
+        c.health = 3;
+
+        c.MINION = true;
+        c.auras.Add(Aura.Type.Taunt);
+        c.triggers.Add((Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.Unstable_Ghoul));
+
+        return c;
+    }
+
+    private static CardInfo Acolyte_of_Pain()
+    {
+        CardInfo c = new();
+
+        c.name = "Acolyte of Pain";
+        c.text = "Whenever this minion takes damage, draw a card.";
+
+        c.manaCost = 3;
+        c.damage = 1;
+        c.health = 3;
+
+        c.MINION = true;
+
+        c.triggers.Add((Trigger.Type.OnDamageTaken, Trigger.Side.Both, Trigger.Ability.Acolyte_of_Pain));
+
+        return c;
+    }
+    private static CardInfo Gnomish_Inventor()
+    {
+        CardInfo c = new();
+
+        c.name = "Gnomish Inventor";
+        c.text = "Battlecry: Draw a card.";
+
+        c.manaCost = 4;
+        c.damage = 2;
+        c.health = 4;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+
+        return c;
+    }
+    private static CardInfo Dread_Corsair()
+    {
+        CardInfo c = new();
+
+        c.name = "Dread Corsair";
+        c.text = "Taunt.\nCosts 1 less per attack on your weapon.";
+
+        c.manaCost = 4;
+        c.damage = 3;
+        c.health = 3;
+
+        c.MINION = true;
+        c.auras.Add(Aura.Type.Taunt);
+        c.cardAuras.Add(Aura.Type.Dread_Corsair);
 
         return c;
     }

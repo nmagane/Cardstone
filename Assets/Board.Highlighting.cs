@@ -219,6 +219,9 @@ public partial class Board
             case EligibleTargets.HealthyMinions:
                 HighlightHealthyMinions();
                 break;
+            case EligibleTargets.DamagedMinions:
+                HighlightDamagedMinions();
+                break;
             default:
                 Debug.LogError("NO HIGHLIGHT IMPLEMENTED: " + eligibleTargets);
                 break;
@@ -263,6 +266,21 @@ public partial class Board
         {
             if (m.creature == null) continue;
             if (m.health == m.maxHealth) m.creature.Highlight(true);
+        }
+    }
+    
+    void HighlightDamagedMinions()
+    {
+        foreach (var m in currMinions)
+        {
+            if (m.creature == null) continue;
+            if (m.health < m.maxHealth) m.creature.Highlight(true);
+        }
+
+        foreach (var m in enemyMinions)
+        {
+            if (m.creature == null) continue;
+            if (m.health < m.maxHealth) m.creature.Highlight(true);
         }
     }
 }

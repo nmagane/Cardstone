@@ -137,4 +137,14 @@ public static class AuraEffects
 
         match.server.AddCardAura(match, card, new Aura(Aura.Type.Cost, -i, false, true, aura));
     }
+    public static void Dread_Corsair(Match match, HandCard card, Aura aura)
+    {
+        Player owner = match.FindOwner(card);
+        if (owner == null) return;
+        if (owner.weapon == null) return;
+        if (owner.weapon.damage <= 0) return;
+
+        int i = owner.weapon.damage;
+        match.server.AddCardAura(match, card, new Aura(Aura.Type.Cost, -i, false, true, aura));
+    }
 }

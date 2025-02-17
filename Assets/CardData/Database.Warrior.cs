@@ -1,5 +1,20 @@
 ﻿public partial class Database
 {
+    static CardInfo Armor_Up()
+    {
+        CardInfo c = new();
+
+        c.name = "Armor Up";
+        c.text = "Give your hero +2 armor.";
+
+        c.classType = Card.Class.Warrior;
+
+        c.manaCost = 2;
+
+        c.SPELL = true;
+        c.TARGETED = false;
+        return c;
+    }
 
     static CardInfo Heroic_Strike()
     {
@@ -16,12 +31,80 @@
         c.TARGETED = false;
         return c;
     }
-    static CardInfo Armor_Up()
+    static CardInfo Inner_Rage()
     {
         CardInfo c = new();
 
-        c.name = "Armor Up";
-        c.text = "Give your hero +2 armor.";
+        c.name = "Inner Rage";
+        c.text = "Deal {0} damage to a minion and give it +2 attack.";
+
+        c.classType = Card.Class.Warrior;
+
+        c.manaCost = 0;
+        c.spellDamage = 1;
+        c.eligibleTargets = Board.EligibleTargets.AllMinions;
+
+        c.SPELL = true;
+        c.TARGETED = true;
+        return c;
+    }
+    
+    static CardInfo Execute()
+    {
+        CardInfo c = new();
+
+        c.name = "Execute";
+        c.text = "Destroy target damaged minion.";
+
+        c.classType = Card.Class.Warrior;
+
+        c.manaCost = 1;
+        c.eligibleTargets = Board.EligibleTargets.DamagedMinions;
+
+        c.SPELL = true;
+        c.TARGETED = true;
+        return c;
+    }
+    static CardInfo Whirlwind()
+    {
+        CardInfo c = new();
+
+        c.name = "Whirlwind";
+        c.text = "Deal {0} damage to all minions.";
+
+        c.classType = Card.Class.Warrior;
+
+        c.manaCost = 1;
+        c.spellDamage = 1;
+
+        c.SPELL = true;
+        c.TARGETED = false;
+        return c;
+    }
+    static CardInfo Slam()
+    {
+        CardInfo c = new();
+
+        c.name = "Slam";
+        c.text = "Deal {0} damage to minion.\nIf it survives, draw a card.";
+
+        c.classType = Card.Class.Warrior;
+        
+
+        c.manaCost = 2;
+        c.spellDamage = 2; 
+        c.eligibleTargets = Board.EligibleTargets.AllMinions;
+
+        c.SPELL = true;
+        c.TARGETED = true;
+        return c;
+    }
+    static CardInfo Battle_Rage()
+    {
+        CardInfo c = new();
+
+        c.name = "Battle Rage";
+        c.text = "Draw a card for each damaged friendly character.";
 
         c.classType = Card.Class.Warrior;
 
@@ -29,6 +112,77 @@
 
         c.SPELL = true;
         c.TARGETED = false;
+        return c;
+    }
+    static CardInfo Fiery_War_Axe()
+    {
+        CardInfo c = new();
+
+        c.name = "Fiery War Axe";
+        c.text = "";
+
+        c.classType = Card.Class.Warrior;
+
+        c.manaCost = 2;
+        c.damage = 3;
+        c.health = 2;
+
+        c.WEAPON = true;
+        return c;
+    }
+    static CardInfo Armorsmith()
+    {
+        CardInfo c = new();
+
+        c.name = "Armorsmith";
+        c.text = "Whenever a friendly minion takes damage, give your hero 1 armor";
+
+        c.classType = Card.Class.Warrior;
+
+        c.manaCost = 2;
+        c.damage = 1;
+        c.health = 4;
+
+        c.MINION = true;
+        c.triggers.Add((Trigger.Type.OnMinionDamage, Trigger.Side.Friendly, Trigger.Ability.Armorsmith));
+        return c;
+    }
+    
+    static CardInfo Cruel_Taskmaster()
+    {
+        CardInfo c = new();
+
+        c.name = "Cruel Taskmaster";
+        c.text = "Battlecry: Deal 1 damage to a minion and give it +2 attack.";
+
+        c.classType = Card.Class.Warrior;
+
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 2;
+
+        c.eligibleTargets = Board.EligibleTargets.AllMinions;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+        return c;
+    }
+    
+    static CardInfo Frothing_Berserker()
+    {
+        CardInfo c = new();
+
+        c.name = "Frothing Berserker";
+        c.text = "Whenever a minion takes damage, gain +1 attack.";
+
+        c.classType = Card.Class.Warrior;
+
+        c.manaCost = 3;
+        c.damage = 2;
+        c.health = 4;
+
+        c.MINION = true;
+        c.triggers.Add((Trigger.Type.OnMinionDamage, Trigger.Side.Both, Trigger.Ability.Frothing_Berserker));
         return c;
     }
 
@@ -49,6 +203,26 @@
 
         c.triggers.Add((Trigger.Type.OnSummonMinion, Trigger.Side.Friendly, Trigger.Ability.Warsong_Commander));
         c.triggers.Add((Trigger.Type.OnPlayMinion, Trigger.Side.Friendly, Trigger.Ability.Warsong_Commander));
+
+        return c;
+    }
+
+    static CardInfo Deaths_Bite()
+    {
+        CardInfo c = new();
+
+        c.name = "Death's Bite";
+        c.text = "Deathrattle: Deal 1 damage to all minions.";
+
+        c.classType = Card.Class.Warrior;
+
+        c.manaCost = 4;
+        c.damage = 4;
+        c.health = 2;
+
+        c.WEAPON = true;
+
+        c.triggers.Add((Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.Unstable_Ghoul));
 
         return c;
     }

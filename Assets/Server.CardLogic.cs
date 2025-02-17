@@ -39,17 +39,23 @@ public partial class Server
     }
     public void Damage(Minion target,int damage,CastInfo spell)
     {
-        if (spell.card.SPELL)
+        if (spell.card != null)
         {
-            damage += spell.player.spellpower;
+            if (spell.card.SPELL)
+            {
+                damage += spell.player.spellpower;
+            }
         }
         DamageMinion(spell.match, target, damage, spell.player);
     }
     public void Damage(Player target,int damage, CastInfo spell)
     {
-        if (spell.card.SPELL)
+        if (spell.card != null)
         {
-            damage += spell.player.spellpower;
+            if (spell.card.SPELL)
+            {
+                damage += spell.player.spellpower;
+            }
         }
         DamageFace(spell.match, target,damage,spell.player);
     }
@@ -285,6 +291,10 @@ public partial class Server
     }
 
     void Azure_Drake(CastInfo spell)
+    {
+        Draw(spell.player);
+    }
+    void Gnomish_Inventor(CastInfo spell)
     {
         Draw(spell.player);
     }

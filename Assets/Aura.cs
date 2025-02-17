@@ -31,6 +31,8 @@ public class Aura
         Molten_Giant,
         Mountain_Giant,
         Sea_Giant,
+        Dread_Corsair,
+
         //========
 
         Amani,
@@ -135,6 +137,9 @@ public class Aura
                 break;
             case Type.Molten_Giant:
                 AuraEffects.Molten_Giant(match, card, this);
+                break;
+            case Type.Dread_Corsair:
+                AuraEffects.Dread_Corsair(match, card, this);
                 break;
             //================
 

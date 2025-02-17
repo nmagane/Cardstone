@@ -41,7 +41,7 @@ public class TriggerEffects
 
     public static void AcolyteOfPain(Match match, Minion minion)
     {
-        match.server.AddAura(match, minion, new Aura(Aura.Type.Damage, 2));
+        match.server.Draw(minion.player);
     }
 
     public static void YoungPriestess(Match match, Minion minion)
@@ -177,4 +177,30 @@ public class TriggerEffects
         }
         match.server.DamageMinion(match, opponent.board[tar], damage, opponent.opponent);
     }
+
+    public static void Armorsmith(Match match, Trigger trigger, CastInfo spell)
+    {
+        trigger.minion.player.armor += 1;
+    }
+    
+    public static void Unstable_Ghoul(Match match, Trigger trigger, CastInfo spell)
+    {
+        MinionBoard b = trigger.minion.player.board;
+        MinionBoard b2 = trigger.minion.player.opponent.board;
+        foreach (Minion m in b)
+        {
+            match.server.DamageMinion(match, m, 1, trigger.minion.player);
+        }
+        foreach (Minion m in b2)
+        {
+            match.server.DamageMinion(match, m, 1, trigger.minion.player);
+        }
+    }
+
+    public static void Frothing_Berserker(Match match, Trigger trigger, CastInfo spell)
+    {
+        Minion minion = trigger.minion;
+        match.server.AddAura(match, minion, new Aura(Aura.Type.Damage, 1));
+    }
+
 }
