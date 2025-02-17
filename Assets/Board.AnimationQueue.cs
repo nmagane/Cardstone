@@ -364,7 +364,7 @@ public partial class Board
     {
         currHand.AddCard(message.handCards[0],Hand.CardSource.Deck);
         CheckHighlights();
-        return StartCoroutine(Wait(15));
+        return StartCoroutine(Wait(30));
     }
     Coroutine DrawEnemyVisual(VisualInfo message)
     {

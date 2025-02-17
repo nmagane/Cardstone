@@ -53,7 +53,7 @@ public static class AuraEffects
     public static void Loatheb(Match match, Minion sourceMinion, Aura sourceAura)
     {
         foreach (HandCard c in sourceMinion.player.hand)
-            if (c.MINION)
+            if (c.SPELL)
             {
                 match.server.AddCardAura(match, c, new Aura(Aura.Type.Cost, 5, false, true, sourceAura));
             }

@@ -129,7 +129,13 @@ public class Card : MonoBehaviour
         Earthen_Ring_Farseer,
         Tinkers_Oil,
         Violet_Apprentice,
-        Violet_Teacher
+        Violet_Teacher,
+        Antique_Healbot,
+        Azure_Drake,
+
+        Sprint,
+        Dr_Boom,
+        Boom_Bot,
     }
 
     public enum Class

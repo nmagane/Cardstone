@@ -12,7 +12,7 @@ public class TriggerEffects
 
         if (tar != -1)
         {
-            while (opponent.board[tar].health <= 0)
+            while (opponent.board[tar].health <= 0 || opponent.board[tar].DEAD)
             {
                 tar = Random.Range(-1, opponent.board.Count());
                 if (tar == -1) break;
@@ -31,15 +31,15 @@ public class TriggerEffects
         };
         match.server.ConfirmAnimation(match, minion.player, anim);
 
-        if (tar==-1)
+        if (tar == -1)
         {
-            match.server.DamageFace(match, opponent, damage,minion.player);
+            match.server.DamageFace(match, opponent, damage, minion.player);
             return;
         }
         match.server.DamageMinion(match, opponent.board[tar], damage, minion.player);
     }
 
-    public static void AcolyteOfPain(Match match,Minion minion)
+    public static void AcolyteOfPain(Match match, Minion minion)
     {
         match.server.AddAura(match, minion, new Aura(Aura.Type.Damage, 2));
     }
@@ -63,11 +63,11 @@ public class TriggerEffects
     {
         match.server.SummonToken(match, match.FindOwner(minion), Card.Cardname.Damaged_Golem, minion.index);
     }
-    
+
     public static void Emperor_Thaurissan(Match match, Minion minion)
     {
         Player p = minion.player;
-        foreach(HandCard c in p.hand)
+        foreach (HandCard c in p.hand)
         {
             match.server.AddCardAura(match, c, new Aura(Aura.Type.Cost, -1));
         }
@@ -93,7 +93,7 @@ public class TriggerEffects
     public static void Archmage_Antonidas(Match m, Minion minion, Trigger t)
     {
         Player p = minion.player;
-        HandCard c = m.server.AddCard(m, p, Card.Cardname.Chillwind_Yeti, minion,-2);
+        HandCard c = m.server.AddCard(m, p, Card.Cardname.Chillwind_Yeti, minion, -2);
         m.server.AddCardAura(m, c, new Aura(Aura.Type.Cost, -2));
     }
     public static void Ice_Barrier(Match m, Minion minion, Trigger t)
@@ -104,7 +104,7 @@ public class TriggerEffects
         m.server.TriggerSecret(t.secret);
 
         p.armor += 8;
-        
+
     }
     public static void Ice_Block(Match m, Minion minion, Trigger t)
     {
@@ -114,7 +114,7 @@ public class TriggerEffects
         m.server.TriggerSecret(t.secret);
 
         p.AddAura(new Aura(Aura.Type.Immune, 0, true));
-        
+
     }
     public static void Noble_Sacrifice(Match match, Trigger trigger, CastInfo spell)
     {
@@ -130,14 +130,14 @@ public class TriggerEffects
     }
     public static void Warsong_Commander(Match match, Trigger trigger, CastInfo spell)
     {
-        if (spell.minion.damage<=3)
+        if (spell.minion.damage <= 3)
         {
             spell.match.server.AddAura(spell.match, spell.minion, new Aura(Aura.Type.Charge));
         }
     }
     public static void Grim_Patron(Match match, Trigger trigger, CastInfo spell)
     {
-        if (trigger.minion.health>0 && trigger.minion.DEAD == false)
+        if (trigger.minion.health > 0 && trigger.minion.DEAD == false)
         {
             spell.match.server.SummonToken(spell.match, spell.player, Card.Cardname.Grim_Patron, trigger.minion.index + 1);
         }
@@ -151,5 +151,30 @@ public class TriggerEffects
     internal static void Violet_Teacher(Match match, Trigger trigger, CastInfo spell)
     {
         spell.match.server.SummonToken(spell.match, spell.player, Card.Cardname.Violet_Apprentice, trigger.minion.index + 1);
+    }
+
+    public static void Boom_Bot(Match match, Trigger trigger, CastInfo spell)
+    {
+        int damage = Random.Range(1,5);
+        Player opponent = trigger.minion.player.opponent;
+
+        int tar = Random.Range(-1, opponent.board.Count());
+
+        if (tar != -1)
+        {
+            while (opponent.board[tar].health <= 0 || opponent.board[tar].DEAD)
+            {
+                tar = Random.Range(-1, opponent.board.Count());
+                if (tar == -1) break;
+            }
+        }
+
+
+        if (tar == -1)
+        {
+            match.server.DamageFace(match, opponent, damage, opponent.opponent);
+            return;
+        }
+        match.server.DamageMinion(match, opponent.board[tar], damage, opponent.opponent);
     }
 }

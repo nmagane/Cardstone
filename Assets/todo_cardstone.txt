@@ -65,6 +65,7 @@ next decks to implement:
 
 = EFFECT FOR SPELL POWER
 -CLASS COLOR CARDS
+-Show tribe on card
 
 ====================================
 
@@ -82,10 +83,10 @@ Oil rogue Decklist:
 1x Earthen Ring Farseer            -- DONE
 2x Tinker's Sharpsword Oil         -- DONE
 2x Violet Teacher                  -- DONE
-1x Healbot                         -- NO
-2x Azure Drake                     -- NO
-1x Loatheb                         -- NO
-2x Sprint                          -- NO
+1x Healbot                         -- DONE
+2x Azure Drake                     -- DONE
+1x Loatheb                         -- DONE
+2x Sprint                          -- DONE
 1x Dr. Boom                        -- NO
 
 

@@ -93,6 +93,7 @@ public class Trigger
         Warsong_Commander,
         Grim_Patron,
         Violet_Teacher,
+        Boom_Bot,
     }
     public enum Side
     {
@@ -190,6 +191,10 @@ public class Trigger
                 break;
             case Ability.Violet_Teacher:
                 TriggerEffects.Violet_Teacher(match, this, spell);
+                break;
+
+            case Ability.Boom_Bot:
+                TriggerEffects.Boom_Bot(match, this, spell);
                 break;
             default:
                 Debug.LogError("MISSING TRIGGER ABILITY");

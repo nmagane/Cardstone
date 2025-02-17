@@ -4,7 +4,6 @@ using UnityEngine;
 public partial class Server
 {
 
-
     public void HealTarget(int heal, CastInfo spell)
     {
         if (spell.isHero)
@@ -82,8 +81,7 @@ public partial class Server
     {
         Player p = spell.player;
         Match match = spell.match;
-        if (spell.isFriendly == false) p = p.opponent;
-        Minion minion = p.board[spell.target];
+        Minion minion = spell.GetTargetMinion();
 
         List<Aura> auras = new List<Aura>(minion.auras);
         List<Trigger> triggers = new List<Trigger>(minion.triggers);
@@ -110,21 +108,7 @@ public partial class Server
     void Ping(CastInfo spell)
     {
         int damage = 1;
-
-        if (spell.isHero)
-        {
-            if (spell.isFriendly)
-                DamageFace(spell.match, spell.player, damage, spell.player);
-            else
-                DamageFace(spell.match, spell.match.Opponent(spell.player), damage, spell.player);
-            return;
-        }
-
-        if (spell.isFriendly)
-            DamageMinion(spell.match, spell.player.board[spell.target], damage, spell.player);
-        else
-            DamageMinion(spell.match, spell.match.Opponent(spell.player).board[spell.target], damage, spell.player);
-
+        DamageTarget(damage, spell);
     }
 
     void Arcane_Explosion(CastInfo spell)
@@ -146,19 +130,15 @@ public partial class Server
         Player p = spell.player;
         Match m = spell.match;
         Minion tar = spell.GetTargetMinion();
-        //TODO: SILENCABLE AURAS
         m.server.AddAura(m, tar, new Aura(Aura.Type.Health, 1));
         m.server.AddAura(m, tar, new Aura(Aura.Type.Damage, 1));
-        //p.board[spell.target].AddAura(new Aura(Aura.Type.Damage, 1));
     }
     void Abusive_Sergeant(CastInfo spell)
     {
         Player p = spell.player;
         Match m = spell.match;
         Minion tar = spell.GetTargetMinion();
-        //TODO: SILENCABLE AURAS
         m.server.AddAura(m, tar, new Aura(Aura.Type.Damage, 2, true));
-        //p.board[spell.target].AddAura(new Aura(Aura.Type.Damage, 2,true));
     }
     void Defender_of_Argus(CastInfo spell)
     {
@@ -219,7 +199,7 @@ public partial class Server
             sourceIsHero = true,
             sourceIsFriendly = true,
             sourceIndex = -1,
-            targetIndex = spell.target,
+            targetIndex = spell.targetMinion==null? -1 : spell.targetMinion.index,
             targetIsFriendly = spell.isFriendly,
             targetIsHero = spell.isHero,
         };
@@ -297,6 +277,26 @@ public partial class Server
     void Earthen_Ring_Farseer(CastInfo spell)
     {
         HealTarget(3, spell);
+    }
+
+    void Antique_Healbot(CastInfo spell)
+    {
+        Heal(spell.player,8,spell);
+    }
+
+    void Azure_Drake(CastInfo spell)
+    {
+        Draw(spell.player);
+    }
+    void Sprint(CastInfo spell)
+    {
+        for (int i=0;i<4;i++)
+            Draw(spell.player);
+    }
+    void Dr_Boom(CastInfo spell)
+    {
+        spell.match.server.SummonToken(spell.match, spell.player, Card.Cardname.Boom_Bot, spell.minion.index);
+        spell.match.server.SummonToken(spell.match, spell.player, Card.Cardname.Boom_Bot, spell.minion.index + 1);
     }
 
 }

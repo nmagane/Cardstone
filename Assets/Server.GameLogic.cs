@@ -356,6 +356,21 @@ public partial class Server
                 Tinkers_Oil(spell);
                 break;
 
+            case Card.Cardname.Antique_Healbot:
+                Antique_Healbot(spell);
+                break;
+            case Card.Cardname.Azure_Drake:
+                Azure_Drake(spell);
+                break;
+
+            case Card.Cardname.Sprint:
+                Sprint(spell);
+                break;
+
+            case Card.Cardname.Dr_Boom:
+                Dr_Boom(spell);
+                break;
+
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);
                 break;

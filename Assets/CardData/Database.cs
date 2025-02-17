@@ -217,6 +217,20 @@ public partial class Database
            case Card.Cardname.Violet_Apprentice:
                 return Violet_Apprentice();
 
+           case Card.Cardname.Antique_Healbot:
+                return Antique_Healbot();
+
+           case Card.Cardname.Azure_Drake:
+                return Azure_Drake();
+
+           case Card.Cardname.Sprint:
+                return Sprint();
+
+            case Card.Cardname.Dr_Boom:
+                return Dr_Boom();
+            case Card.Cardname.Boom_Bot:
+                return Boom_Bot();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 break;
@@ -517,6 +531,7 @@ public partial class Database
         c.health = 3;
 
         c.MINION = true;
+        c.tribe = Card.Tribe.Mech;
 
         c.triggers.Add((Trigger.Type.Deathrattle, Trigger.Side.Friendly, Trigger.Ability.HarvestGolem));
 
@@ -534,6 +549,7 @@ public partial class Database
         c.health = 1;
 
         c.MINION = true;
+        c.tribe = Card.Tribe.Mech;
 
         return c;
     }
@@ -578,7 +594,7 @@ public partial class Database
         c.name = "Loatheb";
         c.text = "Battlecry: Enemy spells cost 5 more next turn.";
 
-        c.manaCost = 1;
+        c.manaCost = 6;
         c.damage = 5;
         c.health = 5;
 
@@ -828,6 +844,76 @@ public partial class Database
         c.health = 1;
 
         c.MINION = true;
+
+        return c;
+    }
+    
+    private static CardInfo Antique_Healbot()
+    {
+        CardInfo c = new();
+
+        c.name = "Antique Healbot";
+        c.text = "Battlecry: Restore 8 health to your hero.";
+
+        c.manaCost = 5;
+        c.damage = 3;
+        c.health = 3;
+        c.tribe = Card.Tribe.Mech;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+
+        return c;
+    }
+    private static CardInfo Azure_Drake()
+    {
+        CardInfo c = new();
+
+        c.name = "Azure Drake";
+        c.text = "+1 Spellpower.\nBattlecry: Draw a card.";
+
+        c.manaCost = 5;
+        c.damage = 4;
+        c.health = 4;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+        c.tribe = Card.Tribe.Dragon;
+
+        c.auras.Add(Aura.Type.Spellpower);
+
+        return c;
+    }
+    private static CardInfo Dr_Boom()
+    {
+        CardInfo c = new();
+
+        c.name = "Dr. Boom";
+        c.text = "Battlecry: Summon two 1/1 Boom Bots.\nWARNING: Bots may explode.";
+
+        c.manaCost = 7;
+        c.damage = 7;
+        c.health = 7;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+
+        return c;
+    }
+    private static CardInfo Boom_Bot()
+    {
+        CardInfo c = new();
+
+        c.name = "Boom Bot";
+        c.text = "Deathrattle: Deal 1-4 damage to a random enemy.";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+
+        c.MINION = true;
+
+        c.triggers.Add((Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.Boom_Bot));
 
         return c;
     }

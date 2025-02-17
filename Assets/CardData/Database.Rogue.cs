@@ -95,7 +95,7 @@ public partial class Database
         c.classType = Card.Class.Rogue;
         c.eligibleTargets = Board.EligibleTargets.Weapon;
 
-        c.manaCost = 1;
+        c.manaCost = 2;
 
         c.SPELL = true;
         c.TARGETED = false;
@@ -186,6 +186,21 @@ public partial class Database
 
         c.manaCost = 3;
         c.spellDamage = 1;
+
+        c.SPELL = true;
+        c.TARGETED = false;
+        return c;
+    }
+    static CardInfo Sprint()
+    {
+        CardInfo c = new();
+
+        c.name = "Sprint";
+        c.text = "Draw 4 cards.";
+
+        c.classType = Card.Class.Rogue;
+
+        c.manaCost = 7;
 
         c.SPELL = true;
         c.TARGETED = false;

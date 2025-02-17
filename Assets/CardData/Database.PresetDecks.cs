@@ -39,7 +39,53 @@ public partial class Database
 
     public static List<Card.Cardname> Oil_Rogue = new List<Card.Cardname>()
     {
+        Card.Cardname.Backstab,
+        Card.Cardname.Backstab,
 
+        Card.Cardname.Preparation,
+        Card.Cardname.Preparation,
+
+        Card.Cardname.Sap,
+        Card.Cardname.Sap,
+
+        Card.Cardname.Deadly_Poison,
+        Card.Cardname.Deadly_Poison,
+
+        Card.Cardname.Blade_Flurry,
+        Card.Cardname.Blade_Flurry,
+
+        Card.Cardname.Southsea_Deckhand,
+
+        Card.Cardname.Eviscerate,
+        Card.Cardname.Eviscerate,
+
+        Card.Cardname.Bloodmage_Thalnos,
+
+        Card.Cardname.Fan_of_Knives,
+        Card.Cardname.Fan_of_Knives,
+
+        Card.Cardname.SI7_Agent,
+        Card.Cardname.SI7_Agent,
+
+        Card.Cardname.Earthen_Ring_Farseer,
+
+        Card.Cardname.Tinkers_Oil,
+        Card.Cardname.Tinkers_Oil,
+
+        Card.Cardname.Violet_Teacher,
+        Card.Cardname.Violet_Teacher,
+
+        Card.Cardname.Antique_Healbot,
+
+        Card.Cardname.Azure_Drake,
+        Card.Cardname.Azure_Drake,
+
+        Card.Cardname.Loatheb,
+
+        Card.Cardname.Sprint,
+        Card.Cardname.Sprint,
+
+        Card.Cardname.Dr_Boom,
     };
 
     public static List<Card.Cardname> Freeze_Mage = new List<Card.Cardname>()

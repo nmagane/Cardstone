@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class CastInfo
 {
     public Match match;
@@ -52,6 +54,10 @@ public class CastInfo
 
     public Minion GetTargetMinion()
     {
+        if (targetMinion == null)
+        {
+            Debug.LogError("TARGET MINION NOT FOUND");
+        }
         return targetMinion;
     }
 }
