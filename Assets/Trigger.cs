@@ -76,6 +76,8 @@ public class Trigger
 
     public enum Ability
     {
+        DrawCard,
+
         KnifeJuggler,
         AcolyteOfPain,
         YoungPriestess,
@@ -89,7 +91,8 @@ public class Trigger
         Noble_Sacrifice,
         Ice_Barrier,
         Warsong_Commander,
-        Grim_Patron
+        Grim_Patron,
+        Violet_Teacher,
     }
     public enum Side
     {
@@ -140,6 +143,9 @@ public class Trigger
     {
         switch (ability)
         {
+            case Ability.DrawCard:
+                TriggerEffects.DrawCard(match, this, spell);
+                break;
             case Ability.KnifeJuggler:
                 TriggerEffects.KnifeJuggler(match, minion);
                 break;
@@ -181,6 +187,9 @@ public class Trigger
                 break;
             case Ability.Grim_Patron:
                 TriggerEffects.Grim_Patron(match, this, spell);
+                break;
+            case Ability.Violet_Teacher:
+                TriggerEffects.Violet_Teacher(match, this, spell);
                 break;
             default:
                 Debug.LogError("MISSING TRIGGER ABILITY");

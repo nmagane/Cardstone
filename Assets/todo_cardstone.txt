@@ -28,7 +28,6 @@ triggers should return true/false to know whether or not to confirm anim
 
 batch removecreature visual animation for Vanish when adding that
 
--dynamic mana cost cards (giants) - use special auras that are added from database?
 
 NOTE: millhouse/loatheb etc are currently set to minion costs for testing instead of spells
 	
@@ -36,12 +35,16 @@ NOTE: millhouse/loatheb etc are currently set to minion costs for testing instea
 
 - change after attack events if target is changed to/from face/minion
 
+refactor hasaura(taunt / stealth)
 
 Mechanics for next-next demo:
 = Secret removal without trigger (Flare)
 = Overload
 = Choose one cards
 = Discover
+
+
+- Serverside target eligibilty check (anti lag/cheating)
 
 next decks to implement:
 	-Patron
@@ -51,10 +54,7 @@ next decks to implement:
 	-Oil/Miracle Rogue
 	-Malygos lock?
 
-
-Next mechanic implementation:
-
-= If holding dragon effects (highlighting in hand, use client-side aura?)
+	
 
 
 - turn indicator (end turn button color)
@@ -62,11 +62,40 @@ Next mechanic implementation:
 - screenshake on big hits (8+)
 - weapon class colors?
 
-refactor hasaura(taunt / stealth)
+
+= EFFECT FOR SPELL POWER
+-CLASS COLOR CARDS
+
+====================================
+
+Oil rogue Decklist:
+2x Backstab                        -- DONE
+2x Prep                            -- DONE
+2x Deadly poison                   -- DONE
+1x Southsea                        -- DONE
+2x Blade flurry                    -- DONE
+2x Evis                            -- DONE
+2x Sap                             -- DONE
+1x Bloodmage                       -- DONE
+2x Fan of Knives                   -- DONE
+2x SI7 Agent                       -- DONE
+1x Earthen Ring Farseer            -- DONE
+2x Tinker's Sharpsword Oil         -- DONE
+2x Violet Teacher                  -- NO - Index changing precast bug...
+1x Healbot                         -- NO
+2x Azure Drake                     -- NO
+1x Loatheb                         -- NO
+2x Sprint                          -- NO
+1x Dr. Boom                        -- NO
+
 
 ===============================================
 =====================DONE======================
 ================================================ 
+
+-dynamic mana cost cards (giants) - use special auras that are added from database?
+	= holding card highlighting in hand (clientside aura check)
+
 = southsea and warsong [charge giving], rework charge initaura (bool summoning sickness?)
 
 = Freeze (Minions and players)

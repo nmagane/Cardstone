@@ -336,6 +336,25 @@ public partial class Server
                 Frostbolt(spell);
                 break;
 
+            case Card.Cardname.Dagger_Mastery:
+                Dagger_Mastery(spell);
+                break;
+            case Card.Cardname.Backstab:
+                Backstab(spell);
+                break;
+
+            case Card.Cardname.Fan_of_Knives:
+                Fan_of_Knives(spell);
+                break;
+
+            case Card.Cardname.Earthen_Ring_Farseer:
+                Earthen_Ring_Farseer(spell);
+                break;
+
+            case Card.Cardname.Tinkers_Oil:
+                Tinkers_Oil(spell);
+                break;
+
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);
                 break;

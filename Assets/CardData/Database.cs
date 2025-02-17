@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
@@ -193,12 +194,36 @@ public partial class Database
             case Card.Cardname.Molten_Giant:
                 return Molten_Giant();
 
+            case Card.Cardname.Dagger_Mastery:
+                return Dagger_Mastery();
+                
+            case Card.Cardname.Backstab:
+                return Backstab();
+                
+            case Card.Cardname.Bloodmage_Thalnos:
+                return Bloodmage_Thalnos();
+
+            case Card.Cardname.Fan_of_Knives:
+                return Fan_of_Knives();
+
+            case Card.Cardname.Earthen_Ring_Farseer:
+                return Earthen_Ring_Farseer();
+
+            case Card.Cardname.Tinkers_Oil:
+                return Tinkers_Oil();
+                
+            case Card.Cardname.Violet_Teacher:
+                return Violet_Teacher();
+           case Card.Cardname.Violet_Apprentice:
+                return Violet_Apprentice();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 break;
         }
         return info;
     }
+
     public static Card.Cardname GetClassSecret(Card.Class c)
     {
         switch(c)
@@ -225,6 +250,39 @@ public partial class Database
         case Card.Class.Shaman:
             break;
         case Card.Class.Neutral:*/
+            default:
+                Debug.LogError("CLASS SECRET UNKNOWN");
+                return Card.Cardname.Cardback;
+        }
+    }
+    public static Card.Cardname GetClassHeroPower(Card.Class c)
+    {
+        switch(c)
+        {
+            case Card.Class.Mage:
+                return Card.Cardname.Ping;
+
+            case Card.Class.Warrior:
+                return Card.Cardname.Armor_Up;
+
+            case Card.Class.Rogue:
+                return Card.Cardname.Dagger_Mastery;
+
+            case Card.Class.Warlock:
+                return Card.Cardname.Lifetap;
+
+            /*
+           case Card.Class.Hunter:
+               break;
+           case Card.Class.Paladin:
+               break;
+           case Card.Class.Priest:
+               break;
+           case Card.Class.Druid:
+               break;
+           case Card.Class.Shaman:
+               break;
+           case Card.Class.Neutral:*/
             default:
                 Debug.LogError("CLASS SECRET UNKNOWN");
                 return Card.Cardname.Cardback;
@@ -703,6 +761,75 @@ public partial class Database
         c.cardAuras.Add(Aura.Type.Molten_Giant);
         return c;
     }
+    private static CardInfo Bloodmage_Thalnos()
+    {
+        CardInfo c = new();
 
-    
+        c.name = "Bloodmage Thalnos";
+        c.text = "+1 Spellpower.\nDeathrattle: Draw a card.";
+
+        c.manaCost = 2;
+        c.damage = 1;
+        c.health = 1;
+
+        c.MINION = true;
+
+        c.auras.Add(Aura.Type.Spellpower);
+        c.triggers.Add((Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.DrawCard));
+
+        return c;
+    }
+    private static CardInfo Earthen_Ring_Farseer()
+    {
+        CardInfo c = new();
+
+        c.name = "Earthen Ring Farseer";
+        c.text = "Battlecry: Restore 3 health.";
+
+        c.manaCost = 3;
+        c.damage = 3;
+        c.health = 3;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+        c.TARGETED = true;
+
+        c.eligibleTargets = Board.EligibleTargets.AllCharacters;
+
+
+        return c;
+    } 
+    private static CardInfo Violet_Teacher()
+    {
+        CardInfo c = new();
+
+        c.name = "Violet Teacher";
+        c.text = "Whenever you cast a spell, summon a 1/1 Violet Apprentice";
+
+        c.manaCost = 4;
+        c.damage = 3;
+        c.health = 5;
+
+        c.MINION = true;
+
+        c.triggers.Add((Trigger.Type.OnPlaySpell, Trigger.Side.Friendly, Trigger.Ability.Violet_Teacher));
+
+        return c;
+    }
+    private static CardInfo Violet_Apprentice()
+    {
+        CardInfo c = new();
+
+        c.name = "Violet Apprentice";
+        c.text = "Ready to learn.";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+
+        c.MINION = true;
+
+        return c;
+    }
+
 }

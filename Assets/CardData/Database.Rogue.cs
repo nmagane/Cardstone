@@ -1,5 +1,24 @@
-﻿public partial class Database
+﻿using Mirror.BouncyCastle.Asn1.X509;
+
+public partial class Database
 {
+    static CardInfo Backstab()
+    {
+        CardInfo c = new();
+
+        c.name = "Backstab";
+        c.text = "Deal {0} damage to an undamaged minion.";
+
+        c.classType = Card.Class.Rogue;
+        c.eligibleTargets = Board.EligibleTargets.HealthyMinions;
+
+        c.manaCost = 0;
+        c.spellDamage = 2;
+
+        c.SPELL = true;
+        c.TARGETED = true;
+        return c;
+    }
     static CardInfo Preparation()
     {
         CardInfo c = new();
@@ -16,6 +35,22 @@
         return c;
     }
 
+    static CardInfo Dagger_Mastery()
+    {
+        CardInfo c = new();
+
+        c.name = "Dagger Mastery";
+        c.text = "Equip a 1/2 Dagger.";
+
+        c.classType = Card.Class.Rogue;
+
+        c.manaCost = 2;
+
+        c.SPELL = true;
+        c.TARGETED = false;
+
+        return c;
+    }
     static CardInfo Dagger()
     {
         CardInfo c = new();
@@ -137,6 +172,39 @@
 
         c.SPELL = true;
         c.TARGETED = true;
+        return c;
+    }
+
+    static CardInfo Fan_of_Knives()
+    {
+        CardInfo c = new();
+
+        c.name = "Fan of Knives";
+        c.text = "Deal {0} damage to all enemy minions.\nDraw a card.";
+
+        c.classType = Card.Class.Rogue;
+
+        c.manaCost = 3;
+        c.spellDamage = 1;
+
+        c.SPELL = true;
+        c.TARGETED = false;
+        return c;
+    }
+    static CardInfo Tinkers_Oil()
+    {
+        CardInfo c = new();
+
+        c.name = "Tinker's Sharpsword Oil";
+        c.text = "Give your weapon +3 attack.\nCombo: Give a random friendly minion +3 attack.";
+
+        c.classType = Card.Class.Rogue;
+
+        c.manaCost = 4;
+
+        c.SPELL = true;
+        c.COMBO = true;
+        c.TARGETED = false;
         return c;
     }
 }

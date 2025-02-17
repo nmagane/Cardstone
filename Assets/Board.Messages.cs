@@ -3,13 +3,24 @@ using UnityEngine;
 
 public partial class Board
 {
-    public void StartMatchmaking()
+    public List<int> GetDeckList(List<Card.Cardname> deck)
+    {
+        List<int> ints = new List<int>();
+        foreach (var c in deck)
+        {
+            ints.Add((int)c);
+        }
+        return ints;
+    }
+    public void StartMatchmaking(List<Card.Cardname> deck = null, Card.Class classType = Card.Class.Warlock)
     {
         Server.CustomMessage message = CreateMessage(Server.MessageType.Matchmaking);
         message.AddULong(playerID);
         message.AddString(playerName);
-        string deck = "";
-        message.AddString(deck);
+
+        message.AddInts(GetDeckList(deck));
+
+        message.AddInt((int)classType);
         //client.Send(message);
         SendMessage(message, true);
     }

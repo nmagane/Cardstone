@@ -216,6 +216,9 @@ public partial class Board
                 HighlightEnemyHero();
                 HighlightFriendlyHero();
                 break;
+            case EligibleTargets.HealthyMinions:
+                HighlightHealthyMinions();
+                break;
             default:
                 Debug.LogError("NO HIGHLIGHT IMPLEMENTED: " + eligibleTargets);
                 break;
@@ -245,6 +248,21 @@ public partial class Board
         {
             if (m.creature == null) continue;
             m.creature.Highlight(true);
+        }
+    }
+
+    void HighlightHealthyMinions()
+    {
+        foreach (var m in currMinions)
+        {
+            if (m.creature == null) continue;
+            if (m.health == m.maxHealth) m.creature.Highlight(true);
+        }
+
+        foreach (var m in enemyMinions)
+        {
+            if (m.creature == null) continue;
+            if (m.health == m.maxHealth) m.creature.Highlight(true);
         }
     }
 }

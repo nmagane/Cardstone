@@ -142,4 +142,14 @@ public class TriggerEffects
             spell.match.server.SummonToken(spell.match, spell.player, Card.Cardname.Grim_Patron, trigger.minion.index + 1);
         }
     }
+
+    public static void DrawCard(Match match, Trigger trigger, CastInfo spell)
+    {
+        match.server.Draw(trigger.minion.player);
+    }
+
+    internal static void Violet_Teacher(Match match, Trigger trigger, CastInfo spell)
+    {
+        spell.match.server.SummonToken(spell.match, spell.player, Card.Cardname.Violet_Apprentice, trigger.minion.index + 1);
+    }
 }

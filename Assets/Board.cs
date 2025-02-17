@@ -1,12 +1,8 @@
 using System.Collections.Generic;
-using Riptide;
 using UnityEngine;
-using System.Linq;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using TMPro;
-using Mirror;
-using System;
 
 public partial class Board : MonoBehaviour
 {
@@ -31,6 +27,8 @@ public partial class Board : MonoBehaviour
     public GameObject splashObject;
 
     public ulong playerID = 100;
+    public Card.Class currClass = Card.Class.Warlock;
+    public List<Card.Cardname> currDecklist;
     public string playerName = "Player";
     public ulong currentMatchID;
 
@@ -194,7 +192,9 @@ public partial class Board : MonoBehaviour
             case Server.MessageType.ConfirmMatch:
                 ulong matchID = message.GetULong();
                 string matchEnemyName = message.GetString();
-                InitGame(matchID, matchEnemyName);
+                Card.Class allyClass = (Card.Class)message.GetInt();
+                Card.Class enemyClass = (Card.Class)message.GetInt();
+                InitGame(matchID, matchEnemyName,allyClass,enemyClass);
                 break;
             case Server.MessageType.DrawHand:
                 List<ushort> hand = message.GetUShorts();
@@ -748,7 +748,7 @@ public partial class Board : MonoBehaviour
 #if (UNITY_EDITOR)
         if (Input.GetKeyDown(KeyCode.Q) && playerID!=101)
         {
-            StartMatchmaking();
+            StartMatchmaking(Database.Zoo_Lock, currClass);
         }
         if (Input.GetKeyDown(KeyCode.A) && playerID!=101)
         {
@@ -761,7 +761,7 @@ public partial class Board : MonoBehaviour
         //===============================
         if (Input.GetKeyDown(KeyCode.W) && playerID==101)
         {
-            StartMatchmaking();
+            StartMatchmaking(Database.Zoo_Lock,currClass);
         }
         if (Input.GetKeyDown(KeyCode.S) && playerID==101)
         {

@@ -97,6 +97,11 @@ public partial class Hero : MonoBehaviour
     public TMP_Text weaponDamage;
     public TMP_Text weaponDurability;
 
+    public void Set(Card.Class hero)
+    {
+
+    }
+
     public void SetHealth(int x)
     {
         health = x;

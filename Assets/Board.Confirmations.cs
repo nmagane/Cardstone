@@ -53,7 +53,7 @@ public partial class Board
     }
 
     bool gameStarted = false;
-    public void InitGame(ulong matchID, string enemyName)
+    public void InitGame(ulong matchID, string enemyName, Card.Class allyClass, Card.Class enemyClass)
     {
         Debug.Log("Player " + playerID + " entered game " + matchID);
         Camera.main.transform.position = new Vector3(0, 0, -10);
@@ -63,8 +63,10 @@ public partial class Board
         playerNameText.text = playerName;
         enemyNameText.text = enemyName;
 
-        heroPower.Set(Card.Cardname.Lifetap);
-        enemyHeroPower.Set(Card.Cardname.Lifetap);
+        currHero.Set(allyClass);
+        enemyHero.Set(enemyClass);
+        heroPower.Set(allyClass, Database.GetClassHeroPower(allyClass));
+        enemyHeroPower.Set(enemyClass,Database.GetClassHeroPower(enemyClass));
 
         currentMatchID = matchID;
     }
@@ -150,6 +152,7 @@ public partial class Board
         }
         if (card.WEAPON)
         {
+            preplayWep = true;
             currHero.EquipWeapon(card.card);
             currHero.DisplayWeapon();
         }
@@ -198,13 +201,21 @@ public partial class Board
         QueueAnimation(anim);
     }
 
+    bool preplayWep = false;
     public void EquipWeapon(bool friendlySide, Card.Cardname card)
     {
         if (friendlySide)
         {
-            if (currHero.weapon.card == card) //preplay confirmed correct
-                return;
-            //currHero.EquipWeapon(card);
+            if (currHero.weapon != null && preplayWep)
+            {
+                if (currHero.weapon.card == card)
+                {
+
+                    preplayWep = false;
+                }//preplay confirmed correct? idk [TODO]
+                    return;
+            }
+            else currHero.EquipWeapon(card);
         }
         else
         {

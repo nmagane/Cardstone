@@ -7,8 +7,8 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Mountain_Giant, Card.Cardname.Warsong_Commander, Card.Cardname.Emperor_Thaurissan };
-    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Loatheb, Card.Cardname.Millhouse_Manastorm, Card.Cardname.Sea_Giant, Card.Cardname.Molten_Giant };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Backstab, Card.Cardname.Tinkers_Oil, Card.Cardname.Violet_Teacher,Card.Cardname.Dagger };
+    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Backstab, Card.Cardname.Tinkers_Oil, Card.Cardname.Fan_of_Knives, Card.Cardname.Violet_Teacher };
     
     
 
@@ -197,9 +197,10 @@ public partial class Server : MonoBehaviour
             case MessageType.Matchmaking:
                 ulong queuePlayerID = message.GetULong();
                 string queuePlayerName = message.GetString();
-                string queuePlayerDeck = message.GetString();
+                List<int> queuePlayerDeck = message.GetInts();
+                int queuePlayerClass = message.GetInt();
                 int queueClientID = clientID;
-                AddToQueue(queueClientID, queuePlayerID, queuePlayerName,queuePlayerDeck);
+                AddToQueue(queueClientID, queuePlayerID, queuePlayerName,queuePlayerDeck, queuePlayerClass);
                 break;
             case MessageType.SubmitMulligan:
                 ulong mullMatchID = message.GetULong();
@@ -265,15 +266,16 @@ public partial class Server : MonoBehaviour
     {
         public int clientID;
         public ulong playerID;
+        public Card.Class classType;
         public string name;
-        public string deck;
+        public List<int> deck;
     }
 
     List<PlayerConnection> playerQueue = new List<PlayerConnection>();
     public Dictionary<ulong, Match> currentMatches = new Dictionary<ulong, Match>();
     public Dictionary<int, Match> clientConnections = new Dictionary<int, Match>();
     public List<Match> matchList = new List<Match>();
-    void AddToQueue(int clientID, ulong playerID, string name,string deck)
+    void AddToQueue(int clientID, ulong playerID, string name,List<int> deck, int classType)
     {
         foreach (PlayerConnection p in playerQueue)
         {
@@ -290,6 +292,7 @@ public partial class Server : MonoBehaviour
         PlayerConnection pc;
         pc.clientID = clientID;
         pc.playerID = playerID;
+        pc.classType = (Card.Class)classType;
         pc.name = name;
         pc.deck = deck;
         playerQueue.Add(pc);
@@ -340,10 +343,14 @@ public partial class Server : MonoBehaviour
         CustomMessage m0 = CreateMessage(MessageType.ConfirmMatch);
         m0.AddULong(currMatchID);
         m0.AddString(p1.name);
+        m0.AddInt((int)p0.classType);
+        m0.AddInt((int)p1.classType);
 
         CustomMessage m1 = CreateMessage(MessageType.ConfirmMatch);
         m1.AddULong(currMatchID); 
         m1.AddString(p0.name);
+        m1.AddInt((int)p1.classType);
+        m1.AddInt((int)p0.classType);
 
         match.InitMatch(p0, p1, currMatchID);
         SendMessage(m0, match.players[0]);
@@ -750,7 +757,7 @@ public partial class Server : MonoBehaviour
         if (player.board.Count() >= 7) return null;
 
         Player opponent = match.Opponent(player);
-        Minion m = player.board.Add(minion, position,match.playOrder,player);
+        Minion m = player.board.Add(minion, position,match.playOrder++,player);
         m.player = player;
 
         CustomMessage message = CreateMessage(Server.MessageType.SummonMinion);
@@ -925,6 +932,11 @@ public partial class Server : MonoBehaviour
         SendMessage(messageOpponent, opponent);
     }
 
+    public void SummonWeapon(Match match, Player player, Card.Cardname card)
+    {
+        CastInfo summonCast = new CastInfo(match, player, null, -1, -1, false, false);
+        match.StartSequenceEquipWeapon(summonCast, card);
+    }
     public Weapon EquipWeapon(Match match, Player player, Card.Cardname card)
     {
         Weapon weapon = new Weapon(card, player, match.playOrder);
@@ -1250,6 +1262,8 @@ public partial class Server : MonoBehaviour
         if (connection.clientID != clientID || connection.playerID != playerID) return;
 
         Card.Cardname ability = (Card.Cardname)heroPower;
+        if (ability != player.heroPower) return;
+
         HandCard card = new HandCard(ability, 0);
 
         if (player.currMana < card.manaCost) return;

@@ -228,16 +228,16 @@ public partial class Match
         WinCheck();
     }
 
-    public void StartSequenceEquipWeapon(CastInfo spell)
+    public void StartSequenceEquipWeapon(CastInfo spell, Card.Cardname card)
     {
-        //TODO: Equipping Token weapon from non-play sources
-        Weapon weapon = server.EquipWeapon(this, spell.player, spell.card.card);
+        Weapon weapon = server.EquipWeapon(this, spell.player, card);
         StartPhase(Phase.OnEquipWeapon, ref spell);
 
         StartPhase(Phase.AfterEquipWeapon, ref spell);
 
         WinCheck();
     }
+
     public void StartSequenceSwingMinion(CastInfo spell)
     {
         StartPhase(Phase.BeforeSwingMinion, ref spell); if (WinCheck()) return;

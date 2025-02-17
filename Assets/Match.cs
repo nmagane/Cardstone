@@ -18,44 +18,31 @@ public partial class Match
     //todo: secrets
     //todo: graveyards
 
-    public void InitMatch(Server.PlayerConnection p1, Server.PlayerConnection p2, ulong mID)
+    public List<Card.Cardname> GetDeck(List<int> deck)
     {
-        players[0].connection = p1;
-        players[1].connection = p2;
+        List<Card.Cardname> result = new List<Card.Cardname>();
+        foreach (int x in deck)
+            result.Add((Card.Cardname)x);
+        return result;
+    }
+
+    public void InitMatch(Server.PlayerConnection p0, Server.PlayerConnection p1, ulong mID)
+    {
+        players[0].connection = p0;
+        players[1].connection = p1;
         players[0].match = this;
         players[1].match = this;
         players[0].opponent = players[1];
         players[1].opponent = players[0];
-        List<Card.Cardname> zooDeck = new List<Card.Cardname>()
-        {
-            Card.Cardname.Flame_Imp,
-            Card.Cardname.Voidwalker,
-            Card.Cardname.Soulfire,
-            Card.Cardname.Abusive_Sergeant,
-            Card.Cardname.Young_Priestess,
-            Card.Cardname.Ironbeak_Owl,
-            Card.Cardname.Argent_Squire,
-            Card.Cardname.Amani_Berserker,
-            Card.Cardname.Dire_Wolf_Alpha,
-            Card.Cardname.Knife_Juggler,
-            Card.Cardname.Shattered_Sun_Cleric,
-            Card.Cardname.Harvest_Golem,
-            Card.Cardname.Dark_Iron_Dwarf,
-            Card.Cardname.Defender_of_Argus,
-            Card.Cardname.Doomguard,
 
-        };
+        players[0].heroPower = Database.GetClassHeroPower(p0.classType);
+        players[1].heroPower = Database.GetClassHeroPower(p1.classType);
 
-        List<Card.Cardname> sampleTestDeck = new List<Card.Cardname>();
-        foreach (var c in zooDeck)
-        {
-            sampleTestDeck.Add(c);
-            sampleTestDeck.Add(c);
-        }    
-        //decks = new List<List<Card.Cardname>>();
+        players[0].deck = GetDeck(p0.deck);
+        players[1].deck = GetDeck(p1.deck);
 
-        players[0].deck = new List<Card.Cardname>(Board.Shuffle(sampleTestDeck));
-        players[1].deck = new List<Card.Cardname>(Board.Shuffle(sampleTestDeck));
+        players[0].deck = new List<Card.Cardname>(Board.Shuffle(players[0].deck));
+        players[1].deck = new List<Card.Cardname>(Board.Shuffle(players[1].deck));
 
         turn = Board.RNG(50) ? Server.Turn.player1 : Server.Turn.player2;
         currPlayer = players[(int)turn];

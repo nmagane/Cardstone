@@ -3093,6 +3093,7 @@ MonoBehaviour:
   UISprite: {fileID: 3855120183959039949, guid: 2fa7455c809adff4eaa1c42fbb7453cd, type: 3}
   splashObject: {fileID: 6159032695919385113, guid: a3261918d5809f846a6ef34ce4304938, type: 3}
   playerID: 100
+  currClass: 3
   playerName: Player
   currentMatchID: 0
   currHand:
@@ -3165,6 +3166,7 @@ MonoBehaviour:
     damage: 0
     baseCost: 0
     card: 0
+    tribe: 0
     eligibleTargets: 0
     SPELL: 0
     MINION: 0
@@ -5143,6 +5145,7 @@ MonoBehaviour:
   UISprite: {fileID: 3855120183959039949, guid: 2fa7455c809adff4eaa1c42fbb7453cd, type: 3}
   splashObject: {fileID: 6159032695919385113, guid: a3261918d5809f846a6ef34ce4304938, type: 3}
   playerID: 101
+  currClass: 1
   playerName: tester101
   currentMatchID: 0
   currHand:
@@ -5215,6 +5218,7 @@ MonoBehaviour:
     damage: 0
     baseCost: 0
     card: 0
+    tribe: 0
     eligibleTargets: 0
     SPELL: 0
     MINION: 0

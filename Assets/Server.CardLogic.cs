@@ -73,6 +73,11 @@ public partial class Server
         }
     }
 
+    public void Draw(Player p)
+    {
+        p.match.StartSequenceDrawCard(new CastInfo(p.match,p,null,-1,-1,false,false));
+    }
+
     public void SilenceMinion(CastInfo spell)
     {
         Player p = spell.player;
@@ -263,45 +268,11 @@ public partial class Server
     {
         spell.player.AddAura(new Aura(Aura.Type.Damage, 4, true));
     }
-    private void Deadly_Poison(CastInfo spell)
-    {
-        if (spell.player.weapon == null) return;
-        spell.player.weapon.AddAura(new Aura(Aura.Type.Damage, 2));
-    }
-    private void Blade_Flurry(CastInfo spell)
-    {
-        if (spell.player.weapon == null) return;
-        spell.player.weapon.DEAD = true;
-        int dmg = spell.player.weapon.damage;
-
-        MinionBoard b = spell.player.opponent.board;
-        foreach(Minion m in b)
-        {
-            Damage(m, dmg,spell);
-        }
-        Damage(spell.player.opponent, dmg,spell);
-    }
     private void Armor_Up(CastInfo spell)
     {
         spell.player.armor += 2;
     }
-    private void SI7_Agent(CastInfo spell)
-    {
-        if (spell.player.combo == false) return;
-        DamageTarget(2,spell);
-    }
-    private void Eviscerate(CastInfo spell)
-    {
-        int dmg = 2;
-        if (spell.player.combo) dmg = 4;
-        DamageTarget(dmg,spell);
-    }
-    private void Sap(CastInfo spell)
-    {
-        Minion m = spell.GetTargetMinion();
-        spell.match.server.AddCard(spell.match, m.player, m.card, m, 0);
-        spell.match.server.RemoveMinion(spell.match,m);
-    }
+
 
     private void Frostbolt(CastInfo spell)
     {
@@ -324,4 +295,10 @@ public partial class Server
             spell.match.server.AddAura(spell.match, m, new Aura(Aura.Type.Freeze));
         }
     }
+
+    void Earthen_Ring_Farseer(CastInfo spell)
+    {
+        HealTarget(3, spell);
+    }
+
 }

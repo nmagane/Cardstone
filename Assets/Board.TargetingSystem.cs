@@ -78,8 +78,8 @@ public partial class Board
 
         Weapon,
 
-        DamagedMinion,
-        HealthyMinion,
+        DamagedMinions,
+        HealthyMinions,
         Mech,
     }
 
@@ -260,6 +260,11 @@ public partial class Board
         {
             return false;
         }
+        if (eligibleTargets == EligibleTargets.HealthyMinions)
+        {
+            if (m.health == m.maxHealth) return true;
+            else return false;
+        }
         return false;
 
     }
@@ -295,12 +300,24 @@ public partial class Board
     {
         switch (targets)
         {
+            case EligibleTargets.Weapon:
+                return currHero.weapon != null;
             case EligibleTargets.FriendlyMinions:
                 return currMinions.Count() > 0;
             case EligibleTargets.EnemyMinions:
                 return enemyMinions.Count() > 0;
             case EligibleTargets.AllMinions:
                 return (currMinions.Count() + enemyMinions.Count()) > 0;
+            case EligibleTargets.HealthyMinions:
+                foreach(Minion m in currMinions)
+                {
+                    if (m.health == m.maxHealth) return true;
+                }
+                foreach(Minion m in enemyMinions)
+                {
+                    if (m.health == m.maxHealth) return true;
+                }
+                return false;
             default:
                 return true;
         }

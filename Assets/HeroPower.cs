@@ -7,12 +7,15 @@ public class HeroPower : MonoBehaviour
 {
     public Board board;
     public SpriteRenderer icon;
+    public SpriteRenderer frame;
     public TMP_Text manaText;
 
     public Sprite activeSprite;
     public Sprite disabledSprite;
 
     public SpriteRenderer highlight;
+
+    public Sprite[] heroPowerSprites;
 
     public int manaCost => card.manaCost;
 
@@ -21,21 +24,24 @@ public class HeroPower : MonoBehaviour
 
     public HandCard card;
 
-    public void Set(Card.Cardname heroPower)
+    public void Set(Card.Class classType,Card.Cardname heroPower)
     {
         card = new HandCard(heroPower, 0);
+        icon.sprite = heroPowerSprites[(int)classType];
     }
 
     public void Enable()
     {
         enabled = true;
-        icon.sprite = activeSprite;
+        icon.enabled = true;
+        frame.sprite = activeSprite;
         manaText.transform.localScale = Vector3.one;
     }
     public void Disable()
     {
         enabled = false;
-        icon.sprite = disabledSprite;
+        icon.enabled = false;
+        frame.sprite = disabledSprite;
         manaText.transform.localScale = Vector3.zero;
     }
 

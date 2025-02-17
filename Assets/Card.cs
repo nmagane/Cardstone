@@ -121,6 +121,15 @@ public class Card : MonoBehaviour
         Mountain_Giant,
         Sea_Giant,
         Molten_Giant,
+
+        Dagger_Mastery,
+        Backstab,
+        Bloodmage_Thalnos,
+        Fan_of_Knives,
+        Earthen_Ring_Farseer,
+        Tinkers_Oil,
+        Violet_Apprentice,
+        Violet_Teacher
     }
 
     public enum Class
