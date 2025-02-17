@@ -293,7 +293,7 @@ public partial class Match
 
         if (spell.card.BATTLECRY || (spell.card.COMBO && spell.player.combo))
         {
-            //DONT TRIGGER IF NO TARGET WAS CHOSEN - should never happen normally
+            //DONT TRIGGER IF NO TARGET WAS CHOSEN
             if (!((spell.card.TARGETED ||spell.card.COMBO_TARGETED) && (!spell.isHero && spell.target==-1)))
             {
                 server.ConfirmBattlecry(spell.match, minion);
@@ -589,6 +589,7 @@ public partial class Match
         }
         //=====================================
         //Aura activation
+
         foreach (Minion minion in players[0].board)
         {
             List<Aura> auras = new List<Aura>(minion.auras);
@@ -603,12 +604,20 @@ public partial class Match
                 aura.ActivateAura(this);
         }
 
-        //activate player auras
+        //activate player and hand auras
         foreach (Player p in players)
         {
             List<Aura> pAuras = new List<Aura>(p.auras);
             foreach (var aura in pAuras)
                 aura.ActivateAura(this);
+
+            //activate auras in hand
+            foreach (var c in p.hand)
+            {
+                List<Aura> cAuras = new List<Aura>(c.auras);
+                foreach (var aura in cAuras)
+                    aura.ActivateAura(this);
+            }
         }
         //==================
 
@@ -631,8 +640,6 @@ public partial class Match
         }
         //HAND CARD AURAS
         //=====================================
-
-        //no activatable auras on individual cards implemented.
 
         foreach (HandCard card in players[0].hand)
         {

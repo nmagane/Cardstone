@@ -145,6 +145,10 @@ public partial class Minion
             if (finder.foreignSource && finder.sourceAura == a.sourceAura)
             {
                 //Refresh and don't re-add.
+
+                //Update value to new value if it's different? TODO: this effect doesnt exist in the game?
+                //finder.value = a.value;
+
                 finder.refreshed = true;
                 return;
             }

@@ -23,8 +23,15 @@ public class Aura
         SetHealth,
         SetDamage,
 
+        //======== CARD AURAS
         Cost,
         SetCost,
+        HoldingDragon,
+        HoldingDragonTargeted,
+        Molten_Giant,
+        Mountain_Giant,
+        Sea_Giant,
+        //========
 
         Amani,
         StormwindChampion,
@@ -116,6 +123,21 @@ public class Aura
 
         switch (type)
         {
+            //======CARD AURAS
+            case Type.HoldingDragonTargeted:
+                AuraEffects.HoldingDragonTargeted(match, card, this);
+                break;
+            case Type.Mountain_Giant:
+                AuraEffects.Mountain_Giant(match, card, this);
+                break;
+            case Type.Sea_Giant:
+                AuraEffects.Sea_Giant(match, card, this);
+                break;
+            case Type.Molten_Giant:
+                AuraEffects.Molten_Giant(match, card, this);
+                break;
+            //================
+
             case Type.Spellpower:
                 AuraEffects.Spellpower(match, minion, this);
                 break;

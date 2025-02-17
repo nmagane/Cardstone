@@ -270,8 +270,9 @@ public partial class Board : MonoBehaviour
             case Server.MessageType.UpdateCard:
                 int updateCardInd = message.GetInt();
                 int updateCardCost = message.GetInt();
+                bool updateCardTargeted = message.GetBool();
 
-                UpdateCard(updateCardInd, updateCardCost);
+                UpdateCard(updateCardInd, updateCardCost, updateCardTargeted);
                 break;
             case Server.MessageType.ConfirmPreAttackMinion:
                 bool preMinionAllyAttack = message.GetBool();
@@ -556,9 +557,10 @@ public partial class Board : MonoBehaviour
 
     }
 
-    public void UpdateCard(int index, int updatedManaCost)
+    public void UpdateCard(int index, int updatedManaCost, bool updateTargeted)
     {
         currHand[index].manaCost = updatedManaCost;
+        currHand[index].TARGETED = updateTargeted;
 
         //===================
         VisualInfo anim = new VisualInfo();

@@ -7,8 +7,8 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Southsea_Deckhand, Card.Cardname.Warsong_Commander, Card.Cardname.Frostbolt, Card.Cardname.Dagger,Card.Cardname.Grim_Patron };
-    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Chillwind_Yeti, Card.Cardname.Frostbolt, Card.Cardname.Dagger };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Mountain_Giant, Card.Cardname.Warsong_Commander, Card.Cardname.Emperor_Thaurissan };
+    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Loatheb, Card.Cardname.Millhouse_Manastorm, Card.Cardname.Sea_Giant, Card.Cardname.Molten_Giant };
     
     
 
@@ -1191,6 +1191,7 @@ public partial class Server : MonoBehaviour
 
         message.AddInt(card.index);
         message.AddInt(card.manaCost);
+        message.AddBool(card.TARGETED);
 
         SendMessage(message, owner);
     }

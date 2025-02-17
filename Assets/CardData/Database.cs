@@ -11,6 +11,7 @@ public partial class Database
         public string text="UNDEFINED CARD";
 
         public Card.Class classType = Card.Class.Neutral;
+        public Card.Tribe tribe = Card.Tribe.None;
 
         public int manaCost=1;
         public int damage=1;
@@ -32,6 +33,7 @@ public partial class Database
         public Board.EligibleTargets eligibleTargets = Board.EligibleTargets.AllCharacters;
 
         public List<Aura.Type> auras = new List<Aura.Type>();
+        public List<Aura.Type> cardAuras = new List<Aura.Type>();
         public List<(Trigger.Type, Trigger.Side, Trigger.Ability)> triggers = new List<(Trigger.Type, Trigger.Side, Trigger.Ability)>();
         public CardInfo()
         {
@@ -184,6 +186,13 @@ public partial class Database
             case Card.Cardname.Grim_Patron:
                 return Grim_Patron();
 
+            case Card.Cardname.Mountain_Giant:
+                return Mountain_Giant();
+            case Card.Cardname.Sea_Giant:
+                return Sea_Giant();
+            case Card.Cardname.Molten_Giant:
+                return Molten_Giant();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 break;
@@ -326,6 +335,7 @@ public partial class Database
         c.MINION = true;
         c.BATTLECRY = true;
         c.TARGETED = true;
+
         c.eligibleTargets = Board.EligibleTargets.AllMinions;
 
         return c;
@@ -642,6 +652,55 @@ public partial class Database
         c.MINION = true;
 
         c.triggers.Add((Trigger.Type.OnDamageTaken, Trigger.Side.Both, Trigger.Ability.Grim_Patron));
+        return c;
+    }
+
+    static CardInfo Mountain_Giant()
+    { 
+        CardInfo c = new();
+
+        c.name = "Mountain Giant";
+        c.text = "Costs 1 less for each other card in your hand.";
+
+        c.manaCost = 12;
+        c.damage = 8;
+        c.health = 8;
+
+        c.MINION = true;
+
+        c.cardAuras.Add(Aura.Type.Mountain_Giant);
+        return c;
+    }
+    static CardInfo Sea_Giant()
+    { 
+        CardInfo c = new();
+
+        c.name = "Sea Giant";
+        c.text = "Costs 1 less for each minion on the board.";
+
+        c.manaCost = 10;
+        c.damage = 8;
+        c.health = 8;
+
+        c.MINION = true;
+
+        c.cardAuras.Add(Aura.Type.Sea_Giant);
+        return c;
+    }
+    static CardInfo Molten_Giant()
+    { 
+        CardInfo c = new();
+
+        c.name = "Molten Giant";
+        c.text = "Costs 1 less for each health you're missing.";
+
+        c.manaCost = 20;
+        c.damage = 8;
+        c.health = 8;
+
+        c.MINION = true;
+
+        c.cardAuras.Add(Aura.Type.Molten_Giant);
         return c;
     }
 

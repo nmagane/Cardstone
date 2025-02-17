@@ -86,4 +86,55 @@ public static class AuraEffects
             match.server.AddAura(match, minion, new Aura(Aura.Type.Charge,0,false,true,aura));
         }
     }
+
+    public static void HoldingDragonTargeted(Match match, HandCard card, Aura aura)
+    {
+        Player owner = match.FindOwner(card);
+        if (owner == null) return;
+
+        card.TARGETED = false;
+        card.BATTLECRY = false;
+        foreach(var c in owner.hand)
+        {
+            if (c == card) continue;
+            if (c.tribe == Card.Tribe.Dragon)
+            {
+                card.TARGETED = true;
+                card.BATTLECRY = true;
+                return;
+            }
+        }
+    }
+
+    public static void Mountain_Giant(Match match, HandCard card, Aura aura)
+    {
+        Player owner = match.FindOwner(card);
+        if (owner == null) return;
+
+        int i = 0;
+        foreach (var c in owner.hand)
+        {
+            if (c == card) continue;
+            i++;
+        }
+        match.server.AddCardAura(match, card, new Aura(Aura.Type.Cost, -i, false, true, aura));
+    } 
+    public static void Sea_Giant(Match match, HandCard card, Aura aura)
+    {
+        Player owner = match.FindOwner(card);
+        if (owner == null) return;
+
+        int i = owner.board.Count() + owner.opponent.board.Count();
+
+        match.server.AddCardAura(match, card, new Aura(Aura.Type.Cost, -i, false, true, aura));
+    }
+    public static void Molten_Giant(Match match, HandCard card, Aura aura)
+    {
+        Player owner = match.FindOwner(card);
+        if (owner == null) return;
+
+        int i = owner.maxHealth - owner.health;
+
+        match.server.AddCardAura(match, card, new Aura(Aura.Type.Cost, -i, false, true, aura));
+    }
 }

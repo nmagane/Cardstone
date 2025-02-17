@@ -23,6 +23,7 @@ public class HandCard
     public int baseCost = 1;
 
     public Card.Cardname card;
+    public Card.Tribe tribe = Card.Tribe.None;
     public Board.EligibleTargets eligibleTargets = Board.EligibleTargets.AllCharacters;
 
     public bool SPELL = false;
@@ -64,6 +65,13 @@ public class HandCard
         COMBO_TARGETED = cardInfo.COMBO_TARGETED;
 
         eligibleTargets = cardInfo.eligibleTargets;
+
+        tribe = cardInfo.tribe;
+
+        foreach (Aura.Type a in cardInfo.cardAuras)
+        {
+            AddAura(new Aura(a));
+        }
     }
 
     public HandCard(Card.Cardname name, int ind)
@@ -92,7 +100,8 @@ public class HandCard
         {
             if (finder.foreignSource && finder.sourceAura == a.sourceAura)
             {
-                //Refresh and don't re-add.
+                //Refresh and don't re-add. Update value if different
+                RecalculateAura(finder, a.value);
                 finder.refreshed = true;
                 return;
             } 
@@ -149,6 +158,25 @@ public class HandCard
                 break;
         }
         return true;
+    }
+    public void RecalculateAura(Aura c, int newValue)
+    {
+        switch (c.type)
+        {
+            case Aura.Type.Cost:
+                //dont overwrite a cost-setting effect by changing an existing aura
+                if (HasAura(Aura.Type.SetCost) == false)
+                {
+                    _manaCost -= c.value;
+                    c.value = newValue;
+                    c.InitAura();
+                }
+                else
+                {
+                    c.value = newValue;
+                }
+                break;
+        }
     }
     void RecalculateAuras()
     {

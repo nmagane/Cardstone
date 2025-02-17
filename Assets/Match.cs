@@ -133,6 +133,20 @@ public partial class Match
         if (minion.player == null) Debug.LogError("MINION OWNER NOT FOUND");
         return minion.player;
     }
+
+    internal Player FindOwner(HandCard card)
+    {
+        if (players[0].hand.cards.Contains(card))
+        {
+            return players[0];
+        }
+        if (players[1].hand.cards.Contains(card))
+        {
+            return players[1];
+        }
+        Debug.LogError("CARD NOT FOUND IN MATCH");
+        return null;
+    }
     public Player FindOpponent(Minion minion)
     {
         return Opponent(FindOwner(minion));

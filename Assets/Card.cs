@@ -118,6 +118,9 @@ public class Card : MonoBehaviour
         Southsea_Deckhand,
         Warsong_Commander,
         Grim_Patron,
+        Mountain_Giant,
+        Sea_Giant,
+        Molten_Giant,
     }
 
     public enum Class
@@ -136,6 +139,7 @@ public class Card : MonoBehaviour
     }
     public enum Tribe
     {
+        None,
         Demon,
         Dragon,
         Mech,
@@ -240,9 +244,11 @@ public class Card : MonoBehaviour
 
     Sprite comboHighlight;
     Sprite baseHighlight;
-    public void Highlight(bool special=false)
+    public void Highlight(bool specialEffect=false)
     {
-        if ((card.COMBO && board.combo)||special) highlight.sprite = comboHighlight;
+        CheckAuras();
+        if (special) specialEffect = true;
+        if ((card.COMBO && board.combo)||specialEffect) highlight.sprite = comboHighlight;
         else highlight.sprite = baseHighlight;
         highlight.enabled = true;
     }
@@ -624,6 +630,30 @@ public class Card : MonoBehaviour
 
     public Vector3 handPos=Vector3.zero;
     public Vector3 handRot=Vector3.zero;
+
+    bool special = false;
+    public void CheckAuras()
+    {
+        special = false;
+
+        foreach (Aura a in card.auras)
+        {
+            switch (a.type)
+            {
+                case Aura.Type.HoldingDragonTargeted:
+                case Aura.Type.HoldingDragon:
+                    foreach (HandCard c in board.currHand)
+                    {
+                        if (c == card) continue;
+                        if (c.tribe == Tribe.Dragon)
+                        {
+                            special = true;
+                        }
+                    }
+                    break;
+            }
+        }
+    }
 
     public void SetSortingOrder(int x)
     {
