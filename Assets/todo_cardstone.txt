@@ -81,7 +81,7 @@ Oil rogue Decklist:
 2x SI7 Agent                       -- DONE
 1x Earthen Ring Farseer            -- DONE
 2x Tinker's Sharpsword Oil         -- DONE
-2x Violet Teacher                  -- NO - Index changing precast bug...
+2x Violet Teacher                  -- DONE
 1x Healbot                         -- NO
 2x Azure Drake                     -- NO
 1x Loatheb                         -- NO

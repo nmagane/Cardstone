@@ -145,7 +145,7 @@ public partial class Server
     {
         Player p = spell.player;
         Match m = spell.match;
-        Minion tar = p.board[spell.target];
+        Minion tar = spell.GetTargetMinion();
         //TODO: SILENCABLE AURAS
         m.server.AddAura(m, tar, new Aura(Aura.Type.Health, 1));
         m.server.AddAura(m, tar, new Aura(Aura.Type.Damage, 1));
@@ -155,9 +155,7 @@ public partial class Server
     {
         Player p = spell.player;
         Match m = spell.match;
-        if (spell.isFriendly == false) p = p.opponent;
-
-        Minion tar = p.board[spell.target];
+        Minion tar = spell.GetTargetMinion();
         //TODO: SILENCABLE AURAS
         m.server.AddAura(m, tar, new Aura(Aura.Type.Damage, 2, true));
         //p.board[spell.target].AddAura(new Aura(Aura.Type.Damage, 2,true));

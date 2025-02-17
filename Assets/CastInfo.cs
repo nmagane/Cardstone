@@ -12,6 +12,8 @@ public class CastInfo
     public Weapon weapon;
     public int playOrder = 0;
     public bool combo => player.combo;
+    public Minion targetMinion;
+    public Player targetPlayer;
 
     public CastInfo(Match m, Player p, HandCard name, int t, int s, bool fri, bool hero)
     {
@@ -22,6 +24,20 @@ public class CastInfo
         isFriendly = fri;
         isHero = hero;
         position = s;
+
+        if (isHero)
+        {
+            targetPlayer = isFriendly ? p : p.opponent;
+            targetMinion = null;
+        }
+        else
+        {
+            if (target!=-1)
+            {
+                targetMinion = isFriendly ? p.board[target] : p.opponent.board[target];
+                targetPlayer = null;
+            }
+        }
     }
     public CastInfo(Match m, AttackInfo a)
     {
@@ -33,8 +49,9 @@ public class CastInfo
     {
 
     }
+
     public Minion GetTargetMinion()
     {
-        return isFriendly ? player.board[target] : player.opponent.board[target];
+        return targetMinion;
     }
 }
