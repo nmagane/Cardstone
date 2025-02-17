@@ -99,6 +99,8 @@ public class Trigger
         Frothing_Berserker,
         Doomsayer,
         Mad_Scientist,
+        Power_Overwhelming,
+        Imp_Gang_Boss,
     }
     public enum Side
     {
@@ -214,6 +216,12 @@ public class Trigger
                 break;
             case Ability.Mad_Scientist:
                 TriggerEffects.Mad_Scientist(match, this, spell);
+                break;
+            case Ability.Power_Overwhelming:
+                TriggerEffects.Power_Overwhelming(match, this, spell);
+                break;
+            case Ability.Imp_Gang_Boss:
+                TriggerEffects.Imp_Gang_Boss(match, this, spell);
                 break;
             default:
                 Debug.LogError("MISSING TRIGGER ABILITY");

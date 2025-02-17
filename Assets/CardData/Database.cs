@@ -308,6 +308,18 @@ public partial class Database
 
             case Card.Cardname.Mad_Scientist:
                 return Mad_Scientist();
+                
+            case Card.Cardname.Mortal_Coil:
+                return Mortal_Coil();
+
+            case Card.Cardname.Power_Overwhelming:
+                return Power_Overwhelming();
+
+            case Card.Cardname.Imp_Gang_Boss:
+                return Imp_Gang_Boss();
+
+            case Card.Cardname.Imp:
+                return Imp();
 
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);

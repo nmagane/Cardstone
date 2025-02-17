@@ -67,7 +67,26 @@ next decks to implement:
 -CLASS COLOR CARDS
 -Show tribe on card
 -animations on all cards
-
+====================================
+Zoo lock Decklist:
+2x Flame Imp                       -- DONE
+1x Mortal coil                     -- DONE
+2x Power overwhelming              -- DONE
+2x Voidwalker                      -- DONE
+2x Imp Gang Boss                   -- NO
+1x Imp-losion                      -- NO
+2x Voidcaller                      -- NO
+2x Doomguard                       -- DONE
+2x Abusive                         -- DONE
+2x Dire wolf alpha                 -- DONE
+2x Haunted Creeper                 -- NO
+2x Knife juggler                   -- DONE
+2x Nerubian egg                    -- NO
+1x Ironbeak Owl                    -- DONE
+1x Crazed Alchemist                -- DONE
+2x Defender of Argus               -- DONE
+1x Loatheb                         -- DONE
+1x Dr. Boom                        -- DONE
 
 ====================================
 Freeze mage Decklist:

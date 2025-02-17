@@ -149,7 +149,7 @@ public class TriggerEffects
 
     internal static void Violet_Teacher(Match match, Trigger trigger, CastInfo spell)
     {
-        spell.match.server.SummonToken(spell.match, spell.player, Card.Cardname.Violet_Apprentice, trigger.minion.index + 1);
+        spell.match.server.SummonToken(spell.match, trigger.minion.player, Card.Cardname.Violet_Apprentice, trigger.minion.index + 1);
     }
 
     public static void Boom_Bot(Match match, Trigger trigger, CastInfo spell)
@@ -232,6 +232,14 @@ public class TriggerEffects
         }
         if (secret != Card.Cardname.Cardback)
             p.deck.Remove(secret);
+    }
+    public static void Power_Overwhelming(Match match, Trigger trigger, CastInfo spell)
+    {
+        trigger.minion.DEAD = true;
+    }
+    public static void Imp_Gang_Boss(Match match, Trigger trigger, CastInfo spell)
+    {
+        spell.match.server.SummonToken(spell.match, trigger.minion.player, Card.Cardname.Imp, trigger.minion.index + 1);
     }
 
     

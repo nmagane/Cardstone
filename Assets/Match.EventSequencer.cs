@@ -231,7 +231,6 @@ public partial class Match
     public void StartSequenceEquipWeapon(CastInfo spell, Card.Cardname card)
     {
         Weapon weapon = server.EquipWeapon(this, spell.player, card);
-        StartPhase(Phase.OnEquipWeapon, ref spell);
 
         StartPhase(Phase.AfterEquipWeapon, ref spell);
 
@@ -312,8 +311,6 @@ public partial class Match
         Minion m = server.SummonMinion(this, spell.player, card,MinionBoard.MinionSource.Summon, spell.position);
         if (m == null) return;
         spell.minion = m;
-
-        StartPhase(Phase.OnSummonMinion, ref spell);
 
         StartPhase(Phase.AfterSummonMinion, ref spell);
         WinCheck();

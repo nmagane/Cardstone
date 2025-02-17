@@ -748,7 +748,7 @@ public partial class Board : MonoBehaviour
 #if (UNITY_EDITOR)
         if (Input.GetKeyDown(KeyCode.Q) && playerID!=101)
         {
-            StartMatchmaking(Database.Freeze_Mage, currClass);
+            StartMatchmaking(Database.Zoo_Lock, currClass);
         }
         if (Input.GetKeyDown(KeyCode.A) && playerID!=101)
         {

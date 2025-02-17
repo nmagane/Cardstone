@@ -423,6 +423,12 @@ public partial class Server
             case Card.Cardname.Alexstrasza:
                 Alexstrasza(spell);
                 break;
+            case Card.Cardname.Mortal_Coil:
+                Mortal_Coil(spell);
+                break;
+            case Card.Cardname.Power_Overwhelming:
+                Power_Overwhelming(spell);
+                break;
 
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);

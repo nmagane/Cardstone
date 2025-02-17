@@ -19,14 +19,49 @@
     {
         CardInfo c = new();
 
-        c.classType = Card.Class.Warlock;
         c.name = "Soulfire";
         c.text = "Deal {0} damage. Discard a random card.";
-        c.manaCost = 0;
+
+        c.classType = Card.Class.Warlock;
+        c.eligibleTargets = Board.EligibleTargets.AllCharacters;
+
+        c.manaCost = 1;
         c.spellDamage = 4;
         c.SPELL = true;
         c.TARGETED = true;
-        c.eligibleTargets = Board.EligibleTargets.AllCharacters;
+
+        return c;
+    }
+    static CardInfo Mortal_Coil()
+    {
+        CardInfo c = new();
+
+        c.name = "Mortal Coil";
+        c.text = "Deal {0} damage to a minion. If it kills it, draw a card";
+
+        c.classType = Card.Class.Warlock;
+        c.eligibleTargets = Board.EligibleTargets.AllMinions;
+
+        c.manaCost = 1;
+        c.spellDamage = 1;
+        c.SPELL = true;
+        c.TARGETED = true;
+
+        return c;
+    }
+    static CardInfo Power_Overwhelming()
+    {
+        CardInfo c = new();
+
+        c.name = "Power Overwhelming";
+        c.text = "Give a friendly minion +4/+4 until end of turn.\nThen, it dies. Horribly.";
+
+        c.classType = Card.Class.Warlock;
+        c.eligibleTargets = Board.EligibleTargets.FriendlyMinions;
+
+        c.manaCost = 1;
+        c.SPELL = true;
+        c.TARGETED = true;
 
         return c;
     }
@@ -40,6 +75,7 @@
         c.manaCost = 1;
         c.damage = 3;
         c.health = 2;
+        c.tribe = Card.Tribe.Demon;
 
         c.MINION = true;
         c.BATTLECRY = true;
@@ -58,9 +94,46 @@
         c.manaCost = 1;
         c.damage = 1;
         c.health = 3;
+        c.tribe = Card.Tribe.Demon;
 
         c.MINION = true;
         c.auras.Add(Aura.Type.Taunt);
+
+        return c;
+    }
+    static CardInfo Imp()
+    {
+        CardInfo c = new();
+
+        c.classType = Card.Class.Warlock;
+        c.name = "Imp";
+        c.text = "Its laughter drives needles through your mind.";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+        c.tribe = Card.Tribe.Demon;
+
+        c.MINION = true;
+
+        return c;
+    }
+    static CardInfo Imp_Gang_Boss()
+    {
+        CardInfo c = new();
+
+        c.classType = Card.Class.Warlock;
+        c.name = "Imp Gang Boss";
+        c.text = "Whenever this minoin takes damage, summon a 1/1 Imp.";
+
+        c.manaCost = 3;
+        c.damage = 2;
+        c.health = 4;
+        c.tribe = Card.Tribe.Demon;
+
+        c.MINION = true;
+
+        c.triggers.Add((Trigger.Type.OnDamageTaken, Trigger.Side.Both, Trigger.Ability.Imp_Gang_Boss));
 
         return c;
     }
@@ -75,6 +148,7 @@
         c.manaCost = 5;
         c.damage = 5;
         c.health = 7;
+        c.tribe = Card.Tribe.Demon;
 
         c.MINION = true;
         c.BATTLECRY = true;
@@ -82,4 +156,5 @@
 
         return c;
     }
+
 }
