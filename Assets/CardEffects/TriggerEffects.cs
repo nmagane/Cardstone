@@ -93,8 +93,7 @@ public class TriggerEffects
     public static void Archmage_Antonidas(Match m, Minion minion, Trigger t)
     {
         Player p = minion.player;
-        HandCard c = m.server.AddCard(m, p, Card.Cardname.Chillwind_Yeti, minion, -2);
-        m.server.AddCardAura(m, c, new Aura(Aura.Type.Cost, -2));
+        HandCard c = m.server.AddCard(m, p, Card.Cardname.Fireball, minion);
     }
     public static void Ice_Barrier(Match m, Minion minion, Trigger t)
     {
@@ -202,5 +201,39 @@ public class TriggerEffects
         Minion minion = trigger.minion;
         match.server.AddAura(match, minion, new Aura(Aura.Type.Damage, 1));
     }
+    public static void Doomsayer(Match match, Trigger trigger, CastInfo spell)
+    {
+        MinionBoard b = trigger.minion.player.board;
+        MinionBoard b2 = trigger.minion.player.opponent.board;
+        foreach (Minion m in b)
+        {
+            m.DEAD = true;
+        }
+        foreach (Minion m in b2)
+        {
+            m.DEAD = true;
+        }
+    }
+    public static void Mad_Scientist(Match match, Trigger trigger, CastInfo spell)
+    {
+        Player p = trigger.minion.player;
+        Card.Cardname secret = Card.Cardname.Cardback;
+        foreach (Card.Cardname c in p.deck)
+        {
+            if (Database.GetCardData(c).SECRET)
+            {
+                if (p.HasSecret(c) == false)
+                {
+                    match.server.AddSecret(c, p, match);
+                    secret = c;
+                    break;
+                }
+            }
+        }
+        if (secret != Card.Cardname.Cardback)
+            p.deck.Remove(secret);
+    }
+
+    
 
 }

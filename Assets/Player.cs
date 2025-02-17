@@ -92,6 +92,12 @@ public class Player
         secrets.Remove(secret);
     }
 
+    public bool HasSecret(Card.Cardname card)
+    {
+        foreach (Secret s in secrets)
+            if (s.card == card) return true;
+        return false;
+    }
     //===========================
     public void AddAura(Aura a)
     {

@@ -273,6 +273,42 @@ public partial class Database
             case Card.Cardname.Dread_Corsair:
                 return Dread_Corsair();
 
+            case Card.Cardname.Ice_Lance:
+                return Ice_Lance();
+
+            case Card.Cardname.Doomsayer:
+                return Doomsayer();
+
+            case Card.Cardname.Frost_Nova:
+                return Frost_Nova();
+
+            case Card.Cardname.Arcane_Intellect:
+                return Arcane_Intellect();
+
+            case Card.Cardname.Loot_Hoarder:
+                return Loot_Hoarder();
+
+            case Card.Cardname.Ice_Block:
+                return Ice_Block();
+            
+            case Card.Cardname.Fireball:
+                return Fireball();
+
+            case Card.Cardname.Flamestrike:
+                return Flamestrike();
+
+            case Card.Cardname.Blizzard:
+                return Blizzard();
+
+            case Card.Cardname.Pyroblast:
+                return Pyroblast();
+
+            case Card.Cardname.Alexstrasza:
+                return Alexstrasza();
+
+            case Card.Cardname.Mad_Scientist:
+                return Mad_Scientist();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 break;
@@ -357,20 +393,7 @@ public partial class Database
 
         return c;
     }
-    static CardInfo Ping()
-    { 
-        CardInfo c = new();
 
-        c.name = "Ping";
-        c.text = "Deal 1 damage.";
-        c.manaCost = 2;
-        c.spellDamage = 1;
-        c.SPELL = true;
-        c.TARGETED = true;
-        c.eligibleTargets = Board.EligibleTargets.AllCharacters;
-
-        return c;
-    }
     static CardInfo Argent_Squire()
     { 
         CardInfo c = new();
@@ -706,22 +729,7 @@ public partial class Database
         c.auras.Add(Aura.Type.Stealth);
         return c;
     }
-    static CardInfo Archmage_Antonidas()
-    { 
-        CardInfo c = new();
 
-        c.name = "Archmage Antonidas";
-        c.text = "Whenever you cast a spell, add a Fireball spell to your hand.";
-
-        c.manaCost = 1;
-        c.damage = 5;
-        c.health = 7;
-
-        c.MINION = true;
-
-        c.triggers.Add((Trigger.Type.OnPlaySpell,Trigger.Side.Friendly,Trigger.Ability.Archmage_Antonidas));
-        return c;
-    }
     static CardInfo Ogre_Magi()
     { 
         CardInfo c = new();
@@ -1025,6 +1033,73 @@ public partial class Database
         c.auras.Add(Aura.Type.Taunt);
         c.cardAuras.Add(Aura.Type.Dread_Corsair);
 
+        return c;
+    }
+    private static CardInfo Doomsayer()
+    {
+        CardInfo c = new();
+
+        c.name = "Doomsayer";
+        c.text = "At the start of your turn, destroy all minions.";
+
+        c.manaCost = 2;
+        c.damage = 0;
+        c.health = 7;
+
+        c.MINION = true;
+        c.triggers.Add((Trigger.Type.StartTurn,Trigger.Side.Friendly,Trigger.Ability.Doomsayer));
+
+        return c;
+    }
+    private static CardInfo Loot_Hoarder()
+    {
+        CardInfo c = new();
+
+        c.name = "Loot Hoarder";
+        c.text = "Deathrattle: Draw a card.";
+
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 1;
+
+        c.MINION = true;
+        c.triggers.Add((Trigger.Type.Deathrattle,Trigger.Side.Both,Trigger.Ability.DrawCard));
+
+        return c;
+    }
+    private static CardInfo Alexstrasza()
+    {
+        CardInfo c = new();
+
+        c.name = "Alexstrasza";
+        c.text = "Battlecry: Set a hero's remaining health to 15.";
+
+        c.eligibleTargets = Board.EligibleTargets.AllHeroes;
+
+        c.manaCost = 9;
+        c.damage = 8;
+        c.health = 8;
+
+        c.MINION = true;
+        c.TARGETED = true;
+        c.BATTLECRY = true;
+
+        return c;
+    }
+    private static CardInfo Mad_Scientist()
+    {
+        CardInfo c = new();
+
+        c.name = "Mad Scientist";
+        c.text = "Deathrattle: Put a secret from your deck into the battlefield.";
+
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 2;
+
+        c.MINION = true;
+
+        c.triggers.Add((Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.Mad_Scientist));
         return c;
     }
 

@@ -2,6 +2,24 @@
 
 public partial class Database
 {
+    static CardInfo Ping()
+    {
+        CardInfo c = new();
+
+        c.name = "Ping";
+        c.text = "Deal 1 damage.";
+
+        c.classType = Card.Class.Mage;
+        c.eligibleTargets = Board.EligibleTargets.AllCharacters;
+
+        c.manaCost = 2;
+        c.spellDamage = 1;
+
+        c.SPELL = true;
+        c.TARGETED = true;
+
+        return c;
+    }
     static CardInfo Mage_Secret()
     {
         CardInfo c = new();
@@ -15,6 +33,76 @@ public partial class Database
 
         c.SPELL = true;
         c.SECRET = true;
+
+        return c;
+    }
+    static CardInfo Ice_Lance()
+    {
+        CardInfo c = new();
+
+        c.name = "Ice Lance";
+        c.text = "Freeze a character.\nIf it's already frozen, deal {0} damage instead.";
+
+        c.classType = Card.Class.Mage;
+        c.eligibleTargets = Board.EligibleTargets.AllCharacters;
+
+        c.manaCost = 1;
+        c.spellDamage = 4;
+
+        c.SPELL = true;
+        c.TARGETED = true;
+
+        return c;
+    }
+
+    static CardInfo Frostbolt()
+    {
+        CardInfo c = new();
+
+        c.name = "Frostbolt";
+        c.text = "Deal {0} damage to a target and Freeze it.";
+
+        c.classType = Card.Class.Mage;
+        c.eligibleTargets = Board.EligibleTargets.AllCharacters;
+
+        c.manaCost = 2;
+        c.spellDamage = 3;
+
+        c.SPELL = true;
+        c.TARGETED = true;
+
+        return c;
+    }
+
+    static CardInfo Arcane_Intellect()
+    {
+        CardInfo c = new();
+
+        c.name = "Arcane Intellect";
+        c.text = "Draw 2 cards.";
+
+        c.classType = Card.Class.Mage;
+
+        c.manaCost = 3;
+
+        c.SPELL = true;
+        c.TARGETED = false;
+
+        return c;
+    }
+    static CardInfo Frost_Nova()
+    {
+        CardInfo c = new();
+
+        c.name = "Frost Nova";
+        c.text = "Freeze all enemy minions.";
+
+        c.classType = Card.Class.Mage;
+
+        c.manaCost = 3;
+
+        c.SPELL = true;
+        c.TARGETED = false;
 
         return c;
     }
@@ -36,22 +124,112 @@ public partial class Database
         c.triggers.Add((Trigger.Type.BeforeSwingFace, Trigger.Side.Enemy, Trigger.Ability.Ice_Barrier));
         return c;
     }
-
-    static CardInfo Frostbolt()
+    static CardInfo Ice_Block()
     {
         CardInfo c = new();
 
-        c.name = "Frostbolt";
-        c.text = "Deal {0} damage to a target and Freeze it.";
+        c.name = "Ice Block";
+        c.text = "Secret: When your hero takes lethal damage, become Immune this turn.";
 
         c.classType = Card.Class.Mage;
 
-        c.manaCost = 2;
-        c.spellDamage = 3;
+        c.manaCost = 3;
+
+        c.SPELL = true;
+        c.SECRET = true;
+
+        c.triggers.Add((Trigger.Type.OnLethalFaceDamage, Trigger.Side.Enemy, Trigger.Ability.Ice_Block));
+        return c;
+    }
+    
+    static CardInfo Fireball()
+    {
+        CardInfo c = new();
+
+        c.name = "Fireball";
+        c.text = "Deal {0} damage.";
+
+        c.classType = Card.Class.Mage;
+
+        c.manaCost = 4;
+        c.spellDamage = 6;
+
+        c.eligibleTargets = Board.EligibleTargets.AllCharacters;
 
         c.SPELL = true;
         c.TARGETED = true;
 
+        return c;
+    }
+    static CardInfo Flamestrike()
+    {
+        CardInfo c = new();
+
+        c.name = "Flamestrike";
+        c.text = "Deal {0} damage to all enemy minions.";
+
+        c.classType = Card.Class.Mage;
+
+        c.manaCost = 7;
+        c.spellDamage = 4;
+
+        c.SPELL = true;
+        c.TARGETED = false;
+
+        return c;
+    }
+    static CardInfo Blizzard()
+    {
+        CardInfo c = new();
+
+        c.name = "Blizzard";
+        c.text = "Deal {0} damage to all enemy minions and Freeze them.";
+
+        c.classType = Card.Class.Mage;
+
+        c.manaCost = 6;
+        c.spellDamage = 2;
+
+        c.SPELL = true;
+        c.TARGETED = false;
+
+        return c;
+    }
+    
+    static CardInfo Pyroblast()
+    {
+        CardInfo c = new();
+
+        c.name = "Pyroblast";
+        c.text = "Deal {0} damage.";
+
+        c.classType = Card.Class.Mage;
+        c.eligibleTargets = Board.EligibleTargets.AllCharacters;
+
+        c.manaCost = 10;
+        c.spellDamage = 10;
+
+        c.SPELL = true;
+        c.TARGETED = true;
+
+        return c;
+    }
+    static CardInfo Archmage_Antonidas()
+    {
+        CardInfo c = new();
+
+        c.name = "Archmage Antonidas";
+        c.text = "Whenever you cast a spell, add a Fireball spell to your hand.";
+
+        c.classType = Card.Class.Mage;
+
+        c.manaCost = 7;
+        c.damage = 5;
+        c.health = 7;
+
+        c.MINION = true;
+
+        c.triggers.Add((Trigger.Type.OnPlaySpell, Trigger.Side.Friendly, Trigger.Ability.Archmage_Antonidas));
         return c;
     }
 }

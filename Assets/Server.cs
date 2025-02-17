@@ -7,11 +7,9 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Whirlwind,Card.Cardname.Deaths_Bite, Card.Cardname.Unstable_Ghoul, Card.Cardname.Gnomish_Inventor, Card.Cardname.Frothing_Berserker, Card.Cardname.Dread_Corsair };
-    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() {Card.Cardname.Unstable_Ghoul, Card.Cardname.Unstable_Ghoul, Card.Cardname.Unstable_Ghoul }; 
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Alexstrasza, Card.Cardname.Alexstrasza};
+    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Alexstrasza, Card.Cardname.Alexstrasza, Card.Cardname.Alexstrasza };
     
-    
-
 #else
     List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { };
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { };
@@ -1323,6 +1321,7 @@ public partial class Server : MonoBehaviour
     public Secret AddSecret(Card.Cardname card, Player player, Match match)
     {
         if (player.secrets.Count >= 5) return null;
+        if (player.HasSecret(card)) return null;
         Secret s = player.AddSecret(card, match.playOrder);
 
         Database.CardInfo info = Database.GetCardData(card);

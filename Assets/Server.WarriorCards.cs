@@ -1,5 +1,15 @@
 ﻿public partial class Server
 {
+
+    private void Armor_Up(CastInfo spell)
+    {
+        spell.player.armor += 2;
+    }
+    private void Heroic_Strike(CastInfo spell)
+    {
+        spell.player.AddAura(new Aura(Aura.Type.Damage, 4, true));
+    }
+
     void Inner_Rage(CastInfo spell)
     {
         DamageTarget(1, spell);

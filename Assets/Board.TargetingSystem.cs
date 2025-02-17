@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using System.Linq;
+using System.Net;
 
 public partial class Board
 {
@@ -458,6 +459,10 @@ public partial class Board
             Database.CardInfo c = Database.GetCardData(targetingCard.card);
 
             int d = c.spellDamage;
+            if (targetingCard.card == Card.Cardname.Ice_Lance && !target.minion.HasAura(Aura.Type.Freeze))
+            {
+                return;
+            }
             if (c.COMBO && c.comboSpellDamage > 0 && currHero.combo) d = c.comboSpellDamage;
             if (c.SPELL && targetingCard.card != heroPower.card.card) d += currHero.spellpower;
             if (d >= target.minion.health)
@@ -485,6 +490,10 @@ public partial class Board
         }
         if (targetMode == TargetMode.Spell || targetMode == TargetMode.Battlecry || targetMode == TargetMode.HeroPower)
         {
+            if (targetingCard.card == Card.Cardname.Ice_Lance && !target.FREEZE)
+            {
+                return;
+            }
             if (Database.GetCardData(targetingCard.card).spellDamage >= target.health + target.armor)
             {
                  target.ShowSkull();

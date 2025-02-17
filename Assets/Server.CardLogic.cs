@@ -111,26 +111,7 @@ public partial class Server
     {
         spell.player.currMana++;
     }
-    void Ping(CastInfo spell)
-    {
-        int damage = 1;
-        DamageTarget(damage, spell);
-    }
 
-    void Arcane_Explosion(CastInfo spell)
-    {
-        int damage = 1;
-
-        Player opp = spell.match.Opponent(spell.player);
-        List<Minion> minions = new List<Minion>();
-        foreach (var m in opp.board)
-        {
-            minions.Add(m);
-        }
-
-        foreach (var m in minions)
-            Damage(m, damage, spell);
-    }
     void ShatteredSunCleric(CastInfo spell)
     {
         Player p = spell.player;
@@ -228,11 +209,6 @@ public partial class Server
         opponent.AddTrigger(Trigger.Type.StartTurn, Trigger.Side.Friendly, Trigger.Ability.Millhouse, spell.minion.playOrder);
     }
 
-    void Preparation(CastInfo spell)
-    {
-        spell.player.AddAura(new Aura(Aura.Type.Preparation, 0, true));
-        spell.player.AddTrigger(Trigger.Type.OnPlaySpell, Trigger.Side.Friendly, Trigger.Ability.Preparation_Cast, spell.playOrder);
-    }
 
     void Hunters_Mark(CastInfo spell)
     {
@@ -247,37 +223,6 @@ public partial class Server
         int hp = m.health;
         SetDamage(spell.match, m, hp);
         SetHealth(spell.match, m, att);
-    }
-    private void Heroic_Strike(CastInfo spell)
-    {
-        spell.player.AddAura(new Aura(Aura.Type.Damage, 4, true));
-    }
-    private void Armor_Up(CastInfo spell)
-    {
-        spell.player.armor += 2;
-    }
-
-
-    private void Frostbolt(CastInfo spell)
-    {
-        Minion m = null;
-        if (!spell.isHero)
-            m = spell.GetTargetMinion();
-
-        int damage = 3;
-        DamageTarget(damage, spell);
-
-        spell.match.ResolveTriggerQueue(ref spell);
-
-        if (spell.isHero)
-        {
-            Player p = spell.isFriendly ? spell.player : spell.player.opponent;
-            p.AddAura(new Aura(Aura.Type.Freeze));
-        }
-        else
-        {
-            spell.match.server.AddAura(spell.match, m, new Aura(Aura.Type.Freeze));
-        }
     }
 
     void Earthen_Ring_Farseer(CastInfo spell)
@@ -298,15 +243,17 @@ public partial class Server
     {
         Draw(spell.player);
     }
-    void Sprint(CastInfo spell)
-    {
-        for (int i=0;i<4;i++)
-            Draw(spell.player);
-    }
+
     void Dr_Boom(CastInfo spell)
     {
         spell.match.server.SummonToken(spell.match, spell.player, Card.Cardname.Boom_Bot, spell.minion.index);
         spell.match.server.SummonToken(spell.match, spell.player, Card.Cardname.Boom_Bot, spell.minion.index + 1);
+    }
+    
+    void Alexstrasza(CastInfo spell)
+    {
+        if (spell.targetPlayer == null) return;
+        spell.targetPlayer.health = 15;
     }
 
 }

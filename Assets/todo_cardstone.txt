@@ -63,9 +63,34 @@ next decks to implement:
 - weapon class colors?
 
 
-= EFFECT FOR SPELL POWER
+= EFFECT FOR SPELL POWER aura 
 -CLASS COLOR CARDS
 -Show tribe on card
+-animations on all cards
+
+
+====================================
+Freeze mage Decklist:
+
+2x Ice Lance                       -- DONE
+2x Frostbolt                       -- DONE
+1x Bloodmage                       -- DONE
+2x Doomsayer                       -- DONE
+2x Loot hoarder                    -- DONE
+2x Mad Scientist                   -- DONE
+2x Arcane Intellect                -- DONE
+2x Frost Nova                      -- DONE
+2x Ice Barrier                     -- DONE
+2x Ice Block                       -- DONE
+1x Acolyte of Pain                 -- DONE
+2x Fireball                        -- DONE
+1x Antique Healbot                 -- DONE
+2x Blizzard                        -- DONE
+1x Emperor Thaurissan              -- DONE
+1x Flamestrike                     -- DONE
+1x Archmage Antonidas              -- DONE
+1x Alexstrasza                     -- DONE
+1x Pyroblast                       -- DONE
 
 ====================================
 Patron warrior Decklist:

@@ -97,6 +97,8 @@ public class Trigger
         Armorsmith,
         Unstable_Ghoul,
         Frothing_Berserker,
+        Doomsayer,
+        Mad_Scientist,
     }
     public enum Side
     {
@@ -206,6 +208,12 @@ public class Trigger
                 break;
             case Ability.Frothing_Berserker:
                 TriggerEffects.Frothing_Berserker(match, this, spell);
+                break;
+            case Ability.Doomsayer:
+                TriggerEffects.Doomsayer(match, this, spell);
+                break;
+            case Ability.Mad_Scientist:
+                TriggerEffects.Mad_Scientist(match, this, spell);
                 break;
             default:
                 Debug.LogError("MISSING TRIGGER ABILITY");

@@ -398,6 +398,31 @@ public partial class Server
             case Card.Cardname.Gnomish_Inventor:
                 Gnomish_Inventor(spell);
                 break;
+                
+            case Card.Cardname.Ice_Lance:
+                Ice_Lance(spell);
+                break;
+            case Card.Cardname.Frost_Nova:
+                Frost_Nova(spell);
+                break;
+            case Card.Cardname.Arcane_Intellect:
+                Arcane_Intellect(spell);
+                break;
+            case Card.Cardname.Fireball:
+                Fireball(spell);
+                break;
+            case Card.Cardname.Flamestrike:
+                Flamestrike(spell);
+                break;
+            case Card.Cardname.Blizzard:
+                Blizzard(spell);
+                break;
+            case Card.Cardname.Pyroblast:
+                Pyroblast(spell);
+                break;
+            case Card.Cardname.Alexstrasza:
+                Alexstrasza(spell);
+                break;
 
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);

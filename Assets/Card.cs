@@ -150,6 +150,19 @@ public class Card : MonoBehaviour
         Deaths_Bite,
         Gnomish_Inventor,
         Dread_Corsair,
+
+        Ice_Lance,
+        Doomsayer,
+        Frost_Nova,
+        Loot_Hoarder,
+        Arcane_Intellect,
+        Ice_Block,
+        Fireball,
+        Flamestrike,
+        Blizzard,
+        Pyroblast,
+        Alexstrasza,
+        Mad_Scientist,
     }
 
     public enum Class
@@ -448,7 +461,7 @@ public class Card : MonoBehaviour
         }
         if (card.SECRET && board.currHero.HasSecret(card.card))
         {
-            //EndPlay();
+            EndPlay();
             return;
         }
         if (card.eligibleTargets==Board.EligibleTargets.Weapon && board.currHero.weapon==null)

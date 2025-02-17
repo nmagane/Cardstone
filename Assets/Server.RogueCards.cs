@@ -6,6 +6,11 @@ public partial class Server
     {
         spell.match.server.SummonWeapon(spell.match, spell.player, Card.Cardname.Dagger);
     }
+    void Preparation(CastInfo spell)
+    {
+        spell.player.AddAura(new Aura(Aura.Type.Preparation, 0, true));
+        spell.player.AddTrigger(Trigger.Type.OnPlaySpell, Trigger.Side.Friendly, Trigger.Ability.Preparation_Cast, spell.playOrder);
+    }
     private void Sap(CastInfo spell)
     {
         Minion m = spell.GetTargetMinion();
@@ -77,5 +82,10 @@ public partial class Server
             }
             spell.match.server.AddAura(spell.match, m, new Aura(Aura.Type.Damage, 3));
         }
+    }
+    void Sprint(CastInfo spell)
+    {
+        for (int i = 0; i < 4; i++)
+            Draw(spell.player);
     }
 }
