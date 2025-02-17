@@ -167,6 +167,12 @@ public class Card : MonoBehaviour
         Power_Overwhelming,
         Imp_Gang_Boss,
         Imp,
+        Implosion,
+        Haunted_Creeper,
+        Spectral_Spider,
+        Nerubian_Egg,
+        Nerubian,
+        Voidcaller,
     }
 
     public enum Class

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Data.Common;
 using Mirror.Examples.CharacterSelection;
 using UnityEngine;
@@ -138,7 +139,7 @@ public class TriggerEffects
     {
         if (trigger.minion.health > 0 && trigger.minion.DEAD == false)
         {
-            spell.match.server.SummonToken(spell.match, spell.player, Card.Cardname.Grim_Patron, trigger.minion.index + 1);
+            spell.match.server.SummonToken(spell.match, trigger.minion.player, Card.Cardname.Grim_Patron, trigger.minion.index + 1);
         }
     }
 
@@ -240,6 +241,27 @@ public class TriggerEffects
     public static void Imp_Gang_Boss(Match match, Trigger trigger, CastInfo spell)
     {
         spell.match.server.SummonToken(spell.match, trigger.minion.player, Card.Cardname.Imp, trigger.minion.index + 1);
+    }
+    public static void Haunted_Creeper(Match match, Trigger trigger, CastInfo spell)
+    {
+        match.server.SummonToken(match, trigger.minion.player, Card.Cardname.Spectral_Spider, trigger.minion.index);
+        match.server.SummonToken(match, trigger.minion.player, Card.Cardname.Spectral_Spider, trigger.minion.index);
+    }
+    public static void Nerubian_Egg(Match match, Trigger trigger, CastInfo spell)
+    {
+        match.server.SummonToken(match, trigger.minion.player, Card.Cardname.Nerubian, trigger.minion.index);
+    }
+    public static void Voidcaller(Match match, Trigger trigger, CastInfo spell)
+    {
+        List<HandCard> demons = new List<HandCard>();
+        foreach (HandCard card in trigger.minion.player.hand)
+        {
+            if (card.tribe == Card.Tribe.Demon)
+                demons.Add(card);
+        }
+        HandCard c = Board.RandElem(demons);
+        match.server.DiscardCard(match, trigger.minion.player, c.index);
+        match.server.SummonToken(match, trigger.minion.player, c.card);
     }
 
     

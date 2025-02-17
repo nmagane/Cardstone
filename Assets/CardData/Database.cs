@@ -320,6 +320,23 @@ public partial class Database
 
             case Card.Cardname.Imp:
                 return Imp();
+                
+            case Card.Cardname.Implosion:
+                return Implosion();
+
+
+            case Card.Cardname.Haunted_Creeper:
+                return Haunted_Creeper();
+            case Card.Cardname.Spectral_Spider:
+                return Spectral_Spider();
+
+            case Card.Cardname.Nerubian_Egg:
+                return Nerubian_Egg();
+            case Card.Cardname.Nerubian:
+                return Nerubian();
+
+            case Card.Cardname.Voidcaller:
+                return Voidcaller();
 
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
@@ -1112,6 +1129,68 @@ public partial class Database
         c.MINION = true;
 
         c.triggers.Add((Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.Mad_Scientist));
+        return c;
+    }
+    private static CardInfo Haunted_Creeper()
+    {
+        CardInfo c = new();
+
+        c.name = "Haunted Creeper";
+        c.text = "Deathrattle: Summon two 1/1 Spectral Spiders.";
+
+        c.manaCost = 2;
+        c.damage = 1;
+        c.health = 2;
+
+        c.MINION = true;
+
+        c.triggers.Add((Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.Haunted_Creeper));
+        return c;
+    }
+    private static CardInfo Spectral_Spider()
+    {
+        CardInfo c = new();
+
+        c.name = "Spectral Spider";
+        c.text = "";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+
+        c.MINION = true;
+
+        return c;
+    }
+    private static CardInfo Nerubian_Egg()
+    {
+        CardInfo c = new();
+
+        c.name = "Nerubian Egg";
+        c.text = "Deathrattle: Summon a 4/4 Nerubian.";
+
+        c.manaCost = 2;
+        c.damage = 0;
+        c.health = 2;
+
+        c.MINION = true;
+
+        c.triggers.Add((Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.Nerubian_Egg));
+        return c;
+    }
+    private static CardInfo Nerubian()
+    {
+        CardInfo c = new();
+
+        c.name = "Nerubian";
+        c.text = "";
+
+        c.manaCost = 4;
+        c.damage = 4;
+        c.health = 4;
+
+        c.MINION = true;
+
         return c;
     }
 

@@ -1,4 +1,7 @@
-﻿public partial class Server
+﻿using System.Data.Common;
+using UnityEngine;
+
+public partial class Server
 {
     void Lifetap(CastInfo spell)
     {
@@ -91,4 +94,35 @@
 
     }
 
-}
+    void Implosion(CastInfo spell)
+    {
+        if (spell.targetMinion == null) return;
+        AnimationManager.AnimationInfo anim = new AnimationManager.AnimationInfo
+        {
+            card = Card.Cardname.Soulfire,
+            sourceIsHero = true,
+            sourceIsFriendly = true,
+            sourceIndex = -1,
+            targetIndex = spell.targetMinion == null ? -1 : spell.targetMinion.index,
+            targetIsFriendly = spell.isFriendly,
+            targetIsHero = spell.isHero,
+        };
+
+        ConfirmAnimation(spell.match, spell.player, anim);
+
+        int damage = Random.Range(2, 5);
+
+
+        DamageTarget(damage, spell);
+
+        damage += spell.player.spellpower;
+
+        spell.match.ResolveTriggerQueue(ref spell);
+
+        for (int i=0;i<damage;i++)
+        {
+            SummonToken(spell.match, spell.player, Card.Cardname.Imp);
+        }
+    }
+
+    }

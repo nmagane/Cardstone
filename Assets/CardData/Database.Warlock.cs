@@ -156,5 +156,44 @@
 
         return c;
     }
+    static CardInfo Implosion()
+    {
+        CardInfo c = new();
+
+        c.classType = Card.Class.Warlock;
+        c.name = "Imp-losion";
+        c.text = "Deal {0}-{1} damage to a minion.\nSummon that many imps.";
+        c.spellDamage = 2;
+        c.comboSpellDamage = 4;
+
+        c.eligibleTargets = Board.EligibleTargets.AllMinions;
+        c.manaCost = 4;
+
+        c.SPELL = true;
+        c.TARGETED = true;
+
+        return c;
+    }
+    static CardInfo Voidcaller()
+    {
+        CardInfo c = new();
+
+        c.classType = Card.Class.Warlock;
+        c.name = "Voidcaller";
+        c.text = "Deathrattle: Put a random Demon from your hand into the battlefield.";
+
+        c.tribe = Card.Tribe.Demon;
+        c.manaCost = 4;
+
+        c.damage = 3;
+        c.health = 4;
+
+        c.MINION = true;
+
+
+        c.triggers.Add((Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.Voidcaller));
+
+        return c;
+    }
 
 }

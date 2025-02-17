@@ -101,6 +101,9 @@ public class Trigger
         Mad_Scientist,
         Power_Overwhelming,
         Imp_Gang_Boss,
+        Haunted_Creeper,
+        Nerubian_Egg,
+        Voidcaller,
     }
     public enum Side
     {
@@ -222,6 +225,15 @@ public class Trigger
                 break;
             case Ability.Imp_Gang_Boss:
                 TriggerEffects.Imp_Gang_Boss(match, this, spell);
+                break;
+            case Ability.Haunted_Creeper:
+                TriggerEffects.Haunted_Creeper(match, this, spell);
+                break;
+            case Ability.Nerubian_Egg:
+                TriggerEffects.Nerubian_Egg(match, this, spell);
+                break;
+            case Ability.Voidcaller:
+                TriggerEffects.Voidcaller(match, this, spell);
                 break;
             default:
                 Debug.LogError("MISSING TRIGGER ABILITY");

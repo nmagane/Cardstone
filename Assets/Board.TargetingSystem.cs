@@ -464,7 +464,7 @@ public partial class Board
                 return;
             }
             if (c.COMBO && c.comboSpellDamage > 0 && currHero.combo) d = c.comboSpellDamage;
-            if (c.SPELL && targetingCard.card != heroPower.card.card) d += currHero.spellpower;
+            if (c.SPELL && targetingCard.card != heroPower.card.card && c.spellDamage>0) d += currHero.spellpower;
             if (d >= target.minion.health)
             {
                 if (target.minion.HasAura(Aura.Type.Shield) == false)
@@ -494,7 +494,12 @@ public partial class Board
             {
                 return;
             }
-            if (Database.GetCardData(targetingCard.card).spellDamage >= target.health + target.armor)
+            Database.CardInfo c = Database.GetCardData(targetingCard.card);
+            int d = c.spellDamage;
+            if (c.COMBO && c.comboSpellDamage > 0 && currHero.combo) d = c.comboSpellDamage;
+            if (c.SPELL && targetingCard.card != heroPower.card.card && c.spellDamage > 0) d += currHero.spellpower;
+
+            if (d >= target.health + target.armor)
             {
                  target.ShowSkull();
             }

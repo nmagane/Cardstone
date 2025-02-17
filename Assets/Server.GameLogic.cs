@@ -429,6 +429,10 @@ public partial class Server
             case Card.Cardname.Power_Overwhelming:
                 Power_Overwhelming(spell);
                 break;
+   
+            case Card.Cardname.Implosion:
+                Implosion(spell);
+                break;
 
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);

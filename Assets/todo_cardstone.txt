@@ -73,15 +73,15 @@ Zoo lock Decklist:
 1x Mortal coil                     -- DONE
 2x Power overwhelming              -- DONE
 2x Voidwalker                      -- DONE
-2x Imp Gang Boss                   -- NO
-1x Imp-losion                      -- NO
-2x Voidcaller                      -- NO
+2x Imp Gang Boss                   -- DONE
+1x Imp-losion                      -- DONE
+2x Voidcaller                      -- DONE
 2x Doomguard                       -- DONE
 2x Abusive                         -- DONE
 2x Dire wolf alpha                 -- DONE
-2x Haunted Creeper                 -- NO
+2x Haunted Creeper                 -- DONE
 2x Knife juggler                   -- DONE
-2x Nerubian egg                    -- NO
+2x Nerubian egg                    -- DONE
 1x Ironbeak Owl                    -- DONE
 1x Crazed Alchemist                -- DONE
 2x Defender of Argus               -- DONE

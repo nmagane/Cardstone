@@ -3093,7 +3093,8 @@ MonoBehaviour:
   UISprite: {fileID: 3855120183959039949, guid: 2fa7455c809adff4eaa1c42fbb7453cd, type: 3}
   splashObject: {fileID: 6159032695919385113, guid: a3261918d5809f846a6ef34ce4304938, type: 3}
   playerID: 100
-  currClass: 3
+  currClass: 1
+  currDecklist: 
   playerName: Player
   currentMatchID: 0
   currHand:
@@ -5145,7 +5146,8 @@ MonoBehaviour:
   UISprite: {fileID: 3855120183959039949, guid: 2fa7455c809adff4eaa1c42fbb7453cd, type: 3}
   splashObject: {fileID: 6159032695919385113, guid: a3261918d5809f846a6ef34ce4304938, type: 3}
   playerID: 101
-  currClass: 1
+  currClass: 3
+  currDecklist: 
   playerName: tester101
   currentMatchID: 0
   currHand:

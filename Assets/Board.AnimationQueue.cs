@@ -319,7 +319,6 @@ public partial class Board
             Server.MessageType t = visualMessageQueue.Peek().type;
             if (t!= Server.MessageType.DiscardCard && t != Server.MessageType.UpdateCard)
             {
-                Debug.Log("waiting "+visualMessageQueue.Peek().type);
                 return StartCoroutine(Wait(15));
             }
         }
