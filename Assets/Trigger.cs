@@ -128,7 +128,6 @@ public class Trigger
             case Type.OnPlayCard:
             case Type.OnPlaySpell:
             case Type.OnPlayMinion:
-            case Type.OnSummonMinion:
             case Type.AfterPlayCard:
             case Type.AfterPlayMinion:
             case Type.AfterSummonMinion:
