@@ -23,6 +23,7 @@ public partial class Match
         List<Card.Cardname> result = new List<Card.Cardname>();
         foreach (int x in deck)
             result.Add((Card.Cardname)x);
+        if (result.Count != 30) Debug.LogError("WRONG DECK SIZE");
         return result;
     }
 
