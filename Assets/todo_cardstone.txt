@@ -69,90 +69,90 @@ next decks to implement:
 -animations on all cards
 ====================================
 Zoo lock Decklist:
-2x Flame Imp                       -- DONE
-1x Mortal coil                     -- DONE
-2x Power overwhelming              -- DONE
-2x Voidwalker                      -- DONE
-2x Imp Gang Boss                   -- DONE
-1x Imp-losion                      -- DONE
-2x Voidcaller                      -- DONE
-2x Doomguard                       -- DONE
-2x Abusive                         -- DONE
-2x Dire wolf alpha                 -- DONE
-2x Haunted Creeper                 -- DONE
-2x Knife juggler                   -- DONE
-2x Nerubian egg                    -- DONE
-1x Ironbeak Owl                    -- DONE
-1x Crazed Alchemist                -- DONE
-2x Defender of Argus               -- DONE
-1x Loatheb                         -- DONE
-1x Dr. Boom                        -- DONE
+2x Flame Imp                       -- 
+1x Mortal coil                     -- 
+2x Power overwhelming              -- 
+2x Voidwalker                      -- 
+2x Imp Gang Boss                   -- 
+1x Imp-losion                      -- 
+2x Voidcaller                      -- 
+2x Doomguard                       -- 
+2x Abusive                         -- 
+2x Dire wolf alpha                 -- 
+2x Haunted Creeper                 -- 
+2x Knife juggler                   -- 
+2x Nerubian egg                    -- 
+1x Ironbeak Owl                    -- 
+1x Crazed Alchemist                -- 
+2x Defender of Argus               -- 
+1x Loatheb                         -- 
+1x Dr. Boom                        -- 
 
 ====================================
 Freeze mage Decklist:
 
 2x Ice Lance                       -- DONE
 2x Frostbolt                       -- DONE
-1x Bloodmage                       -- DONE
-2x Doomsayer                       -- DONE
-2x Loot hoarder                    -- DONE
-2x Mad Scientist                   -- DONE
+1x Bloodmage                       -- NO
+2x Doomsayer                       -- NO
+2x Loot hoarder                    -- NO
+2x Mad Scientist                   -- NO
 2x Arcane Intellect                -- DONE
 2x Frost Nova                      -- DONE
 2x Ice Barrier                     -- DONE
 2x Ice Block                       -- DONE
-1x Acolyte of Pain                 -- DONE
+1x Acolyte of Pain                 -- NO
 2x Fireball                        -- DONE
-1x Antique Healbot                 -- DONE
+1x Antique Healbot                 -- NO
 2x Blizzard                        -- DONE
-1x Emperor Thaurissan              -- DONE
+1x Emperor Thaurissan              -- NO
 1x Flamestrike                     -- DONE
 1x Archmage Antonidas              -- DONE
-1x Alexstrasza                     -- DONE
+1x Alexstrasza                     -- NO
 1x Pyroblast                       -- DONE
 
 ====================================
 Patron warrior Decklist:
 
-1x Inner Rage                      -- DONE
-2x Execute                         -- DONE
-2x Whirlwind                       -- DONE
-2x Fiery War Axe                   -- DONE
-2x Battle Rage                     -- DONE
-2x Slam                            -- DONE
-2x Armorsmith                      -- DONE
-1x Cruel Taskmaster                -- DONE
-2x Unstable Ghoul                  -- DONE
-2x Acolyte of Pain                 -- DONE
-2x Forthing Berserker              -- DONE
-2x Warsong Commander               -- DONE
-2x Death's Bite                    -- DONE
-1x Dread Corsair                   -- DONE
-2x Gnomish Inventor                -- DONE
-2x Grim Patron                     -- DONE
-1x Emperor Thaurissan              -- DONE
+1x Inner Rage                      -- 
+2x Execute                         -- 
+2x Whirlwind                       -- 
+2x Fiery War Axe                   -- 
+2x Battle Rage                     -- 
+2x Slam                            -- 
+2x Armorsmith                      -- 
+1x Cruel Taskmaster                -- 
+2x Unstable Ghoul                  -- 
+2x Acolyte of Pain                 -- 
+2x Forthing Berserker              -- 
+2x Warsong Commander               -- 
+2x Death's Bite                    -- 
+1x Dread Corsair                   -- 
+2x Gnomish Inventor                -- 
+2x Grim Patron                     -- 
+1x Emperor Thaurissan              -- 
 
 ====================================
 Oil rogue Decklist:
 
-2x Backstab                        -- DONE
-2x Prep                            -- DONE
-2x Deadly poison                   -- DONE
-1x Southsea                        -- DONE
-2x Blade flurry                    -- DONE
-2x Evis                            -- DONE
-2x Sap                             -- DONE
-1x Bloodmage                       -- DONE
-2x Fan of Knives                   -- DONE
-2x SI7 Agent                       -- DONE
-1x Earthen Ring Farseer            -- DONE
-2x Tinker's Sharpsword Oil         -- DONE
-2x Violet Teacher                  -- DONE
-1x Healbot                         -- DONE
-2x Azure Drake                     -- DONE
-1x Loatheb                         -- DONE
-2x Sprint                          -- DONE
-1x Dr. Boom                        -- DONE
+2x Backstab                        -- 
+2x Prep                            -- 
+2x Deadly poison                   -- 
+1x Southsea                        -- 
+2x Blade flurry                    -- 
+2x Evis                            -- 
+2x Sap                             -- 
+1x Bloodmage                       -- 
+2x Fan of Knives                   -- 
+2x SI7 Agent                       -- 
+1x Earthen Ring Farseer            -- 
+2x Tinker's Sharpsword Oil         -- 
+2x Violet Teacher                  -- 
+1x Healbot                         -- 
+2x Azure Drake                     -- 
+1x Loatheb                         -- 
+2x Sprint                          -- 
+1x Dr. Boom                        -- 
 
 
 ===============================================

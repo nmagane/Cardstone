@@ -8,7 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7585596581536382941}
+  - component: {fileID: 6305108217881017868}
   m_Layer: 0
   m_Name: DeckSlots
   m_TagString: Untagged
@@ -16,7 +16,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7585596581536382941
+--- !u!4 &6305108217881017868
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2421136601815712784}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.017769, y: -2.590845, z: -7.0944257}
+  m_LocalPosition: {x: 0, y: 0, z: -7.0944257}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -68,7 +68,7 @@ Transform:
   - {fileID: 7960096634527478347}
   - {fileID: 8414036981978901251}
   - {fileID: 686472367285678162}
-  - {fileID: 7585596581536382941}
+  - {fileID: 6305108217881017868}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1096,7 +1096,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 7585596581536382941}
+    m_TransformParent: {fileID: 6305108217881017868}
     m_Modifications:
     - target: {fileID: 2284123011719177795, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
       propertyPath: m_text
@@ -1327,7 +1327,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 7585596581536382941}
+    m_TransformParent: {fileID: 6305108217881017868}
     m_Modifications:
     - target: {fileID: 2284123011719177795, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
       propertyPath: m_text
@@ -1932,7 +1932,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 7585596581536382941}
+    m_TransformParent: {fileID: 6305108217881017868}
     m_Modifications:
     - target: {fileID: 2284123011719177795, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
       propertyPath: m_text
@@ -2161,7 +2161,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 7585596581536382941}
+    m_TransformParent: {fileID: 6305108217881017868}
     m_Modifications:
     - target: {fileID: 2284123011719177795, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
       propertyPath: m_text

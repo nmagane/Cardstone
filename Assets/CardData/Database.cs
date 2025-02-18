@@ -1104,6 +1104,7 @@ public partial class Database
         c.text = "Battlecry: Set a hero's remaining health to 15.";
 
         c.eligibleTargets = Board.EligibleTargets.AllHeroes;
+        c.tribe = Card.Tribe.Dragon;
 
         c.manaCost = 9;
         c.damage = 8;
