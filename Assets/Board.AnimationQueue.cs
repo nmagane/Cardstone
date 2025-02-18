@@ -190,7 +190,7 @@ public partial class Board
         enemyMinions.board = currMinions.board = this;
         currMinions.server = enemyMinions.server = false;
         currTurn = message.isFriendly;
-        if (mulliganBG!=null) animationManager.SpriteFade(mulliganBG.gameObject, 10, true);
+        if (mulliganBG!=null) animationManager.SpriteFade(mulliganBG.gameObject, 10);
         return null;
     }
     Coroutine EndGameVisual(VisualInfo message)

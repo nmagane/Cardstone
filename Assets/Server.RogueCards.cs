@@ -20,10 +20,13 @@ public partial class Server
     private void SI7_Agent(CastInfo spell)
     {
         if (spell.player.combo == false) return;
+        var anim = spell.isHero? new AnimationInfo(Card.Cardname.SI7_Agent, spell.player, spell.minion, spell.targetPlayer)
+                                :new AnimationInfo(Card.Cardname.SI7_Agent, spell.player, spell.minion, spell.targetMinion);
         DamageTarget(2, spell);
     }
     private void Eviscerate(CastInfo spell)
     {
+        var anim = new AnimationInfo(Card.Cardname.Eviscerate, spell.player, spell);
         int dmg = 2;
         if (spell.player.combo) dmg = 4;
         DamageTarget(dmg, spell);

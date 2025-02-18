@@ -458,13 +458,14 @@ public partial class AnimationManager : MonoBehaviour
         g.transform.localEulerAngles = new Vector3(0, 0, angle);
     }
 
-    public void SpriteFade(GameObject g, int frames, bool destroy=true)
+    public void SpriteFade(GameObject g, int frames, int delay=0, bool destroy=true)
     {
-        StartCoroutine(_fadeout(g, frames, destroy));
+        StartCoroutine(_fadeout(g, frames, delay,destroy));
     }
 
-    IEnumerator _fadeout(GameObject g, int frames, bool destroy=true)
+    IEnumerator _fadeout(GameObject g, int frames, int delay=0, bool destroy=true)
     {
+        yield return Wait(delay);
         SpriteRenderer s = g.GetComponentsInChildren<SpriteRenderer>()[0];
         for (int i=0;i<frames;i++)
         {
@@ -473,7 +474,7 @@ public partial class AnimationManager : MonoBehaviour
         }
         if (destroy)
         {
-            Destroy(s.gameObject);
+            Destroy(g.gameObject);
         }
     }
 }

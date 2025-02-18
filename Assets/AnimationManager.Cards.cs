@@ -87,6 +87,7 @@ public partial class AnimationManager
         public Vector3 GetTargetPos()
         {
             MonoBehaviour obj = GetTarget();
+
             if (obj == null)
             {
                 if (sourceIsHero == false)
@@ -99,11 +100,12 @@ public partial class AnimationManager
                         return Board.Instance.enemyHero.transform.localPosition;
                 }
             }
-            return obj.transform.localPosition;
+            return obj.transform.localPosition * obj.transform.parent.transform.localScale.x;
         }
         public Vector3 GetSourcePos()
         {
             MonoBehaviour obj = GetSource();
+
             if (obj == null)
             {
                 if (sourceIsHero == false)
@@ -116,7 +118,7 @@ public partial class AnimationManager
                         return Board.Instance.enemyHero.transform.localPosition;
                 }
             }
-            return obj.transform.localPosition;
+            return obj.transform.localPosition * obj.transform.parent.transform.localScale.x;
         }
     }
     public Coroutine StartAnimation(AnimationData data)
@@ -159,6 +161,8 @@ public partial class AnimationManager
                 return StartCoroutine(WhirlwindAnim(data));
 
             case Card.Cardname.Backstab:
+            case Card.Cardname.SI7_Agent:
+            case Card.Cardname.Eviscerate:
                 return StartCoroutine(SmokeTrailProjectile(data));
 
             default:
@@ -255,7 +259,7 @@ public partial class AnimationManager
         slash.transform.position = p.transform.position;
         slash.transform.localScale = Vector3.one * 1.25f;
         BounceZoom(slash, 0.1f);
-        SpriteFade(slash, 20);
+        SpriteFade(slash, 10,5);
         Destroy(p.gameObject);
     }
 }
