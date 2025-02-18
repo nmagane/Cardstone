@@ -12,8 +12,8 @@ public class UIButton : MonoBehaviour
         EndTurn,
         RestartScene,
         Concede,
-
         Menu,
+        SelectDeck,
     }
     public AudioClip[] sounds;
     public SpriteRenderer bg;
@@ -54,7 +54,7 @@ public class UIButton : MonoBehaviour
         float H, S, V;
         Color.RGBToHSV(c, out H, out S, out V);
         bg.color = c;
-        icon.color = Color.HSVToRGB(H, S, V + 0.25f);
+        //icon.color = Color.HSVToRGB(H, S, V + 0.25f);
         text.color = Color.HSVToRGB(H, S, V + 0.25f);
     }
 
@@ -78,10 +78,12 @@ public class UIButton : MonoBehaviour
 
     public void StartMatchmaking()
     {
-        if (text.text == "IN QUEUE") return;
         owner.GetComponent<Mainmenu>().StartMatchmaking();
-        text.text = "IN QUEUE";
         //Destroy(this.gameObject);
+    }
+    public void SelectDeck()
+    {
+        owner.GetComponent<Mainmenu>().SetDeck(data);
     }
     public void RestartScene()
     {
@@ -155,6 +157,9 @@ public class UIButton : MonoBehaviour
             case func.Menu:
                 Menu();
                 break;
+            case func.SelectDeck:
+                SelectDeck();
+                break;
             default:
                 Debug.LogError("NO BUTTON FUNCTION");
                 break;
@@ -187,7 +192,7 @@ public class UIButton : MonoBehaviour
         GetComponent<BoxCollider2D>().size = buttonSize;
         //anim = false;
     }
-    IEnumerator bigBouncer(float amp = 0.25f)
+    public IEnumerator bigBouncer(float amp = 0.25f)
     {
         //if (anim) yield break;
         //anim = true;

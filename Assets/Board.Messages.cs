@@ -25,6 +25,11 @@ public partial class Board
         SendMessage(message, true);
     }
 
+    public void LeaveMatchmaking()
+    {
+        Server.CustomMessage message = CreateMessage(Server.MessageType.LeaveMatchmaking);
+        SendMessage(message, true);
+    }
 
 
     public List<int> selectedMulligans = new List<int>() { };

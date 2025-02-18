@@ -748,7 +748,7 @@ public partial class Board : MonoBehaviour
 #if (UNITY_EDITOR)
         if (Input.GetKeyDown(KeyCode.Q) && playerID!=101)
         {
-            StartMatchmaking(Database.Zoo_Lock, currClass);
+            StartMatchmaking(Database.Freeze_Mage, currClass);
         }
         if (Input.GetKeyDown(KeyCode.A) && playerID!=101)
         {
@@ -761,7 +761,7 @@ public partial class Board : MonoBehaviour
         //===============================
         if (Input.GetKeyDown(KeyCode.W) && playerID==101)
         {
-            StartMatchmaking(Database.Oil_Rogue,currClass);
+            StartMatchmaking(Database.Patron_Warrior,currClass);
         }
         if (Input.GetKeyDown(KeyCode.S) && playerID==101)
         {

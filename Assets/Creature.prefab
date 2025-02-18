@@ -1042,13 +1042,14 @@ MonoBehaviour:
     baseHealth: 0
     baseDamage: 0
     DEAD: 0
+    SICKNESS: 0
     playOrder: 0
   frameSprites:
   - {fileID: 21300000, guid: 1113b2a4260c42342a6a6eb6b5417306, type: 3}
   - {fileID: 21300000, guid: b92898b6cc71c4c4bb126b25e8164394, type: 3}
-  - {fileID: 21300000, guid: b92898b6cc71c4c4bb126b25e8164394, type: 3}
-  - {fileID: 21300000, guid: b92898b6cc71c4c4bb126b25e8164394, type: 3}
-  - {fileID: 21300000, guid: b92898b6cc71c4c4bb126b25e8164394, type: 3}
+  - {fileID: 21300000, guid: 16a155d06e0e5e445a487ee3d95bb775, type: 3}
+  - {fileID: 21300000, guid: 5f176b37c68322a49846ce9d5ede2444, type: 3}
+  - {fileID: 21300000, guid: 6940b200c6def0746adb620f977c0e65, type: 3}
   - {fileID: 21300000, guid: b92898b6cc71c4c4bb126b25e8164394, type: 3}
   - {fileID: 21300000, guid: b92898b6cc71c4c4bb126b25e8164394, type: 3}
   - {fileID: 21300000, guid: b92898b6cc71c4c4bb126b25e8164394, type: 3}

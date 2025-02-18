@@ -7,8 +7,8 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Voidcaller, Card.Cardname.Haunted_Creeper, Card.Cardname.Nerubian_Egg, Card.Cardname.Imp_Gang_Boss};
-    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Implosion,Card.Cardname.Fan_of_Knives };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { };
+    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { };
     
 #else
     List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { };
@@ -29,6 +29,8 @@ public partial class Server : MonoBehaviour
     public enum MessageType
     {
         Matchmaking,
+        LeaveMatchmaking,
+
         ConfirmMatch,
 
         SubmitMulligan,
@@ -160,6 +162,10 @@ public partial class Server : MonoBehaviour
                 ParseMessage(messageID, clientID, message, 0);
                 orderedMessage = false;
                 break;
+            case MessageType.LeaveMatchmaking:
+                ParseMessage(messageID, clientID, message, 0);
+                orderedMessage = false;
+                break;
 
             case MessageType.SubmitMulligan:
                 ParseMessage(messageID, clientID, message, 0);
@@ -199,6 +205,9 @@ public partial class Server : MonoBehaviour
                 int queuePlayerClass = message.GetInt();
                 int queueClientID = clientID;
                 AddToQueue(queueClientID, queuePlayerID, queuePlayerName,queuePlayerDeck, queuePlayerClass);
+                break;
+            case MessageType.LeaveMatchmaking:
+                LeaveQueue(clientID);
                 break;
             case MessageType.SubmitMulligan:
                 ulong mullMatchID = message.GetULong();
@@ -310,7 +319,7 @@ public partial class Server : MonoBehaviour
     }
     public ulong currMatchID = 1000;
     
-    public void DisconnectClient(int clientID)
+    public void DisconnectClient(int clientID, bool matchmaking=false)
     {
         //if player is in queue
         List<PlayerConnection> removers = new List<PlayerConnection>();
@@ -329,8 +338,13 @@ public partial class Server : MonoBehaviour
         }
         Match match = clientConnections[clientID];
 
-        mirror.connections.Remove(clientID);
+        if (!matchmaking) mirror.connections.Remove(clientID);
         EndMatch(match, match.FindClientID(clientID).opponent);
+    }
+
+    public void LeaveQueue(int clientID)
+    {
+        DisconnectClient(clientID, true);
     }
 
     public void StartMatch(PlayerConnection p0, PlayerConnection p1)

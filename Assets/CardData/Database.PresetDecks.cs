@@ -5,36 +5,55 @@ public partial class Database
     public static List<Card.Cardname> Zoo_Lock = new List<Card.Cardname>()
     {
         Card.Cardname.Flame_Imp,
+        Card.Cardname.Flame_Imp,
+
+        Card.Cardname.Mortal_Coil,
+
         Card.Cardname.Voidwalker,
-        Card.Cardname.Soulfire,
-        Card.Cardname.Abusive_Sergeant,
-        Card.Cardname.Young_Priestess,
-        Card.Cardname.Ironbeak_Owl,
-        Card.Cardname.Argent_Squire,
-        Card.Cardname.Amani_Berserker,
-        Card.Cardname.Dire_Wolf_Alpha,
-        Card.Cardname.Knife_Juggler,
-        Card.Cardname.Shattered_Sun_Cleric,
-        Card.Cardname.Harvest_Golem,
-        Card.Cardname.Dark_Iron_Dwarf,
-        Card.Cardname.Defender_of_Argus,
+        Card.Cardname.Voidwalker,
+
+        Card.Cardname.Power_Overwhelming,
+        Card.Cardname.Power_Overwhelming,
+
+        Card.Cardname.Imp_Gang_Boss,
+        Card.Cardname.Imp_Gang_Boss,
+
+        Card.Cardname.Implosion,
+
+        Card.Cardname.Voidcaller,
+        Card.Cardname.Voidcaller,
+
+        Card.Cardname.Doomguard,
         Card.Cardname.Doomguard,
 
-        Card.Cardname.Flame_Imp,
-        Card.Cardname.Voidwalker,
-        Card.Cardname.Soulfire,
         Card.Cardname.Abusive_Sergeant,
-        Card.Cardname.Young_Priestess,
-        Card.Cardname.Ironbeak_Owl,
-        Card.Cardname.Argent_Squire,
-        Card.Cardname.Amani_Berserker,
+        Card.Cardname.Abusive_Sergeant,
+
         Card.Cardname.Dire_Wolf_Alpha,
+        Card.Cardname.Dire_Wolf_Alpha,
+
+        Card.Cardname.Haunted_Creeper,
+        Card.Cardname.Haunted_Creeper,
+
         Card.Cardname.Knife_Juggler,
-        Card.Cardname.Shattered_Sun_Cleric,
-        Card.Cardname.Harvest_Golem,
-        Card.Cardname.Dark_Iron_Dwarf,
+        Card.Cardname.Knife_Juggler,
+
+        Card.Cardname.Nerubian_Egg,
+        Card.Cardname.Nerubian_Egg,
+
+        Card.Cardname.Ironbeak_Owl,
+
+        Card.Cardname.Crazed_Alchemist,
+
         Card.Cardname.Defender_of_Argus,
-        Card.Cardname.Doomguard,
+        Card.Cardname.Defender_of_Argus,
+
+        Card.Cardname.Loatheb,
+
+        Card.Cardname.Dr_Boom,
+
+
+
     };
 
     public static List<Card.Cardname> Oil_Rogue = new List<Card.Cardname>()

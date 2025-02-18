@@ -165,6 +165,7 @@
 
         c.MINION = true;
         c.BATTLECRY = true;
+        c.TARGETED = true;
         return c;
     }
     
