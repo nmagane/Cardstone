@@ -73,7 +73,6 @@ public class Card : MonoBehaviour
         Shieldbearer,
         Young_Priestess,
 
-        //WARLOCK
         Lifetap,
 
         Soulfire,
@@ -81,12 +80,7 @@ public class Card : MonoBehaviour
         Flame_Imp,
         Doomguard,
 
-        //Mage
         Ping,
-        Arcane_Explosion,
-
-        //UNIMPLEMENTED
-        Voodoo_Doctor,
 
         Emperor_Thaurissan,
         Preparation,

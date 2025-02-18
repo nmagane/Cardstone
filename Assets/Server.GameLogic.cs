@@ -265,9 +265,6 @@ public partial class Server
             case Card.Cardname.Ping:
                 Ping(spell);
                 break;
-            case Card.Cardname.Arcane_Explosion:
-                Arcane_Explosion(spell);
-                break;
             case Card.Cardname.Shattered_Sun_Cleric:
                 ShatteredSunCleric(spell);
                 break;
@@ -281,8 +278,6 @@ public partial class Server
             case Card.Cardname.Ironbeak_Owl:
                 SilenceMinion(spell);
                 break;
-            case Card.Cardname.Voodoo_Doctor:
-                HealTarget(2,spell);
                 break;
             case Card.Cardname.Soulfire:
                 Soulfire(spell);
