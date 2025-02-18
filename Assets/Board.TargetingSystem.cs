@@ -307,7 +307,7 @@ public partial class Board
         switch (targets)
         {
             case EligibleTargets.Weapon:
-                return currHero.weapon != null;
+                return (currHero.weapon != null);
             case EligibleTargets.FriendlyMinions:
                 return currMinions.Count() > 0;
             case EligibleTargets.EnemyMinions:

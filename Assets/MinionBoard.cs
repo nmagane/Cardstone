@@ -76,13 +76,32 @@ public class MinionBoard
         creature.Set(m);
         minionObjects.Add(m, creature);
         m.creature = creature;
+        creature.order = m.index;
         creature.transform.parent = board.gameAnchor.transform;
         creature.source = source;
 
-        
+        List<Creature> orderBoost = new List<Creature>();
+
+        foreach (Creature c in minionObjects.Values)
+        {
+            if (c.minion.DEAD)
+            {
+                foreach (Creature cc in minionObjects.Values)
+                {
+                    if (cc.order > c.order)
+                    {
+                        orderBoost.Add(cc);
+                    }
+                }
+            }
+        }
         foreach (Creature c in minionObjects.Values)
         {
             c.order = c.minion.index;
+        }
+        foreach (Creature c in orderBoost)
+        {
+            c.order++;
         }
 
         OrderCreatures();
