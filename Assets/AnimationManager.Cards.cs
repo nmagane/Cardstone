@@ -8,12 +8,25 @@ public partial class AnimationManager
         dagger,
         fireballSmall,
         fireballBig,
+
         lifetap,
+
+        greenSmall,
+        greenBig,
+
+        frostSmall,
+        frostBig,
+
+        whirlwind,
     }
-    public GameObject[] effectObjects;
+    public Sprite[] effectSprites;
     GameObject CreateEffect(Effect e)
     {
-        GameObject g = Instantiate(effectObjects[(int)e]);
+        GameObject g = Instantiate(board.UISprite);
+        
+        g.GetComponent<SpriteRenderer>().sortingLayerName = "creatureElevated";
+        g.GetComponent<SpriteRenderer>().sortingOrder = 10;
+        g.GetComponent<SpriteRenderer>().sprite = effectSprites[(int)e];
 
         g.transform.parent = board.currHero.transform.parent;
         g.transform.localScale = Vector3.one;
@@ -95,13 +108,30 @@ public partial class AnimationManager
         {
             case Card.Cardname.Knife_Juggler:
                 return StartCoroutine(KnifeJugglerAnim(data));
+
             case Card.Cardname.Flame_Imp:
-                return StartCoroutine(Flame_ImpAnim(data));
+            case Card.Cardname.Ping:
+                return StartCoroutine(Simple_Projectile(data,Effect.fireballSmall,12,5));
+
             case Card.Cardname.Soulfire:
             case Card.Cardname.Fireball:
                 return StartCoroutine(SoulfireAnim(data));
+
+            case Card.Cardname.Mortal_Coil:
+                return StartCoroutine(Simple_Projectile(data, Effect.greenSmall, 12, 10));
+            case Card.Cardname.Implosion:
+                return StartCoroutine(Simple_Projectile(data, Effect.greenBig, 12, 12));
+
+            case Card.Cardname.Ice_Lance:
+                return StartCoroutine(Simple_Projectile(data, Effect.frostSmall, 12, 10));
+            case Card.Cardname.Frostbolt:
+                return StartCoroutine(Simple_Projectile(data, Effect.frostBig, 12, 12));
+
             case Card.Cardname.Lifetap:
                 return StartCoroutine(Lifetap(data));
+
+            case Card.Cardname.Whirlwind:
+                return StartCoroutine(WhirlwindAnim(data));
 
             default:
                 Debug.LogWarning("Animation Unimplemented? " + data.card);
@@ -122,9 +152,9 @@ public partial class AnimationManager
         Destroy(p.gameObject);
 
     }
-    IEnumerator Flame_ImpAnim(AnimationData data)
+    IEnumerator Simple_Projectile(AnimationData data,Effect projectile, int zoomFrames=12, int travelFrames=12)
     {
-        GameObject p = CreateEffect(Effect.fireballSmall);
+        GameObject p = CreateEffect(projectile);
 
 
         p.transform.localPosition = data.sourcePos;
@@ -132,8 +162,8 @@ public partial class AnimationManager
 
         p.transform.localScale = Vector3.zero;
         Spin(p, 0.5f);
-        yield return LerpZoom(p, Vector3.one, 12);
-        yield return LerpTo(p,targetPos,5);
+        yield return LerpZoom(p, Vector3.one, zoomFrames);
+        yield return LerpTo(p,targetPos, travelFrames);
         Destroy(p.gameObject);
 
     }
@@ -158,5 +188,15 @@ public partial class AnimationManager
         p.transform.localScale = Vector3.zero;
         yield return LerpZoom(p, Vector3.one, 10);
         StartCoroutine(_fadeout(p,15));
+    }
+    IEnumerator WhirlwindAnim(AnimationData data)
+    {
+        GameObject p = CreateEffect(Effect.whirlwind);
+        Spin(p, 20f);
+        p.transform.localPosition = new Vector3(10,0);
+        LerpTo(p, new Vector3(-10,0), 30);
+        StartCoroutine(_fadeout(p,30));
+
+        yield return Wait(10);
     }
 }

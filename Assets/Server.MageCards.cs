@@ -4,6 +4,7 @@ public partial class Server
 {
     void Ping(CastInfo spell)
     {
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Ping, spell.player, spell);
         int damage = 1;
         DamageTarget(damage, spell);
     }
@@ -24,6 +25,8 @@ public partial class Server
     }
     private void Frostbolt(CastInfo spell)
     {
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Frostbolt, spell.player, spell);
+
         Minion m = null;
         if (!spell.isHero)
             m = spell.GetTargetMinion();
@@ -46,6 +49,8 @@ public partial class Server
     
     private void Ice_Lance(CastInfo spell)
     {
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Ice_Lance, spell.player, spell);
+
         if (spell.isHero)
         {
             if (spell.targetPlayer.HasAura(Aura.Type.Freeze))
@@ -79,6 +84,7 @@ public partial class Server
     }
     private void Fireball(CastInfo spell)
     {
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Fireball, spell.player, spell);
         DamageTarget(6, spell);
     }
     private void Pyroblast(CastInfo spell)

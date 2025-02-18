@@ -25,6 +25,7 @@
     }
     void Whirlwind(CastInfo spell)
     {
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Whirlwind, spell.player);
         MinionBoard b = spell.player.board;
         MinionBoard b2 = spell.player.opponent.board;
         foreach (Minion m in b)

@@ -67,8 +67,9 @@ next decks to implement:
 -CLASS COLOR CARDS
 -Show tribe on card
 -animations on all cards
-addcreature order visual issue when minions are dying and being summoned simultaneously
-(imp boss, patron)
+addcreature order visual issue
+	= happens when minions are dying and being summoned simultaneously (imp boss, patron)
+
 ====================================
 Zoo lock Decklist:
 2x Flame Imp                       -- DONE
