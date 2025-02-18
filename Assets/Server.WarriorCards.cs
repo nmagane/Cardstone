@@ -15,12 +15,17 @@
         DamageTarget(1, spell);
         spell.match.ResolveTriggerQueue(ref spell);
         Minion m = spell.GetTargetMinion();
+        if (m.DEAD) return;
+
+        var anim = new AnimationInfo(Card.Cardname.Inner_Rage, spell.player, m);
         spell.match.server.AddAura(spell.match, m, new Aura(Aura.Type.Damage, 2,false,false,null,Card.Cardname.Inner_Rage));
     }
     void Execute(CastInfo spell)
     {
         Minion m = spell.GetTargetMinion();
         if (m.health >= m.maxHealth) return;
+
+        var anim = new AnimationInfo(Card.Cardname.Execute, spell.player, m);
         m.DEAD = true;
     }
     void Whirlwind(CastInfo spell)
@@ -39,6 +44,8 @@
     }
     void Battle_Rage(CastInfo spell)
     {
+        var anim = new AnimationInfo(Card.Cardname.Battle_Rage, spell.player);
+
         int count = 0;
         Player p = spell.player;
         if (p.health < p.maxHealth) count++;
@@ -56,6 +63,7 @@
     {
         Minion m = spell.GetTargetMinion();
         if (m == null) return;
+        var anim = new AnimationInfo(Card.Cardname.Slam, spell.player, m);
         Damage(m, 2, spell);
         spell.match.ResolveTriggerQueue(ref spell);
         if (m.DEAD == false && m.health>0)
@@ -67,10 +75,14 @@
     {
         Minion m = spell.GetTargetMinion();
         if (m == null) return;
+
+        var anim = new AnimationInfo(Card.Cardname.Cruel_Taskmaster, spell.player, spell.minion, m);
+
         Damage(m, 1, spell);
         spell.match.ResolveTriggerQueue(ref spell);
         if (m.DEAD == false && m.health>0)
         {
+            var anim2 = new AnimationInfo(Card.Cardname.Inner_Rage, spell.player, m);
             spell.match.server.AddAura(spell.match, m, new Aura(Aura.Type.Damage, 2, false, false, null, Card.Cardname.Cruel_Taskmaster));
         }
     }

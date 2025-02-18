@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public partial class AnimationManager
@@ -18,6 +19,18 @@ public partial class AnimationManager
         frostBig,
 
         whirlwind,
+
+        brownSmall,
+        brownBig,
+
+        pyroblast,
+
+        smoke0,
+        smoke1,
+        smoke2,
+        smoke3,
+
+        slash0,
     }
     public Sprite[] effectSprites;
     GameObject CreateEffect(Effect e)
@@ -25,13 +38,17 @@ public partial class AnimationManager
         GameObject g = Instantiate(board.UISprite);
         
         g.GetComponent<SpriteRenderer>().sortingLayerName = "creatureElevated";
-        g.GetComponent<SpriteRenderer>().sortingOrder = 10;
+        g.GetComponent<SpriteRenderer>().sortingOrder = 500;
         g.GetComponent<SpriteRenderer>().sprite = effectSprites[(int)e];
 
-        g.transform.parent = board.currHero.transform.parent;
-        g.transform.localScale = Vector3.one;
+        GameObject x = new GameObject(e.ToString());
 
-        return g;
+        x.transform.parent = board.gameAnchor.transform;
+        g.transform.parent = x.transform;
+        g.transform.localScale = Vector3.one * 1.25f;
+        x.transform.localScale = Vector3.one;
+
+        return x;
     }
 
     public class AnimationData
@@ -127,11 +144,22 @@ public partial class AnimationManager
             case Card.Cardname.Frostbolt:
                 return StartCoroutine(Simple_Projectile(data, Effect.frostBig, 12, 12));
 
+            case Card.Cardname.Slam:
+                return StartCoroutine(Simple_Projectile(data, Effect.brownBig, 12, 12));
+            case Card.Cardname.Execute:
+                return StartCoroutine(Simple_Projectile(data, Effect.brownSmall, 12, 12));
+
+            case Card.Cardname.Pyroblast:
+                return StartCoroutine(Simple_Projectile(data, Effect.pyroblast, 20, 20));
+
             case Card.Cardname.Lifetap:
                 return StartCoroutine(Lifetap(data));
 
             case Card.Cardname.Whirlwind:
                 return StartCoroutine(WhirlwindAnim(data));
+
+            case Card.Cardname.Backstab:
+                return StartCoroutine(SmokeTrailProjectile(data));
 
             default:
                 Debug.LogWarning("Animation Unimplemented? " + data.card);
@@ -192,11 +220,42 @@ public partial class AnimationManager
     IEnumerator WhirlwindAnim(AnimationData data)
     {
         GameObject p = CreateEffect(Effect.whirlwind);
-        Spin(p, 20f);
-        p.transform.localPosition = new Vector3(10,0);
-        LerpTo(p, new Vector3(-10,0), 30);
+        Spin(p, 40f);
+        p.transform.localPosition = new Vector3(12,0);
+        LerpTo(p, new Vector3(-15,0), 30);
+        yield return Wait(5);
         StartCoroutine(_fadeout(p,30));
-
         yield return Wait(10);
+
+    }
+
+    IEnumerator SmokeTrailProjectile(AnimationData data)
+    {
+        GameObject p = CreateEffect(Effect.fireballBig);
+
+        p.transform.localPosition = data.GetSourcePos();
+        Vector3 targetPos = data.GetTargetPos();
+        p.transform.localScale = Vector3.zero;
+        List<Effect> smokes = new List<Effect>() { Effect.smoke0, Effect.smoke1, Effect.smoke2, Effect.smoke3 };
+        int f = 15;
+        LerpTo(p, targetPos, f,0,true);
+        for (int i=0;i<f;i++)
+        {
+            GameObject s = CreateEffect(Board.RandElem(smokes));
+            s.transform.position = p.transform.position + new Vector3(Random.Range(-0.5f,0.5f), Random.Range(-0.1f, 0.1f));
+            s.transform.localScale = Vector3.one*1.25f;
+            LerpZoom(s, Vector3.zero, 10);
+            Spin(s, Random.Range(-5, 5));
+            SpriteFade(s, 10);
+            yield return null;
+        }
+
+        yield return Wait(5);
+        GameObject slash = CreateEffect(Effect.slash0);
+        slash.transform.position = p.transform.position;
+        slash.transform.localScale = Vector3.one * 1.25f;
+        BounceZoom(slash, 0.1f);
+        SpriteFade(slash, 20);
+        Destroy(p.gameObject);
     }
 }

@@ -85,11 +85,11 @@ public partial class AnimationManager : MonoBehaviour
         yield return _lerpTo(obj, tar2, f2);
     }
 
-    public void LerpTo(MonoBehaviour obj, Vector3 tar, int frameCount = 30, float bounce = 0)
+    public void LerpTo(MonoBehaviour obj, Vector3 tar, int frameCount = 30, float bounce = 0, bool slerp = false)
     {
-        LerpTo(obj.gameObject, tar, frameCount, bounce);
+        LerpTo(obj.gameObject, tar, frameCount, bounce,slerp);
     }
-    public Coroutine LerpTo(GameObject obj,Vector3 tar, int frameCount=30, float bounce = 0)
+    public Coroutine LerpTo(GameObject obj,Vector3 tar, int frameCount=30, float bounce = 0, bool slerp = false)
     {
         if (activeLerps.ContainsKey(obj))
         {
@@ -102,7 +102,7 @@ public partial class AnimationManager : MonoBehaviour
                 StopCoroutine(stopper);
             }
         }
-        Coroutine c = StartCoroutine(_lerpTo(obj, tar, frameCount, bounce));
+        Coroutine c = StartCoroutine(_lerpTo(obj, tar, frameCount, bounce, slerp));
         activeLerps.Add(obj, c);
         return c;
     }
@@ -114,7 +114,7 @@ public partial class AnimationManager : MonoBehaviour
             activeLerps.Remove(obj);
         }
     }
-    IEnumerator _lerpTo(GameObject obj, Vector3 tar, float frameCount= 30, float bounce=0)
+    IEnumerator _lerpTo(GameObject obj, Vector3 tar, float frameCount= 30, float bounce=0, bool slerp=false)
     {
         Vector3 OP = obj.transform.localPosition;
         Vector3 DP = tar;
@@ -123,7 +123,16 @@ public partial class AnimationManager : MonoBehaviour
         for (int i = 0; i < frameCount; i++)
         {
             if (obj == null) break;
-            obj.transform.localPosition = Vector3.Lerp(OP, DP, (i + 1) / frameCount);
+
+            if (slerp)
+            {
+                obj.transform.localPosition = Vector3.Slerp(OP, DP, (i + 1) / frameCount);
+            }
+            else
+            {
+                obj.transform.localPosition = Vector3.Lerp(OP, DP, (i + 1) / frameCount);
+            }
+
             yield return Wait(1);
         }
 
@@ -456,12 +465,15 @@ public partial class AnimationManager : MonoBehaviour
 
     IEnumerator _fadeout(GameObject g, int frames, bool destroy=true)
     {
-        SpriteRenderer s = g.GetComponent<SpriteRenderer>();
+        SpriteRenderer s = g.GetComponentsInChildren<SpriteRenderer>()[0];
         for (int i=0;i<frames;i++)
         {
             s.color += new Color(0, 0, 0, -1f / frames);
             yield return Wait(1);
         }
-        if (destroy) Destroy(s.gameObject);
+        if (destroy)
+        {
+            Destroy(s.gameObject);
+        }
     }
 }

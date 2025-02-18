@@ -9,20 +9,6 @@ public partial class Server
         DamageTarget(damage, spell);
     }
 
-    void Arcane_Explosion(CastInfo spell)
-    {
-        int damage = 1;
-
-        Player opp = spell.match.Opponent(spell.player);
-        List<Minion> minions = new List<Minion>();
-        foreach (var m in opp.board)
-        {
-            minions.Add(m);
-        }
-
-        foreach (var m in minions)
-            Damage(m, damage, spell);
-    }
     private void Frostbolt(CastInfo spell)
     {
         AnimationInfo anim = new AnimationInfo(Card.Cardname.Frostbolt, spell.player, spell);
@@ -72,6 +58,8 @@ public partial class Server
     }
     private void Frost_Nova(CastInfo spell)
     {
+
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Frost_Nova, spell.player);
         foreach (Minion m in spell.player.opponent.board)
         {
             spell.match.server.AddAura(spell.match, m, new Aura(Aura.Type.Freeze));
@@ -89,6 +77,7 @@ public partial class Server
     }
     private void Pyroblast(CastInfo spell)
     {
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Pyroblast, spell.player, spell);
         DamageTarget(10, spell);
     }
     void Flamestrike(CastInfo spell)
@@ -96,6 +85,8 @@ public partial class Server
         int damage = 4;
 
         Player opp = spell.match.Opponent(spell.player);
+
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Flamestrike, spell.player);
         foreach (var m in opp.board)
         {
             Damage(m, damage, spell);
@@ -107,6 +98,7 @@ public partial class Server
         int damage = 2;
 
         Player opp = spell.match.Opponent(spell.player);
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Blizzard, spell.player);
         foreach (var m in opp.board)
         {
             Damage(m, damage, spell);

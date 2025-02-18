@@ -49,6 +49,7 @@ public partial class Server
 
     private void Backstab(CastInfo spell)
     {
+        var anim = new AnimationInfo(Card.Cardname.Backstab, spell.player, spell);
         DamageTarget(2, spell);
     }
     private void Fan_of_Knives(CastInfo spell)

@@ -70,6 +70,8 @@ next decks to implement:
 addcreature order visual issue
 	= happens when minions are dying and being summoned simultaneously (imp boss, patron)
 
+new projectiles dont get destroyed with fade
+	
 ====================================
 Zoo lock Decklist:
 2x Flame Imp                       -- DONE

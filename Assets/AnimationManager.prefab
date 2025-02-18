@@ -54,5 +54,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 68e2d265775ed5b42b488451c9b42347, type: 3}
   - {fileID: 21300000, guid: b6f2ee22c18b0124cb40d70ae72246a5, type: 3}
   - {fileID: 21300000, guid: 524c9a135f6dd084f9380e2cef1846b8, type: 3}
+  - {fileID: 21300000, guid: 4e2931812fc3cf548b96cf0fbe730dd9, type: 3}
+  - {fileID: 21300000, guid: df8a43f7a939839428a128db01283a44, type: 3}
+  - {fileID: 21300000, guid: bf94cf9270286f1448fffd85ae1e1f53, type: 3}
+  - {fileID: 21300000, guid: 4823caef1f5ad414d8e61381608ce419, type: 3}
+  - {fileID: 21300000, guid: 10cc5e9c3bf5c7f479dd41583397a044, type: 3}
+  - {fileID: 21300000, guid: 2b6da06414eade141b6b8d8f9a2731de, type: 3}
+  - {fileID: 21300000, guid: e47531f0e2dfbb84eb25420d589251ae, type: 3}
+  - {fileID: 21300000, guid: 5331972fd70c927489c3ab87c8c646b3, type: 3}
   shadowMat: {fileID: 2100000, guid: ab167aeb60df8ca4cb7736e375cabbc2, type: 2}
   board: {fileID: 0}
