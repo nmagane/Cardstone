@@ -5,17 +5,8 @@ public partial class Server
 {
     void Lifetap(CastInfo spell)
     {
-        AnimationManager.AnimationInfo anim = new AnimationManager.AnimationInfo
-        {
-            card = Card.Cardname.Lifetap,
-            sourceIsHero = true,
-            sourceIsFriendly = true,
-            targetIsHero = true,
-            targetIsFriendly = true,
-        };
-
-        ConfirmAnimation(spell.match, spell.player, anim);
-
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Lifetap, spell.player, spell.player);
+        
         Damage(spell.player, 2, spell);
         spell.match.ResolveTriggerQueue(ref spell);
         Draw(spell, 1);
@@ -23,56 +14,22 @@ public partial class Server
 
     void Flame_Imp(CastInfo spell)
     {
-        AnimationManager.AnimationInfo anim = new AnimationManager.AnimationInfo
-        {
-            card = Card.Cardname.Flame_Imp,
-            sourceIsHero = false,
-            sourceIsFriendly = true,
-            sourceIndex = spell.minion.index,
-            targetIndex = -1,
-            targetIsFriendly = true,
-            targetIsHero = true,
-        };
-
-        ConfirmAnimation(spell.match, spell.player, anim);
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Flame_Imp, spell.player,spell.minion,spell.player);
 
         Damage(spell.player, 3, spell);
     }
 
     void Soulfire(CastInfo spell)
     {
-        AnimationManager.AnimationInfo anim = new AnimationManager.AnimationInfo
-        {
-            card = Card.Cardname.Soulfire,
-            sourceIsHero = true,
-            sourceIsFriendly = true,
-            sourceIndex = -1,
-            targetIndex = spell.targetMinion == null ? -1 : spell.targetMinion.index,
-            targetIsFriendly = spell.isFriendly,
-            targetIsHero = spell.isHero,
-        };
-
-        ConfirmAnimation(spell.match, spell.player, anim);
-
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Soulfire, spell.player, spell);
         DamageTarget(4, spell);
         spell.match.ResolveTriggerQueue(ref spell);
         Discard(spell, 1);
     }
     void Mortal_Coil(CastInfo spell)
     {
-        if (spell.targetMinion == null) return;
-        AnimationManager.AnimationInfo anim = new AnimationManager.AnimationInfo
-        {
-            card = Card.Cardname.Soulfire,
-            sourceIsHero = true,
-            sourceIsFriendly = true,
-            sourceIndex = -1,
-            targetIndex = spell.targetMinion == null ? -1 : spell.targetMinion.index,
-            targetIsFriendly = spell.isFriendly,
-            targetIsHero = spell.isHero,
-        };
-
-        ConfirmAnimation(spell.match, spell.player, anim);
+        if (spell.targetMinion == null) return; 
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Mortal_Coil, spell.player, spell);
 
         DamageTarget(1, spell);
 
@@ -97,21 +54,9 @@ public partial class Server
     void Implosion(CastInfo spell)
     {
         if (spell.targetMinion == null) return;
-        AnimationManager.AnimationInfo anim = new AnimationManager.AnimationInfo
-        {
-            card = Card.Cardname.Soulfire,
-            sourceIsHero = true,
-            sourceIsFriendly = true,
-            sourceIndex = -1,
-            targetIndex = spell.targetMinion == null ? -1 : spell.targetMinion.index,
-            targetIsFriendly = spell.isFriendly,
-            targetIsHero = spell.isHero,
-        };
-
-        ConfirmAnimation(spell.match, spell.player, anim);
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Implosion, spell.player, spell);
 
         int damage = Random.Range(2, 5);
-
 
         DamageTarget(damage, spell);
 

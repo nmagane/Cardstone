@@ -19,24 +19,16 @@ public class TriggerEffects
                 if (tar == -1) break;
             }
         }
-
-        AnimationManager.AnimationInfo anim = new AnimationManager.AnimationInfo
-        {
-            card = Card.Cardname.Knife_Juggler,
-            sourceIsHero = false,
-            sourceIsFriendly = true,
-            sourceIndex = minion.index,
-            targetIndex = tar,
-            targetIsFriendly = false,
-            targetIsHero = tar == -1,
-        };
-        match.server.ConfirmAnimation(match, minion.player, anim);
+        
+        
 
         if (tar == -1)
         {
+            AnimationInfo animFace = new AnimationInfo(Card.Cardname.Knife_Juggler, minion.player, minion, opponent);
             match.server.DamageFace(match, opponent, damage, minion.player);
             return;
         }
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Knife_Juggler, minion.player, minion, opponent.board[tar]);
         match.server.DamageMinion(match, opponent.board[tar], damage, minion.player);
     }
 
@@ -139,7 +131,7 @@ public class TriggerEffects
     {
         if (trigger.minion.health > 0 && trigger.minion.DEAD == false)
         {
-            spell.match.server.SummonToken(spell.match, trigger.minion.player, Card.Cardname.Grim_Patron, trigger.minion.index + 1);
+            trigger.minion.player.match.server.SummonToken(trigger.minion.player.match, trigger.minion.player, Card.Cardname.Grim_Patron, trigger.minion.index + 1);
         }
     }
 
@@ -150,7 +142,7 @@ public class TriggerEffects
 
     internal static void Violet_Teacher(Match match, Trigger trigger, CastInfo spell)
     {
-        spell.match.server.SummonToken(spell.match, trigger.minion.player, Card.Cardname.Violet_Apprentice, trigger.minion.index + 1);
+        trigger.match.server.SummonToken(trigger.match, trigger.minion.player, Card.Cardname.Violet_Apprentice, trigger.minion.index + 1);
     }
 
     public static void Boom_Bot(Match match, Trigger trigger, CastInfo spell)
@@ -240,18 +232,18 @@ public class TriggerEffects
     }
     public static void Imp_Gang_Boss(Match match, Trigger trigger, CastInfo spell)
     {
-        spell.match.server.SummonToken(spell.match, trigger.minion.player, Card.Cardname.Imp, trigger.minion.index + 1);
+        trigger.match.server.SummonToken(trigger.minion.player.match, trigger.minion.player, Card.Cardname.Imp, trigger.minion.index + 1);
     }
     public static void Haunted_Creeper(Match match, Trigger trigger, CastInfo spell)
     {
         match.server.SummonToken(match, trigger.minion.player, Card.Cardname.Spectral_Spider, trigger.minion.index);
         match.server.SummonToken(match, trigger.minion.player, Card.Cardname.Spectral_Spider, trigger.minion.index);
     }
-    public static void Nerubian_Egg(Match match, Trigger trigger, CastInfo spell)
+    public static void Nerubian_Egg(Match match, Trigger trigger)
     {
         match.server.SummonToken(match, trigger.minion.player, Card.Cardname.Nerubian, trigger.minion.index);
     }
-    public static void Voidcaller(Match match, Trigger trigger, CastInfo spell)
+    public static void Voidcaller(Match match, Trigger trigger)
     {
         List<HandCard> demons = new List<HandCard>();
         foreach (HandCard card in trigger.minion.player.hand)

@@ -202,7 +202,7 @@
 
         c.MINION = true;
 
-        c.triggers.Add((Trigger.Type.OnSummonMinion, Trigger.Side.Friendly, Trigger.Ability.Warsong_Commander));
+        c.triggers.Add((Trigger.Type.AfterSummonMinion, Trigger.Side.Friendly, Trigger.Ability.Warsong_Commander));
         c.triggers.Add((Trigger.Type.OnPlayMinion, Trigger.Side.Friendly, Trigger.Ability.Warsong_Commander));
 
         return c;

@@ -437,7 +437,7 @@ public partial class Board : MonoBehaviour
             case Server.MessageType.ConfirmAnimation: //TODO ANIM QUEUE
                 bool animationFriendly = message.GetBool();
                 string animJson = message.GetString();
-                AnimationManager.AnimationInfo animInfo = JsonUtility.FromJson<AnimationManager.AnimationInfo>(animJson);
+                AnimationInfo animInfo = JsonUtility.FromJson<AnimationInfo>(animJson);
                 ConfirmAnimation(animInfo, animationFriendly);
                 break;
             default:

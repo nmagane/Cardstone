@@ -527,7 +527,7 @@ public partial class Board
                 break;
         }
     }
-    void ConfirmAnimation(AnimationManager.AnimationInfo animInfo, bool friendly)
+    void ConfirmAnimation(AnimationInfo animInfo, bool friendly)
     {
         AnimationManager.AnimationData data = TranslateAnimationInfo(animInfo,friendly);
 
@@ -540,7 +540,7 @@ public partial class Board
         QueueAnimation(anim);
     }
 
-    AnimationManager.AnimationData TranslateAnimationInfo(AnimationManager.AnimationInfo info, bool friendly)
+    AnimationManager.AnimationData TranslateAnimationInfo(AnimationInfo info, bool friendly)
     {
         if (friendly == false)
         {
@@ -550,6 +550,7 @@ public partial class Board
 
         AnimationManager.AnimationData data = new();
         data.card = info.card;
+        data.friendly = friendly;
         data.sourceIsHero = info.sourceIsHero;
         data.targetIsHero = info.targetIsHero;
 

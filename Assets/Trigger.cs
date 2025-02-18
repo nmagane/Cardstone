@@ -18,7 +18,6 @@ public class Trigger
         AfterPlayCard,
 
         OnPlayMinion,
-        OnSummonMinion, //Tokens
         AfterPlayMinion,
         AfterSummonMinion,
 
@@ -43,8 +42,6 @@ public class Trigger
 
         OnPlayWeapon,
         AfterPlayWeapon,
-
-        OnEquipWeapon,
         AfterEquipWeapon,
 
         BeforeSwingMinion,
@@ -117,6 +114,8 @@ public class Trigger
     public Side side;
     public Minion minion;
     public Secret secret;
+    public Player player => minion.player;
+    public Match match => minion.player.match;
 
     public bool CheckTrigger(Type t, Side s, CastInfo spell)
     {
@@ -230,10 +229,10 @@ public class Trigger
                 TriggerEffects.Haunted_Creeper(match, this, spell);
                 break;
             case Ability.Nerubian_Egg:
-                TriggerEffects.Nerubian_Egg(match, this, spell);
+                TriggerEffects.Nerubian_Egg(match, this);
                 break;
             case Ability.Voidcaller:
-                TriggerEffects.Voidcaller(match, this, spell);
+                TriggerEffects.Voidcaller(match, this);
                 break;
             default:
                 Debug.LogError("MISSING TRIGGER ABILITY");

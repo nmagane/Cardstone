@@ -7,7 +7,7 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() {Card.Cardname.Warsong_Commander, Card.Cardname.Grim_Patron, Card.Cardname.Whirlwind };
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { };
     
 #else
@@ -1314,7 +1314,7 @@ public partial class Server : MonoBehaviour
         SendMessage(messageOwner, player);
         SendMessage(messageOpponent, player.opponent);
     }
-    public void ConfirmAnimation(Match match, Player player, AnimationManager.AnimationInfo anim)
+    public void ConfirmAnimation(Match match, Player player, AnimationInfo anim)
     {
         CustomMessage messageOwner = CreateMessage(MessageType.ConfirmAnimation);
         CustomMessage messageOpponent = CreateMessage(MessageType.ConfirmAnimation);

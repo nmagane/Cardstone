@@ -278,7 +278,6 @@ public partial class Server
             case Card.Cardname.Ironbeak_Owl:
                 SilenceMinion(spell);
                 break;
-                break;
             case Card.Cardname.Soulfire:
                 Soulfire(spell);
                 break;

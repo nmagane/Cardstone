@@ -73,8 +73,8 @@ Zoo lock Decklist:
 1x Mortal coil                     -- DONE
 2x Power overwhelming              -- DONE
 2x Voidwalker                      -- DONE
-2x Imp Gang Boss                   -- DONE-TOKEN
-1x Imp-losion                      -- DONE-^^^^^
+2x Imp Gang Boss                   -- DONE
+1x Imp-losion                      -- DONE
 2x Voidcaller                      -- DONE
 2x Doomguard                       -- DONE
 2x Abusive                         -- DONE
@@ -118,15 +118,15 @@ Patron warrior Decklist:
 2x Execute                         -- DONE
 2x Whirlwind                       -- DONE
 2x Fiery War Axe                   -- DONE
-2x Battle Rage                     -- 
-2x Slam                            -- 
-2x Armorsmith                      -- 
-1x Cruel Taskmaster                -- 
+2x Battle Rage                     -- DONE
+2x Slam                            -- DONE
+2x Armorsmith                      -- DONE
+1x Cruel Taskmaster                -- DONE
 2x Unstable Ghoul                  -- DONE
 2x Acolyte of Pain                 -- DONE
-2x Forthing Berserker              -- 
-2x Warsong Commander               -- 
-2x Death's Bite                    -- 
+2x Forthing Berserker              -- DONE
+2x Warsong Commander               -- DONE
+2x Death's Bite                    -- DONE
 1x Dread Corsair                   -- DONE
 2x Gnomish Inventor                -- DONE
 2x Grim Patron                     -- DONE
@@ -147,12 +147,12 @@ Oil rogue Decklist:
 2x SI7 Agent                       -- DONE
 1x Earthen Ring Farseer            -- DONE
 2x Tinker's Sharpsword Oil         -- DONE
-2x Violet Teacher                  -- DONE - TOKEN DONE
+2x Violet Teacher                  -- DONE
 1x Healbot                         -- DONE
 2x Azure Drake                     -- DONE
 1x Loatheb                         -- DONE
 2x Sprint                          -- DONE
-1x Dr. Boom                        -- DONE - TOKEN DONE
+1x Dr. Boom                        -- DONE
 
 
 ===============================================

@@ -18,7 +18,6 @@ public partial class Match
         AfterPlayCard,
 
         OnPlayMinion,
-        OnSummonMinion, //Tokens
         AfterPlayMinion,
         AfterSummonMinion,
 
@@ -43,8 +42,6 @@ public partial class Match
 
         OnPlayWeapon,
         AfterPlayWeapon,
-
-        OnEquipWeapon,
         AfterEquipWeapon,
 
         BeforeSwingMinion,
