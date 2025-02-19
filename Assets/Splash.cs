@@ -17,6 +17,11 @@ public class Splash : MonoBehaviour
     }
     public void Set(Type t, int value, GameObject obj)
     {
+        if (t==Type.Damage && Mathf.Abs(value)>=8)
+        {
+            ShakeScreen(0.2f,-0.1f,3);
+            ShakeScreen(-0.1f,0.2f,5);
+        }
         string s = "";
         switch(t)
         {
@@ -63,5 +68,18 @@ public class Splash : MonoBehaviour
         }
 
         Destroy(this.gameObject);
+    }
+    public void ShakeScreen(float x, float y, int frames = 3)
+    {
+        StartCoroutine(screenshaker(x, y, frames));
+    }
+    IEnumerator screenshaker(float x, float y, int frames = 3)
+    {
+        Board.Instance.transform.localPosition += new Vector3(x, y);
+        for (int i = 0; i < frames; i++)
+        {
+            yield return null;
+        }
+        Board.Instance.transform.localPosition -= new Vector3(x, y);
     }
 }

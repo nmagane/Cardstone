@@ -20,8 +20,8 @@ public partial class Server
     private void SI7_Agent(CastInfo spell)
     {
         if (spell.player.combo == false) return;
-        var anim = spell.isHero? new AnimationInfo(Card.Cardname.SI7_Agent, spell.player, spell.minion, spell.targetPlayer)
-                                :new AnimationInfo(Card.Cardname.SI7_Agent, spell.player, spell.minion, spell.targetMinion);
+        var anim = new AnimationInfo(Card.Cardname.SI7_Agent, spell.player, spell.minion, spell);
+                                
         DamageTarget(2, spell);
     }
     private void Eviscerate(CastInfo spell)

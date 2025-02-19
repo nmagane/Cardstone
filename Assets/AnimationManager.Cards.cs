@@ -31,6 +31,11 @@ public partial class AnimationManager
         smoke3,
 
         slash0,
+
+        boardFire,
+        boardFrost,
+        
+        rage,
     }
     public Sprite[] effectSprites;
     GameObject CreateEffect(Effect e)
@@ -126,6 +131,7 @@ public partial class AnimationManager
         switch (data.card)
         {
             case Card.Cardname.Knife_Juggler:
+            case Card.Cardname.Cruel_Taskmaster:
                 return StartCoroutine(KnifeJugglerAnim(data));
 
             case Card.Cardname.Flame_Imp:
@@ -167,6 +173,8 @@ public partial class AnimationManager
             case Card.Cardname.Eviscerate:
                 return StartCoroutine(SmokeTrailProjectile(data));
 
+            case Card.Cardname.Inner_Rage:
+                return StartCoroutine(RageEffect(data));
             default:
                 Debug.LogWarning("Animation Unimplemented? " + data.card);
                 return null;
@@ -273,6 +281,34 @@ public partial class AnimationManager
         slash.transform.localScale = Vector3.one * 1.25f;
         BounceZoom(slash, 0.1f);
         SpriteFade(slash, 8,5);
+        Destroy(p.gameObject);
+    }
+
+    IEnumerator RageEffect(AnimationData data)
+    {
+        StartCoroutine(RageEffectInternal(data));
+        yield return Wait(10);
+    }
+    IEnumerator RageEffectInternal(AnimationData data)
+    {
+        GameObject p = CreateEffect(Effect.rage);
+
+        p.transform.localPosition = data.targetPos;
+        SpriteRenderer s = p.GetComponentInChildren<SpriteRenderer>();
+        var color = s.color;
+        color.a = 0;
+        s.color = color;
+        for (int i = 0; i < 20; i++)
+        {
+            p.transform.localPosition = data.targetPos;
+            p.transform.localScale = data.GetTarget().transform.localScale;
+
+            if (i < 10) color.a += 1 / 20f;
+            else color.a -= 1 / 20f;
+
+            s.color = color;
+            yield return null;
+        }
         Destroy(p.gameObject);
     }
 }

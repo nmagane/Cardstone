@@ -29,6 +29,17 @@ public class AnimationInfo
             var a = new AnimationInfo(card, player, target.targetMinion);
         }
     }
+    public AnimationInfo(Card.Cardname card, Player player, Minion source, CastInfo target)
+    {
+        if (target.isHero)
+        {
+            var a = new AnimationInfo(card, player, source, target.targetPlayer);
+        }
+        else
+        {
+            var a = new AnimationInfo(card, player, source, target.targetMinion);
+        }
+    }
     public AnimationInfo(Card.Cardname card, Player player, Minion source, Minion target)
     {
         this.card = card;
