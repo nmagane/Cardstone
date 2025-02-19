@@ -7,7 +7,7 @@ public partial class AnimationManager : MonoBehaviour
     public Material shadowMat;
     public Board board;
     Dictionary<GameObject, Coroutine> activeLerps = new Dictionary<GameObject, Coroutine>();
-    Dictionary<GameObject, Coroutine> activeZooms = new Dictionary<GameObject, Coroutine>();
+    public Dictionary<GameObject, Coroutine> activeZooms = new Dictionary<GameObject, Coroutine>();
     Dictionary<GameObject, Coroutine> activeRotates = new Dictionary<GameObject, Coroutine>();
     public static IEnumerator Wait(int x)
     {
@@ -466,9 +466,11 @@ public partial class AnimationManager : MonoBehaviour
     IEnumerator _fadeout(GameObject g, int frames, int delay=0, bool destroy=true)
     {
         yield return Wait(delay);
+        if (g == null) yield break;
         SpriteRenderer s = g.GetComponentsInChildren<SpriteRenderer>()[0];
         for (int i=0;i<frames;i++)
         {
+            if (s == null) yield break;
             s.color += new Color(0, 0, 0, -1f / frames);
             yield return Wait(1);
         }

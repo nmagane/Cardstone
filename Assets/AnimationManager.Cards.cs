@@ -36,6 +36,7 @@ public partial class AnimationManager
         boardFrost,
         
         rage,
+        flurry,
     }
     public Sprite[] effectSprites;
     GameObject CreateEffect(Effect e)
@@ -166,7 +167,10 @@ public partial class AnimationManager
                 return StartCoroutine(Lifetap(data));
 
             case Card.Cardname.Whirlwind:
-                return StartCoroutine(WhirlwindAnim(data));
+            case Card.Cardname.Deaths_Bite:
+                return StartCoroutine(WhirlwindEffect(data,Effect.whirlwind));
+            case Card.Cardname.Blade_Flurry:
+                return StartCoroutine(WhirlwindEffect(data,Effect.flurry));
 
             case Card.Cardname.Backstab:
             case Card.Cardname.SI7_Agent:
@@ -242,17 +246,6 @@ public partial class AnimationManager
         yield return LerpTo(p, data.GetTargetPos(), 10);
         Destroy(p.gameObject);
     }
-    IEnumerator WhirlwindAnim(AnimationData data)
-    {
-        GameObject p = CreateEffect(Effect.whirlwind);
-        Spin(p, 40f);
-        p.transform.localPosition = new Vector3(12,0);
-        LerpTo(p, new Vector3(-15,0), 30);
-        yield return Wait(5);
-        StartCoroutine(_fadeout(p,30));
-        yield return Wait(10);
-
-    }
 
     IEnumerator SmokeTrailProjectile(AnimationData data)
     {
@@ -311,4 +304,19 @@ public partial class AnimationManager
         }
         Destroy(p.gameObject);
     }
+    
+    IEnumerator WhirlwindEffect(AnimationData data, Effect effect)
+    {
+        GameObject p = CreateEffect(effect);
+
+        p.transform.localPosition = data.sourcePos;
+        p.transform.parent = data.GetSource().transform.parent;
+        p.transform.localScale = Vector3.one;
+        Spin(p, 10f);
+        SpriteFade(p, 10, 10);
+        yield return Wait(10);
+    }
+
+
+
 }

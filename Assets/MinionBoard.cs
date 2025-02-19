@@ -206,7 +206,19 @@ public class MinionBoard
             }
             else if (c.init == false)
             {
-                DropCreature(c, targetPos,10);
+                switch (c.source)
+                {
+                    case MinionSource.Summon:
+                        c.transform.localPosition = targetPos;
+                        c.transform.localScale = Vector3.zero;
+                        board.animationManager.LerpZoom(c.gameObject, Vector3.one, 10, 0.1f);
+                        c.floatEnabled = true;
+                        break;
+                    case MinionSource.Play:
+                    default:
+                        DropCreature(c, targetPos, 10);
+                        break;
+                }
                 c.init = true;
             }
             else MoveCreature(c, targetPos);

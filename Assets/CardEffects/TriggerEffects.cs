@@ -115,8 +115,8 @@ public class TriggerEffects
 
         match.server.TriggerSecret(trigger.secret);
 
-        Minion sac = match.server.SummonMinion(match, owner, Card.Cardname.Damaged_Golem, MinionBoard.MinionSource.Summon, -1);
-
+        Minion sac = match.server.SummonToken(match, trigger.player, Card.Cardname.Damaged_Golem);
+        if (sac == null) return;
         spell.attack.faceAttack = false;
         spell.attack.target = sac;
     }
@@ -177,6 +177,14 @@ public class TriggerEffects
     
     public static void Unstable_Ghoul(Match match, Trigger trigger, CastInfo spell)
     {
+        if (trigger.minion.card==Card.Cardname.Deaths_Bite)
+        {
+            var anim = new AnimationInfo(Card.Cardname.Deaths_Bite,trigger.player);
+        }
+        else
+        {
+            var anim = new AnimationInfo(Card.Cardname.Unstable_Ghoul, trigger.player);
+        }
         MinionBoard b = trigger.minion.player.board;
         MinionBoard b2 = trigger.minion.player.opponent.board;
         foreach (Minion m in b)

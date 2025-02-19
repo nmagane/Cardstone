@@ -477,6 +477,7 @@ public class Creature : MonoBehaviour
         {
             if (floatEnabled)
             {
+                while (board.animationManager.activeZooms.ContainsKey(this.gameObject)) yield return null;
                 float ang = freq * i * Mathf.PI / 180;
                 transform.localScale = Vector3.one * ((1.025f + 0.01f * Mathf.Sin(ang)));
                 //transform.localEulerAngles = new Vector3(0, 0, 0.15F * Mathf.Sin(0.5f * ang));

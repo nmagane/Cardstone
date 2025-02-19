@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using Mono.CecilX;
 
 public partial class Board
 {
@@ -238,7 +239,7 @@ public partial class Board
     Coroutine SummonMinionVisual(VisualInfo message)
     {
         MinionBoard board = message.isFriendly ? currMinions : enemyMinions;
-        board.AddCreature(message.minions[0]);
+        board.AddCreature(message.minions[0], (MinionBoard.MinionSource)message.ints[0]);
         CheckHighlights();
         return StartCoroutine(Wait(15));
     }

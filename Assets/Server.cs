@@ -7,7 +7,7 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.SI7_Agent, Card.Cardname.Backstab, Card.Cardname.Inner_Rage, Card.Cardname.Inner_Rage, Card.Cardname.Inner_Rage, Card.Cardname.Inner_Rage, Card.Cardname.Cruel_Taskmaster };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.SI7_Agent, Card.Cardname.Backstab, Card.Cardname.Inner_Rage, Card.Cardname.Inner_Rage, Card.Cardname.Blade_Flurry, Card.Cardname.Deaths_Bite, Card.Cardname.Cruel_Taskmaster };
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { };
     
 #else
@@ -789,10 +789,10 @@ public partial class Server : MonoBehaviour
         return m;
     }
 
-    public void SummonToken(Match match, Player player, Card.Cardname minion, int position = -1)
+    public Minion SummonToken(Match match, Player player, Card.Cardname minion, int position = -1)
     {
         CastInfo summonCast = new CastInfo(match, player, null, -1, position,false,false);
-        match.StartSequenceSummonMinion(summonCast, minion);
+        return match.StartSequenceSummonMinion(summonCast, minion);
     }
 
     public void AttackMinion(ulong matchID, int clientID, ulong playerID, int attackerInd, int targetInd)

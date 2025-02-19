@@ -197,6 +197,7 @@ public partial class Board
         anim.type = Server.MessageType.SummonMinion;
         anim.minions.Add(m);
         anim.isFriendly = friendlySide;
+        anim.ints.Add((int)source);
 
         QueueAnimation(anim);
     }

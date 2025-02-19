@@ -302,15 +302,16 @@ public partial class Match
         StartPhase(Phase.AfterPlayMinion, ref spell);
         WinCheck();
     }
-    public void StartSequenceSummonMinion(CastInfo spell, Card.Cardname card)
+    public Minion StartSequenceSummonMinion(CastInfo spell, Card.Cardname card)
     {
 
         Minion m = server.SummonMinion(this, spell.player, card,MinionBoard.MinionSource.Summon, spell.position);
-        if (m == null) return;
+        if (m == null) return null;
         spell.minion = m;
 
         StartPhase(Phase.AfterSummonMinion, ref spell);
         WinCheck();
+        return m;
     }
     public void StartSequenceHeroPower(CastInfo spell)
     {

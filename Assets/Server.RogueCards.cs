@@ -40,6 +40,8 @@ public partial class Server
     {
         if (spell.player.weapon == null) return;
         spell.player.weapon.DEAD = true;
+
+        var anim = new AnimationInfo(Card.Cardname.Blade_Flurry, spell.player);
         int dmg = spell.player.weapon.damage;
 
         MinionBoard b = spell.player.opponent.board;
@@ -78,6 +80,8 @@ public partial class Server
         if (spell.combo)
         {
             List<Minion> minions = spell.player.board.minions;
+            if (minions.Count == 0) return;
+
             Minion m = Board.RandElem(minions);
             while ((m.DEAD || m.health<m.maxHealth) && minions.Count>0)
             {

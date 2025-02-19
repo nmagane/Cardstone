@@ -44,7 +44,7 @@
     }
     void Battle_Rage(CastInfo spell)
     {
-        var anim = new AnimationInfo(Card.Cardname.Battle_Rage, spell.player);
+        //var anim = new AnimationInfo(Card.Cardname.Battle_Rage, spell.player);
 
         int count = 0;
         Player p = spell.player;
