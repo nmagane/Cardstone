@@ -109,6 +109,14 @@ PrefabInstance:
       propertyPath: sortingLayer
       value: shadowCardElevated
       objectReference: {fileID: 0}
+    - target: {fileID: 2876425225104785208, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
+      propertyPath: m_SortingLayer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2876425225104785208, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1194144581
+      objectReference: {fileID: 0}
     - target: {fileID: 3196792686632191057, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
       propertyPath: m_SortingLayer
       value: 11

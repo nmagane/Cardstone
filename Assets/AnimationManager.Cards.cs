@@ -4,7 +4,7 @@ using UnityEngine;
 
 public partial class AnimationManager
 {
-    enum Effect
+    public enum Effect
     {
         dagger,
         fireballSmall,
@@ -490,7 +490,7 @@ public partial class AnimationManager
         foreach (GameObject g in objs) Destroy(g);
     }
 
-    void CreateParticle(Vector3 pos, Effect effect, Color color = new Color())
+    public void CreateParticle(Vector3 pos, Effect effect, Color color = new Color())
     {
         Color c = color;
         switch (effect)
@@ -521,4 +521,19 @@ public partial class AnimationManager
         SpriteFade(p, 20);
     }
 
+    public void CreateSpellpowerParticle(Vector3 pos, Effect effect, Color color = new Color())
+    {
+        Color c = color;
+        Effect[] particles = { Effect.particle1, Effect.particle2, Effect.particleCross };
+        GameObject p = CreateEffect(Board.RandElem(particles));
+
+        p.GetComponentInChildren<SpriteRenderer>().color = c;
+        p.transform.localPosition = pos;
+        p.transform.localScale = Vector3.one * 0.5f;
+        Spin(p, Random.Range(-5, 5));
+        Vector3 targetPos = pos + 4 * new Vector3(0,1);
+        p.transform.localPosition = Vector3.Lerp(pos, targetPos, 0.15f);
+        LerpTo(p, targetPos, 45);
+        SpriteFade(p, 20,5);
+    }
 }

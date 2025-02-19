@@ -335,6 +335,20 @@ public class Creature : MonoBehaviour
                 DisableFreeze();
         }
 
+        if (minion.HasAura(Aura.Type.Spellpower))
+        {
+            if (spAnim == null)
+                spAnim = StartCoroutine(spellpowerEffect());
+        }
+        else
+        {
+            if (spAnim != null)
+            {
+                StopCoroutine(spAnim);
+                spAnim = null;
+            }
+        }
+
         if (minion.STEALTH)
         {
             stealthSprite.enabled = true;
@@ -350,6 +364,17 @@ public class Creature : MonoBehaviour
             tauntSprite.color = Color.white;
             freezeSprite.color = Color.white;
             silenceSprite.color = Color.white;
+        }
+    }
+
+    Coroutine spAnim = null;
+    IEnumerator spellpowerEffect()
+    {
+        while (true)
+        {
+            Vector3 pos = this.transform.localPosition + new Vector3(Random.Range(-1.8F, 1.8f), Random.Range(-1.6F, 1f));
+            board.animationManager.CreateSpellpowerParticle(pos, AnimationManager.Effect.boardFire, Board.GetColor("92DCBA"));
+            yield return Board.Wait(10);
         }
     }
     public SpriteRenderer skull;

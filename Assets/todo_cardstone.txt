@@ -59,16 +59,10 @@ next decks to implement:
 
 - turn indicator (end turn button color)
 - rope
-- screenshake on big hits (8+)
 - weapon class colors?
 
 
 = EFFECT FOR SPELL POWER aura 
--CLASS COLOR CARDS
--Show tribe on card
--animations on all cards
-addcreature order visual issue
-	= happens when minions are dying and being summoned simultaneously (imp boss, patron)
 
 ====================================
 Zoo lock Decklist:
@@ -89,7 +83,7 @@ Zoo lock Decklist:
 1x Crazed Alchemist                -- DONE
 2x Defender of Argus               -- DONE
 1x Loatheb                         -- DONE
-1x Dr. Boom                        -- NO
+1x Dr. Boom                        -- DONE
 
 ====================================
 Freeze mage Decklist:
@@ -111,7 +105,7 @@ Freeze mage Decklist:
 1x Emperor Thaurissan              -- DONE
 1x Flamestrike                     -- DONE
 1x Archmage Antonidas              -- DONE
-1x Alexstrasza                     -- NO
+1x Alexstrasza                     -- DONE
 1x Pyroblast                       -- DONE
 
 ====================================
@@ -162,6 +156,14 @@ Oil rogue Decklist:
 =====================DONE======================
 ================================================ 
 
+- screenshake on big hits (8+)
+
+-CLASS COLOR CARDS
+-Show tribe on card
+-animations on all cards
+addcreature order visual issue
+	= happens when minions are dying and being summoned simultaneously (imp boss, patron)
+	
 -dynamic mana cost cards (giants) - use special auras that are added from database?
 	= holding card highlighting in hand (clientside aura check)
 

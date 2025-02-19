@@ -228,10 +228,12 @@ public class Card : MonoBehaviour
         _manaCost = c.manaCost;
         spellDamage = cardInfo.spellDamage;
         comboDamage = cardInfo.comboSpellDamage;
-        if (c.tribe!=Tribe.None)
+        if (c.tribe != Tribe.None)
         {
             tribe.text = c.tribe.ToString();
         }
+        else
+            tribe.text = "";
         manaCost.text = c.manaCost.ToString();
 
 
