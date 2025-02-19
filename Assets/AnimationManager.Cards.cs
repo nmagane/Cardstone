@@ -129,8 +129,10 @@ public partial class AnimationManager
                 return StartCoroutine(KnifeJugglerAnim(data));
 
             case Card.Cardname.Flame_Imp:
-            case Card.Cardname.Ping:
                 return StartCoroutine(Simple_Projectile(data,Effect.fireballSmall,12,5));
+
+            case Card.Cardname.Ping:
+                return StartCoroutine(Ping(data));
 
             case Card.Cardname.Soulfire:
             case Card.Cardname.Fireball:
@@ -221,6 +223,17 @@ public partial class AnimationManager
         yield return LerpZoom(p, Vector3.one, 10);
         StartCoroutine(_fadeout(p,15));
     }
+    IEnumerator Ping(AnimationData data)
+    {
+        GameObject p = CreateEffect(Effect.fireballSmall);
+        p.transform.position = data.GetSource() == board.currHero? board.heroPower.transform.position: board.enemyHeroPower.transform.position;
+
+        p.transform.localScale = Vector3.zero;
+        Spin(p, 0.5f);
+        yield return LerpZoom(p, Vector3.one, 12);
+        yield return LerpTo(p, data.GetTargetPos(), 10);
+        Destroy(p.gameObject);
+    }
     IEnumerator WhirlwindAnim(AnimationData data)
     {
         GameObject p = CreateEffect(Effect.whirlwind);
@@ -259,7 +272,7 @@ public partial class AnimationManager
         slash.transform.position = p.transform.position;
         slash.transform.localScale = Vector3.one * 1.25f;
         BounceZoom(slash, 0.1f);
-        SpriteFade(slash, 10,5);
+        SpriteFade(slash, 8,5);
         Destroy(p.gameObject);
     }
 }

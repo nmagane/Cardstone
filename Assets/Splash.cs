@@ -52,7 +52,7 @@ public class Splash : MonoBehaviour
             transform.localScale += Vector3.one * 0.25f / bumpTime;
             yield return AnimationManager.Wait(1);
         }
-        //yield return AnimationManager.Wait(10);
+        yield return AnimationManager.Wait(5);
         float fadeTime = 25;
         for (int i=0;i< fadeTime; i++)
         {

@@ -211,6 +211,17 @@ MonoBehaviour:
   IMMUNE: 0
   combo: 0
   spriteRenderer: {fileID: 1741553120168221907}
+  classSprites:
+  - {fileID: 21300000, guid: 18a5788e475121f4b99618cdbd7100d9, type: 3}
+  - {fileID: 21300000, guid: b8d38792cfd2b1942ad35517d6f410e2, type: 3}
+  - {fileID: 21300000, guid: 0545bc6aef221e340a2bdb043c7fe5d2, type: 3}
+  - {fileID: 21300000, guid: ce15f2d1b88107145a38acf0cb2124a3, type: 3}
+  - {fileID: 21300000, guid: 18a5788e475121f4b99618cdbd7100d9, type: 3}
+  - {fileID: 21300000, guid: 18a5788e475121f4b99618cdbd7100d9, type: 3}
+  - {fileID: 21300000, guid: 18a5788e475121f4b99618cdbd7100d9, type: 3}
+  - {fileID: 21300000, guid: 18a5788e475121f4b99618cdbd7100d9, type: 3}
+  - {fileID: 21300000, guid: 18a5788e475121f4b99618cdbd7100d9, type: 3}
+  - {fileID: 21300000, guid: 18a5788e475121f4b99618cdbd7100d9, type: 3}
   damageSpriteRenderer: {fileID: 2609343458304010595}
   armorSpriteRenderer: {fileID: 2194483140440141548}
   shadowSpriteRenderer: {fileID: 3562002092613296251}

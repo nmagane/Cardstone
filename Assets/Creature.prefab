@@ -794,7 +794,7 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: 0}
   enableCustomColor: 1
   customColor: {r: 0.1764706, g: 0.1764706, b: 0.1764706, a: 0.5019608}
-  layerGap: 1
+  layerGap: 2
   sortingLayer: shadowCreature
   elevation: 0.2
 --- !u!1 &5773124054104636858

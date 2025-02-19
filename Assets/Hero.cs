@@ -57,6 +57,7 @@ public partial class Hero : MonoBehaviour
     public Weapon weapon;
 
     public SpriteRenderer spriteRenderer;
+    public Sprite[] classSprites;
     public SpriteRenderer damageSpriteRenderer;
     public SpriteRenderer armorSpriteRenderer;
 
@@ -99,7 +100,7 @@ public partial class Hero : MonoBehaviour
 
     public void Set(Card.Class hero)
     {
-
+        spriteRenderer.sprite = classSprites[(int)hero];
     }
 
     public void SetHealth(int x)
