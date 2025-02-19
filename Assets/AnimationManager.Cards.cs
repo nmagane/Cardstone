@@ -37,6 +37,18 @@ public partial class AnimationManager
         
         rage,
         flurry,
+
+        boom,
+        boomFrost,
+
+        particle1,
+        particle2,
+        particleCross,
+
+        potionGreen,
+        potionBlue,
+        potionLight,
+        bomb,
     }
     public Sprite[] effectSprites;
     GameObject CreateEffect(Effect e)
@@ -69,6 +81,8 @@ public partial class AnimationManager
         public bool targetIsHero;
         public Minion targetMinion = null;
         public Hero targetHero = null;
+        public Vector3 originalSourcePos;
+        public Vector3 originalTargetPos;
         public Vector3 sourcePos => GetSourcePos();
         public Vector3 targetPos => GetTargetPos();
         public MonoBehaviour GetTarget()
@@ -179,6 +193,34 @@ public partial class AnimationManager
 
             case Card.Cardname.Inner_Rage:
                 return StartCoroutine(RageEffect(data));
+
+            case Card.Cardname.Unstable_Ghoul:
+                return StartCoroutine(Boom(data,Effect.boom));
+
+            case Card.Cardname.Frost_Nova:
+                return StartCoroutine(Boom(data,Effect.boomFrost));
+            case Card.Cardname.Flamestrike:
+                return StartCoroutine(AoEEffect(data,Effect.boardFire));
+            case Card.Cardname.Blizzard:
+                return StartCoroutine(AoEEffect(data,Effect.boardFrost));
+
+            case Card.Cardname.Deadly_Poison:
+                return StartCoroutine(PotionProjectileWeapon(data,Effect.potionGreen));
+
+            case Card.Cardname.Tinkers_Oil:
+                return StartCoroutine(Tinkers_Oil(data));
+
+            case Card.Cardname.Crazed_Alchemist:
+                return StartCoroutine(PotionProjectile(data,Effect.potionBlue));
+
+            case Card.Cardname.Boom_Bot:
+                return StartCoroutine(PotionProjectile(data,Effect.bomb,20));
+
+            case Card.Cardname.Fan_of_Knives:
+                return StartCoroutine(FanOfKnives(data));
+
+            case Card.Cardname.Alexstrasza:
+                return StartCoroutine(AlexEffect(data));
             default:
                 Debug.LogWarning("Animation Unimplemented? " + data.card);
                 return null;
@@ -316,7 +358,167 @@ public partial class AnimationManager
         SpriteFade(p, 10, 10);
         yield return Wait(10);
     }
+    
+    IEnumerator Boom(AnimationData data, Effect effect)
+    {
+        GameObject p = CreateEffect(effect);
 
+        p.transform.localPosition = data.sourcePos;
+        LerpZoom(p, Vector3.one * 30, 30);
+        SpriteFade(p, 15);
+        yield return Wait(15);
+    }
 
+    IEnumerator AlexEffect(AnimationData data)
+    {
+        Vector3 sourcePos = data.sourcePos;
+        Vector3 targetPos = data.targetPos;
+        for (int i=0;i<10;i++)
+        {
+            Vector3 p = Vector3.Lerp(sourcePos, targetPos, i / 10F);
+            for (int j = 0; j < 5; j++)
+            {
+                CreateParticle(p, Effect.fireballSmall,Board.GetColor("DF3E23"));
+            }
+            yield return Wait(1);
+        }
+
+        for (int j = 0; j < 20; j++)
+        {
+            CreateParticle(targetPos, Effect.fireballSmall, Board.GetColor("DF3E23"));
+        }
+        yield return Wait(5);
+    }
+    IEnumerator AoEEffect(AnimationData data, Effect effect)
+    {
+        StartCoroutine(BoardAoE(data, effect));
+        yield return Wait(10);
+    }
+    IEnumerator BoardAoE(AnimationData data, Effect effect)
+    {
+        GameObject p = CreateEffect(effect);
+
+        p.transform.localPosition = data.sourcePos;
+
+        SpriteRenderer s = p.GetComponentInChildren<SpriteRenderer>();
+        if (data.friendly) p.transform.localPosition = new Vector3(0, 2.1325f+1/16f);
+        else p.transform.localPosition = new Vector3(0, -2.1325f-1/16f);
+
+        BounceZoom(p, 0.1f);
+        var color = s.color;
+        color.a = 0;
+        s.color = color;
+        for (int i = 0; i < 20; i++)
+        {
+            if (i < 10) color.a += 1 / 20f;
+            else color.a -= 1 / 20f;
+
+            s.color = color;
+            yield return null;
+        }
+        Destroy(p.gameObject);
+    }
+
+    IEnumerator PotionProjectile(AnimationData data, Effect effect, int frames = 10)
+    {
+        GameObject p = CreateEffect(effect);
+
+        p.transform.localPosition = data.sourcePos;
+        Vector3 targetPos = data.targetPos;
+        Spin(p, targetPos.x < p.transform.localPosition.x ? 5 : -5);
+        yield return LerpTo(p, targetPos, frames);
+        Destroy(p.gameObject);
+        for (int i=0;i<20;i++)
+        {
+            CreateParticle(targetPos, effect);
+        }
+    }
+    IEnumerator PotionProjectileWeapon(AnimationData data, Effect effect)
+    {
+        GameObject p = CreateEffect(effect);
+        p.transform.localPosition = data.sourcePos;
+        
+        Vector3 targetPos = data.friendly == false? board.enemyHero.weaponFrame.transform.localPosition : board.currHero.weaponFrame.transform.localPosition;
+        Vector3 offset = data.friendly == false? board.enemyHero.transform.localPosition : board.currHero.transform.localPosition;
+        targetPos += offset;
+        targetPos += new Vector3(0, 0.5f);
+        targetPos *= 1.25f;
+
+        Spin(p, targetPos.x < p.transform.localPosition.x ? 5 : -5);
+        yield return LerpTo(p, targetPos, 10);
+        Destroy(p.gameObject);
+        for (int i=0;i<20;i++)
+        {
+            CreateParticle(targetPos, effect);
+        }
+    }
+
+    IEnumerator Tinkers_Oil(AnimationData data)
+    {
+        Hero h = data.friendly ? board.currHero : board.enemyHero;
+        bool anim = false;
+        if (h.weapon != null)
+        {
+            anim = true;
+            StartCoroutine(PotionProjectileWeapon(data, Effect.potionLight));
+        }
+        if (data.GetTarget() != (data.friendly?board.enemyHero:board.currHero))
+        {
+            anim = true;
+            StartCoroutine(PotionProjectile(data, Effect.potionLight));
+        }
+        yield return Wait(anim? 10:0);
+    }
+
+    IEnumerator FanOfKnives(AnimationData data)
+    {
+        MinionBoard b = data.friendly ? board.enemyMinions : board.currMinions;
+        List<GameObject> objs = new List<GameObject>();
+        foreach(var c in b.minionObjects.Values)
+        {
+            GameObject p = CreateEffect(Effect.dagger);
+
+            p.transform.localPosition = data.GetSourcePos();
+            Vector3 targetPos = c.transform.localPosition;
+
+            PointTo(p, targetPos, 90);
+            LerpTo(p, targetPos, 10);
+            objs.Add(p);
+        }
+        
+        yield return Wait(10);
+        foreach (GameObject g in objs) Destroy(g);
+    }
+
+    void CreateParticle(Vector3 pos, Effect effect, Color color = new Color())
+    {
+        Color c = color;
+        switch (effect)
+        {
+            case Effect.potionGreen:
+                c = Board.GetColor("14A02E");
+                break;
+            case Effect.potionBlue:
+                c = Board.GetColor("20D6C7");
+                break;
+            case Effect.potionLight:
+                c = Board.GetColor("92DCBA");
+                break;
+            case Effect.bomb:
+                c = Board.GetColor("73172D");
+                break;
+        }
+        Effect[] particles = { Effect.particle1, Effect.particle2, Effect.particleCross };
+        GameObject p = CreateEffect(Board.RandElem(particles));
+
+        p.GetComponentInChildren<SpriteRenderer>().color = c;
+        p.transform.localPosition = pos;
+        Spin(p, Random.Range(-5, 5));
+        float angle = Random.Range(0, 360) * Mathf.PI/180f;
+        Vector3 targetPos = pos + 4 * new Vector3(Mathf.Cos(angle), Mathf.Sin(angle));
+        p.transform.localPosition = Vector3.Lerp(pos, targetPos, 0.15f);
+        LerpTo(p, targetPos, 30);
+        SpriteFade(p, 20);
+    }
 
 }

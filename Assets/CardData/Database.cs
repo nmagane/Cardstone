@@ -737,6 +737,8 @@ public partial class Database
         c.damage = 2;
         c.health = 2;
 
+        c.eligibleTargets = Board.EligibleTargets.AllMinions;
+
         c.MINION = true;
         c.BATTLECRY = true;
         c.TARGETED = true;
@@ -1101,7 +1103,7 @@ public partial class Database
         CardInfo c = new();
 
         c.name = "Alexstrasza";
-        c.text = "Battlecry: Set a hero's remaining health to 15.";
+        c.text = "Battlecry:\nSet a hero's remaining health to 15.";
 
         c.eligibleTargets = Board.EligibleTargets.AllHeroes;
         c.tribe = Card.Tribe.Dragon;

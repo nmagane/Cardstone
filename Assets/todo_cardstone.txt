@@ -89,7 +89,7 @@ Zoo lock Decklist:
 1x Crazed Alchemist                -- DONE
 2x Defender of Argus               -- DONE
 1x Loatheb                         -- DONE
-1x Dr. Boom                        -- DONE
+1x Dr. Boom                        -- NO
 
 ====================================
 Freeze mage Decklist:
@@ -111,7 +111,7 @@ Freeze mage Decklist:
 1x Emperor Thaurissan              -- DONE
 1x Flamestrike                     -- DONE
 1x Archmage Antonidas              -- DONE
-1x Alexstrasza                     -- DONE
+1x Alexstrasza                     -- NO
 1x Pyroblast                       -- DONE
 
 ====================================
@@ -152,7 +152,7 @@ Oil rogue Decklist:
 2x Tinker's Sharpsword Oil         -- DONE
 2x Violet Teacher                  -- DONE
 1x Healbot                         -- DONE
-2x Azure Drake                     -- DONE
+2x Azure Drake                     -- NO (spell power)
 1x Loatheb                         -- DONE
 2x Sprint                          -- DONE
 1x Dr. Boom                        -- DONE

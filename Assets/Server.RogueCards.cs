@@ -34,6 +34,9 @@ public partial class Server
     private void Deadly_Poison(CastInfo spell)
     {
         if (spell.player.weapon == null) return;
+
+        var anim = new AnimationInfo(Card.Cardname.Deadly_Poison, spell.player);
+
         spell.player.weapon.AddAura(new Aura(Aura.Type.Damage, 2));
     }
     private void Blade_Flurry(CastInfo spell)
@@ -60,6 +63,10 @@ public partial class Server
     private void Fan_of_Knives(CastInfo spell)
     {
         MinionBoard b = spell.player.opponent.board;
+        if (b.Count()>0)
+        {
+            var anim = new AnimationInfo(Card.Cardname.Fan_of_Knives, spell.player);
+        }
         foreach (Minion m in b)
         {
             Damage(m, 1, spell);
@@ -71,25 +78,34 @@ public partial class Server
     }
     private void Tinkers_Oil(CastInfo spell)
     {
-        if (spell.player.weapon != null) 
+        bool hasWeapon = spell.player.weapon != null;
+        bool combo = spell.combo;
+        bool hasMinions = spell.player.board.Count() > 0;
+
+        if (hasWeapon)
             spell.player.weapon.AddAura(new Aura(Aura.Type.Damage, 3));
 
-        //there are no possible triggers that trigger on "addaura" right?
-        //spell.match.ResolveTriggerQueue(ref spell);
-
-        if (spell.combo)
+        List<Minion> minions = spell.player.board.minions;
+        Minion m = null;
+        if (minions.Count != 0)
         {
-            List<Minion> minions = spell.player.board.minions;
-            if (minions.Count == 0) return;
+           m = Board.RandElem(minions);
+        }
 
-            Minion m = Board.RandElem(minions);
-            while ((m.DEAD || m.health<m.maxHealth) && minions.Count>0)
-            {
-                minions.Remove(m);
-                m = Board.RandElem(minions);
-            }
+        if (combo && hasMinions)
+        {
+            var anim = new AnimationInfo(Card.Cardname.Tinkers_Oil, spell.player, m);
+        }
+        else if (hasWeapon)
+        { 
+            var anim = new AnimationInfo(Card.Cardname.Tinkers_Oil, spell.player);
+        }
+
+        if (combo && hasMinions)
+        {
             spell.match.server.AddAura(spell.match, m, new Aura(Aura.Type.Damage, 3));
         }
+
     }
     void Sprint(CastInfo spell)
     {

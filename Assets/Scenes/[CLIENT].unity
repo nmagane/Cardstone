@@ -5059,6 +5059,14 @@ PrefabInstance:
       propertyPath: board
       value: 
       objectReference: {fileID: 1287994307}
+    - target: {fileID: 3201840216127571770, guid: e191c75d080628747ae367018f2c9c5a, type: 3}
+      propertyPath: effectSprites.Array.size
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3201840216127571770, guid: e191c75d080628747ae367018f2c9c5a, type: 3}
+      propertyPath: effectSprites.Array.data[29]
+      value: 
+      objectReference: {fileID: 21300000, guid: a2b9ba3460c69d14d960449ff4e7f610, type: 3}
     - target: {fileID: 3201840216127571772, guid: e191c75d080628747ae367018f2c9c5a, type: 3}
       propertyPath: m_Name
       value: AnimationManager (1)
@@ -8402,6 +8410,14 @@ PrefabInstance:
       propertyPath: board
       value: 
       objectReference: {fileID: 716059625}
+    - target: {fileID: 3201840216127571770, guid: e191c75d080628747ae367018f2c9c5a, type: 3}
+      propertyPath: effectSprites.Array.size
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3201840216127571770, guid: e191c75d080628747ae367018f2c9c5a, type: 3}
+      propertyPath: effectSprites.Array.data[29]
+      value: 
+      objectReference: {fileID: 21300000, guid: a2b9ba3460c69d14d960449ff4e7f610, type: 3}
     - target: {fileID: 3201840216127571772, guid: e191c75d080628747ae367018f2c9c5a, type: 3}
       propertyPath: m_Name
       value: AnimationManager

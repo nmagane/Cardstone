@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Data.Common;
+using Mirror.BouncyCastle.Bcpg;
 using Mirror.Examples.CharacterSelection;
 using UnityEngine;
 
@@ -161,11 +162,28 @@ public class TriggerEffects
             }
         }
 
+        int ind = (trigger.player.board.Count() > trigger.minion.index) ? trigger.minion.index : -1;
 
         if (tar == -1)
         {
+            if (ind != -1)
+            {
+                var animFace = new AnimationInfo(Card.Cardname.Boom_Bot, trigger.player, trigger.player.board[ind], opponent);
+            }
+            else
+            {
+                var animFace = new AnimationInfo(Card.Cardname.Boom_Bot, trigger.player, opponent);
+            }
             match.server.DamageFace(match, opponent, damage, opponent.opponent);
             return;
+        }
+        if (ind != -1)
+        {
+            var animFace = new AnimationInfo(Card.Cardname.Boom_Bot, trigger.player, trigger.player.board[ind], opponent.board[tar]);
+        }
+        else
+        {
+            var animFace = new AnimationInfo(Card.Cardname.Boom_Bot, trigger.player, opponent.board[tar]);
         }
         match.server.DamageMinion(match, opponent.board[tar], damage, opponent.opponent);
     }

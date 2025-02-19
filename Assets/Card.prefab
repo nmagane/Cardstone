@@ -715,12 +715,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1084335336091685025}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0033, y: -2.192}
-  m_SizeDelta: {x: 2.9, y: 1.2502}
+  m_AnchoredPosition: {x: 0, y: -2.0625}
+  m_SizeDelta: {x: 2.9, y: 0.4159}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &2876425225104785208
 MeshRenderer:
@@ -762,7 +762,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1546346851
   m_SortingLayer: 9
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8275863408904673126
 MonoBehaviour:
@@ -819,7 +819,7 @@ MonoBehaviour:
   m_fontSizeMax: 4
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 4096
+  m_VerticalAlignment: 8192
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1216,6 +1216,7 @@ MonoBehaviour:
   manaCost: {fileID: 5503984478277702751}
   health: {fileID: 6397873228368202551}
   damage: {fileID: 477049995625680310}
+  tribe: {fileID: 8275863408904673126}
   frame: {fileID: 7187123306332122834}
   icon: {fileID: 3196792686632191057}
   back: {fileID: 4317927336061253282}
@@ -1262,6 +1263,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 31e2e8f38b2cc9a4ab732073dc32a9b4, type: 3}
   - {fileID: 21300000, guid: 31e2e8f38b2cc9a4ab732073dc32a9b4, type: 3}
   - {fileID: 21300000, guid: 31e2e8f38b2cc9a4ab732073dc32a9b4, type: 3}
+  tribeSprites:
+  - {fileID: 21300000, guid: b7dc9fcd0d97a5e489ff37d2b52874f3, type: 3}
+  - {fileID: 21300000, guid: 32b1e4fbe39a132419a7650169e1fa86, type: 3}
+  - {fileID: 21300000, guid: 87c22a24f5a3c8041b373925fbc7bced, type: 3}
+  - {fileID: 21300000, guid: ddc14fe6b4720ee45a1f6832562e3a73, type: 3}
+  - {fileID: 21300000, guid: bf9bc80d1989ad847b8836e180945f22, type: 3}
+  - {fileID: 21300000, guid: 32b1e4fbe39a132419a7650169e1fa86, type: 3}
   hidden: 0
   handPos: {x: 0, y: 0, z: 0}
   handRot: {x: 0, y: 0, z: 0}
@@ -1348,8 +1356,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0033, y: -1.4339}
-  m_SizeDelta: {x: 2.9, y: 1.2502}
+  m_AnchoredPosition: {x: 0, y: -1.4097}
+  m_SizeDelta: {x: 2.9, y: 1.2003}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &8174179713164967626
 MeshRenderer:
@@ -1413,7 +1421,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "+1 Spellpower\nBattlecry: \nDraw a card"
+  m_text: 'Deathrattle: Put a Demon from your hand into play.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 06dc05703f6f28d43a34573092f5d22c, type: 2}
   m_sharedMaterial: {fileID: 2547159853987201026, guid: 06dc05703f6f28d43a34573092f5d22c, type: 2}
@@ -1448,7 +1456,7 @@ MonoBehaviour:
   m_fontSizeMax: 4
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 4096
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1778,6 +1786,7 @@ Transform:
   - {fileID: 7751850323966045925}
   - {fileID: 459709971042808491}
   - {fileID: 7749457406982351782}
+  - {fileID: 5832745852683819309}
   - {fileID: 7106883894311975941}
   m_Father: {fileID: 8767642050265229191}
   m_RootOrder: 1
@@ -1853,3 +1862,87 @@ MonoBehaviour:
   layerGap: 1
   sortingLayer: shadowCard
   elevation: 0.1
+--- !u!1 &8190752328272398854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5832745852683819309}
+  - component: {fileID: 897691437185361769}
+  m_Layer: 0
+  m_Name: tribeBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5832745852683819309
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8190752328272398854}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1084335336091685025}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &897691437185361769
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8190752328272398854}
+  m_Enabled: 0
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -1546346851
+  m_SortingLayer: 9
+  m_SortingOrder: 3
+  m_Sprite: {fileID: 21300000, guid: 27604ca3a1e7f064dae443ad9b15010c, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1.9375, y: 2.5625}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0

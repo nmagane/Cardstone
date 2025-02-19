@@ -54,7 +54,7 @@
         CardInfo c = new();
 
         c.name = "Power Overwhelming";
-        c.text = "Give a friendly minion +4/+4 until end of turn.\nThen, it dies. Horribly.";
+        c.text = "Give a friendly minion +4/+4 until end of turn.\nThen, it dies.";
 
         c.classType = Card.Class.Warlock;
         c.eligibleTargets = Board.EligibleTargets.FriendlyMinions;
@@ -180,7 +180,7 @@
 
         c.classType = Card.Class.Warlock;
         c.name = "Voidcaller";
-        c.text = "Deathrattle: Put a random Demon from your hand into the battlefield.";
+        c.text = "Deathrattle: Put a Demon from your hand into play.";
 
         c.tribe = Card.Tribe.Demon;
         c.manaCost = 4;

@@ -28,6 +28,7 @@ public class Card : MonoBehaviour
             frame.color = new Color(frame.color.r, frame.color.g, frame.color.b, _alpha);
             icon.color = new Color(frame.color.r, frame.color.g, frame.color.b, _alpha);
             back.color = new Color(back.color.r, back.color.g, back.color.b, _alpha);
+            tribe.color = new Color(tribe.color.r, tribe.color.g, tribe.color.b, _alpha);
 
         }
     }
@@ -38,6 +39,7 @@ public class Card : MonoBehaviour
     public TMP_Text manaCost;
     public TMP_Text health;
     public TMP_Text damage;
+    public TMP_Text tribe;
     public SpriteRenderer frame;
     public SpriteRenderer icon;
     public SpriteRenderer back;
@@ -193,6 +195,7 @@ public class Card : MonoBehaviour
     public Sprite[] minionCards;
     public Sprite[] spellCards;
     public Sprite[] weaponCards;
+    public Sprite[] tribeSprites;
 
     void Awake()
     {
@@ -225,14 +228,25 @@ public class Card : MonoBehaviour
         _manaCost = c.manaCost;
         spellDamage = cardInfo.spellDamage;
         comboDamage = cardInfo.comboSpellDamage;
+        if (c.tribe!=Tribe.None)
+        {
+            tribe.text = c.tribe.ToString();
+        }
         manaCost.text = c.manaCost.ToString();
+
+
         if (c.MINION || c.WEAPON)
         {
             damage.text = c.damage.ToString();
             health.text = c.health.ToString();
             if (c.WEAPON)
+            {
                 frame.sprite = weaponCards[(int)cardInfo.classType];
-            else frame.sprite = minionCards[(int)cardInfo.classType];
+            }
+            else
+            {
+                frame.sprite = cardInfo.tribe==Tribe.None? minionCards[(int)cardInfo.classType] : tribeSprites[(int)cardInfo.classType];
+            }
             highlight.sprite = highlightMinion;
             baseHighlight = highlightMinion;
             comboHighlight = highlightMinionSpecial;
@@ -246,6 +260,7 @@ public class Card : MonoBehaviour
             baseHighlight = highlightSpell;
             comboHighlight = highlightSpellSpecial;
         }
+
         UpdateCardText();
     }
     int _manaCost = 0;
@@ -713,6 +728,7 @@ public class Card : MonoBehaviour
         manaCost.GetComponent<MeshRenderer>().sortingOrder = x + 1;
         health.GetComponent<MeshRenderer>().sortingOrder = x + 1;
         damage.GetComponent<MeshRenderer>().sortingOrder = x + 1;
+        tribe.GetComponent<MeshRenderer>().sortingOrder = x + 1;
     }
     public void SetElevated(bool elevated)
     {
@@ -728,6 +744,7 @@ public class Card : MonoBehaviour
         manaCost.GetComponent<MeshRenderer>().sortingLayerName = x;
         health.GetComponent<MeshRenderer>().sortingLayerName = x;
         damage.GetComponent<MeshRenderer>().sortingLayerName = x;
+        tribe.GetComponent<MeshRenderer>().sortingLayerName = x;
 
         shadow.sortingLayer = s;
     }

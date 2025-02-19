@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Mirror.Examples.MultipleAdditiveScenes;
 using Mirror.SimpleWeb;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.SI7_Agent, Card.Cardname.Backstab, Card.Cardname.Inner_Rage, Card.Cardname.Inner_Rage, Card.Cardname.Blade_Flurry, Card.Cardname.Deaths_Bite, Card.Cardname.Cruel_Taskmaster };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Dr_Boom, Card.Cardname.Crazed_Alchemist, Card.Cardname.Crazed_Alchemist, Card.Cardname.Deadly_Poison, Card.Cardname.Alexstrasza, Card.Cardname.Fan_of_Knives, Card.Cardname.Fan_of_Knives };
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { };
     
 #else
@@ -424,8 +425,7 @@ public partial class Server : MonoBehaviour
 
         matchList.Remove(match);
         currentMatches.Remove(match.matchID);
-        Debug.Log($"{match.matchID}: {winner.connection.name} defeats {winner.opponent.connection.name}");
-        clientConnections.Remove(match.players[0].connection.clientID);
+        Debug.Log($"{match.matchID}: {winner.connection.name} ({winner.connection.classType}) defeats {winner.opponent.connection.name} ({winner.opponent.connection.classType})");        clientConnections.Remove(match.players[0].connection.clientID);
         clientConnections.Remove(match.players[1].connection.clientID);
     }
     public enum Turn
@@ -452,7 +452,13 @@ public partial class Server : MonoBehaviour
 
         foreach (var v in TESTCARDS) m.players[0].hand.Add(v);
         foreach (var v in TESTCARDS2) m.players[1].hand.Add(v);
-
+        if (TESTCARDS.Count>0)
+        {
+            m.players[0].maxMana = 10;
+            m.players[0].currMana = 10;
+            m.players[1].maxMana = 10;
+            m.players[1].currMana = 10;
+        }
         if (m.turn==Turn.player1)
         {
             //TODO: add coin p2

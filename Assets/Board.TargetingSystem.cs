@@ -7,6 +7,22 @@ using System.Net;
 
 public partial class Board
 {
+    public static Color GetColor(string hex)
+    {
+        if (hex.StartsWith("#"))
+        {
+            hex = hex.Substring(1);
+        }
+        if (hex.Length != 6)
+        {
+            return Color.white;
+        }
+        float r = int.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber) / 255f;
+        float g = int.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber) / 255f;
+        float b = int.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber) / 255f;
+
+        return new Color(r, g, b);
+    }
     public static bool RNG(float percent) //Two point precision. RNG(XX.XXf)
     {
         percent *= 100;

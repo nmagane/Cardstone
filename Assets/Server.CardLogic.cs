@@ -161,6 +161,8 @@ public partial class Server
     void Crazed_Alchemist(CastInfo spell)
     {
         Minion m = spell.GetTargetMinion();
+        if (m == null) return;
+        var anim = new AnimationInfo(Card.Cardname.Crazed_Alchemist, spell.player, spell.minion, m);
         int att = m.damage;
         int hp = m.health;
         SetDamage(spell.match, m, hp);
@@ -195,6 +197,7 @@ public partial class Server
     void Alexstrasza(CastInfo spell)
     {
         if (spell.targetPlayer == null) return;
+        var anim = new AnimationInfo(Card.Cardname.Alexstrasza, spell.player,spell.minion, spell.targetPlayer);
         spell.targetPlayer.health = 15;
     }
 
