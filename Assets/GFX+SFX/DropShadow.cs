@@ -35,8 +35,10 @@ public class DropShadow : MonoBehaviour
             spriteRenderer.size = parent.size;
     }
     public float elevation = 0.3f;
+    public bool customShadow = false;
     public void SetOffset()
     {
+        if (customShadow) return;
         float y = transform.position.y;
         float x = transform.position.x;
         float v = (9 + y) / 18;

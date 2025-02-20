@@ -750,6 +750,11 @@ public partial class Board : MonoBehaviour
     }
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha0) && saveData.secret==false)
+        {
+            saveData.secret = true;
+            saveManager.SaveGame();
+        }
 #if (UNITY_EDITOR)
         if (Input.GetKeyDown(KeyCode.Q) && playerID!=101)
         {

@@ -20,7 +20,7 @@ public class SaveManager : MonoBehaviour
         {
             deckName = name;
             classType = hero;
-            cards = list; 
+            cards = new List<Card.Cardname>(list); 
         }
     }
 
@@ -30,7 +30,7 @@ public class SaveManager : MonoBehaviour
         public string playerName = "Player";
         public List<Decklist> decks = new List<Decklist>();
         public int selectedDeck = 0;
-
+        public bool secret = false;
         public GameSave()
         {
             playerName = "Player";
@@ -141,6 +141,7 @@ public class SaveManager : MonoBehaviour
     {
         Card.Class hero = deck.classType;
         Dictionary<Card.Cardname, int> cardCount = new Dictionary<Card.Cardname, int>();
+        if (deck.cards.Count != 30) return false;
         foreach (Card.Cardname c in deck.cards)
         {
             Database.CardInfo card = Database.GetCardData(c);

@@ -6,6 +6,7 @@ using TMPro;
 
 public class CollectionMenu : MonoBehaviour
 {
+
     public GameObject listObject;
 
     public Board board;
@@ -22,11 +23,14 @@ public class CollectionMenu : MonoBehaviour
     public SpriteRenderer cardpickerBG;
     public Card.Class currClass;
     public int currPage = 0;
-    public string currName = "DECK";
+    public string currName = "NEW DECK";
     public TMP_Text headerText;
+    public TMP_InputField nameBox;
 
     public UIButton confirmButton;
     public UIButton deleteButton;
+    public UIButton nextPageButton;
+    public UIButton prevPageButton;
 
     state currState = state.DeckSelect;
     enum state
@@ -37,7 +41,7 @@ public class CollectionMenu : MonoBehaviour
     }
     public void Start()
     {
-        GetData();
+        //GetData();
 
         foreach (CardPicker p in pickers)
             p.cardObject.board = board;
@@ -64,6 +68,10 @@ public class CollectionMenu : MonoBehaviour
         confirmButton.transform.localScale = Vector3.zero;
         deleteButton.transform.localScale = Vector3.zero;
         classPickerAnchor.transform.localScale = Vector3.zero;
+        nextPageButton.transform.localScale = Vector3.zero;
+        prevPageButton.transform.localScale = Vector3.zero;
+        prevPageButton.transform.localScale = Vector3.zero; 
+        nameBox.transform.localScale = Vector3.zero;
         cardpickerBG.enabled = false;
         switch (x)
         {
@@ -80,6 +88,9 @@ public class CollectionMenu : MonoBehaviour
                 cardPickerAnchor.transform.localScale = Vector3.one;
                 confirmButton.transform.localScale = Vector3.one;
                 deleteButton.transform.localScale = Vector3.one;
+                nextPageButton.transform.localScale = Vector3.one;
+                prevPageButton.transform.localScale = Vector3.one;
+                nameBox.transform.localScale = Vector3.one;
                 cardpickerBG.enabled = true; 
                 headerText.text = "EDIT DECK";
                 currPage = 0;
@@ -92,8 +103,15 @@ public class CollectionMenu : MonoBehaviour
 
     public void GetData()
     {
+        cardData.Clear();
+        neutralData.Clear();
+        List<Card.Cardname> secretCards = new List<Card.Cardname>(){ Card.Cardname.Malygos,Card.Cardname.Blackwing_Technician,Card.Cardname.Blackwing_Corruptor};
         for (int i = 1; i < (int)Card.Cardname._COUNT; i++)
         {
+            if (secretCards.Contains((Card.Cardname)i) && board.saveData.secret==false)
+            {
+                continue;
+            }
             var c = Database.GetCardData((Card.Cardname)i);
             if (c == null) continue;
             if (c.TOKEN) continue;
@@ -172,7 +190,8 @@ public class CollectionMenu : MonoBehaviour
     {
         Card.Class newClass = (Card.Class)x;
         SetClass(newClass);
-
+        nameBox.SetTextWithoutNotify("");
+        currName = "NEW DECK";
         SetState(state.DeckEdit);
     }
     public void Back()
@@ -188,7 +207,8 @@ public class CollectionMenu : MonoBehaviour
         }
         else
         {
-            //Close the menu, back to main menu.
+            board.mainmenu.InitDecks();
+            Camera.main.transform.localPosition = new Vector3(-40, 0, -10);
         }
     }
     Dictionary<Card.Cardname, ListCard> listings = new();
@@ -274,6 +294,7 @@ public class CollectionMenu : MonoBehaviour
         currDeckslot = x;
         currClass = list.classType;
         currName = list.deckName;
+        nameBox.SetTextWithoutNotify(currName);
         SetClass(list.classType);
 
         foreach(Card.Cardname c in list.cards)
@@ -295,11 +316,28 @@ public class CollectionMenu : MonoBehaviour
         Back();
     }
 
+    public void SetName()
+    {
+        currName = nameBox.text; 
+        if (board.saveData.decks.Count <= currDeckslot)
+        {
+            return;
+        }
+
+        board.saveData.decks[currDeckslot].deckName = currName;
+        board.saveManager.SaveGame();
+    }
+
     int maxPages = 0;
     public void ShowCards(int page)
     {
         float classPages = Mathf.Ceil(classData.Count / 8f);
         maxPages = (int)classPages + (int)Mathf.Ceil(neutralData.Count / 8f) - 1;
+
+        nextPageButton.transform.localScale = page == maxPages? Vector3.zero : (nextPageButton.transform.localScale==Vector3.zero? Vector3.one:nextPageButton.transform.localScale);
+        prevPageButton.transform.localScale = page == 0? Vector3.zero: (prevPageButton.transform.localScale == Vector3.zero ? Vector3.one : prevPageButton.transform.localScale);
+
+
         int start = page * 8;
         List<Database.CardInfo> cards;
         if (start < classData.Count)

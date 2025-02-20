@@ -14,6 +14,7 @@ public class CardPicker : MonoBehaviour
         transform.localScale = Vector3.one * 1.4f;
         cardObject.noHover = true;
         cardObject.noReturn = true;
+        cardObject.shadow.elevation = 0.1f;
         cardObject.GetComponent<BoxCollider2D>().enabled = false;
         cardObject.transform.localPosition = Vector3.zero;
         cardObject.Set(new HandCard(c.cardname, 0));

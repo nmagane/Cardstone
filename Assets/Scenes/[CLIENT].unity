@@ -1388,7 +1388,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &348523064
 PrefabInstance:
@@ -1514,6 +1514,7 @@ MonoBehaviour:
       classType: 2
       cards: 4f0000004f0000002d0000002d00000036000000500000005000000052000000520000005a0000005a00000053000000530000005100000051000000290000002900000054000000540000004a00000055000000550000003c00000057000000570000001500000056000000260000005900000058000000
     selectedDeck: 0
+    secret: 0
 --- !u!4 &383230268
 Transform:
   m_ObjectHideFlags: 0
@@ -2131,7 +2132,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 40, z: -10}
+  m_LocalPosition: {x: -40, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3089,7 +3090,7 @@ Transform:
   - {fileID: 1981516032}
   - {fileID: 767435374}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &716059625
 MonoBehaviour:
@@ -3932,6 +3933,7 @@ MonoBehaviour:
       classType: 2
       cards: 4f0000004f0000002d0000002d00000036000000500000005000000052000000520000005a0000005a00000053000000530000005100000051000000290000002900000054000000540000004a00000055000000550000003c00000057000000570000001500000056000000260000005900000058000000
     selectedDeck: 0
+    secret: 0
 --- !u!114 &811196308 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -2761653108027592629, guid: 27af3c6cc3c8950478c478747d6f10a8, type: 3}
@@ -4634,7 +4636,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 282755577577769786, guid: f925c19839fd29d4f994ebe90098248a, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 282755577577769786, guid: f925c19839fd29d4f994ebe90098248a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5143,6 +5145,7 @@ MonoBehaviour:
   layerGap: 1
   sortingLayer: shadowCard
   elevation: 1
+  customShadow: 0
 --- !u!212 &1162820135
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5556,7 +5559,7 @@ Transform:
   - {fileID: 1879338577}
   - {fileID: 1305589744}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1297061911
 PrefabInstance:
@@ -6800,6 +6803,7 @@ MonoBehaviour:
   layerGap: 1
   sortingLayer: shadowCard
   elevation: 1
+  customShadow: 0
 --- !u!212 &1594704691
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7065,6 +7069,10 @@ PrefabInstance:
       propertyPath: board
       value: 
       objectReference: {fileID: 716059625}
+    - target: {fileID: 2949252805516380160, guid: de7ed2021eae97b4ab2bd8b902c5cee7, type: 3}
+      propertyPath: editorMenu
+      value: 
+      objectReference: {fileID: 1720779059}
     - target: {fileID: 3013370515212348873, guid: de7ed2021eae97b4ab2bd8b902c5cee7, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

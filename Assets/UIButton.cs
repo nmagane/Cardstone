@@ -20,6 +20,8 @@ public class UIButton : MonoBehaviour
         CollectionReturn,
         DeleteDeck,
         NewDeckClass,
+        ChangeDeckPage,
+        MainmenuEditDecks,
     }
     public AudioClip[] sounds;
     public SpriteRenderer bg;
@@ -136,6 +138,14 @@ public class UIButton : MonoBehaviour
     {
         owner.GetComponent<CollectionMenu>().SelectNewClass(data);
     }
+    public void ChangeDeckPage()
+    {
+        owner.GetComponent<CollectionMenu>().ChangePage(data);
+    }
+    public void MainmenuEditDecks()
+    {
+        owner.GetComponent<Mainmenu>().EditDecks();
+    }
     public void RestartScene()
     {
         board.RestartScene();
@@ -225,6 +235,12 @@ public class UIButton : MonoBehaviour
             case func.NewDeckClass:
                 NewDeckClass();
                 break;
+            case func.ChangeDeckPage:
+                ChangeDeckPage();
+                break;
+            case func.MainmenuEditDecks:
+                MainmenuEditDecks();
+                break;
             default:
                 Debug.LogError("NO BUTTON FUNCTION");
                 break;
@@ -264,12 +280,14 @@ public class UIButton : MonoBehaviour
         this.transform.localScale += Vector3.one * amp;
         for (int i = 0; i < 8; i++)
         {
+            if (transform.localScale == Vector3.zero) break;
             this.transform.localScale += Vector3.one * -amp / 7;
             yield return null;
         }
         yield return null;
         for (int i = 0; i < 1; i++)
         {
+            if (transform.localScale == Vector3.zero) break;
             this.transform.localScale += Vector3.one * amp / 7;
             yield return null;
         }

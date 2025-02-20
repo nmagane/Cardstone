@@ -9,8 +9,10 @@ public class Mainmenu : MonoBehaviour
     public Board board;
     public bool inQueue = false;
     public TMP_InputField textbox;
+    public CollectionMenu editorMenu;
 
     public UIButton findMatchButton;
+    public UIButton collectionButton;
     public UIButton resetButton;
     public void Start()
     {
@@ -39,6 +41,14 @@ public class Mainmenu : MonoBehaviour
             deckButtons[j].icon.sprite = null;
             deckButtons[j].text.text = "";
             deckButtons[j].GetComponent<BoxCollider2D>().enabled = false;
+        }
+        if (board.saveData.decks.Count == 0)
+        {
+            findMatchButton.transform.localScale = Vector3.zero;
+        }
+        else
+        {
+            findMatchButton.transform.localScale = Vector3.one;
         }
     }
 
@@ -112,5 +122,11 @@ public class Mainmenu : MonoBehaviour
         board.saveManager.SelectDeck(x);
         deckButtons[x].SetColor(new Color(0.1019608f, 0.4784314f, 0.2431373f));
 
+    }
+
+    internal void EditDecks()
+    {
+        editorMenu.GetData();
+        Camera.main.transform.position = new Vector3(0, 40, -10);
     }
 }
