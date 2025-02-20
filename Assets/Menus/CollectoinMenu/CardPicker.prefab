@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8709024584219201963}
   - component: {fileID: 2214755518067901535}
+  - component: {fileID: 6491387064851059810}
   m_Layer: 0
   m_Name: CardPicker
   m_TagString: Untagged
@@ -58,6 +59,20 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &6491387064851059810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4573673899991859405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e033a34d13b0f1046b71e0ecdfa4c4f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardObject: {fileID: 4831656722866324936}
+  menu: {fileID: 0}
 --- !u!1001 &5898532465968988452
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -124,3 +139,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8767642050265229191, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
   m_PrefabInstance: {fileID: 5898532465968988452}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4831656722866324936 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1357468283118519532, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
+  m_PrefabInstance: {fileID: 5898532465968988452}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8e5bce1a5bea6a49a44c5eaa1796adb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

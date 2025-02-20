@@ -471,6 +471,7 @@ public partial class Match
         if (triggerBuffer.Count > 0)
         {
             //Sort by playorder and add to resolve queue
+            //sorted backwards and appended at 0
             triggerBuffer.Sort((x, y) => y.playOrder.CompareTo(x.playOrder));
             foreach (var t in triggerBuffer)
             {

@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class CardPicker : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Card cardObject;
+    public CollectionMenu menu;
+    public Card.Cardname card => cardObject.card.card;
+    public void Set(Card.Cardname c)
     {
-        
+        cardObject.Set(new HandCard(c, 0));
     }
 
-    // Update is called once per frame
-    void Update()
+
+    private void OnMouseDown()
     {
-        
+        //addcard
     }
+
 }

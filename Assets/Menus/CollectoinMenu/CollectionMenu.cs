@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CollectionMenu : MonoBehaviour
 {
-    public List<Database.CardInfo> cardData;
-    public List<Database.CardInfo> classData;
-    public List<Database.CardInfo> neutralData;
+    public List<Database.CardInfo> cardData = new();
+    public List<Database.CardInfo> classData = new();
+    public List<Database.CardInfo> neutralData = new();
     public List<CardPicker> pickers;
 
     
@@ -15,7 +15,7 @@ public class CollectionMenu : MonoBehaviour
 
     public void GetData()
     {
-        for (int i = 0; i < (int)Card.Cardname._COUNT; i++)
+        for (int i = 1; i < (int)Card.Cardname._COUNT; i++)
         {
             var c = Database.GetCardData((Card.Cardname)i);
             if (c == null) continue;
@@ -23,10 +23,13 @@ public class CollectionMenu : MonoBehaviour
             cardData.Add(c);
         }
 
-        cardData.Sort((x, y) => y.manaCost.CompareTo(x.manaCost));
+        cardData.Sort((x, y) => x.manaCost.CompareTo(y.manaCost));
 
         foreach (var c in cardData)
+        {
+            Debug.Log(c.manaCost);
             if (c.classType == Card.Class.Neutral) neutralData.Add(c);
+        }
     }
 
     public void SetClass(Card.Class hero)
@@ -36,6 +39,14 @@ public class CollectionMenu : MonoBehaviour
 
         foreach (var c in cardData)
             if (c.classType == hero) classData.Add(c);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            GetData();
+        }
     }
 
 }
