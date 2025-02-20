@@ -20,14 +20,7 @@ public class SaveManager : MonoBehaviour
         {
             deckName = name;
             classType = hero;
-            cards = list;
-
-            if (CheckValidDeck(this) == false)
-            {
-                deckName = "ERROR";
-                classType = Card.Class.Warlock;
-                cards = Database.Zoo_Lock;
-            }
+            cards = list; 
         }
     }
 
@@ -41,10 +34,6 @@ public class SaveManager : MonoBehaviour
         public GameSave()
         {
             playerName = "Player";
-            decks.Add(new Decklist("ZOO", Card.Class.Warlock, Database.Zoo_Lock));
-            decks.Add(new Decklist("OIL", Card.Class.Rogue, Database.Oil_Rogue));
-            decks.Add(new Decklist("PATRON", Card.Class.Warrior, Database.Patron_Warrior));
-            decks.Add(new Decklist("FREEZE", Card.Class.Mage, Database.Freeze_Mage));
         }
     }
 
@@ -86,12 +75,23 @@ public class SaveManager : MonoBehaviour
             File.WriteAllText(dir, jsonText);
         }
 
+        if (saveData.decks.Count==0)
+        {
+            saveData.decks.Add(new Decklist("ZOO", Card.Class.Warlock, Database.Zoo_Lock));
+            saveData.decks.Add(new Decklist("OIL", Card.Class.Rogue, Database.Oil_Rogue));
+            saveData.decks.Add(new Decklist("PATRON", Card.Class.Warrior, Database.Patron_Warrior));
+            saveData.decks.Add(new Decklist("FREEZE", Card.Class.Mage, Database.Freeze_Mage));
+        }
+
         List<Decklist> decklists = new List<Decklist>(saveData.decks);
 
         foreach(Decklist list in decklists)
         {
             if (CheckValidDeck(list) == false)
+            {
+                Debug.LogError(list.deckName+" invalid");
                 saveData.decks.Remove(list);
+            }
         }
 
         SelectDeck(saveData.selectedDeck);
@@ -110,11 +110,11 @@ public class SaveManager : MonoBehaviour
         string saveDir = GetSaveDir();
 
         string dir = saveDir + "/save.json";
-        string videoDir = saveDir + "/video.prefs";
         string jsonText = JsonUtility.ToJson(saveData);
 #if (UNITY_WEBGL)
         PlayerPrefs.SetString("save", jsonText);
 #endif
+        //Debug.Log("Saved+ "+jsonText);
         File.WriteAllText(dir, jsonText);
 
     }
@@ -148,10 +148,28 @@ public class SaveManager : MonoBehaviour
             if (cardCount.ContainsKey(c) == false) cardCount.Add(c, 1);
             else cardCount[c]++;
 
-            if (card.classType !=Card.Class.Neutral && card.classType != hero) return false;
-            if (card.TOKEN) return false;
-            if (card.LEGENDARY && cardCount[c] > 1) return false;
-            if (card.LEGENDARY == false && cardCount[c] > 2) return false;
+            if (card.classType != Card.Class.Neutral && card.classType != hero)
+            {
+                Debug.LogError("classwrong " + card.name);
+                return false;
+            }
+            if (card.TOKEN)
+            {
+                Debug.LogError("token "+card);
+                return false;
+            }
+            if (card.LEGENDARY && cardCount[c] > 1)
+            {
+
+                Debug.LogError("legendoubl " + card);
+                return false;
+            }
+            if (card.LEGENDARY == false && cardCount[c] > 2)
+            {
+
+                Debug.LogError("tripl " + card);
+                return false;
+            }
         }
         return true;
     }

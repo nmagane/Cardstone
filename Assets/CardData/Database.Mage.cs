@@ -235,4 +235,22 @@ public partial class Database
         c.triggers.Add((Trigger.Type.OnPlaySpell, Trigger.Side.Friendly, Trigger.Ability.Archmage_Antonidas));
         return c;
     }
+    static CardInfo Sorcerers_Apprentice()
+    {
+        CardInfo c = new();
+
+        c.name = "Sorcerers Apprentice";
+        c.text = "Your spells cost 1 less.";
+
+        c.classType = Card.Class.Mage;
+
+        c.manaCost = 2;
+        c.damage = 3;
+        c.health = 2;
+
+        c.MINION = true;
+
+        c.auras.Add(Aura.Type.Sorcerers_Apprentice);
+        return c;
+    }
 }

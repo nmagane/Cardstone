@@ -8,10 +8,6 @@ public class CardPicker : MonoBehaviour
     public Card cardObject;
     public CollectionMenu menu;
 
-    public TMP_Text cardName;
-    public TMP_Text manaCost;
-    public TMP_Text count;
-
     public Card.Cardname card => cardObject.card.card;
     public void Set(Database.CardInfo c)
     {
@@ -26,7 +22,7 @@ public class CardPicker : MonoBehaviour
 
     private void OnMouseDown()
     {
-        //addcard
+        menu.AddListing(card);
     }
 
 }

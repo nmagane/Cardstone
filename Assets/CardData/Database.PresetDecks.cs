@@ -52,8 +52,6 @@ public partial class Database
 
         Card.Cardname.Dr_Boom,
 
-
-
     };
 
     public static List<Card.Cardname> Oil_Rogue = new List<Card.Cardname>()

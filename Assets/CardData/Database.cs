@@ -367,6 +367,8 @@ public partial class Database
                 return Putrid_Slime();
             case Card.Cardname.Malygos:
                 return Malygos();
+            case Card.Cardname.Sorcerers_Apprentice:
+                return Sorcerers_Apprentice();
 
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
@@ -726,6 +728,7 @@ public partial class Database
 
         c.MINION = true;
         c.BATTLECRY = true;
+        c.LEGENDARY = true;
         return c;
     }
     static CardInfo Stormwind_Champion()
@@ -902,6 +905,7 @@ public partial class Database
         c.health = 1;
 
         c.MINION = true;
+        c.LEGENDARY = true;
 
         c.auras.Add(Aura.Type.Spellpower);
         c.triggers.Add((Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.DrawCard));
@@ -1011,6 +1015,7 @@ public partial class Database
 
         c.MINION = true;
         c.BATTLECRY = true;
+        c.LEGENDARY = true;
 
         return c;
     }

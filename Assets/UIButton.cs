@@ -16,6 +16,10 @@ public class UIButton : MonoBehaviour
         SelectDeck,
         EditDeck,
         NewDeck,
+        ConfirmDeck,
+        CollectionReturn,
+        DeleteDeck,
+        NewDeckClass,
     }
     public AudioClip[] sounds;
     public SpriteRenderer bg;
@@ -26,6 +30,7 @@ public class UIButton : MonoBehaviour
     public Board board;
     public int data = 0;
     public float floatData = 0;
+    public bool locked = false;
     public bool bounce = false;
 
     public enum ColorPreset
@@ -115,6 +120,22 @@ public class UIButton : MonoBehaviour
     {
         owner.GetComponent<CollectionMenu>().NewDeck();
     }
+    public void ConfirmDeck()
+    {
+        owner.GetComponent<CollectionMenu>().SaveDeck();
+    }
+    public void CollectionReturn()
+    {
+        owner.GetComponent<CollectionMenu>().Back();
+    }
+    public void DeleteDeck()
+    {
+        owner.GetComponent<CollectionMenu>().DeleteDeck();
+    }
+    public void NewDeckClass()
+    {
+        owner.GetComponent<CollectionMenu>().SelectNewClass(data);
+    }
     public void RestartScene()
     {
         board.RestartScene();
@@ -127,19 +148,14 @@ public class UIButton : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (bounce)
-        {
-            //Camera.main.GetComponentInChildren<AudioManager>().PlayUI_Randomized(sounds[0], 1, 1.2f);
-            //Camera.main.GetComponentInChildren<AudioManager>().PlayUI_Randomized(sounds[0],1.7f,1.9f);
-            StartCoroutine(bouncer());
-        }
-
+        StartCoroutine(bouncer());
+        
         switch (f)
         {
             default:
                 break;
         }
-    }
+    }   
     private void OnMouseExit()
     {
         switch (f)
@@ -161,12 +177,13 @@ public class UIButton : MonoBehaviour
     }
     private void OnMouseUpAsButton()
     {
+
         if (bounce)
         {
-            //Camera.main.GetComponentInChildren<AudioManager>().PlayUI_Randomized(sounds[0], 1.7f, 1.9f);
             StartCoroutine(bigBouncer(0.25f));
         }
-        //Invoke(f.ToString(), 0);
+        if (locked) return;
+
         switch (f)
         {
             case func.StartMatchmaking:
@@ -195,6 +212,18 @@ public class UIButton : MonoBehaviour
                 break;
             case func.NewDeck:
                 NewDeck();
+                break;
+            case func.ConfirmDeck:
+                ConfirmDeck();
+                break;
+            case func.CollectionReturn:
+                CollectionReturn();
+                break;
+            case func.DeleteDeck:
+                DeleteDeck();
+                break;
+            case func.NewDeckClass:
+                NewDeckClass();
                 break;
             default:
                 Debug.LogError("NO BUTTON FUNCTION");

@@ -170,6 +170,9 @@ public class Aura
             case Type.Southsea_Deckhand:
                 AuraEffects.Southsea_Deckhand(match, minion, this);
                 break;
+            case Type.Sorcerers_Apprentice:
+                AuraEffects.Sorcerers_Apprentice(match, minion, this);
+                break;
         }
     }
 

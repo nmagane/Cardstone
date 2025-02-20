@@ -49,6 +49,15 @@ public static class AuraEffects
                     match.server.AddCardAura(match, c, new Aura(Aura.Type.Cost, 1, false, true, sourceAura));
         }    
     }
+    public static void Sorcerers_Apprentice(Match match, Minion sourceMinion, Aura sourceAura)
+    {
+        Player owner = match.FindOwner(sourceMinion);
+
+        foreach (HandCard c in owner.hand)
+            if (c.SPELL)
+                match.server.AddCardAura(match, c, new Aura(Aura.Type.Cost, -1, false, true, sourceAura));
+            
+    }
 
     public static void Loatheb(Match match, Minion sourceMinion, Aura sourceAura)
     {

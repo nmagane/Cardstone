@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
+using TMPro;
 
 public class CollectionMenu : MonoBehaviour
 {
+    public GameObject listObject;
+
     public Board board;
 
     public List<Database.CardInfo> cardData = new();
@@ -14,10 +17,18 @@ public class CollectionMenu : MonoBehaviour
     public List<UIButton> deckButtons;
     public GameObject deckButtonAnchor;
     public GameObject cardPickerAnchor;
+    public GameObject classPickerAnchor;
+    public GameObject listAnchor;
     public SpriteRenderer cardpickerBG;
     public Card.Class currClass;
     public int currPage = 0;
+    public string currName = "DECK";
+    public TMP_Text headerText;
 
+    public UIButton confirmButton;
+    public UIButton deleteButton;
+
+    state currState = state.DeckSelect;
     enum state
     {
         DeckSelect,
@@ -27,7 +38,6 @@ public class CollectionMenu : MonoBehaviour
     public void Start()
     {
         GetData();
-        InitDecks();
 
         foreach (CardPicker p in pickers)
             p.cardObject.board = board;
@@ -47,23 +57,34 @@ public class CollectionMenu : MonoBehaviour
     }
     void SetState(state x)
     {
-        
+        currState = x;
+
+        cardPickerAnchor.transform.localScale = Vector3.zero;
+        deckButtonAnchor.transform.localScale = Vector3.zero;
+        confirmButton.transform.localScale = Vector3.zero;
+        deleteButton.transform.localScale = Vector3.zero;
+        classPickerAnchor.transform.localScale = Vector3.zero;
+        cardpickerBG.enabled = false;
         switch (x)
         {
             case state.DeckSelect:
-                cardPickerAnchor.transform.localScale = Vector3.zero;
                 deckButtonAnchor.transform.localScale = Vector3.one;
-                cardpickerBG.enabled = false;
+                headerText.text = "CHOOSE DECK";
+                InitDecks();
                 break;
             case state.NewSelect:
-                cardPickerAnchor.transform.localScale = Vector3.one;
-                deckButtonAnchor.transform.localScale = Vector3.zero;
-                cardpickerBG.enabled = false;
+                headerText.text = "CHOOSE CLASS";
+                classPickerAnchor.transform.localScale = Vector3.one;
                 break;
             case state.DeckEdit:
                 cardPickerAnchor.transform.localScale = Vector3.one;
-                deckButtonAnchor.transform.localScale = Vector3.zero;
-                cardpickerBG.enabled = true;
+                confirmButton.transform.localScale = Vector3.one;
+                deleteButton.transform.localScale = Vector3.one;
+                cardpickerBG.enabled = true; 
+                headerText.text = "EDIT DECK";
+                currPage = 0;
+                ShowCards(0);
+                CheckDeck();
                 break;
         }
     }
@@ -84,7 +105,6 @@ public class CollectionMenu : MonoBehaviour
 
         foreach (var c in cardData)
         {
-            Debug.Log(c.manaCost);
             if (c.classType == Card.Class.Neutral) neutralData.Add(c);
         }
     }
@@ -120,33 +140,166 @@ public class CollectionMenu : MonoBehaviour
             deckButtons[j].icon.sprite = null;
             deckButtons[j].text.text = "NEW";
             deckButtons[j].f = UIButton.func.NewDeck; 
-            deckButtons[i].owner = this;
+            deckButtons[j].owner = this;
             deckButtons[j].text.transform.localPosition = new Vector3(0, -0.125f);
             deckButtons[j].GetComponent<BoxCollider2D>().enabled = true;
         }
     }   
 
+    public void SaveDeck()
+    {
+        if (currDeckslot < board.saveData.decks.Count)
+        {
+            board.saveData.decks[currDeckslot].deckName = currName;
+            board.saveData.decks[currDeckslot].cards = new List<Card.Cardname>(cards);
+            board.saveData.decks[currDeckslot].classType = currClass;
+        }
+        else
+        {
+            board.saveData.decks.Add(new SaveManager.Decklist(currName, currClass, cards));
+        }
 
+        board.saveManager.SaveGame();
+        Back();
+    }
     public void NewDeck()
     {
+        if (board.saveData.decks.Count >= 8) return;
+        currDeckslot = board.saveData.decks.Count;
+        SetState(state.NewSelect);
+    }
+    public void SelectNewClass(int x)
+    {
+        Card.Class newClass = (Card.Class)x;
+        SetClass(newClass);
 
+        SetState(state.DeckEdit);
+    }
+    public void Back()
+    {
+        if (currState==state.DeckEdit||currState == state.NewSelect)
+        {
+            foreach (var x in listings)
+                Destroy(x.Value.gameObject);
+            listings.Clear();
+            cards.Clear();
+
+            SetState(state.DeckSelect);
+        }
+        else
+        {
+            //Close the menu, back to main menu.
+        }
+    }
+    Dictionary<Card.Cardname, ListCard> listings = new();
+
+    public void RemoveListing(Card.Cardname c)
+    {
+        if (cards.Contains(c) == false) return;
+        if (listings.ContainsKey(c) == false) return;
+
+        cards.Remove(c);
+
+        ListCard listing = listings[c];
+        listing.count--;
+
+        if (listing.count == 0)
+        {
+            listings.Remove(c);
+            Destroy(listing.gameObject);
+            SortListings();
+        }
+        else
+            listing.SetCount(listing.count);
+
+        CheckDeck();
     }
 
+    public void SortListings()
+    {
+        List<ListCard> list = new(listings.Values);
+        list.Sort((x, y) => x.manaCost.CompareTo(y.manaCost));
+        int i = 0;
+        foreach (var x in list)
+        {
+            x.transform.localPosition = new Vector3(0, -0.875f * i++);
+        }
+        listAnchor.transform.localScale = Vector3.one;
+        if (listings.Count > 16)
+            listAnchor.transform.localScale = Vector3.one * 0.9f;
+        if (listings.Count > 18)
+            listAnchor.transform.localScale = Vector3.one * 0.8f;
+        if (listings.Count > 20)
+            listAnchor.transform.localScale = Vector3.one * 0.7f;
+        if (listings.Count > 23)
+            listAnchor.transform.localScale = Vector3.one * 0.6f;
+        if (listings.Count > 27)
+            listAnchor.transform.localScale = Vector3.one * 0.5f;
+    }
+    public List<Card.Cardname> cards = new List<Card.Cardname>();
+    public void AddListing(Card.Cardname c)
+    {
+        if (cards.Count == 30) return;
+
+        if (listings.ContainsKey(c))
+        {
+            ListCard l = listings[c];
+            if (l.legendary) return;
+            if (l.count >= 2) return;
+            l.count++;
+            l.SetCount(l.count);
+            cards.Add(c);
+        }
+        else
+        {
+            ListCard newListing = Instantiate(listObject).GetComponent<ListCard>();
+            newListing.Set(Database.GetCardData(c));
+            newListing.card = c;
+            newListing.transform.parent = listAnchor.transform;
+            newListing.transform.localScale = Vector3.one;
+            newListing.transform.localPosition = new Vector3(0, -0.875f * listings.Count);
+            newListing.menu = this;
+
+            newListing.SetCount(1);
+            cards.Add(c);
+            listings.Add(c, newListing);
+            SortListings();
+        }
+        CheckDeck();
+    }
+    int currDeckslot = 0;
     public void SelectDeck(int x)
     {
         SaveManager.Decklist list = board.saveData.decks[x];
+        currDeckslot = x;
         currClass = list.classType;
+        currName = list.deckName;
         SetClass(list.classType);
 
+        foreach(Card.Cardname c in list.cards)
+        {
+            AddListing(c);
+        }
 
-        currPage = 0;
-        ShowCards(currPage);
         SetState(state.DeckEdit);
     }
+    public void DeleteDeck()
+    {
+        if (board.saveData.decks.Count<=currDeckslot)
+        {
+            Back();
+            return;
+        }
+        board.saveData.decks.RemoveAt(currDeckslot);
+        board.saveManager.SaveGame();
+        Back();
+    }
 
+    int maxPages = 0;
     public void ShowCards(int page)
     {
         float classPages = Mathf.Ceil(classData.Count / 8f);
+        maxPages = (int)classPages + (int)Mathf.Ceil(neutralData.Count / 8f) - 1;
         int start = page * 8;
         List<Database.CardInfo> cards;
         if (start < classData.Count)
@@ -176,8 +329,24 @@ public class CollectionMenu : MonoBehaviour
     }
     public void ChangePage(int i=0)
     {
-        currPage = Mathf.Max(currPage + i, 0);
+        currPage = Mathf.Clamp(currPage + i, 0,maxPages);
         ShowCards(currPage);
+    }
+
+    void CheckDeck()
+    {
+        if (cards.Count==30)
+        {
+            confirmButton.locked = false;
+            confirmButton.text.text = "CONFIRM";
+            confirmButton.SetColor(Board.GetColor("4A5462"));
+        }
+        else
+        {
+            confirmButton.locked = true;
+            confirmButton.text.text = $"{cards.Count}/30";
+            confirmButton.SetColor(Board.GetColor("B4202A"));
+        }
     }
 
 }

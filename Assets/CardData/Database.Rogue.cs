@@ -213,7 +213,7 @@ public partial class Database
         CardInfo c = new();
 
         c.name = "Tinker's Sharpsword Oil";
-        c.text = "Give your weapon +3 attack.\nCombo: Give a random friendly minion +3 attack.";
+        c.text = "Give your\nweapon +3 attack.\nCombo: Give a random friendly minion +3 attack.";
 
         c.classType = Card.Class.Rogue;
 
