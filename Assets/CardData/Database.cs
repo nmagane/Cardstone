@@ -32,6 +32,7 @@ public partial class Database
         public bool CHOOSE = false;
 
         public bool LEGENDARY = false;
+        public bool TOKEN = false;
 
         public Board.EligibleTargets eligibleTargets = Board.EligibleTargets.AllCharacters;
 
@@ -340,20 +341,6 @@ public partial class Database
             case Card.Cardname.Voidcaller:
                 return Voidcaller();
 
-            /*
-             *         Darkbomb,
-        Hellfire,
-        Shadowflame,
-        Siphon_Soul,
-
-        Zombie_Chow,
-        Blackwing_Technician,
-        Big_Game_Hunter,
-        Twilight_Drake,
-        Blackwing_Corruptor,
-        Sludge_Belcher,
-        Malygos,
-             */
             case Card.Cardname.Darkbomb:
                 return Darkbomb();
             case Card.Cardname.Hellfire:
@@ -382,9 +369,8 @@ public partial class Database
 
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
-                break;
+                return null;
         }
-        return info;
     }
 
     public static Card.Cardname GetClassSecret(Card.Class c)
@@ -461,6 +447,7 @@ public partial class Database
         c.manaCost = 0;
         c.SPELL = true;
         c.TARGETED = false;
+        c.TOKEN = true;
 
         return c;
     }
@@ -686,6 +673,7 @@ public partial class Database
 
         c.MINION = true;
         c.tribe = Card.Tribe.Mech;
+        c.TOKEN = true;
 
         return c;
     }
@@ -702,6 +690,7 @@ public partial class Database
         c.health = 5;
 
         c.MINION = true;
+        c.LEGENDARY = true;
 
         c.triggers.Add((Trigger.Type.EndTurn, Trigger.Side.Friendly, Trigger.Ability.Emperor_Thaurissan));
         return c;
@@ -766,6 +755,7 @@ public partial class Database
 
         c.MINION = true;
         c.BATTLECRY = true;
+        c.LEGENDARY = true;
         return c;
     }
     static CardInfo Crazed_Alchemist()
@@ -799,7 +789,6 @@ public partial class Database
 
         c.MINION = true;
 
-        c.auras.Add(Aura.Type.Stealth);
         return c;
     }
 
@@ -967,6 +956,7 @@ public partial class Database
         c.health = 1;
 
         c.MINION = true;
+        c.TOKEN = true;
 
         return c;
     }
@@ -1035,6 +1025,7 @@ public partial class Database
         c.health = 1;
 
         c.MINION = true;
+        c.TOKEN = true;
 
         c.triggers.Add((Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.Boom_Bot));
 
@@ -1157,6 +1148,7 @@ public partial class Database
         c.MINION = true;
         c.TARGETED = true;
         c.BATTLECRY = true;
+        c.LEGENDARY = true;
 
         return c;
     }
@@ -1204,6 +1196,7 @@ public partial class Database
         c.health = 1;
 
         c.MINION = true;
+        c.TOKEN = true;
 
         return c;
     }
@@ -1235,6 +1228,7 @@ public partial class Database
         c.health = 4;
 
         c.MINION = true;
+        c.TOKEN = true;
 
         return c;
     }
@@ -1362,6 +1356,7 @@ public partial class Database
         c.health = 2;
 
         c.MINION = true;
+        c.TOKEN = true;
 
         c.auras.Add(Aura.Type.Taunt);
 
@@ -1388,6 +1383,7 @@ public partial class Database
         c.auras.Add(Aura.Type.Spellpower);
         c.auras.Add(Aura.Type.Spellpower);
 
+        c.LEGENDARY = true;
         return c;
     }
 

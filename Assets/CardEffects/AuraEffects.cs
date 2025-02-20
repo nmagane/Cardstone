@@ -20,8 +20,8 @@ public static class AuraEffects
             {
                 continue;
             }
-            match.server.AddAura(match,m,new Aura(Aura.Type.Health, 2, false, true, sourceAura));
-            match.server.AddAura(match,m,new Aura(Aura.Type.Damage, 2, false, true, sourceAura));
+            match.server.AddAura(match,m,new Aura(Aura.Type.Health, 1, false, true, sourceAura));
+            match.server.AddAura(match,m,new Aura(Aura.Type.Damage, 1, false, true, sourceAura));
         }
     }
     public static void DireWolfAlpha(Match match, Minion sourceMinion, Aura sourceAura)

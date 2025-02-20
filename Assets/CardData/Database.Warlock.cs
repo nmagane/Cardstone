@@ -12,6 +12,7 @@
         c.SPELL = true;
         c.TARGETED = false;
         c.eligibleTargets = Board.EligibleTargets.FriendlyHero;
+        c.TOKEN = true;
 
         return c;
     }
@@ -115,6 +116,7 @@
         c.tribe = Card.Tribe.Demon;
 
         c.MINION = true;
+        c.TOKEN = true;
 
         return c;
     }

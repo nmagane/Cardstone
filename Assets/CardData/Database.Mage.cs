@@ -17,6 +17,7 @@ public partial class Database
 
         c.SPELL = true;
         c.TARGETED = true;
+        c.TOKEN = true;
 
         return c;
     }
@@ -33,6 +34,7 @@ public partial class Database
 
         c.SPELL = true;
         c.SECRET = true;
+        c.TOKEN = true;
 
         return c;
     }
@@ -228,6 +230,7 @@ public partial class Database
         c.health = 7;
 
         c.MINION = true;
+        c.LEGENDARY = true;
 
         c.triggers.Add((Trigger.Type.OnPlaySpell, Trigger.Side.Friendly, Trigger.Ability.Archmage_Antonidas));
         return c;

@@ -13,6 +13,7 @@
 
         c.SPELL = true;
         c.SECRET = true;
+        c.TOKEN = true;
 
         return c;
     }

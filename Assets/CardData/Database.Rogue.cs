@@ -48,6 +48,7 @@ public partial class Database
 
         c.SPELL = true;
         c.TARGETED = false;
+        c.TOKEN = true;
 
         return c;
     }
@@ -65,6 +66,7 @@ public partial class Database
         c.health = 2;
 
         c.WEAPON = true;
+        c.TOKEN = true;
 
         return c;
     }
