@@ -14,6 +14,7 @@ public class CollectionMenu : MonoBehaviour
     public List<UIButton> deckButtons;
     public GameObject deckButtonAnchor;
     public GameObject cardPickerAnchor;
+    public SpriteRenderer cardpickerBG;
     public Card.Class currClass;
     public int currPage = 0;
 
@@ -23,26 +24,51 @@ public class CollectionMenu : MonoBehaviour
         NewSelect,
         DeckEdit,
     }
-
-    void SetState(state x)
-    {
-        switch (x)
-        {
-            case state.DeckSelect:
-                break;
-            case state.NewSelect:
-                break;
-            case state.DeckEdit:
-                break;
-        }
-    }
-
     public void Start()
     {
         GetData();
         InitDecks();
+
+        foreach (CardPicker p in pickers)
+            p.cardObject.board = board;
+
         SetState(state.DeckSelect);
     }
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            ChangePage(1);
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            ChangePage(-1);
+        }
+    }
+    void SetState(state x)
+    {
+        
+        switch (x)
+        {
+            case state.DeckSelect:
+                cardPickerAnchor.transform.localScale = Vector3.zero;
+                deckButtonAnchor.transform.localScale = Vector3.one;
+                cardpickerBG.enabled = false;
+                break;
+            case state.NewSelect:
+                cardPickerAnchor.transform.localScale = Vector3.one;
+                deckButtonAnchor.transform.localScale = Vector3.zero;
+                cardpickerBG.enabled = false;
+                break;
+            case state.DeckEdit:
+                cardPickerAnchor.transform.localScale = Vector3.one;
+                deckButtonAnchor.transform.localScale = Vector3.zero;
+                cardpickerBG.enabled = true;
+                break;
+        }
+    }
+
+
     public void GetData()
     {
         for (int i = 1; i < (int)Card.Cardname._COUNT; i++)
@@ -80,7 +106,9 @@ public class CollectionMenu : MonoBehaviour
         foreach (SaveManager.Decklist list in board.saveData.decks)
         {
             deckButtons[i].icon.sprite = deckSprites[(int)list.classType];
-            deckButtons[i].text.text = list.deckName;
+            deckButtons[i].text.text = list.deckName; 
+            deckButtons[i].f = UIButton.func.EditDeck;
+            deckButtons[i].owner = this;
             deckButtons[i].GetComponent<BoxCollider2D>().enabled = true;
             deckButtons[i].text.transform.localPosition = new Vector3(0, -1.6f);
 
@@ -91,6 +119,8 @@ public class CollectionMenu : MonoBehaviour
         {
             deckButtons[j].icon.sprite = null;
             deckButtons[j].text.text = "NEW";
+            deckButtons[j].f = UIButton.func.NewDeck; 
+            deckButtons[i].owner = this;
             deckButtons[j].text.transform.localPosition = new Vector3(0, -0.125f);
             deckButtons[j].GetComponent<BoxCollider2D>().enabled = true;
         }
@@ -116,23 +146,38 @@ public class CollectionMenu : MonoBehaviour
 
     public void ShowCards(int page)
     {
-        int classPages = classData.Count / 8;
-        int i = page * 8;
+        float classPages = Mathf.Ceil(classData.Count / 8f);
+        int start = page * 8;
         List<Database.CardInfo> cards;
-        if (i < classPages)
+        if (start < classData.Count)
         {
             cards = classData;
         }
         else
+        {
+            start = (page - (int)classPages) * 8;
             cards = neutralData;
+        }
 
         int ind = 0;
-        for (i=i+0;i<8;i++)
+        for (int i=start;i<start+8;i++)
         {
+            if (i >= cards.Count)
+            {
+                for (int x = ind;x<8;x++)
+                {
+                    pickers[x].transform.localScale = Vector3.zero;
+                }
+                break;
+            }
             pickers[ind].Set(cards[i]);
             ind++;
         }
-
+    }
+    public void ChangePage(int i=0)
+    {
+        currPage = Mathf.Max(currPage + i, 0);
+        ShowCards(currPage);
     }
 
 }

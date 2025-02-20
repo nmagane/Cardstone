@@ -735,7 +735,7 @@ public partial class Database
         c.name = "Stormwind Champion";
         c.text = "Ally minions have +1/+1";
 
-        c.manaCost = 1;
+        c.manaCost = 6;
         c.damage = 6;
         c.health = 6;
 
@@ -800,7 +800,7 @@ public partial class Database
         c.name = "Ogre Magi";
         c.text = "+1 Spellpower.";
 
-        c.manaCost = 1;
+        c.manaCost = 4;
         c.damage = 4;
         c.health = 4;
 

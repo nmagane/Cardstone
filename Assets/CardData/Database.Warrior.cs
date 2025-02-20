@@ -13,6 +13,7 @@
 
         c.SPELL = true;
         c.TARGETED = false;
+        c.TOKEN = true;
         return c;
     }
 

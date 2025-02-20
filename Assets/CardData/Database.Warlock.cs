@@ -126,7 +126,7 @@
 
         c.classType = Card.Class.Warlock;
         c.name = "Imp Gang Boss";
-        c.text = "Whenever this minoin takes damage, summon a 1/1 Imp.";
+        c.text = "Whenever this minion takes damage, summon a 1/1 Imp.";
 
         c.manaCost = 3;
         c.damage = 2;

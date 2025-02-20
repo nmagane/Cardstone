@@ -37,6 +37,8 @@ NOTE: millhouse/loatheb etc are currently set to minion costs for testing instea
 
 refactor hasaura(taunt / stealth)
 
+change button gfx to not be fishlike
+
 Mechanics for next-next demo:
 = Secret removal without trigger (Flare)
 = Overload

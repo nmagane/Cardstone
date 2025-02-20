@@ -73,7 +73,7 @@ public static class AuraEffects
         Player owner = match.FindOwner(sourceMinion);
 
         foreach (HandCard c in owner.hand)
-            if (c.MINION)
+            if (c.SPELL)
                 match.server.AddCardAura(match, c, new Aura(Aura.Type.SetCost, 0, false, true, sourceAura));
 
     }
