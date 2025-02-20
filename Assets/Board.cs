@@ -7,6 +7,8 @@ using TMPro;
 public partial class Board : MonoBehaviour
 {
     public AnimationManager animationManager;
+    public SaveManager saveManager;
+    public SaveManager.GameSave saveData => saveManager.saveData;
     public Mainmenu mainmenu;
     public GameObject gameAnchor;   
     public UIButton mulliganButton;
@@ -28,8 +30,7 @@ public partial class Board : MonoBehaviour
     public GameObject splashObject;
 
     public ulong playerID = 100;
-    public Card.Class currClass = Card.Class.Warlock;
-    public List<Card.Cardname> currDecklist;
+    public SaveManager.Decklist currDecklist;
     public string playerName = "Player";
     public ulong currentMatchID;
 
@@ -752,7 +753,7 @@ public partial class Board : MonoBehaviour
 #if (UNITY_EDITOR)
         if (Input.GetKeyDown(KeyCode.Q) && playerID!=101)
         {
-            StartMatchmaking(Database.Freeze_Mage, currClass);
+            StartMatchmaking(new SaveManager.Decklist("zoo",Card.Class.Warlock,Database.Zoo_Lock));
         }
         if (Input.GetKeyDown(KeyCode.A) && playerID!=101)
         {
@@ -765,7 +766,7 @@ public partial class Board : MonoBehaviour
         //===============================
         if (Input.GetKeyDown(KeyCode.W) && playerID==101)
         {
-            StartMatchmaking(Database.Patron_Warrior,currClass);
+            StartMatchmaking(new SaveManager.Decklist("patron", Card.Class.Warrior, Database.Patron_Warrior));
         }
         if (Input.GetKeyDown(KeyCode.S) && playerID==101)
         {

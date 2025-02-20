@@ -12,23 +12,33 @@ public class Mainmenu : MonoBehaviour
 
     public UIButton findMatchButton;
     public UIButton resetButton;
-    public void Awake()
+    public void Start()
     {
         findMatchButton.board = resetButton.board = board;
-        if (PlayerPrefs.HasKey("name"))
+        SetPlayerID();
+        InitDecks();
+    }
+
+    public Sprite[] deckSprites;
+
+    public void InitDecks()
+    {
+        board.playerName = board.saveData.playerName;
+        int i = 0;
+        foreach(SaveManager.Decklist list in board.saveData.decks)
         {
-            string s = PlayerPrefs.GetString("name");
-            textbox.SetTextWithoutNotify(s);
-            SetPlayerID();
+            deckButtons[i].icon.sprite = deckSprites[(int)list.classType];
+            deckButtons[i].text.text = list.deckName;
+            deckButtons[i].GetComponent<BoxCollider2D>().enabled = true;
+
+            i++;
+            if (i > 7) break;
         }
-        if (PlayerPrefs.HasKey("deck"))
+        for (int j=i; j<8; j++)
         {
-            int d = PlayerPrefs.GetInt("deck");
-            SetDeck(d);
-        }
-        else
-        {
-            SetDeck(0);
+            deckButtons[j].icon.sprite = null;
+            deckButtons[j].text.text = "";
+            deckButtons[j].GetComponent<BoxCollider2D>().enabled = false;
         }
     }
 
@@ -38,12 +48,13 @@ public class Mainmenu : MonoBehaviour
         long t = time.ToFileTimeUtc();
         board.playerID = (ulong)t;
         board.playerName = textbox.text;
-        PlayerPrefs.SetString("name", board.playerName);
+        board.saveData.playerName = textbox.text;
 
         if (textbox.text == "")
         {
             board.playerName = "Player";
         }
+        board.saveManager.SaveGame();
     }
 
     public void StartMatchmaking()
@@ -61,7 +72,7 @@ public class Mainmenu : MonoBehaviour
         inQueue = true;
         textbox.enabled = false;
         findMatchButton.text.text = "IN QUEUE";
-        board.StartMatchmaking(board.currDecklist,board.currClass);
+        board.StartMatchmaking(board.currDecklist);
     }
 
 
@@ -70,6 +81,7 @@ public class Mainmenu : MonoBehaviour
     public void ConfirmConnection()
     {
         findMatchButton.transform.localScale = Vector3.one;
+        textbox.transform.localScale = Vector3.one;
         connectedContainer.transform.localScale = Vector3.one;
         disconnectedContainer.transform.localScale = Vector3.zero;
     }
@@ -77,21 +89,17 @@ public class Mainmenu : MonoBehaviour
     public void ConfirmDisconnect()
     {
         findMatchButton.transform.localScale = Vector3.zero;
+        textbox.transform.localScale = Vector3.zero;
         connectedContainer.transform.localScale = Vector3.zero;
         disconnectedContainer.transform.localScale = Vector3.one;
     }
 
-    public enum PresetDeck
-    {
-        Zoo,
-        Oil,
-        Patron,
-        Freeze,
-    }
-    public PresetDeck selectedDeck = PresetDeck.Zoo;
+
+    public int selectedDeck = 0;
     public List<UIButton> deckButtons;
     public void SetDeck(int x)
     {
+        Debug.Log("selected " + x);
         if (inQueue)
         {
             StartMatchmaking();
@@ -100,28 +108,9 @@ public class Mainmenu : MonoBehaviour
         {
             b.SetColor(new Color(0.2901961f, 0.3294118f, 0.3843138f));
         }
-        PresetDeck d = (PresetDeck)x;
-        selectedDeck = d;
+        selectedDeck = x;
+        board.saveManager.SelectDeck(x);
         deckButtons[x].SetColor(new Color(0.1019608f, 0.4784314f, 0.2431373f));
-        PlayerPrefs.SetInt("deck", x);
-        switch (d)
-        {
-            case PresetDeck.Zoo:
-                board.currDecklist = Database.Zoo_Lock;
-                board.currClass = Card.Class.Warlock;
-                break;
-            case PresetDeck.Oil:
-                board.currDecklist = Database.Oil_Rogue;
-                board.currClass = Card.Class.Rogue;
-                break;
-            case PresetDeck.Patron:
-                board.currDecklist = Database.Patron_Warrior;
-                board.currClass = Card.Class.Warrior;
-                break;
-            case PresetDeck.Freeze:
-                board.currDecklist = Database.Freeze_Mage;
-                board.currClass = Card.Class.Mage;
-                break;
-        }
+
     }
 }

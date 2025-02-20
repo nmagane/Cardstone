@@ -12,15 +12,15 @@ public partial class Board
         }
         return ints;
     }
-    public void StartMatchmaking(List<Card.Cardname> deck = null, Card.Class classType = Card.Class.Warlock)
+    public void StartMatchmaking(SaveManager.Decklist list)
     {
         Server.CustomMessage message = CreateMessage(Server.MessageType.Matchmaking);
         message.AddULong(playerID);
         message.AddString(playerName);
 
-        message.AddInts(GetDeckList(deck));
+        message.AddInts(GetDeckList(list.cards));
 
-        message.AddInt((int)classType);
+        message.AddInt((int)list.classType);
         //client.Send(message);
         SendMessage(message, true);
     }

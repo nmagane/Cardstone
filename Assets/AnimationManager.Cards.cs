@@ -467,7 +467,7 @@ public partial class AnimationManager
         Spin(p, targetPos.x < p.transform.localPosition.x ? 5 : -5);
         yield return LerpTo(p, targetPos, frames);
         Destroy(p.gameObject);
-        for (int i=0;i<20;i++)
+        for (int i=0;i<15;i++)
         {
             CreateParticle(targetPos, effect);
         }
@@ -486,7 +486,7 @@ public partial class AnimationManager
         Spin(p, targetPos.x < p.transform.localPosition.x ? 5 : -5);
         yield return LerpTo(p, targetPos, 10);
         Destroy(p.gameObject);
-        for (int i=0;i<20;i++)
+        for (int i=0;i<15;i++)
         {
             CreateParticle(targetPos, effect);
         }

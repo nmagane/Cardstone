@@ -57,7 +57,7 @@ next decks to implement:
 	
 - DECK EDITOR
 
-- rope
+- rope (chess timer?)
 - weapon class colors?
 
 ====================================
