@@ -14,6 +14,8 @@ public class UIButton : MonoBehaviour
         Concede,
         Menu,
         SelectDeck,
+        EditDeck,
+        NewDeck,
     }
     public AudioClip[] sounds;
     public SpriteRenderer bg;
@@ -105,6 +107,14 @@ public class UIButton : MonoBehaviour
     {
         owner.GetComponent<Mainmenu>().SetDeck(data);
     }
+    public void EditDeck()
+    {
+        owner.GetComponent<CollectionMenu>().SelectDeck(data);
+    }
+    public void NewDeck()
+    {
+        owner.GetComponent<CollectionMenu>().NewDeck();
+    }
     public void RestartScene()
     {
         board.RestartScene();
@@ -179,6 +189,12 @@ public class UIButton : MonoBehaviour
                 break;
             case func.SelectDeck:
                 SelectDeck();
+                break;
+            case func.EditDeck:
+                EditDeck();
+                break;
+            case func.NewDeck:
+                NewDeck();
                 break;
             default:
                 Debug.LogError("NO BUTTON FUNCTION");

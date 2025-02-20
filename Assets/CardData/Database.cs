@@ -11,6 +11,7 @@ public partial class Database
         public string name="UNDEFINED CARD";
         public string text="UNDEFINED CARD";
 
+        public Card.Cardname cardname = Card.Cardname.Cardback;
         public Card.Class classType = Card.Class.Neutral;
         public Card.Tribe tribe = Card.Tribe.None;
 

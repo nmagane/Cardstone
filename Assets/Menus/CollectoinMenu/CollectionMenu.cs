@@ -1,18 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
 public class CollectionMenu : MonoBehaviour
 {
+    public Board board;
+
     public List<Database.CardInfo> cardData = new();
     public List<Database.CardInfo> classData = new();
     public List<Database.CardInfo> neutralData = new();
     public List<CardPicker> pickers;
-
-    
-
+    public List<UIButton> deckButtons;
+    public GameObject deckButtonAnchor;
+    public GameObject cardPickerAnchor;
     public Card.Class currClass;
+    public int currPage = 0;
 
+    enum state
+    {
+        DeckSelect,
+        NewSelect,
+        DeckEdit,
+    }
+
+    void SetState(state x)
+    {
+        switch (x)
+        {
+            case state.DeckSelect:
+                break;
+            case state.NewSelect:
+                break;
+            case state.DeckEdit:
+                break;
+        }
+    }
+
+    public void Start()
+    {
+        GetData();
+        InitDecks();
+        SetState(state.DeckSelect);
+    }
     public void GetData()
     {
         for (int i = 1; i < (int)Card.Cardname._COUNT; i++)
@@ -20,6 +50,7 @@ public class CollectionMenu : MonoBehaviour
             var c = Database.GetCardData((Card.Cardname)i);
             if (c == null) continue;
             if (c.TOKEN) continue;
+            c.cardname = (Card.Cardname)i;
             cardData.Add(c);
         }
 
@@ -41,12 +72,67 @@ public class CollectionMenu : MonoBehaviour
             if (c.classType == hero) classData.Add(c);
     }
 
-    private void Update()
+    public Sprite[] deckSprites => board.mainmenu.deckSprites;
+
+    public void InitDecks()
     {
-        if (Input.GetKeyDown(KeyCode.K))
+        int i = 0;
+        foreach (SaveManager.Decklist list in board.saveData.decks)
         {
-            GetData();
+            deckButtons[i].icon.sprite = deckSprites[(int)list.classType];
+            deckButtons[i].text.text = list.deckName;
+            deckButtons[i].GetComponent<BoxCollider2D>().enabled = true;
+            deckButtons[i].text.transform.localPosition = new Vector3(0, -1.6f);
+
+            i++;
+            if (i > 7) break;
         }
+        for (int j = i; j < 8; j++)
+        {
+            deckButtons[j].icon.sprite = null;
+            deckButtons[j].text.text = "NEW";
+            deckButtons[j].text.transform.localPosition = new Vector3(0, -0.125f);
+            deckButtons[j].GetComponent<BoxCollider2D>().enabled = true;
+        }
+    }   
+
+
+    public void NewDeck()
+    {
+
+    }
+
+    public void SelectDeck(int x)
+    {
+        SaveManager.Decklist list = board.saveData.decks[x];
+        currClass = list.classType;
+        SetClass(list.classType);
+
+
+        currPage = 0;
+        ShowCards(currPage);
+        SetState(state.DeckEdit);
+    }
+
+    public void ShowCards(int page)
+    {
+        int classPages = classData.Count / 8;
+        int i = page * 8;
+        List<Database.CardInfo> cards;
+        if (i < classPages)
+        {
+            cards = classData;
+        }
+        else
+            cards = neutralData;
+
+        int ind = 0;
+        for (i=i+0;i<8;i++)
+        {
+            pickers[ind].Set(cards[i]);
+            ind++;
+        }
+
     }
 
 }
