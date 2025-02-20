@@ -183,6 +183,7 @@ public class Card : MonoBehaviour
         Sludge_Belcher,
         Putrid_Slime,
         Malygos,
+        _COUNT,
     }
 
     public enum Class

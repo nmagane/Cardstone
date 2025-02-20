@@ -65,6 +65,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8709024584219201963}
     m_Modifications:
+    - target: {fileID: 2670244061852006825, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
+      propertyPath: elevation
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 4505397687313927827, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
       propertyPath: m_Name
       value: Card
