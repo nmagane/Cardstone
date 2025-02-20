@@ -31,6 +31,8 @@ public partial class Database
         public bool COMBO_TARGETED = false; //for cards that are only targeted when combo is active (SI7)
         public bool CHOOSE = false;
 
+        public bool LEGENDARY = false;
+
         public Board.EligibleTargets eligibleTargets = Board.EligibleTargets.AllCharacters;
 
         public List<Aura.Type> auras = new List<Aura.Type>();
@@ -337,6 +339,46 @@ public partial class Database
 
             case Card.Cardname.Voidcaller:
                 return Voidcaller();
+
+            /*
+             *         Darkbomb,
+        Hellfire,
+        Shadowflame,
+        Siphon_Soul,
+
+        Zombie_Chow,
+        Blackwing_Technician,
+        Big_Game_Hunter,
+        Twilight_Drake,
+        Blackwing_Corruptor,
+        Sludge_Belcher,
+        Malygos,
+             */
+            case Card.Cardname.Darkbomb:
+                return Darkbomb();
+            case Card.Cardname.Hellfire:
+                return Hellfire();
+            case Card.Cardname.Shadowflame:
+                return Shadowflame();
+            case Card.Cardname.Siphon_Soul:
+                return Siphon_Soul();
+             
+            case Card.Cardname.Zombie_Chow:
+                return Zombie_Chow();
+            case Card.Cardname.Blackwing_Technician:
+                return Blackwing_Technician();
+            case Card.Cardname.Blackwing_Corruptor:
+                return Blackwing_Corruptor();
+            case Card.Cardname.Twilight_Drake:
+                return Twilight_Drake();
+            case Card.Cardname.Big_Game_Hunter:
+                return Big_Game_Hunter();
+            case Card.Cardname.Sludge_Belcher:
+                return Sludge_Belcher();
+            case Card.Cardname.Putrid_Slime:
+                return Putrid_Slime();
+            case Card.Cardname.Malygos:
+                return Malygos();
 
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
@@ -1193,6 +1235,158 @@ public partial class Database
         c.health = 4;
 
         c.MINION = true;
+
+        return c;
+    }
+
+    private static CardInfo Zombie_Chow()
+    {
+        CardInfo c = new();
+
+        c.name = "Zombie Chow";
+        c.text = "Deathrattle: Restore 5 health to enemy hero.";
+
+        c.manaCost = 1;
+        c.damage = 2;
+        c.health = 3;
+
+        c.MINION = true;
+
+        c.triggers.Add((Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.Zombie_Chow));
+        return c;
+    }
+
+    private static CardInfo Blackwing_Technician()
+    {
+        CardInfo c = new();
+
+        c.name = "Blackwing Technician";
+        c.text = "Battlecry: If you're holding a dragon, gain +1/+1.";
+
+        c.manaCost = 3;
+        c.damage = 2;
+        c.health = 4;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+
+        c.cardAuras.Add(Aura.Type.HoldingDragon);
+        return c;
+    }
+    
+    private static CardInfo Twilight_Drake()
+    {
+        CardInfo c = new();
+
+        c.name = "Twilight Drake";
+        c.text = "Battlecry: Gain +1 Health for each card in your hand.";
+
+        c.manaCost = 4;
+        c.damage = 4;
+        c.health = 1;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+
+        c.tribe = Card.Tribe.Dragon;
+
+        return c;
+    }
+    
+    private static CardInfo Blackwing_Corruptor()
+    {
+        CardInfo c = new();
+
+        c.name = "Blackwing Corruptor";
+        c.text = "Battlecry: If you're holding a dragon, deal 5 damage.";
+
+        c.manaCost = 5;
+        c.damage = 5;
+        c.health = 4;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+
+        c.cardAuras.Add(Aura.Type.HoldingDragonTargeted);
+
+        return c;
+    }
+
+    public static CardInfo Big_Game_Hunter()
+    {
+        CardInfo c = new();
+
+        c.name = "Big Game Hunter";
+        c.text = "Battlecry: Destroy a minion with 7 or more attack.";
+
+        c.manaCost = 3;
+        c.damage = 4;
+        c.health = 2;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+        c.TARGETED = true;
+        c.eligibleTargets = Board.EligibleTargets.Big_Game_Hunter;
+
+        return c;
+    }
+    
+    private static CardInfo Sludge_Belcher()
+    {
+        CardInfo c = new();
+
+        c.name = "Sludge Belcher";
+        c.text = "Taunt.\nDeathrattle: Summon a 1/2 Slime with Taunt.";
+
+        c.manaCost = 5;
+        c.damage = 3;
+        c.health = 5;
+
+        c.MINION = true;
+
+        c.auras.Add(Aura.Type.Taunt);
+
+        c.triggers.Add((Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.Sludge_Belcher));
+
+        return c;
+    }
+    private static CardInfo Putrid_Slime()
+    {
+        CardInfo c = new();
+
+        c.name = "Putrid Slime";
+        c.text = "Taunt";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 2;
+
+        c.MINION = true;
+
+        c.auras.Add(Aura.Type.Taunt);
+
+        return c;
+    }
+    
+    private static CardInfo Malygos()
+    {
+        CardInfo c = new();
+
+        c.name = "Malygos";
+        c.text = "+5 Spellpower.";
+
+        c.manaCost = 9;
+        c.damage = 4;
+        c.health = 12;
+
+        c.MINION = true;
+        c.tribe = Card.Tribe.Dragon;
+
+        c.auras.Add(Aura.Type.Spellpower);
+        c.auras.Add(Aura.Type.Spellpower);
+        c.auras.Add(Aura.Type.Spellpower);
+        c.auras.Add(Aura.Type.Spellpower);
+        c.auras.Add(Aura.Type.Spellpower);
 
         return c;
     }

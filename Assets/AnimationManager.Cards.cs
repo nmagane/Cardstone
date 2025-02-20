@@ -49,6 +49,8 @@ public partial class AnimationManager
         potionBlue,
         potionLight,
         bomb,
+
+        boom_shadow,
     }
     public Sprite[] effectSprites;
     GameObject CreateEffect(Effect e)
@@ -151,6 +153,8 @@ public partial class AnimationManager
 
             case Card.Cardname.Flame_Imp:
                 return StartCoroutine(Simple_Projectile(data,Effect.fireballSmall,12,5));
+            case Card.Cardname.Big_Game_Hunter:
+                return StartCoroutine(Simple_Projectile(data,Effect.brownSmall,12,5));
 
             case Card.Cardname.Ping:
                 return StartCoroutine(Ping(data));
@@ -163,6 +167,9 @@ public partial class AnimationManager
                 return StartCoroutine(Simple_Projectile(data, Effect.greenSmall, 12, 10));
             case Card.Cardname.Implosion:
                 return StartCoroutine(Simple_Projectile(data, Effect.greenBig, 12, 12));
+
+            case Card.Cardname.Blackwing_Corruptor:
+                return StartCoroutine(Simple_Projectile(data, Effect.greenBig, 5, 10));
 
             case Card.Cardname.Ice_Lance:
                 return StartCoroutine(Simple_Projectile(data, Effect.frostSmall, 12, 10));
@@ -195,7 +202,10 @@ public partial class AnimationManager
                 return StartCoroutine(RageEffect(data));
 
             case Card.Cardname.Unstable_Ghoul:
+            case Card.Cardname.Hellfire:
                 return StartCoroutine(Boom(data,Effect.boom));
+            case Card.Cardname.Shadowflame:
+                return StartCoroutine(Boom(data,Effect.boom_shadow));
 
             case Card.Cardname.Frost_Nova:
                 return StartCoroutine(Boom(data,Effect.boomFrost));
@@ -214,6 +224,7 @@ public partial class AnimationManager
                 return StartCoroutine(PotionProjectile(data,Effect.potionBlue));
 
             case Card.Cardname.Boom_Bot:
+            case Card.Cardname.Darkbomb:
                 return StartCoroutine(PotionProjectile(data,Effect.bomb,20));
 
             case Card.Cardname.Fan_of_Knives:
@@ -221,6 +232,9 @@ public partial class AnimationManager
 
             case Card.Cardname.Alexstrasza:
                 return StartCoroutine(AlexEffect(data));
+
+            case Card.Cardname.Siphon_Soul:
+                return StartCoroutine(Siphon_Soul(data));
             default:
                 Debug.LogWarning("Animation Unimplemented? " + data.card);
                 return null;
@@ -316,6 +330,31 @@ public partial class AnimationManager
         slash.transform.localScale = Vector3.one * 1.25f;
         BounceZoom(slash, 0.1f);
         SpriteFade(slash, 8,5);
+        Destroy(p.gameObject);
+    }
+    IEnumerator Siphon_Soul(AnimationData data)
+    {
+        GameObject p = CreateEffect(Effect.fireballBig);
+
+        p.transform.localPosition = data.GetTargetPos();
+        Vector3 targetPos = data.GetSourcePos();
+        p.transform.localScale = Vector3.zero;
+        List<Effect> smokes = new List<Effect>() { Effect.particle1, Effect.particle2, Effect.particleCross };
+        int f = 20;
+        LerpTo(p, targetPos, f,0,true);
+        for (int i=0;i<f;i++)
+        {
+            GameObject s = CreateEffect(Board.RandElem(smokes));
+            s.transform.position = p.transform.position + new Vector3(Random.Range(-0.5f,0.5f), Random.Range(-0.1f, 0.1f));
+            s.transform.localScale = Vector3.one*1.5f;
+            s.GetComponentInChildren<SpriteRenderer>().color = Board.GetColor("14A02E");
+            LerpZoom(s, Vector3.zero, 10);
+            Spin(s, Random.Range(-5, 5));
+            SpriteFade(s, 10);
+            yield return null;
+        }
+
+        yield return Wait(5);
         Destroy(p.gameObject);
     }
 
@@ -536,4 +575,5 @@ public partial class AnimationManager
         LerpTo(p, targetPos, 45);
         SpriteFade(p, 20,5);
     }
+
 }

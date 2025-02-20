@@ -97,7 +97,8 @@ public partial class Board
 
         DamagedMinions,
         HealthyMinions,
-        Mech,
+        MechMinions,
+        Big_Game_Hunter,
     }
 
     public void TargetMinion(Minion minion)
@@ -287,6 +288,12 @@ public partial class Board
             if (m.health < m.maxHealth) return true;
             else return false;
         }
+
+        if (eligibleTargets == EligibleTargets.Big_Game_Hunter)
+        {
+            if (m.damage >= 7) return true;
+            else return false;
+        }
         return false;
 
     }
@@ -313,7 +320,7 @@ public partial class Board
             return IsFriendly(h);
         if (eligibleTargets == EligibleTargets.EnemyHero)
             return !IsFriendly(h);
-        if (eligibleTargets == EligibleTargets.FriendlyMinions || eligibleTargets == EligibleTargets.EnemyMinions || eligibleTargets == EligibleTargets.AllMinions)
+        if (eligibleTargets.ToString().Contains("Minions") || eligibleTargets == EligibleTargets.Big_Game_Hunter)
             return false;
         return false;
     }
@@ -348,6 +355,16 @@ public partial class Board
                 foreach(Minion m in enemyMinions)
                 {
                     if (m.health < m.maxHealth) return true;
+                }
+                return false;
+            case EligibleTargets.Big_Game_Hunter:
+                foreach(Minion m in currMinions)
+                {
+                    if (m.damage >= 7) return true;
+                }
+                foreach(Minion m in enemyMinions)
+                {
+                    if (m.damage >= 7) return true;
                 }
                 return false;
             default:

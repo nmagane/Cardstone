@@ -30,6 +30,10 @@ public class UIButton : MonoBehaviour
     {
         grey,
         black,
+
+        ActionAvailable,
+        NoActions,
+
     }
 
     void Start()
@@ -37,8 +41,9 @@ public class UIButton : MonoBehaviour
         SetColor(bg.color);
         buttonSize = GetComponent<BoxCollider2D>().size;
     }
-    public void SetColor(ColorPreset c)
+    public void SetColor(ColorPreset c, bool bounce = false)
     {
+        Color x = bg.color;
         switch (c)
         {
             case ColorPreset.grey:
@@ -47,15 +52,30 @@ public class UIButton : MonoBehaviour
             case ColorPreset.black:
                 SetColor(new Color(0.23f, 0.23f, 0.23f));
                 break;
+            case ColorPreset.ActionAvailable:
+                bg.color = Board.GetColor("BB7547");
+                text.color = Board.GetColor("DBA463");
+                break;
+            case ColorPreset.NoActions:
+                bg.color = Board.GetColor("1A7A3E");
+                text.color = Board.GetColor("59C135");
+                break;
         }
+        if (bounce && bg.color != x)
+            StartCoroutine(bigBouncer());
     }
-    public void SetColor(Color c)
+    public void SetColor(Color c, bool bounce=false)
     {
+        Color x = bg.color;
+
         float H, S, V;
         Color.RGBToHSV(c, out H, out S, out V);
         bg.color = c;
         //icon.color = Color.HSVToRGB(H, S, V + 0.25f);
         text.color = Color.HSVToRGB(H, S, V + 0.25f);
+
+        if (bounce && bg.color != x)
+            StartCoroutine(bigBouncer());
     }
 
     public void SubmitMulligan()

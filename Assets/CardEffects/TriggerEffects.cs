@@ -282,6 +282,13 @@ public class TriggerEffects
         match.server.SummonToken(match, trigger.minion.player, c.card);
     }
 
-    
+    public static void Sludge_Belcher(Match match, Trigger trigger)
+    {
+        match.server.SummonToken(match, trigger.minion.player, Card.Cardname.Putrid_Slime, trigger.minion.index);
+    }
+    public static void Zombie_Chow(Match match, Trigger trigger)
+    {
+        match.server.HealFace(match, trigger.player.opponent, 5);
+    }
 
 }

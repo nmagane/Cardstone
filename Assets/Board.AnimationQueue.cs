@@ -192,6 +192,7 @@ public partial class Board
         currMinions.server = enemyMinions.server = false;
         currTurn = message.isFriendly;
         if (mulliganBG!=null) animationManager.SpriteFade(mulliganBG.gameObject, 10);
+        CheckHighlights();
         return null;
     }
     Coroutine EndGameVisual(VisualInfo message)

@@ -101,6 +101,9 @@ public class Trigger
         Haunted_Creeper,
         Nerubian_Egg,
         Voidcaller,
+
+        Zombie_Chow,
+        Sludge_Belcher,
     }
     public enum Side
     {
@@ -232,6 +235,13 @@ public class Trigger
                 break;
             case Ability.Voidcaller:
                 TriggerEffects.Voidcaller(match, this);
+                break;
+
+            case Ability.Zombie_Chow:
+                TriggerEffects.Zombie_Chow(match, this);
+                break;
+            case Ability.Sludge_Belcher:
+                TriggerEffects.Sludge_Belcher(match, this);
                 break;
             default:
                 Debug.LogError("MISSING TRIGGER ABILITY");

@@ -169,6 +169,20 @@ public class Card : MonoBehaviour
         Nerubian_Egg,
         Nerubian,
         Voidcaller,
+
+        Darkbomb,
+        Hellfire,
+        Shadowflame,
+        Siphon_Soul,
+
+        Zombie_Chow,
+        Blackwing_Technician,
+        Big_Game_Hunter,
+        Twilight_Drake,
+        Blackwing_Corruptor,
+        Sludge_Belcher,
+        Putrid_Slime,
+        Malygos,
     }
 
     public enum Class
@@ -291,7 +305,7 @@ public class Card : MonoBehaviour
 
         if (_manaCost < card.baseCost)
         {
-            manaCost.color = Board.Instance.minionObject.GetComponent<Creature>().greenText;
+            manaCost.color = Board.GetColor("D6F264");//Board.Instance.minionObject.GetComponent<Creature>().greenText;
         }
         else if (_manaCost > card.baseCost)
         {

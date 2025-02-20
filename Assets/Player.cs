@@ -98,6 +98,12 @@ public class Player
             if (s.card == card) return true;
         return false;
     }
+    public bool HasTribe(Card.Tribe tribe)
+    {
+        foreach (HandCard c in hand)
+            if (c.tribe == tribe) return true;
+        return false;
+    }
     //===========================
     public void AddAura(Aura a)
     {

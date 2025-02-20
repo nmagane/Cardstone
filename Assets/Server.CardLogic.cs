@@ -200,5 +200,28 @@ public partial class Server
         var anim = new AnimationInfo(Card.Cardname.Alexstrasza, spell.player,spell.minion, spell.targetPlayer);
         spell.targetPlayer.health = 15;
     }
+    void Blackwing_Technician(CastInfo spell)
+    {
+        if (spell.player.HasTribe(Card.Tribe.Dragon) == false) return;
+        AddAura(spell.match, spell.minion, new Aura(Aura.Type.Health, 1));
+        AddAura(spell.match, spell.minion, new Aura(Aura.Type.Damage, 1));
+    }
+    void Blackwing_Corruptor(CastInfo spell)
+    {
+        if (spell.player.HasTribe(Card.Tribe.Dragon) == false) return;
+        var anim = new AnimationInfo(Card.Cardname.Blackwing_Corruptor, spell.player, spell.minion, spell);
+        DamageTarget(5, spell);
+    }
+    void Twilight_Drake(CastInfo spell)
+    {
+        AddAura(spell.match, spell.minion, new Aura(Aura.Type.Health, spell.player.hand.Count()));
+    }
+    void Big_Game_Hunter(CastInfo spell)
+    {
+        if (spell.GetTargetMinion() == null) return;
+        if (spell.GetTargetMinion().damage < 7) return;
+        var anim = new AnimationInfo(Card.Cardname.Big_Game_Hunter, spell.player, spell.minion, spell);
+        spell.GetTargetMinion().DEAD = true;
+    }
 
 }

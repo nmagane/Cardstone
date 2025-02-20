@@ -67,7 +67,10 @@ public partial class Board
     {
         UnhighlightAll();
 
-        if (currTurn == false) return;
+        if (currTurn == false)
+        {
+            return;
+        }
 
         if (targetMode == TargetMode.None)
         {
@@ -103,6 +106,7 @@ public partial class Board
 
     public void HighlightActions()
     {
+        bool action = false;
         foreach (var c in currHand.cardObjects)
         {
             if (c.Value.card.manaCost > currMana) continue;
@@ -112,6 +116,7 @@ public partial class Board
             if (c.Value.card.SECRET && currHero.HasSecret(c.Value.card.card)) continue;
             if (c.Value.card.played) continue;
             c.Value.Highlight();
+            action = true;
         }
 
         foreach (var m in currMinions.minionObjects)
@@ -119,6 +124,7 @@ public partial class Board
             if (m.Value.minion.canAttack == false) continue;
             if (m.Value.minion.DEAD == true) continue;
             m.Value.Highlight();
+            action = true;
         }
 
         if (heroPower.enabled)
@@ -126,12 +132,23 @@ public partial class Board
             if (heroPower.manaCost <= currMana)
             {
                 heroPower.Highlight();
+                action = true;
             }
         }
 
         if (currHero.canAttack)
         {
             currHero.Highlight();
+            action = true;
+        }
+
+        if (action==false)
+        {
+            endTurnButton.SetColor(UIButton.ColorPreset.NoActions, true);
+        }
+        else
+        {
+            endTurnButton.SetColor(UIButton.ColorPreset.ActionAvailable, true);
         }
     }
     public void HighlightTargets()
@@ -223,6 +240,9 @@ public partial class Board
             case EligibleTargets.DamagedMinions:
                 HighlightDamagedMinions();
                 break;
+            case EligibleTargets.Big_Game_Hunter:
+                HighlightBigGameHunter();
+                break;
             default:
                 Debug.LogError("NO HIGHLIGHT IMPLEMENTED: " + eligibleTargets);
                 break;
@@ -267,6 +287,20 @@ public partial class Board
         {
             if (m.creature == null) continue;
             if (m.health == m.maxHealth) m.creature.Highlight(true);
+        }
+    }
+    void HighlightBigGameHunter()
+    {
+        foreach (var m in currMinions)
+        {
+            if (m.creature == null) continue;
+            if (m.damage >= 7) m.creature.Highlight(true);
+        }
+
+        foreach (var m in enemyMinions)
+        {
+            if (m.creature == null) continue;
+            if (m.damage >= 7) m.creature.Highlight(true);
         }
     }
     

@@ -55,14 +55,10 @@ next decks to implement:
 	-Malygos lock?
 
 	
+- DECK EDITOR
 
-
-- turn indicator (end turn button color)
 - rope
 - weapon class colors?
-
-
-= EFFECT FOR SPELL POWER aura 
 
 ====================================
 Zoo lock Decklist:
@@ -146,7 +142,7 @@ Oil rogue Decklist:
 2x Tinker's Sharpsword Oil         -- DONE
 2x Violet Teacher                  -- DONE
 1x Healbot                         -- DONE
-2x Azure Drake                     -- NO (spell power)
+2x Azure Drake                     -- DONE
 1x Loatheb                         -- DONE
 2x Sprint                          -- DONE
 1x Dr. Boom                        -- DONE
@@ -155,6 +151,9 @@ Oil rogue Decklist:
 ===============================================
 =====================DONE======================
 ================================================ 
+
+- turn indicator (end turn button color)
+= EFFECT FOR SPELL POWER aura 
 
 - screenshake on big hits (8+)
 

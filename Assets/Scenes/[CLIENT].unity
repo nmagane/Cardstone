@@ -3045,6 +3045,7 @@ MonoBehaviour:
   mainmenu: {fileID: 839021285}
   gameAnchor: {fileID: 1421786286}
   mulliganButton: {fileID: 768848211}
+  endTurnButton: {fileID: 982082721}
   waitingEnemyMulliganMessage: {fileID: 6210492576923011008}
   secretPopup: {fileID: 1594704691}
   hoveredCard: {fileID: 0}
@@ -3769,6 +3770,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5858038224512697349, guid: 0ac0b858c41824042a53e44ab9e3f0f4, type: 3}
+      propertyPath: m_SortingLayer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 6029879999419531924, guid: 0ac0b858c41824042a53e44ab9e3f0f4, type: 3}
       propertyPath: elevation
       value: 1
@@ -4482,6 +4487,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6369766180485498513, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
   m_PrefabInstance: {fileID: 626965709}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &982082721 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3682426844166967699, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
+  m_PrefabInstance: {fileID: 626965709}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74839779ca49f0a43a56b6f58f164ad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1016520493 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3682426844166967699, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
@@ -4671,6 +4687,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1092882560 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3682426844166967699, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
+  m_PrefabInstance: {fileID: 751668491}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74839779ca49f0a43a56b6f58f164ad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1094860449
 GameObject:
   m_ObjectHideFlags: 0
@@ -5059,14 +5086,6 @@ PrefabInstance:
       propertyPath: board
       value: 
       objectReference: {fileID: 1287994307}
-    - target: {fileID: 3201840216127571770, guid: e191c75d080628747ae367018f2c9c5a, type: 3}
-      propertyPath: effectSprites.Array.size
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 3201840216127571770, guid: e191c75d080628747ae367018f2c9c5a, type: 3}
-      propertyPath: effectSprites.Array.data[29]
-      value: 
-      objectReference: {fileID: 21300000, guid: a2b9ba3460c69d14d960449ff4e7f610, type: 3}
     - target: {fileID: 3201840216127571772, guid: e191c75d080628747ae367018f2c9c5a, type: 3}
       propertyPath: m_Name
       value: AnimationManager (1)
@@ -5183,6 +5202,7 @@ MonoBehaviour:
   mainmenu: {fileID: 839021285}
   gameAnchor: {fileID: 955974029}
   mulliganButton: {fileID: 1016520493}
+  endTurnButton: {fileID: 1092882560}
   waitingEnemyMulliganMessage: {fileID: 2006279369}
   secretPopup: {fileID: 1162820135}
   hoveredCard: {fileID: 0}
@@ -8412,12 +8432,16 @@ PrefabInstance:
       objectReference: {fileID: 716059625}
     - target: {fileID: 3201840216127571770, guid: e191c75d080628747ae367018f2c9c5a, type: 3}
       propertyPath: effectSprites.Array.size
-      value: 30
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 3201840216127571770, guid: e191c75d080628747ae367018f2c9c5a, type: 3}
       propertyPath: effectSprites.Array.data[29]
       value: 
       objectReference: {fileID: 21300000, guid: a2b9ba3460c69d14d960449ff4e7f610, type: 3}
+    - target: {fileID: 3201840216127571770, guid: e191c75d080628747ae367018f2c9c5a, type: 3}
+      propertyPath: effectSprites.Array.data[30]
+      value: 
+      objectReference: {fileID: 21300000, guid: 371f6fe5d6c63a040a322a9e764b26ee, type: 3}
     - target: {fileID: 3201840216127571772, guid: e191c75d080628747ae367018f2c9c5a, type: 3}
       propertyPath: m_Name
       value: AnimationManager

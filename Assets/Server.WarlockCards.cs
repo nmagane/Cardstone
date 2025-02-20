@@ -70,4 +70,57 @@ public partial class Server
         }
     }
 
+    void Darkbomb(CastInfo spell)
+    {
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Darkbomb, spell.player, spell);
+        DamageTarget(3, spell);
     }
+    void Hellfire(CastInfo spell)
+    {
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Hellfire, spell.player);
+        int damage = 3;
+
+        MinionBoard b = spell.player.board;
+        MinionBoard b2 = spell.player.opponent.board;
+
+        Damage(spell.player, damage, spell);
+        Damage(spell.player.opponent, damage, spell);
+        foreach (Minion m in b)
+        {
+            Damage(m, damage, spell);
+        }
+        foreach (Minion m in b2)
+        {
+            Damage(m, damage, spell);
+        }
+    }
+    void Shadowflame(CastInfo spell)
+    {
+        Minion m = spell.GetTargetMinion();
+        if (m == null) return;
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Shadowflame, spell.player, spell.targetMinion, spell.player.opponent);
+
+        foreach (Minion x in spell.player.opponent.board)
+        {
+            Damage(x, m.damage, spell);
+        }
+
+        spell.match.ResolveTriggerQueue(ref spell);
+
+        m.DEAD = true;
+    }
+    void Siphon_Soul(CastInfo spell)
+    {
+        Minion m = spell.GetTargetMinion();
+        if (m == null) return;
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Siphon_Soul, spell.player, spell.targetMinion);
+
+        m.DEAD = true;
+
+        Heal(spell.player, 3, spell);
+
+    }
+
+
+
+}

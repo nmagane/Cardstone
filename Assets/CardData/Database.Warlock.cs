@@ -195,5 +195,71 @@
 
         return c;
     }
+    
+    static CardInfo Darkbomb()
+    {
+        CardInfo c = new();
+
+        c.classType = Card.Class.Warlock;
+        c.name = "Darkbomb";
+        c.text = "Deal {0} damage.";
+
+        c.manaCost = 2;
+        c.spellDamage = 3;
+
+        c.SPELL = true;
+        c.TARGETED = true;
+        c.eligibleTargets = Board.EligibleTargets.AllCharacters;
+
+        return c;
+    }
+    static CardInfo Hellfire()
+    {
+        CardInfo c = new();
+
+        c.classType = Card.Class.Warlock;
+        c.name = "Hellfire";
+        c.text = "Deal {0} damage to all characters.";
+
+        c.manaCost = 4;
+        c.spellDamage = 3;
+
+        c.SPELL = true;
+        c.TARGETED = false;
+
+        return c;
+    }
+    static CardInfo Shadowflame()
+    {
+        CardInfo c = new();
+
+        c.classType = Card.Class.Warlock;
+        c.name = "Shadowflame";
+        c.text = "Destroy a friendly minion. Deal its attack damage to all enemy minoins.";
+
+        c.manaCost = 4;
+
+        c.SPELL = true;
+        c.TARGETED = true;
+        c.eligibleTargets = Board.EligibleTargets.FriendlyMinions;
+
+        return c;
+    }
+    static CardInfo Siphon_Soul()
+    {
+        CardInfo c = new();
+
+        c.classType = Card.Class.Warlock;
+        c.name = "Siphon Soul";
+        c.text = "Destroy a minion.\nRestore 3 health to your hero.";
+
+        c.manaCost = 6;
+
+        c.SPELL = true;
+        c.TARGETED = true;
+        c.eligibleTargets = Board.EligibleTargets.AllMinions;
+
+        return c;
+    }
 
 }

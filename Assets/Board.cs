@@ -10,6 +10,7 @@ public partial class Board : MonoBehaviour
     public Mainmenu mainmenu;
     public GameObject gameAnchor;   
     public UIButton mulliganButton;
+    public UIButton endTurnButton;
     public GameObject waitingEnemyMulliganMessage;
     public SpriteRenderer secretPopup;
 
@@ -489,6 +490,9 @@ public partial class Board : MonoBehaviour
         currTurn = false;
         currHero.combo = false;
         currHero.DisableWeapon();
+
+        endTurnButton.SetColor(GetColor("4A5462"));
+
         CheckHighlights();
     }
     public void StartTurn(bool allyTurn, int maxMana, int currMana, int messageCount)

@@ -428,6 +428,32 @@ public partial class Server
                 Implosion(spell);
                 break;
 
+            case Card.Cardname.Darkbomb:
+                Darkbomb(spell); 
+                break;
+            case Card.Cardname.Hellfire:
+                Hellfire(spell);
+                break;
+            case Card.Cardname.Shadowflame:
+                Shadowflame(spell);
+                break;
+            case Card.Cardname.Siphon_Soul:
+                Siphon_Soul(spell);
+                break;
+
+            case Card.Cardname.Blackwing_Technician:
+                Blackwing_Technician(spell); 
+                break;
+            case Card.Cardname.Blackwing_Corruptor:
+                Blackwing_Corruptor(spell);
+                break;
+            case Card.Cardname.Big_Game_Hunter:
+                Big_Game_Hunter(spell);
+                break;
+            case Card.Cardname.Twilight_Drake:
+                Twilight_Drake(spell);
+                break;
+
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);
                 break;
