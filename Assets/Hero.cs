@@ -386,6 +386,7 @@ public partial class Hero : MonoBehaviour
     Vector3 clickPos = Vector3.zero;
     private void OnMouseDown()
     {
+        if (board.currTurn == false) return;
         if (board.targeting)
         {
             if (board.targetingHero == this)

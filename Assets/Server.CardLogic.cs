@@ -245,5 +245,19 @@ public partial class Server
     {
         Draw(spell.player);
     }
+    void Harrison_Jones(CastInfo spell)
+    {
+        if (spell.player.opponent.weapon == null) return;
+
+        int count = spell.player.opponent.weapon.durability;
+
+        var anim = new AnimationInfo(Card.Cardname.Acidic_Swamp_Ooze, spell.player, spell.minion, spell.player.opponent);
+        spell.player.opponent.weapon.DEAD = true;
+
+        spell.match.ResolveTriggerQueue(ref spell);
+
+        for (int i=0;i<count;i++)
+            Draw(spell.player);
+    }
 
 }

@@ -64,6 +64,7 @@ public partial class Server
 
     public void HealMinion(Match match, Minion minion, int heal)
     {
+        if (heal == 0) return;
         bool healed = false;
         if (minion.health<minion.maxHealth)
         {
@@ -80,6 +81,7 @@ public partial class Server
     }
     public void HealFace(Match match, Player target, int heal)
     {
+        if (heal == 0) return;
         bool healed = false;
         if (target.health < target.maxHealth)
             healed = true;
@@ -97,6 +99,7 @@ public partial class Server
 
     public void DamageMinion(Match match, Minion minion, int damage, Player source)
     {
+        if (damage == 0) return;
         if (minion.HasAura(Aura.Type.Shield))
         {
             match.server.RemoveAura(match,minion,minion.FindAura(Aura.Type.Shield));
@@ -117,6 +120,7 @@ public partial class Server
 
     public void DamageFace(Match match, Player target, int damage, Player source)
     {
+        if (damage == 0) return;
         if (target.health + target.armor <= damage)
         {
             match.AddTrigger(Trigger.Type.OnLethalFaceDamage, null, source);
@@ -463,6 +467,18 @@ public partial class Server
                 break;    
             case Card.Cardname.Novice_Engineer:
                 Novice_Engineer(spell);
+                break;    
+            case Card.Cardname.Edwin_VanCleef:
+                Edwin_VanCleef(spell);
+                break;
+            case Card.Cardname.Shadowstep:
+                Shadowstep(spell);
+                break;
+            case Card.Cardname.Shiv:
+                Shiv(spell);
+                break;
+            case Card.Cardname.Harrison_Jones:
+                Harrison_Jones(spell);
                 break;
 
             default:

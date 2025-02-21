@@ -68,6 +68,10 @@ public class HandCard
 
         tribe = cardInfo.tribe;
 
+        foreach (Aura c in auras)
+        {
+            RemoveAura(c);
+        }
         foreach (Aura.Type a in cardInfo.cardAuras)
         {
             AddAura(new Aura(a));

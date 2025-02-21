@@ -612,6 +612,7 @@ public partial class Board : MonoBehaviour
             deck.Set(deckCount);
             mana.SetCurrent(currMana);
             mana.SetMax(maxMana);
+            mana.UpdateCardCount();
             currHero.damage = damage;
             currHero.armor = armor;
             if (spellpower!=currHero.spellpower)
@@ -637,6 +638,7 @@ public partial class Board : MonoBehaviour
             enemyDeck.Set(deckCount);
             enemyMana.SetCurrent(currMana);
             enemyMana.SetMax(maxMana);
+            enemyMana.UpdateCardCount();
             enemyHero.damage = damage;
             enemyHero.armor = armor;
             enemyHero.spellpower = spellpower;

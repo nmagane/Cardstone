@@ -89,7 +89,7 @@ public partial class Board
         message.AddBool(isHero);
 
         mana.Spend(card.manaCost);
-        mana.UpdateDisplay();
+        mana.UpdateDisplay(-1,-1,-1);
 
         EndTargeting();
         playingCard = null;

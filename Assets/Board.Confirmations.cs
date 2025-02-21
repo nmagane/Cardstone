@@ -67,6 +67,8 @@ public partial class Board
         enemyHero.Set(enemyClass);
         heroPower.Set(allyClass, Database.GetClassHeroPower(allyClass));
         enemyHeroPower.Set(enemyClass,Database.GetClassHeroPower(enemyClass));
+        mana.attachedHand = currHand;
+        enemyMana.attachedHand= enemyHand;
 
         currentMatchID = matchID;
     }

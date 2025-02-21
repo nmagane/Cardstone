@@ -144,6 +144,23 @@ public partial class Database
         c.COMBO = true;
         return c;
     }
+    static CardInfo Shiv()
+    {
+        CardInfo c = new();
+
+        c.name = "Shiv";
+        c.text = "Deal {0} damage.\nDraw a card.";
+        c.spellDamage = 1;
+
+        c.classType = Card.Class.Rogue;
+        c.eligibleTargets = Board.EligibleTargets.AllCharacters;
+
+        c.manaCost = 2;
+
+        c.SPELL = true;
+        c.TARGETED = true;
+        return c;
+    }
     static CardInfo Sap()
     {
         CardInfo c = new();
@@ -165,7 +182,7 @@ public partial class Database
         CardInfo c = new();
 
         c.name = "Shadowstep";
-        c.text = "Return a friendly minion to your hand.\nIt costs 2 less";
+        c.text = "Return a friendly minion to your hand.\nIt costs 2 less.";
 
         c.classType = Card.Class.Rogue;
         c.eligibleTargets = Board.EligibleTargets.FriendlyMinions;
@@ -174,6 +191,7 @@ public partial class Database
 
         c.SPELL = true;
         c.TARGETED = true;
+
         return c;
     }
 
@@ -222,6 +240,24 @@ public partial class Database
         c.SPELL = true;
         c.COMBO = true;
         c.TARGETED = false;
+        return c;
+    }
+    static CardInfo Edwin_VanCleef()
+    {
+        CardInfo c = new();
+
+        c.name = "Edwin VanCleef";
+        c.text = "Combo: Gain +2/+2 for each card other card you've played this turn.";
+
+        c.classType = Card.Class.Rogue;
+
+        c.manaCost = 3;
+        c.damage = 2;
+        c.health = 2;
+
+        c.MINION = true;
+        c.COMBO = true;
+
         return c;
     }
 }

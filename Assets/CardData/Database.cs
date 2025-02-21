@@ -382,6 +382,19 @@ public partial class Database
             case Card.Cardname.Novice_Engineer:
                 return Novice_Engineer();
 
+            case Card.Cardname.Edwin_VanCleef:
+                return Edwin_VanCleef();
+            case Card.Cardname.Shadowstep:
+                return Shadowstep();
+            case Card.Cardname.Shiv:
+                return Shiv();
+            case Card.Cardname.Gadgetzan_Auctioneer:
+                return Gadgetzan_Auctioneer(); 
+            case Card.Cardname.Shade_of_Naxxrammas:
+                return Shade_of_Naxxrammas();  
+            case Card.Cardname.Harrison_Jones:
+                return Harrison_Jones();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 return null;
@@ -735,7 +748,7 @@ public partial class Database
         c.name = "Loatheb";
         c.text = "Battlecry: Enemy spells cost 5 more next turn.";
 
-        c.manaCost = 6;
+        c.manaCost = 5;
         c.damage = 5;
         c.health = 5;
 
@@ -1176,7 +1189,7 @@ public partial class Database
         CardInfo c = new();
 
         c.name = "Mad Scientist";
-        c.text = "Deathrattle: Put a secret from your deck into the battlefield.";
+        c.text = "Deathrattle: Put a secret from your deck into play.";
 
         c.manaCost = 2;
         c.damage = 2;
@@ -1498,6 +1511,59 @@ public partial class Database
         c.MINION = true;
 
         c.auras.Add(Aura.Type.Spellpower);
+
+        return c;
+    }
+    private static CardInfo Gadgetzan_Auctioneer()
+    {
+        CardInfo c = new();
+
+        c.name = "Gadgetzan Auctioneer";
+        c.text = "Whenever you play a spell, draw a card.";
+
+        c.manaCost = 6;
+        c.damage = 4;
+        c.health = 4;
+
+        c.MINION = true;
+
+        c.triggers.Add((Trigger.Type.OnPlaySpell, Trigger.Side.Friendly,Trigger.Ability.DrawCard));
+
+        return c;
+    }
+    private static CardInfo Shade_of_Naxxrammas()
+    {
+        CardInfo c = new();
+
+        c.name = "Shade of Naxxrammas";
+        c.text = "Stealth.\nAt the start of your turn, gain +1/+1";
+
+        c.manaCost = 3;
+        c.damage = 2;
+        c.health = 2;
+
+        c.MINION = true;
+
+        c.auras.Add(Aura.Type.Stealth);
+
+        c.triggers.Add((Trigger.Type.StartTurn, Trigger.Side.Friendly,Trigger.Ability.Shade_of_Naxxrammas));
+
+        return c;
+    }
+    
+    private static CardInfo Harrison_Jones()
+    {
+        CardInfo c = new();
+
+        c.name = "Harrison Jones";
+        c.text = "Battlecry: Destroy enemy weapon. Draw cards equal to its durability";
+
+        c.manaCost = 5;
+        c.damage = 5;
+        c.health = 4;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
 
         return c;
     }

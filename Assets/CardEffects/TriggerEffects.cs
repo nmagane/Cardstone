@@ -277,6 +277,7 @@ public class TriggerEffects
             if (card.tribe == Card.Tribe.Demon)
                 demons.Add(card);
         }
+        if (demons.Count == 0) return;
         HandCard c = Board.RandElem(demons);
         match.server.DiscardCard(match, trigger.minion.player, c.index);
         match.server.SummonToken(match, trigger.minion.player, c.card);
@@ -289,6 +290,11 @@ public class TriggerEffects
     public static void Zombie_Chow(Match match, Trigger trigger)
     {
         match.server.HealFace(match, trigger.player.opponent, 5);
+    }
+    public static void Shade_of_Naxxrammas(Match match, Trigger trigger)
+    {
+        match.server.AddAura(match, trigger.minion, new Aura(Aura.Type.Health,1,false,false,null,Card.Cardname.Shade_of_Naxxrammas));
+        match.server.AddAura(match, trigger.minion, new Aura(Aura.Type.Damage,1,false,false,null,Card.Cardname.Shade_of_Naxxrammas));
     }
 
 }

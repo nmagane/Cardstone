@@ -2008,6 +2008,10 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6680652816680447382, guid: 4fccc64687e20bb4a8a083ff872a8954, type: 3}
+      propertyPath: m_text
+      value: 'HAND: 0/10'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fccc64687e20bb4a8a083ff872a8954, type: 3}
 --- !u!114 &1031720772 stripped
@@ -3831,6 +3835,14 @@ PrefabInstance:
     - target: {fileID: 4110305615516620318, guid: 4fccc64687e20bb4a8a083ff872a8954, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6285305877467338415, guid: 4fccc64687e20bb4a8a083ff872a8954, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6680652816680447382, guid: 4fccc64687e20bb4a8a083ff872a8954, type: 3}
+      propertyPath: m_text
+      value: 'HAND: 0/10'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fccc64687e20bb4a8a083ff872a8954, type: 3}

@@ -17,6 +17,13 @@ public partial class Server
         spell.match.server.AddCard(spell.match, m.player, m.card, m, 0);
         spell.match.server.RemoveMinion(spell.match, m);
     }
+    private void Shadowstep(CastInfo spell)
+    {
+        Minion m = spell.GetTargetMinion();
+        HandCard c = spell.match.server.AddCard(spell.match, m.player, m.card, m, -2);
+        AddCardAura(spell.match,c,new Aura(Aura.Type.Cost, -2));
+        spell.match.server.RemoveMinion(spell.match, m);
+    }
     private void SI7_Agent(CastInfo spell)
     {
         if (spell.player.combo == false) return;
@@ -24,6 +31,17 @@ public partial class Server
                                 
         DamageTarget(2, spell);
     }
+
+    private void Shiv(CastInfo spell)
+    {
+        var anim = new AnimationInfo(Card.Cardname.Eviscerate, spell.player, spell);
+        DamageTarget(1, spell);
+
+        spell.match.ResolveTriggerQueue(ref spell);
+
+        Draw(spell.player);
+    }
+
     private void Eviscerate(CastInfo spell)
     {
         var anim = new AnimationInfo(Card.Cardname.Eviscerate, spell.player, spell);
@@ -111,5 +129,15 @@ public partial class Server
     {
         for (int i = 0; i < 4; i++)
             Draw(spell.player);
+    }
+    void Edwin_VanCleef(CastInfo spell)
+    {
+        if (spell.combo == false) return;
+        int i = spell.player.comboCounter * 2;
+        if (i>0)
+        {
+            AddAura(spell.match, spell.minion, new Aura(Aura.Type.Health, i, false, false, null, Card.Cardname.Edwin_VanCleef));
+            AddAura(spell.match, spell.minion, new Aura(Aura.Type.Damage, i, false, false, null, Card.Cardname.Edwin_VanCleef));
+        }
     }
 }

@@ -190,6 +190,14 @@ public class Card : MonoBehaviour
         Kobold_Geomancer,
         Novice_Engineer,    
 
+        Edwin_VanCleef,
+        Shiv,
+        Shadowstep,
+
+        Gadgetzan_Auctioneer,
+        Harrison_Jones,
+        Shade_of_Naxxrammas,
+
         _COUNT,
     }
 
