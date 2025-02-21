@@ -109,7 +109,6 @@ public class Mainmenu : MonoBehaviour
     public List<UIButton> deckButtons;
     public void SetDeck(int x)
     {
-        Debug.Log("selected " + x);
         if (inQueue)
         {
             StartMatchmaking();

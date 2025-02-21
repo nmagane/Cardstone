@@ -369,12 +369,25 @@ public partial class Database
                 return Malygos();
             case Card.Cardname.Sorcerers_Apprentice:
                 return Sorcerers_Apprentice();
+            case Card.Cardname.Core_Hound:
+                return Core_Hound();
+            case Card.Cardname.Sunfury_Protector:
+                return Sunfury_Protector();
+            case Card.Cardname.Acidic_Swamp_Ooze:
+                return Acidic_Swamp_Ooze();
+            case Card.Cardname.Ancient_Watcher:
+                return Ancient_Watcher();
+            case Card.Cardname.Kobold_Geomancer:
+                return Kobold_Geomancer();
+            case Card.Cardname.Novice_Engineer:
+                return Novice_Engineer();
 
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 return null;
         }
     }
+
 
     public static Card.Cardname GetClassSecret(Card.Class c)
     {
@@ -1368,7 +1381,21 @@ public partial class Database
 
         return c;
     }
-    
+    private static CardInfo Core_Hound()
+    {
+        CardInfo c = new();
+
+        c.name = "Core Hound";
+        c.text = "";
+
+        c.manaCost = 7;
+        c.damage = 9;
+        c.health = 5;
+
+        c.MINION = true;
+
+        return c;
+    }
     private static CardInfo Malygos()
     {
         CardInfo c = new();
@@ -1393,4 +1420,85 @@ public partial class Database
         return c;
     }
 
+    private static CardInfo Sunfury_Protector()
+    {
+        CardInfo c = new();
+
+        c.name = "Sunfury Protector";
+        c.text = "Battlecry: Give adjacent minions Taunt.";
+
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 3;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+
+        return c;
+    }
+    private static CardInfo Ancient_Watcher()
+    {
+        CardInfo c = new();
+
+        c.name = "Ancient Watcher";
+        c.text = "Can't attack.";
+
+        c.manaCost = 2;
+        c.damage = 4;
+        c.health = 5;
+
+        c.MINION = true;
+        c.auras.Add(Aura.Type.NoAttack);
+
+        return c;
+    }
+    private static CardInfo Acidic_Swamp_Ooze()
+    {
+        CardInfo c = new();
+
+        c.name = "Acidic Swamp Ooze";
+        c.text = "Battlecry: Destroy your opponent's weapon.";
+
+        c.manaCost = 2;
+        c.damage = 3;
+        c.health = 2;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+
+        return c;
+    }
+    private static CardInfo Novice_Engineer()
+    {
+        CardInfo c = new();
+
+        c.name = "Novice Engineer";
+        c.text = "Battlecry: Draw a card.";
+
+        c.manaCost = 2;
+        c.damage = 1;
+        c.health = 1;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+
+        return c;
+    }
+    private static CardInfo Kobold_Geomancer()
+    {
+        CardInfo c = new();
+
+        c.name = "Kobold Geomancer";
+        c.text = "+1 Spellpower.";
+
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 2;
+
+        c.MINION = true;
+
+        c.auras.Add(Aura.Type.Spellpower);
+
+        return c;
+    }
 }

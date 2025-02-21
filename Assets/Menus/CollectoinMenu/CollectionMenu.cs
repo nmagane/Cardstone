@@ -50,11 +50,11 @@ public class CollectionMenu : MonoBehaviour
     }
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow)||Input.GetKeyDown(KeyCode.D))
         {
             ChangePage(1);
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow)||Input.GetKeyDown(KeyCode.A))
         {
             ChangePage(-1);
         }
@@ -245,27 +245,35 @@ public class CollectionMenu : MonoBehaviour
             x.transform.localPosition = new Vector3(0, -0.875f * i++);
         }
         listAnchor.transform.localScale = Vector3.one;
-        if (listings.Count > 16)
+        if (listings.Count >= 16)
+            listAnchor.transform.localScale = Vector3.one * 0.95f;
+        if (listings.Count > 17)
             listAnchor.transform.localScale = Vector3.one * 0.9f;
         if (listings.Count > 18)
+            listAnchor.transform.localScale = Vector3.one * 0.85f;
+        if (listings.Count > 19)
             listAnchor.transform.localScale = Vector3.one * 0.8f;
         if (listings.Count > 20)
+            listAnchor.transform.localScale = Vector3.one * 0.775f;
+        if (listings.Count > 21)
             listAnchor.transform.localScale = Vector3.one * 0.7f;
-        if (listings.Count > 23)
+        if (listings.Count > 22)
+            listAnchor.transform.localScale = Vector3.one * 0.68f;
+        if (listings.Count > 25)
             listAnchor.transform.localScale = Vector3.one * 0.6f;
         if (listings.Count > 27)
-            listAnchor.transform.localScale = Vector3.one * 0.5f;
+            listAnchor.transform.localScale = Vector3.one * 0.55f;
     }
     public List<Card.Cardname> cards = new List<Card.Cardname>();
-    public void AddListing(Card.Cardname c)
+    public bool AddListing(Card.Cardname c)
     {
-        if (cards.Count == 30) return;
+        if (cards.Count == 30) return false;
 
         if (listings.ContainsKey(c))
         {
             ListCard l = listings[c];
-            if (l.legendary) return;
-            if (l.count >= 2) return;
+            if (l.legendary) return false;
+            if (l.count >= 2) return false;
             l.count++;
             l.SetCount(l.count);
             cards.Add(c);
@@ -286,6 +294,7 @@ public class CollectionMenu : MonoBehaviour
             SortListings();
         }
         CheckDeck();
+        return true;
     }
     int currDeckslot = 0;
     public void SelectDeck(int x)
@@ -363,6 +372,26 @@ public class CollectionMenu : MonoBehaviour
             }
             pickers[ind].Set(cards[i]);
             ind++;
+        }
+        StartCoroutine(BounceCards());
+    }
+    IEnumerator BounceCards()
+    {
+        foreach(var x in pickers)
+        {
+            x.transform.localPosition += new Vector3(0, 0.1f);
+        }
+        yield return null;
+        yield return null;
+        foreach(var x in pickers)
+        {
+            x.transform.localPosition += new Vector3(0, -0.05f);
+        }
+        yield return null;
+        yield return null;
+        foreach(var x in pickers)
+        {
+            x.transform.localPosition += new Vector3(0, -0.05f);
         }
     }
     public void ChangePage(int i=0)

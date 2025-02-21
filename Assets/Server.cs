@@ -8,7 +8,7 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Sorcerers_Apprentice, Card.Cardname.Darkbomb, Card.Cardname.Malygos, Card.Cardname.Twilight_Drake,Card.Cardname.Blackwing_Technician, Card.Cardname.Big_Game_Hunter, Card.Cardname.Sludge_Belcher, Card.Cardname.Zombie_Chow};
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Core_Hound, Card.Cardname.Darkbomb, Card.Cardname.Malygos, Card.Cardname.Twilight_Drake,Card.Cardname.Acidic_Swamp_Ooze, Card.Cardname.Ironbeak_Owl, Card.Cardname.Sunfury_Protector, Card.Cardname.Ancient_Watcher};
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { };
     
 #else

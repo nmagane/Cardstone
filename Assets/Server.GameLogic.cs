@@ -453,6 +453,17 @@ public partial class Server
             case Card.Cardname.Twilight_Drake:
                 Twilight_Drake(spell);
                 break;
+                
+            case Card.Cardname.Sunfury_Protector:
+                Sunfury_Protector(spell);
+                break;
+                
+            case Card.Cardname.Acidic_Swamp_Ooze:
+                Acidic_Swamp_Ooze(spell);
+                break;    
+            case Card.Cardname.Novice_Engineer:
+                Novice_Engineer(spell);
+                break;
 
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);

@@ -216,6 +216,9 @@ public partial class AnimationManager
 
             case Card.Cardname.Deadly_Poison:
                 return StartCoroutine(PotionProjectileWeapon(data,Effect.potionGreen));
+                
+            case Card.Cardname.Acidic_Swamp_Ooze:
+                return StartCoroutine(PotionProjectileWeapon(data,Effect.greenSmall,true));
 
             case Card.Cardname.Tinkers_Oil:
                 return StartCoroutine(Tinkers_Oil(data));
@@ -472,11 +475,11 @@ public partial class AnimationManager
             CreateParticle(targetPos, effect);
         }
     }
-    IEnumerator PotionProjectileWeapon(AnimationData data, Effect effect)
+    IEnumerator PotionProjectileWeapon(AnimationData data, Effect effect, bool enemy=false)
     {
         GameObject p = CreateEffect(effect);
         p.transform.localPosition = data.sourcePos;
-        
+        if (enemy) data.friendly = !data.friendly;
         Vector3 targetPos = data.friendly == false? board.enemyHero.weaponFrame.transform.localPosition : board.currHero.weaponFrame.transform.localPosition;
         Vector3 offset = data.friendly == false? board.enemyHero.transform.localPosition : board.currHero.transform.localPosition;
         targetPos += offset;

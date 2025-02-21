@@ -183,6 +183,13 @@ public class Card : MonoBehaviour
         Sludge_Belcher,
         Putrid_Slime,
         Malygos,
+        Core_Hound,
+        Sunfury_Protector,
+        Ancient_Watcher,
+        Acidic_Swamp_Ooze,
+        Kobold_Geomancer,
+        Novice_Engineer,    
+
         _COUNT,
     }
 

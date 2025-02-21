@@ -23,7 +23,34 @@ public class CardPicker : MonoBehaviour
 
     private void OnMouseDown()
     {
-        menu.AddListing(card);
+        bool added = menu.AddListing(card);
+        if (added)
+            menu.board.animationManager.BounceZoom(this.gameObject, 0.1f);
+        else
+            StartCoroutine(Shake());
+    }
+
+    public void OnMouseOver()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (menu.cards.Contains(card))
+            {
+                menu.board.animationManager.BounceZoom(this.gameObject, -0.1f);
+                menu.RemoveListing(card);
+            }
+        }
+    }
+
+    IEnumerator Shake()
+    {
+        this.transform.localPosition += new Vector3(0.1f, 0);
+        yield return null;
+        yield return null; 
+        this.transform.localPosition += new Vector3(-0.2f, 0);
+        yield return null;
+        yield return null;
+        this.transform.localPosition += new Vector3(0.1f, 0);
     }
 
 }

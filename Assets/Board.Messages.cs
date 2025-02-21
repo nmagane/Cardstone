@@ -14,6 +14,11 @@ public partial class Board
     }
     public void StartMatchmaking(SaveManager.Decklist list)
     {
+        if (SaveManager.CheckValidDeck(list) == false)
+        {
+            Debug.LogError("Invalid deck");
+            return;
+        }
         Server.CustomMessage message = CreateMessage(Server.MessageType.Matchmaking);
         message.AddULong(playerID);
         message.AddString(playerName);

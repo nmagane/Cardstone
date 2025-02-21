@@ -223,5 +223,27 @@ public partial class Server
         var anim = new AnimationInfo(Card.Cardname.Big_Game_Hunter, spell.player, spell.minion, spell);
         spell.GetTargetMinion().DEAD = true;
     }
+    void Sunfury_Protector(CastInfo spell)
+    {
+        Player p = spell.player;
+        Match match = spell.match;
+        foreach (var m in spell.player.board)
+        {
+            if (m.index == spell.position - 1 || m.index == spell.position + 1)
+            {
+                match.server.AddAura(match, m, new Aura(Aura.Type.Taunt));
+            }
+        }
+    }
+    void Acidic_Swamp_Ooze(CastInfo spell)
+    {
+        if (spell.player.opponent.weapon == null) return;
+        var anim = new AnimationInfo(Card.Cardname.Acidic_Swamp_Ooze, spell.player, spell.minion, spell.player.opponent);
+        spell.player.opponent.weapon.DEAD = true;
+    }
+    void Novice_Engineer(CastInfo spell)
+    {
+        Draw(spell.player);
+    }
 
 }
