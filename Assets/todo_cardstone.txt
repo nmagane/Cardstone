@@ -18,11 +18,12 @@ get a new color pallette this shit sucks ( future todo )
 a bit of rotation on creeature anim facing the direction of attack?
 different tooltip shape for hero power hover
 creature floating should hit scale vector3.one?
-creatures should be limited in ordercreatures to board edges, this is mostly because previews can make them go wider than 7 minion spaces //THIS IS FIXED?
-//move card animations to database.animations? static functions?
+
+
 --board.phaseOngoing bool or something to disable input until server sends "sequence over" message?
-deathrattle/spawned source minions should pop out lerpzoom, not drop in
-FIX REPEAT CODE IN ANIMATOINMANAGER.CARDS?
+
+
+- weapon class colors?
 
 triggers should return true/false to know whether or not to confirm anim 
 	(priestess anim only when theres other minions, hobgoblin anim only when its 1-cost, etc)
@@ -41,7 +42,7 @@ refactor hasaura(taunt / stealth)
 
 change button gfx to not be fishlike
 
-Mechanics for next-next demo:
+Mechanics for next demo:
 = Secret removal without trigger (Flare)
 = Overload
 = Choose one cards
@@ -50,111 +51,17 @@ Mechanics for next-next demo:
 
 - Serverside target eligibilty check (anti lag/cheating)
 
-next decks to implement:
-	-Patron
-	-BRM/GvG Zoo
-	-Freeze
-		aura temporary two turns
-	-Oil/Miracle Rogue
-	-Malygos lock?
-
-	
-- DECK EDITOR
-
 - rope (chess timer?)
-- weapon class colors?
-
-====================================
-Zoo lock Decklist:
-2x Flame Imp                       -- DONE
-1x Mortal coil                     -- DONE
-2x Power overwhelming              -- DONE
-2x Voidwalker                      -- DONE
-2x Imp Gang Boss                   -- DONE
-1x Imp-losion                      -- DONE
-2x Voidcaller                      -- DONE
-2x Doomguard                       -- DONE
-2x Abusive                         -- DONE
-2x Dire wolf alpha                 -- DONE
-2x Haunted Creeper                 -- DONE
-2x Knife juggler                   -- DONE
-2x Nerubian egg                    -- DONE
-1x Ironbeak Owl                    -- DONE
-1x Crazed Alchemist                -- DONE
-2x Defender of Argus               -- DONE
-1x Loatheb                         -- DONE
-1x Dr. Boom                        -- DONE
-
-====================================
-Freeze mage Decklist:
-
-2x Ice Lance                       -- DONE
-2x Frostbolt                       -- DONE
-1x Bloodmage                       -- DONE
-2x Doomsayer                       -- DONE
-2x Loot hoarder                    -- DONE
-2x Mad Scientist                   -- DONE
-2x Arcane Intellect                -- DONE
-2x Frost Nova                      -- DONE
-2x Ice Barrier                     -- DONE
-2x Ice Block                       -- DONE
-1x Acolyte of Pain                 -- DONE
-2x Fireball                        -- DONE
-1x Antique Healbot                 -- DONE
-2x Blizzard                        -- DONE
-1x Emperor Thaurissan              -- DONE
-1x Flamestrike                     -- DONE
-1x Archmage Antonidas              -- DONE
-1x Alexstrasza                     -- DONE
-1x Pyroblast                       -- DONE
-
-====================================
-Patron warrior Decklist:
-
-1x Inner Rage                      -- DONE
-2x Execute                         -- DONE
-2x Whirlwind                       -- DONE
-2x Fiery War Axe                   -- DONE
-2x Battle Rage                     -- DONE
-2x Slam                            -- DONE
-2x Armorsmith                      -- DONE
-1x Cruel Taskmaster                -- DONE
-2x Unstable Ghoul                  -- DONE
-2x Acolyte of Pain                 -- DONE
-2x Forthing Berserker              -- DONE
-2x Warsong Commander               -- DONE
-2x Death's Bite                    -- DONE
-1x Dread Corsair                   -- DONE
-2x Gnomish Inventor                -- DONE
-2x Grim Patron                     -- DONE
-1x Emperor Thaurissan              -- DONE
-
-====================================
-Oil rogue Decklist:
-
-2x Backstab                        -- DONE
-2x Prep                            -- DONE
-2x Deadly poison                   -- DONE
-1x Southsea                        -- DONE
-2x Blade flurry                    -- DONE
-2x Evis                            -- DONE
-2x Sap                             -- DONE
-1x Bloodmage                       -- DONE
-2x Fan of Knives                   -- DONE
-2x SI7 Agent                       -- DONE
-1x Earthen Ring Farseer            -- DONE
-2x Tinker's Sharpsword Oil         -- DONE
-2x Violet Teacher                  -- DONE
-1x Healbot                         -- DONE
-2x Azure Drake                     -- DONE
-1x Loatheb                         -- DONE
-2x Sprint                          -- DONE
-1x Dr. Boom                        -- DONE
 
 
 ===============================================
 =====================DONE======================
 ================================================ 
+deathrattle/spawned source minions should pop out lerpzoom, not drop in
+
+FIX REPEAT CODE IN ANIMATOINMANAGER.CARDS?
+
+- DECK EDITOR
 
 - turn indicator (end turn button color)
 = EFFECT FOR SPELL POWER aura 
@@ -337,3 +244,90 @@ SHATTERED SUN CLERIC  - DONE
 DARK IRON DWARF       - DONE
 DEFENDER OF ARGUS     - DONE
 DOOMGUARD             - DONE
+
+Zoo lock Decklist:
+2x Flame Imp                       -- DONE
+1x Mortal coil                     -- DONE
+2x Power overwhelming              -- DONE
+2x Voidwalker                      -- DONE
+2x Imp Gang Boss                   -- DONE
+1x Imp-losion                      -- DONE
+2x Voidcaller                      -- DONE
+2x Doomguard                       -- DONE
+2x Abusive                         -- DONE
+2x Dire wolf alpha                 -- DONE
+2x Haunted Creeper                 -- DONE
+2x Knife juggler                   -- DONE
+2x Nerubian egg                    -- DONE
+1x Ironbeak Owl                    -- DONE
+1x Crazed Alchemist                -- DONE
+2x Defender of Argus               -- DONE
+1x Loatheb                         -- DONE
+1x Dr. Boom                        -- DONE
+
+====================================
+Freeze mage Decklist:
+
+2x Ice Lance                       -- DONE
+2x Frostbolt                       -- DONE
+1x Bloodmage                       -- DONE
+2x Doomsayer                       -- DONE
+2x Loot hoarder                    -- DONE
+2x Mad Scientist                   -- DONE
+2x Arcane Intellect                -- DONE
+2x Frost Nova                      -- DONE
+2x Ice Barrier                     -- DONE
+2x Ice Block                       -- DONE
+1x Acolyte of Pain                 -- DONE
+2x Fireball                        -- DONE
+1x Antique Healbot                 -- DONE
+2x Blizzard                        -- DONE
+1x Emperor Thaurissan              -- DONE
+1x Flamestrike                     -- DONE
+1x Archmage Antonidas              -- DONE
+1x Alexstrasza                     -- DONE
+1x Pyroblast                       -- DONE
+
+====================================
+Patron warrior Decklist:
+
+1x Inner Rage                      -- DONE
+2x Execute                         -- DONE
+2x Whirlwind                       -- DONE
+2x Fiery War Axe                   -- DONE
+2x Battle Rage                     -- DONE
+2x Slam                            -- DONE
+2x Armorsmith                      -- DONE
+1x Cruel Taskmaster                -- DONE
+2x Unstable Ghoul                  -- DONE
+2x Acolyte of Pain                 -- DONE
+2x Forthing Berserker              -- DONE
+2x Warsong Commander               -- DONE
+2x Death's Bite                    -- DONE
+1x Dread Corsair                   -- DONE
+2x Gnomish Inventor                -- DONE
+2x Grim Patron                     -- DONE
+1x Emperor Thaurissan              -- DONE
+
+====================================
+Oil rogue Decklist:
+
+2x Backstab                        -- DONE
+2x Prep                            -- DONE
+2x Deadly poison                   -- DONE
+1x Southsea                        -- DONE
+2x Blade flurry                    -- DONE
+2x Evis                            -- DONE
+2x Sap                             -- DONE
+1x Bloodmage                       -- DONE
+2x Fan of Knives                   -- DONE
+2x SI7 Agent                       -- DONE
+1x Earthen Ring Farseer            -- DONE
+2x Tinker's Sharpsword Oil         -- DONE
+2x Violet Teacher                  -- DONE
+1x Healbot                         -- DONE
+2x Azure Drake                     -- DONE
+1x Loatheb                         -- DONE
+2x Sprint                          -- DONE
+1x Dr. Boom                        -- DONE
+
