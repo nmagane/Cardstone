@@ -17,7 +17,8 @@ public class Mainmenu : MonoBehaviour
     public void Start()
     {
         findMatchButton.board = resetButton.board = board;
-        SetPlayerID();
+        textbox.SetTextWithoutNotify(board.playerName);
+        SetDeck(board.saveData.selectedDeck);
         InitDecks();
     }
 
@@ -126,6 +127,7 @@ public class Mainmenu : MonoBehaviour
     internal void EditDecks()
     {
         editorMenu.GetData();
+        editorMenu.InitDecks();
         Camera.main.transform.position = new Vector3(0, 40, -10);
     }
 }

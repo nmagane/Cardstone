@@ -753,8 +753,17 @@ public partial class Board : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha0) && saveData.secret==false)
         {
             saveData.secret = true;
+            saveData.decks.Add(new SaveManager.Decklist("MALYGOS", Card.Class.Warlock, Database.Malygos_Lock));
+            mainmenu.InitDecks();
+            mainmenu.editorMenu.InitDecks();
             saveManager.SaveGame();
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            UnityEngine.Screen.SetResolution(1920, 1080, true,60);
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            UnityEngine.Screen.SetResolution(1280, 720, false,60);
+
 #if (UNITY_EDITOR)
         if (Input.GetKeyDown(KeyCode.Q) && playerID!=101)
         {

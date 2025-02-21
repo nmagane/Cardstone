@@ -5,6 +5,8 @@ First demo goal:
 Vanilla Zoo mirror.
 players in que counter in menu
 
+ ./ts3server  daemon=1 pid_file=ts3server.pid
+ 
 only way to run server in background? ctrl+z and & stops the server for some reason
 	screen -d -m -s "card server" ./cardserver.x86_64
 

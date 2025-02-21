@@ -207,5 +207,61 @@ public partial class Database
 
         Card.Cardname.Emperor_Thaurissan,
     };
+    
+    public static List<Card.Cardname> Malygos_Lock = new List<Card.Cardname>()
+    {
+        Card.Cardname.Mortal_Coil,
+        Card.Cardname.Mortal_Coil,
+
+        Card.Cardname.Soulfire,
+
+        Card.Cardname.Darkbomb,
+        Card.Cardname.Darkbomb,
+
+        Card.Cardname.Hellfire,
+        
+        Card.Cardname.Implosion,
+        Card.Cardname.Implosion,
+
+        Card.Cardname.Shadowflame,
+
+        Card.Cardname.Siphon_Soul,
+
+        Card.Cardname.Abusive_Sergeant,
+
+        Card.Cardname.Zombie_Chow,
+
+        Card.Cardname.Blackwing_Technician,
+        Card.Cardname.Blackwing_Technician,
+
+        Card.Cardname.Earthen_Ring_Farseer,
+
+        Card.Cardname.Ironbeak_Owl,
+        Card.Cardname.Ironbeak_Owl,
+
+        Card.Cardname.Big_Game_Hunter,
+
+        Card.Cardname.Defender_of_Argus,
+
+        Card.Cardname.Twilight_Drake,
+        Card.Cardname.Twilight_Drake,
+
+        Card.Cardname.Antique_Healbot,
+        Card.Cardname.Antique_Healbot,
+
+        Card.Cardname.Azure_Drake,
+        Card.Cardname.Azure_Drake,
+
+        Card.Cardname.Blackwing_Corruptor,
+        Card.Cardname.Blackwing_Corruptor,
+
+        Card.Cardname.Sludge_Belcher,
+
+        Card.Cardname.Emperor_Thaurissan,
+
+        Card.Cardname.Malygos,
+
+    };
+
 
 }

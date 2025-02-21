@@ -21,7 +21,11 @@ public partial class Board
         }
         Server.CustomMessage message = CreateMessage(Server.MessageType.Matchmaking);
         message.AddULong(playerID);
-        message.AddString(playerName);
+
+        if (playerName == "")
+            message.AddString("Player");
+        else
+            message.AddString(playerName);
 
         message.AddInts(GetDeckList(list.cards));
 

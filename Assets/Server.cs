@@ -8,8 +8,9 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Core_Hound, Card.Cardname.Darkbomb, Card.Cardname.Malygos, Card.Cardname.Twilight_Drake,Card.Cardname.Acidic_Swamp_Ooze, Card.Cardname.Ironbeak_Owl, Card.Cardname.Sunfury_Protector, Card.Cardname.Ancient_Watcher};
-    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Hellfire, Card.Cardname.Hellfire,Card.Cardname.Malygos };
+    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Hellfire, Card.Cardname.Hellfire, Card.Cardname.Malygos};
+    
     
 #else
     List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { };
@@ -425,7 +426,15 @@ public partial class Server : MonoBehaviour
 
         matchList.Remove(match);
         currentMatches.Remove(match.matchID);
-        Debug.Log($"{match.matchID}: {winner.connection.name} ({winner.connection.classType}) defeats {winner.opponent.connection.name} ({winner.opponent.connection.classType})");        clientConnections.Remove(match.players[0].connection.clientID);
+        if (winner==null)
+        {
+            Debug.Log($"{match.matchID}: {match.players[0].connection.name} ties {match.players[1].connection.name}");
+        }
+        else
+        {
+            Debug.Log($"{match.matchID}: {winner.connection.name} ({winner.connection.classType}) defeats {winner.opponent.connection.name} ({winner.opponent.connection.classType})"); 
+        }
+        clientConnections.Remove(match.players[0].connection.clientID);
         clientConnections.Remove(match.players[1].connection.clientID);
     }
     public enum Turn

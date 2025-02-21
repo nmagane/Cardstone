@@ -396,6 +396,7 @@ public class CollectionMenu : MonoBehaviour
     }
     public void ChangePage(int i=0)
     {
+        if (currState != state.DeckEdit) return;
         currPage = Mathf.Clamp(currPage + i, 0,maxPages);
         ShowCards(currPage);
     }
