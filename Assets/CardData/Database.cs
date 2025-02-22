@@ -1564,6 +1564,7 @@ public partial class Database
 
         c.MINION = true;
         c.BATTLECRY = true;
+        c.LEGENDARY = true;
 
         return c;
     }

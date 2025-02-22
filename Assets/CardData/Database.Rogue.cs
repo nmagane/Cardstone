@@ -257,6 +257,7 @@ public partial class Database
 
         c.MINION = true;
         c.COMBO = true;
+        c.LEGENDARY = true;
 
         return c;
     }
