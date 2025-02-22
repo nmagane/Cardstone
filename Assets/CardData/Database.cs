@@ -31,6 +31,8 @@ public partial class Database
         public bool COMBO = false;
         public bool COMBO_TARGETED = false; //for cards that are only targeted when combo is active (SI7)
         public bool CHOOSE = false;
+        public Card.Cardname choice1 = Card.Cardname.Cardback;
+        public Card.Cardname choice2 = Card.Cardname.Cardback;
 
         public bool LEGENDARY = false;
         public bool TOKEN = false;
@@ -46,6 +48,12 @@ public partial class Database
         }
     }
     public static CardInfo GetCardData(Card.Cardname card)
+    {
+        CardInfo info = GetCardDataInternal(card);
+        info.cardname = card;
+        return info;
+    }
+    static CardInfo GetCardDataInternal(Card.Cardname card)
     {
 
         CardInfo info = new CardInfo();
@@ -400,8 +408,6 @@ public partial class Database
                 return null;
         }
     }
-
-
     public static Card.Cardname GetClassSecret(Card.Class c)
     {
         switch(c)

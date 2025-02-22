@@ -259,5 +259,4 @@ public partial class Server
         for (int i=0;i<count;i++)
             Draw(spell.player);
     }
-
 }
