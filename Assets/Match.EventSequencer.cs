@@ -320,18 +320,42 @@ public partial class Match
         StartPhase(Phase.AfterHeroPower, ref spell);
         WinCheck();
     }
-    public void TriggerMinion(Trigger.Type type, Minion target)
+    public void TriggerMinion(Trigger.Type type, Minion target, Player source=null)
     {
         CastInfo cast = new CastInfo();
+        Trigger.Side side = Trigger.Side.Both;
+        if (source != null)
+        {
+            side = target.player == source ? Trigger.Side.Friendly : Trigger.Side.Enemy;
+        }
         cast.minion = target;
-        triggerBuffer.AddRange(target.CheckTriggers(type, Trigger.Side.Both, cast));
+        cast.player = source;
+        triggerBuffer.AddRange(target.CheckTriggers(type, side, cast));
     }
-    public void TriggerWeapon(Trigger.Type type, Weapon target)
+    public void TriggerPlayer(Trigger.Type type, Player target, Player source=null)
     {
         CastInfo cast = new CastInfo();
+        Trigger.Side side = Trigger.Side.Both;
+        if (source!=null)
+        {
+            side = target == source ? Trigger.Side.Friendly : Trigger.Side.Enemy;
+        }
+        cast.player = source;
+        triggerBuffer.AddRange(target.CheckTriggers(type, side, cast));
+    }
+   
+    public void TriggerWeapon(Trigger.Type type, Weapon target, Player source=null)
+    {
+        CastInfo cast = new CastInfo();
+        Trigger.Side side = Trigger.Side.Both;
+        if (source != null)
+        {
+            side = target.player == source ? Trigger.Side.Friendly : Trigger.Side.Enemy;
+        }
         cast.minion = target.sentinel;
         cast.weapon = target;
-        triggerBuffer.AddRange(target.CheckTriggers(type, Trigger.Side.Both, cast));
+        cast.player = source;
+        triggerBuffer.AddRange(target.CheckTriggers(type, side, cast));
     }
 
     public void AddTrigger(Trigger.Type type, CastInfo spell = null, Minion source = null, Weapon wep = null)

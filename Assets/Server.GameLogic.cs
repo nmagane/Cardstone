@@ -123,7 +123,7 @@ public partial class Server
         if (damage == 0) return;
         if (target.health + target.armor <= damage)
         {
-            match.AddTrigger(Trigger.Type.OnLethalFaceDamage, null, source);
+            match.TriggerPlayer(Trigger.Type.OnLethalFaceDamage, target, source);
             CastInfo c = new CastInfo();
             match.ResolveTriggerQueue(ref c);
         }
