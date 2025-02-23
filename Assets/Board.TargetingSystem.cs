@@ -244,6 +244,10 @@ public partial class Board
             {
                 animationManager.CancelLiftHero(targetingHero);
             }
+            foreach (var x in currHand.cardObjects.Values)
+            {
+                x.alpha = 1;
+            }
         }
         targeting = false;
         targetMode = TargetMode.None;

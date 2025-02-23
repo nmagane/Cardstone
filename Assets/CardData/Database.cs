@@ -1330,7 +1330,7 @@ public partial class Database
         CardInfo c = new();
 
         c.name = "Blackwing Corruptor";
-        c.text = "Battlecry: If you're holding a dragon, deal 5 damage.";
+        c.text = "Battlecry: If you're holding a dragon, deal 3 damage.";
 
         c.manaCost = 5;
         c.damage = 5;

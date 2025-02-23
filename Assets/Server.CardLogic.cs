@@ -210,7 +210,7 @@ public partial class Server
     {
         if (spell.player.HasTribe(Card.Tribe.Dragon) == false) return;
         var anim = new AnimationInfo(Card.Cardname.Blackwing_Corruptor, spell.player, spell.minion, spell);
-        DamageTarget(5, spell);
+        DamageTarget(3, spell);
     }
     void Twilight_Drake(CastInfo spell)
     {

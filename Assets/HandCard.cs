@@ -41,7 +41,15 @@ public class HandCard
     public Card cardObject;
     public List<Aura> auras = new List<Aura>();
     public void Set(Card.Cardname name, int ind)
-    {
+    {        
+        List<Aura> removers = new List<Aura>();
+        foreach (Aura c in auras)
+        {
+            removers.Add(c);
+        }
+        foreach (var x in removers)
+            RemoveAura(x);
+
         card = name;
         index = ind;
 
@@ -68,10 +76,8 @@ public class HandCard
 
         tribe = cardInfo.tribe;
 
-        foreach (Aura c in auras)
-        {
-            RemoveAura(c);
-        }
+
+
         foreach (Aura.Type a in cardInfo.cardAuras)
         {
             AddAura(new Aura(a));

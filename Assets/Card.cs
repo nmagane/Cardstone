@@ -301,7 +301,13 @@ public class Card : MonoBehaviour
     public void UpdateCardText()
     {
         if (card.SPELL == false) return; //no need to update non-spells
-        if (board == null) return;
+        if (board == null)
+        {
+            string m = originalText.Replace("{0}", spellDamage.ToString());
+            m = m.Replace("{1}",(comboDamage).ToString());
+            text.text = m;
+            return;
+        }
 
         int sp = (transform.parent == board.enemyPlayTip.transform) ? board.enemyHero.spellpower : board.spellpower;
         string s = originalText;
@@ -379,6 +385,7 @@ public class Card : MonoBehaviour
         EndDrag();
         board.animationManager.PlayFade(this, pos, true);
     }
+    public Coroutine HideCoroutine= null;
     public void ShowCard()
     {
         hidden = false;

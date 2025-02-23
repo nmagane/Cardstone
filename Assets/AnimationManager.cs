@@ -374,12 +374,11 @@ public partial class AnimationManager : MonoBehaviour
         Destroy(c.gameObject);
     }
 
-    Coroutine PlayFader = null;
     public void PlayFade(Card c, Vector3 location, bool hider=false)
     {
         LerpTo(c, location,10);
         LerpRotate(c.gameObject, Vector3.zero, 10);
-        PlayFader = StartCoroutine(_fadePlay(c, 0.5f,10, 5,hider));
+        c.HideCoroutine = StartCoroutine(_fadePlay(c, 0.5f,10, 5,hider));
     }
     IEnumerator _fadePlay(Card c, float target,float f = 10, int delay = 0, bool hider=false)
     {
@@ -405,10 +404,10 @@ public partial class AnimationManager : MonoBehaviour
     }
     public void Unfade(Card c)
     {
-        if (PlayFader!=null)
+        if (c.HideCoroutine!=null)
         {
-            StopCoroutine(PlayFader);
-            PlayFader = null;
+            StopCoroutine(c.HideCoroutine);
+            c.HideCoroutine = null;
         }
         StartCoroutine(_unfadeCard(c));
     }
