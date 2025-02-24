@@ -403,6 +403,9 @@ public partial class Database
             case Card.Cardname.Harrison_Jones:
                 return Harrison_Jones();
 
+            case Card.Cardname.Fatigue:
+                return Fatigue();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 return null;
@@ -482,6 +485,19 @@ public partial class Database
         c.manaCost = 0;
         c.SPELL = true;
         c.TARGETED = false;
+        c.TOKEN = true;
+
+        return c;
+    }
+    static CardInfo Fatigue()
+    { 
+        CardInfo c = new();
+
+        c.name = "Fatigue";
+        c.text = "Out of cards!\nTake {0} damage.";
+        c.manaCost = 0;
+        c.spellDamage = 1;
+        c.SPELL = true;
         c.TOKEN = true;
 
         return c;

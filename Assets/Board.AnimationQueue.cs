@@ -128,6 +128,9 @@ public partial class Board
 
             case Server.MessageType.MillCard:
                 return MillVisual(message);
+
+            case Server.MessageType.Fatigue:
+                return FatigueVisual(message);
                 
             case Server.MessageType.AddCard:
                 return AddCardVisual(message);
@@ -143,6 +146,10 @@ public partial class Board
             case Server.MessageType.RemoveSecret:
                 return RemoveSecretVisual(message);
                 
+            case Server.MessageType.AddAuraPlayer:
+            case Server.MessageType.RemoveAuraPlayer:
+                return AuraPlayerChangeVisual(message, message.type == Server.MessageType.RemoveAuraPlayer);
+
             case Server.MessageType.AddAura:
                 return AddAuraVisual(message);
                 
@@ -565,6 +572,23 @@ public partial class Board
         return StartCoroutine(Wait(15));
     }
 
+    Coroutine FatigueVisual(VisualInfo message)
+    {
+        Card.Cardname card = Card.Cardname.Fatigue;
+        bool friendly = message.isFriendly;
+        Card c = CreateCard();
+        c.GetComponent<BoxCollider2D>().enabled = false;
+        c.transform.parent = deck.transform.parent;
+        c.Set(new HandCard(card, 0));
+        c.UpdateCardText(message.damage);
+        c.transform.localPosition = (friendly) ? deck.transform.localPosition : enemyDeck.transform.localPosition;
+        c.SetFlipped();
+        c.Flip();
+        animationManager.MillAnim(c, friendly);
+
+        return StartCoroutine(Wait(15));
+    }
+
     Coroutine ConfirmHeroPowerVisual(VisualInfo message)
     {
         
@@ -592,6 +616,22 @@ public partial class Board
         if (message.minions[0].creature == null) return null;
         message.minions[0].creature.CheckAuras();
         CheckHighlights();
+        return null;
+    }
+    Coroutine AuraPlayerChangeVisual(VisualInfo message, bool remove)
+    {
+        bool state = !remove;
+        Aura.Type type = (Aura.Type)message.ints[0];
+        Hero hero = message.isFriendly ? currHero : enemyHero;
+        switch (type)
+        {
+            case Aura.Type.Freeze:
+                hero.FREEZE = state;
+                break;
+            case Aura.Type.Immune:
+                hero.IMMUNE = state;
+                break;
+        }
         return null;
     }
 

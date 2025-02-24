@@ -9,7 +9,7 @@ public partial class Server : MonoBehaviour
     public NetworkHandler mirror;
 #if UNITY_EDITOR
     List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Ice_Lance, Card.Cardname.Ice_Lance,Card.Cardname.Doomguard, Card.Cardname.Inner_Rage};
-    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Ice_Barrier, Card.Cardname.Ice_Barrier, Card.Cardname.Ice_Barrier };
+    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Ice_Lance, Card.Cardname.Ice_Lance, Card.Cardname.Ice_Block, Card.Cardname.Ice_Block };
     
     
 #else
@@ -100,6 +100,10 @@ public partial class Server : MonoBehaviour
         AddSecret,
         RemoveSecret,
         TriggerSecret,
+
+        Fatigue,
+        TransformMinion,
+        StealMinion,
 
         Concede,
 
@@ -1233,6 +1237,20 @@ public partial class Server : MonoBehaviour
         message.AddBool(card.TARGETED);
 
         SendMessage(message, owner);
+    }
+    public void Fatigue(Match match, Player player)
+    {
+        CustomMessage messageOwner = CreateMessage(MessageType.Fatigue);
+        CustomMessage messageOpponent = CreateMessage(MessageType.Fatigue);
+
+        messageOwner.AddBool(true);
+        messageOpponent.AddBool(false);
+
+        messageOwner.AddInt(player.fatigue);
+        messageOpponent.AddInt(player.fatigue);
+
+        SendMessage(messageOwner, player);
+        SendMessage(messageOpponent, player.opponent);
     }
     public void MillCard(Match match, Player player)
     {

@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using TMPro;
+using System;
 
 public partial class Board : MonoBehaviour
 {
@@ -395,6 +396,11 @@ public partial class Board : MonoBehaviour
                 int millCardName = message.GetInt();
                 MillCard(millFriendly, (Card.Cardname)millCardName);
                 break;
+            case Server.MessageType.Fatigue:
+                bool fatigueFriendly = message.GetBool();
+                int fatigueDamage = message.GetInt();
+                Fatigue(fatigueFriendly, fatigueDamage);
+                break;
             case Server.MessageType.ConfirmHeroPower:
                 bool heroPowerFriendly = message.GetBool();
                 ConfirmHeroPower(heroPowerFriendly);
@@ -739,6 +745,15 @@ public partial class Board : MonoBehaviour
         QueueAnimation(anim);
     }
 
+    private void Fatigue(bool fatigueFriendly, int fatigueDamage)
+    {
+        VisualInfo anim = new();
+        anim.type = Server.MessageType.Fatigue;
+        anim.isFriendly = fatigueFriendly;
+        anim.damage = fatigueDamage;
+        QueueAnimation(anim);
+    }
+
 
     public bool IsFriendly(Minion m)
     {
@@ -752,15 +767,6 @@ public partial class Board : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha0) && saveData.secret==false)
-        {
-            saveData.secret = true;
-            saveData.decks.Add(new SaveManager.Decklist("MALYGOS", Card.Class.Warlock, Database.Malygos_Lock));
-            mainmenu.InitDecks();
-            mainmenu.editorMenu.InitDecks();
-            saveManager.SaveGame();
-        }
-
         if (Input.GetKeyDown(KeyCode.Alpha1))
             UnityEngine.Screen.SetResolution(1920, 1080, true,60);
         if (Input.GetKeyDown(KeyCode.Alpha2))

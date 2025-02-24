@@ -105,13 +105,9 @@ public class CollectionMenu : MonoBehaviour
     {
         cardData.Clear();
         neutralData.Clear();
-        List<Card.Cardname> secretCards = new List<Card.Cardname>(){ Card.Cardname.Malygos,Card.Cardname.Blackwing_Technician,Card.Cardname.Blackwing_Corruptor};
+       
         for (int i = 1; i < (int)Card.Cardname._COUNT; i++)
         {
-            if (secretCards.Contains((Card.Cardname)i) && board.saveData.secret==false)
-            {
-                continue;
-            }
             var c = Database.GetCardData((Card.Cardname)i);
             if (c == null) continue;
             if (c.TOKEN) continue;

@@ -60,11 +60,13 @@ Mechanics for next demo:
 
 - freeze and immune auras appear out of order. but only on receiving side HERO.. need auraconfirm message..
 
--fatigue anim
+-simple play history, updated in visual que? confirm trigger/battlecry would have to include targets in message
 
 ===============================================
 =====================DONE======================
 ================================================ 
+-fatigue anim
+
 
 - EDWIN + TEACHER HIT FACE, SECRET ANIM - EDWIN HIT DIDNT GO OFF, TOO FAST? or hitbox too small?
 

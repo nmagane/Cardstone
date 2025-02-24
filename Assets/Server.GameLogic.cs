@@ -146,6 +146,9 @@ public partial class Server
     {
         target.fatigue++;
 
+        Fatigue(match, target);
+        var anim = new AnimationInfo(Card.Cardname.Fatigue, target, target);
+
         DamageFace(match, target, target.fatigue, target);
     }
     public void SetHealth(Match match, Minion minion, int value)

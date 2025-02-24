@@ -512,16 +512,13 @@ public partial class Board
     }
     private void AuraPlayerChange(bool friendly, Aura.Type type, bool remove)
     {
-        Hero h = friendly ? currHero : enemyHero;
-        switch (type)
-        {
-            case Aura.Type.Freeze:
-                h.FREEZE = !remove;
-                break;
-            case Aura.Type.Immune:
-                h.IMMUNE = !remove;
-                break;
-        }
+
+        VisualInfo anim = new();
+        anim.type = remove? Server.MessageType.RemoveAuraPlayer:Server.MessageType.AddAuraPlayer;
+        anim.isFriendly = friendly;
+        anim.ints.Add((int)type);
+
+        QueueAnimation(anim);
     }
     void ConfirmAnimation(AnimationInfo animInfo, bool friendly)
     {

@@ -30,7 +30,6 @@ public class SaveManager : MonoBehaviour
         public string playerName = "";
         public List<Decklist> decks = new List<Decklist>();
         public int selectedDeck = 0;
-        public bool secret = false;
         public GameSave()
         {
             playerName = "";

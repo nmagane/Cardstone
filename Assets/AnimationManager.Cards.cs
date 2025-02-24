@@ -238,6 +238,9 @@ public partial class AnimationManager
 
             case Card.Cardname.Siphon_Soul:
                 return StartCoroutine(Siphon_Soul(data));
+
+            case Card.Cardname.Fatigue:
+                return StartCoroutine(SmokeTrailProjectile(data));
             default:
                 Debug.LogWarning("Animation Unimplemented? " + data.card);
                 return null;
@@ -310,7 +313,11 @@ public partial class AnimationManager
     {
         GameObject p = CreateEffect(Effect.fireballBig);
 
-        p.transform.localPosition = data.GetSourcePos();
+        if (data.card==Card.Cardname.Fatigue)
+        {
+            p.transform.localPosition = data.friendly ? board.deck.transform.localPosition : board.enemyDeck.transform.localPosition;
+        }
+        else p.transform.localPosition = data.GetSourcePos();
         Vector3 targetPos = data.GetTargetPos();
         p.transform.localScale = Vector3.zero;
         List<Effect> smokes = new List<Effect>() { Effect.smoke0, Effect.smoke1, Effect.smoke2, Effect.smoke3 };

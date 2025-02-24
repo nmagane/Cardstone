@@ -199,6 +199,8 @@ public class Card : MonoBehaviour
         Harrison_Jones,
         Shade_of_Naxxrammas,
 
+        Fatigue,
+
         _COUNT,
     }
 
@@ -316,7 +318,11 @@ public class Card : MonoBehaviour
         s = s.Replace("{1}", (sp>0?"(":"")+(comboDamage+sp).ToString() + (sp > 0 ? ")" : ""));
         text.text = s;
     }
-
+    public void UpdateCardText(int customSP)
+    {
+        string s = originalText.Replace("{0}", customSP.ToString());
+        text.text = s;
+    }
     public void UpdateManaCost(bool noAnim =false)
     {
         if (card.manaCost!=_manaCost && !noAnim)
