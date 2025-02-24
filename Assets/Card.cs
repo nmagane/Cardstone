@@ -769,6 +769,7 @@ public class Card : MonoBehaviour
         icon.sortingOrder = x+1;
         back.sortingOrder = x;
         highlight.sortingOrder = x;
+        mulliganMark.sortingOrder = x+2;
         name.GetComponent<MeshRenderer>().sortingOrder = x + 1;
         text.GetComponent<MeshRenderer>().sortingOrder = x + 1;
         manaCost.GetComponent<MeshRenderer>().sortingOrder = x + 1;
