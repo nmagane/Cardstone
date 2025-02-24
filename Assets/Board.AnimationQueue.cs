@@ -397,19 +397,22 @@ public partial class Board
 
     Coroutine PreAttackMinionVisual(VisualInfo message)
     {
-        return animationManager.PreAttackMinion(message.creatures[0], message.vectors[0]);
+        if (message.minions.Count > 1) message.vectors.Insert(0, message.minions[1].creature.transform.localPosition);
+        return animationManager.PreAttackMinion(message.minions[0].creature, message.vectors[0]);
     }
     Coroutine ConfirmAttackMinionVisual(VisualInfo message)
     {
-        if (message.minions.Count > 0) message.vectors.Insert(0, message.minions[0].creature.transform.localPosition);
-        return animationManager.ConfirmAttackMinion(message.creatures[0], message.vectors[0]);
+        if (message.minions.Count > 1) message.vectors.Insert(0, message.minions[1].creature.transform.localPosition);
+        return animationManager.ConfirmAttackMinion(message.minions[0].creature, message.vectors[0]);
     }
     Coroutine PreSwingVisual(VisualInfo message)
     {
+        if (message.minions.Count > 0) message.vectors.Insert(0, message.minions[0].creature.transform.localPosition);
         return animationManager.PreSwing(message.isFriendly? currHero:enemyHero, message.vectors[0]);
     }
     Coroutine ConfirmSwingVisual(VisualInfo message)
     {
+        if (message.minions.Count > 0) message.vectors.Insert(0, message.minions[0].creature.transform.localPosition);
         return animationManager.ConfirmSwing(message.isFriendly ? currHero : enemyHero, message.vectors[0]);
     }
 

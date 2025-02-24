@@ -11,7 +11,7 @@ only way to run server in background? ctrl+z and & stops the server for some rea
 	screen -d -m -s "card server" ./cardserver.x86_64
 
 todo: 
-	
+rare bug when sequencing a ton of stuff at once in <5 frames? not sure if its a disconnect from pausing in editor. Impossible to replicate by humans.
 auras in hover tooltip
 replace all fade effects with some shader (FAR FUTURE TODO)
 get a new color pallette this shit sucks ( future todo )
@@ -22,6 +22,8 @@ creature floating should hit scale vector3.one?
 
 --board.phaseOngoing bool or something to disable input until server sends "sequence over" message?
 
+
+castinfo.redirect(minion/player) function
 
 - weapon class colors?
 
@@ -55,18 +57,25 @@ Mechanics for next demo:
 
 - rope (chess timer?)
 
-castinfo.redirect(minion/player) function
 
-- playing minion during a secret attack pause causes overlap position
+- freeze and immune auras appear out of order. but only on receiving side HERO.. need auraconfirm message..
 
-- EDWIN + TEACHER HIT FACE, SECRET ANIM - EDWIN HIT DIDNT GO OFF, TOO FAST?
-
-- own iceblock pops if enemy firbealls self?
--milled cards sp formatting
+-fatigue anim
 
 ===============================================
 =====================DONE======================
 ================================================ 
+
+- EDWIN + TEACHER HIT FACE, SECRET ANIM - EDWIN HIT DIDNT GO OFF, TOO FAST? or hitbox too small?
+
+- playing minion during a secret attack pause causes overlap position
+
+-error when attacking with doomguard too fast while secret anim is going (while its still preplay?)
+confirm preattack and attack messages cant find creature obj in dictionary
+
+- own iceblock pops if enemy firbealls self?
+
+-milled cards sp formatting
 - Vancleef/shiv/step
 
 - CARD IN HAND COUNTER

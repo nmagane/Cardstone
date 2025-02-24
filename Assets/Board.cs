@@ -606,7 +606,7 @@ public partial class Board : MonoBehaviour
 
         if (friendly)
         {
-            diff = hp - currHero.health;
+            diff = (hp+armor) - (currHero.health+currHero.armor);
 
             currHero.SetHealth(hp);
             deck.Set(deckCount);
@@ -632,7 +632,7 @@ public partial class Board : MonoBehaviour
         }
         else
         {
-            diff = hp - enemyHero.health;
+            diff = (hp + armor) - (enemyHero.health + enemyHero.armor);
 
             enemyHero.SetHealth(hp);
             enemyDeck.Set(deckCount);

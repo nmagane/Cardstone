@@ -283,15 +283,13 @@ public partial class Board
         Minion attacker = allyAttack ? currMinions[attackerIndex] : enemyMinions[attackerIndex];
         Minion target = allyAttack ? enemyMinions[targetIndex] : currMinions[targetIndex];
 
-        Creature atkCreature = allyAttack ? currMinions.minionObjects[attacker] : enemyMinions.minionObjects[attacker];
-        Creature tarCreature = allyAttack ? enemyMinions.minionObjects[target] : currMinions.minionObjects[target];
-
         CheckHighlights();
 
         VisualInfo anim = new VisualInfo();
         anim.type = Server.MessageType.ConfirmPreAttackMinion;
-        anim.creatures.Add(atkCreature);
-        anim.vectors.Add(tarCreature.transform.localPosition);
+        anim.minions.Add(attacker);
+        anim.minions.Add(target);
+        //anim.vectors.Add(tarCreature.transform.localPosition);
 
         QueueAnimation(anim);
 
@@ -302,10 +300,7 @@ public partial class Board
     {
         
         Minion attacker = allyAttack ? currMinions[attackerIndex] : enemyMinions[attackerIndex];
-        Creature atkCreature = allyAttack ? currMinions.minionObjects[attacker] : enemyMinions.minionObjects[attacker];
-
         Minion target = allyAttack && !friendlyFire ? enemyMinions[targetIndex] : currMinions[targetIndex];
-        //Creature tarCreature = allyAttack && !friendlyFire ? enemyMinions.minionObjects[target] : currMinions.minionObjects[target];
 
         if (allyAttack)
         {
@@ -317,9 +312,8 @@ public partial class Board
 
         VisualInfo anim = new VisualInfo();
         anim.type = Server.MessageType.ConfirmAttackMinion;
-        anim.creatures.Add(atkCreature);
+        anim.minions.Add(attacker);
         anim.minions.Add(target);
-        //anim.vectors.Add(tarCreature.transform.localPosition);
 
         QueueAnimation(anim);
 
@@ -329,13 +323,13 @@ public partial class Board
     public Coroutine ConfirmPreAttackFace(bool allyAttack, int attackerIndex)
     {
         Minion attacker = allyAttack ? currMinions[attackerIndex] : enemyMinions[attackerIndex];
-        Creature atkCreature = allyAttack ? currMinions.minionObjects[attacker] : enemyMinions.minionObjects[attacker];
+       // Creature atkCreature = allyAttack ? currMinions.minionObjects[attacker] : enemyMinions.minionObjects[attacker];
         Hero tar = allyAttack ? enemyHero : currHero;
 
 
         VisualInfo anim = new VisualInfo();
         anim.type = Server.MessageType.ConfirmPreAttackMinion;
-        anim.creatures.Add(atkCreature);
+        anim.minions.Add(attacker);
         anim.vectors.Add(tar.transform.localPosition);
 
         QueueAnimation(anim);
@@ -346,7 +340,7 @@ public partial class Board
     public Coroutine ConfirmAttackFace(bool allyAttack, int attackerIndex, bool canAttack, bool friendlyFire)
     {
         Minion attacker = allyAttack ? currMinions[attackerIndex] : enemyMinions[attackerIndex];
-        Creature atkCreature = allyAttack ? currMinions.minionObjects[attacker] : enemyMinions.minionObjects[attacker];
+        //Creature atkCreature = allyAttack ? currMinions.minionObjects[attacker] : enemyMinions.minionObjects[attacker];
         Hero tar = allyAttack && !friendlyFire ? enemyHero : currHero;
         if (allyAttack)
         {
@@ -355,7 +349,7 @@ public partial class Board
 
         VisualInfo anim = new VisualInfo();
         anim.type = Server.MessageType.ConfirmAttackFace;
-        anim.creatures.Add(atkCreature);
+        anim.minions.Add(attacker);
         anim.vectors.Add(tar.transform.localPosition);
 
         QueueAnimation(anim);
@@ -368,14 +362,13 @@ public partial class Board
         Hero attacker = allyAttack ? currHero : enemyHero;
         Minion target = allyAttack ? enemyMinions[targetIndex] : currMinions[targetIndex];
 
-        Creature tarCreature = allyAttack ? enemyMinions.minionObjects[target] : currMinions.minionObjects[target];
-
         CheckHighlights();
 
         VisualInfo anim = new VisualInfo();
         anim.type = Server.MessageType.ConfirmPreSwingMinion;
         anim.isFriendly = allyAttack;
-        anim.vectors.Add(tarCreature.transform.localPosition);
+        anim.minions.Add(target);
+        //anim.vectors.Add(tarCreature.transform.localPosition);
 
         QueueAnimation(anim);
     }
@@ -384,8 +377,7 @@ public partial class Board
         Hero attacker = allyAttack ? currHero : enemyHero;
 
         Minion target = allyAttack && !friendlyFire ? enemyMinions[targetIndex] : currMinions[targetIndex];
-        Creature tarCreature = allyAttack && !friendlyFire ? enemyMinions.minionObjects[target] : currMinions.minionObjects[target];
-        
+      
         if (allyAttack)
         {
             attacker.canAttack = canAttack;
@@ -395,7 +387,8 @@ public partial class Board
         VisualInfo anim = new VisualInfo();
         anim.type = Server.MessageType.ConfirmSwingMinion;
         anim.isFriendly = allyAttack;
-        anim.vectors.Add(tarCreature.transform.localPosition);
+        anim.minions.Add(target);
+        //anim.vectors.Add(tarCreature.transform.localPosition);
 
         QueueAnimation(anim);
     }

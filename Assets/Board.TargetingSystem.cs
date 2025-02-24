@@ -391,12 +391,22 @@ public partial class Board
 
     public void StartTargetingAnim(MonoBehaviour source)
     {
+        foreach (SecretDisplay s in enemyHero.secrets)
+        {
+            s.GetComponent<BoxCollider2D>().enabled = false;
+        }
+
         CheckHighlights();
         StartCoroutine(_animActive(source.gameObject));
     }
     public void EndTargetingAnim()
     {
         HideSkulls();
+        foreach (SecretDisplay s in enemyHero.secrets)
+        {
+            s.GetComponent<BoxCollider2D>().enabled = true;
+        }
+
         activeTargetingAnim = false;
     }
 

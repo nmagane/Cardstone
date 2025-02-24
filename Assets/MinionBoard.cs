@@ -4,6 +4,7 @@ using Riptide;
 using System.Reflection;
 using UnityEngine;
 using Mirror.BouncyCastle.Bcpg;
+using System.Net.Security;
 [Serializable]
 public class MinionBoard
 {
@@ -313,6 +314,11 @@ public class MinionBoard
 
     public void MoveCreature(Creature c, Vector3 location)
     {
+        c.boardPos = location;
+        if (c.isElevated)
+        {
+            location = new Vector3(location.x, c.transform.localPosition.y);
+        }
         float bounce = 0.1f;
 
         if (Vector3.Distance(c.transform.localPosition,location)< 0.2f)
