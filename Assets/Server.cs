@@ -308,6 +308,7 @@ public partial class Server : MonoBehaviour
         pc.classType = (Card.Class)classType;
         pc.name = name;
         pc.deck = deck;
+        Debug.Log($"{name} entered the queue.");
         playerQueue.Add(pc);
 
         //MatchmakingLogic();

@@ -57,7 +57,7 @@ Mechanics for next demo:
 
 - rope (chess timer?)
 
-- simple play history, updated in visual que? confirm trigger/battlecry would have to include targets in message
+- simple play history, updated in visual que? confirm play/trigger/battlecry would have to include targets in message
 
 ===============================================
 =====================DONE======================
