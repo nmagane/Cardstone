@@ -13,12 +13,19 @@ public class HistoryElement : MonoBehaviour
     public Board board;
     public SpriteRenderer icon;
     public SpriteRenderer background;
+    public SpriteRenderer frame;
+    public Sprite enemyFrame;
     public Card.Cardname card;
-    public void Set(Card.Cardname card)
+    public Type type;
+    public void Set(Card.Cardname card, bool friendly, Type type)
     {
         this.card = card;
+        if (!friendly) frame.sprite = enemyFrame;
+        this.type = type;
+
         Database.CardInfo info = Database.GetCardData(card);
         background.sprite = board.minionObject.GetComponent<Creature>().frameSprites[(int)info.classType];
         icon.sprite = board.cardObject.GetComponent<Card>().cardSprites[(int)card];
+
     }
 }

@@ -16,6 +16,7 @@ public partial class Board : MonoBehaviour
     public UIButton endTurnButton;
     public GameObject waitingEnemyMulliganMessage;
     public SpriteRenderer secretPopup;
+    public HistoryManager history;
 
     public Card hoveredCard = null;
     public BoardSide hoveredSide = null;

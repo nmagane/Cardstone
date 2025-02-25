@@ -300,6 +300,10 @@ public partial class Board
 
     Coroutine PlayCardVisual(VisualInfo message)
     {
+        history.AddElement(message.names[0], message.isFriendly, HistoryElement.Type.Play);
+
+        if (message.isFriendly) return null;
+
         Hand h = message.isFriendly ? currHand : enemyHand;
         bool wep = Database.GetCardData(message.names[0]).WEAPON;
         h.RemoveCard(message.handCards[0], Hand.RemoveCardType.Play, message.names[0],message.index,-1,wep);
@@ -307,18 +311,8 @@ public partial class Board
         if (message.isFriendly == false)
         {
             ShowEnemyPlay(message.names[0], message.manaCost);
-            //enemyMana.Spend(message.manaCost);
-        }
-        else
-        {
-            //mana.Spend(message.manaCost);
         }
 
-
-        if (message.isFriendly && currMinions.previewMinion != null && currMinions.currPreview == message.index)
-        {
-            if (currMinions.previewMinion.index == message.index) return null;
-        }
         return StartCoroutine(Wait(8));
     }
     Coroutine DiscardVisual(VisualInfo message)

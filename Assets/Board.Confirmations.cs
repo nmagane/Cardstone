@@ -251,7 +251,16 @@ public partial class Board
 
     public void ConfirmPlayCard(bool friendlySide, int index, int manaCost, Card.Cardname card, int pos)
     {
-        if (friendlySide) return;
+        if (friendlySide)
+        {
+            VisualInfo animFriendly = new VisualInfo();
+            animFriendly.type = Server.MessageType.PlayCard;
+            animFriendly.names.Add(card);
+            animFriendly.isFriendly = friendlySide;
+            QueueAnimation(animFriendly);
+
+            return;
+        }
 
         HandCard hc = null;
         if (friendlySide == false)

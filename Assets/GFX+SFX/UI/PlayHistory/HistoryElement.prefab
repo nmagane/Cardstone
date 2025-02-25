@@ -51,6 +51,8 @@ MonoBehaviour:
   board: {fileID: 0}
   icon: {fileID: 821025751548931741}
   background: {fileID: 8026115646264842816}
+  frame: {fileID: 821025751507602881}
+  enemyFrame: {fileID: 21300000, guid: 88f9b6a52354e0342befed130cf703ac, type: 3}
   card: 0
 --- !u!212 &821025751507602881
 SpriteRenderer:

@@ -10,14 +10,14 @@ public class HistoryManager : MonoBehaviour
     public List<HistoryElement> elements = new List<HistoryElement>();
 
 
-    public void AddElement(Card.Cardname card, HistoryElement.Type type)
+    public void AddElement(Card.Cardname card,bool friendly, HistoryElement.Type type)
     {
         HistoryElement newElem = Instantiate(elementObject).GetComponent<HistoryElement>();
         newElem.transform.parent = this.transform;
         newElem.transform.localScale = Vector3.zero;
         newElem.transform.localPosition = new Vector3(0, 3.75f);
         newElem.board = board;
-        newElem.Set(card);
+        newElem.Set(card,friendly,type);
         elements.Insert(0,newElem);
         if (elements.Count > 6)
         {
@@ -36,7 +36,7 @@ public class HistoryManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
-            AddElement((Card.Cardname)Random.Range(10, 30), HistoryElement.Type.Play);
+            AddElement((Card.Cardname)Random.Range(10, 30), true,HistoryElement.Type.Play);
         }
     }
 }
