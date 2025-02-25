@@ -32,8 +32,12 @@ public class HandCard
     public bool WEAPON = false;
 
     public bool TARGETED = false;
+
     public bool COMBO_TARGETED = false;
     public bool COMBO = false;
+
+    public bool CHOOSE = false;
+
     public bool BATTLECRY = false;
 
     public bool played = false;
@@ -71,6 +75,8 @@ public class HandCard
         BATTLECRY = cardInfo.BATTLECRY;
         COMBO = cardInfo.COMBO;
         COMBO_TARGETED = cardInfo.COMBO_TARGETED;
+
+        CHOOSE = cardInfo.CHOOSE;
 
         eligibleTargets = cardInfo.eligibleTargets;
 

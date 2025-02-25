@@ -455,7 +455,12 @@ public class Card : MonoBehaviour
         if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED == false)
         {
             //UNTARGETED NON-MINION
-            board.PlayCard(card);
+            if (card.CHOOSE)
+            {
+
+            }
+            else 
+                board.PlayCard(card);
             return;
         }
 
@@ -488,6 +493,19 @@ public class Card : MonoBehaviour
             EndDrag();
             return;
         }
+    }
+
+    public void StartChoice()
+    {
+
+    }
+    public void ChooseOption(int x)
+    {
+
+    }
+    public void CancelChoice()
+    {
+
     }
 
     int FindMinionPosition()

@@ -10,7 +10,7 @@ public class HistoryManager : MonoBehaviour
     public List<HistoryElement> elements = new List<HistoryElement>();
 
 
-    public void AddElement(Card.Cardname card,bool friendly, HistoryElement.Type type)
+    public void AddElement(Card.Cardname card,bool friendly, HistoryElement.Type type, List<Creature> targetCreatures = null, List<Hero> targetHeroes = null)
     {
         HistoryElement newElem = Instantiate(elementObject).GetComponent<HistoryElement>();
         newElem.transform.parent = this.transform;

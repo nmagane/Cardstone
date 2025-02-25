@@ -17,6 +17,8 @@ public class HistoryElement : MonoBehaviour
     public Sprite enemyFrame;
     public Card.Cardname card;
     public Type type;
+    public List<Minion> targetMinions;
+    public List<Hero> targetHeroes;
     public void Set(Card.Cardname card, bool friendly, Type type)
     {
         this.card = card;
