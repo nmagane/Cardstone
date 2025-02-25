@@ -8,8 +8,8 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Ice_Lance, Card.Cardname.Ice_Lance,Card.Cardname.Doomguard, Card.Cardname.Inner_Rage};
-    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Ice_Lance, Card.Cardname.Ice_Lance, Card.Cardname.Ice_Block, Card.Cardname.Ice_Block };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Wrath, Card.Cardname.Wrath, Card.Cardname.Ice_Lance };
+    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Ice_Lance };
     
     
 #else
@@ -336,7 +336,10 @@ public partial class Server : MonoBehaviour
                 removers.Add(c);
         }
         foreach (PlayerConnection c in removers)
+        {
+            Debug.Log($"{c.name} left the queue.");
             playerQueue.Remove(c);
+        }
 
         //if player is in game
         if (clientConnections.ContainsKey(clientID) == false)

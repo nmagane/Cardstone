@@ -405,6 +405,13 @@ public partial class Database
 
             case Card.Cardname.Fatigue:
                 return Fatigue();
+                
+            case Card.Cardname.Wrath:
+                return Wrath();
+            case Card.Cardname.Wrath_Big:
+                return Wrath_Big(); 
+            case Card.Cardname.Wrath_Small:
+                return Wrath_Small();
 
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);

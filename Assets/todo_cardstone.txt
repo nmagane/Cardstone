@@ -46,7 +46,8 @@ change button gfx to not be fishlike
 
 Mechanics for next demo:
 = Choose one cards + Druid deck: https://www.hearthpwn.com/decks/232369-superdiogos-legendary-druid-top-50-eu 
-	=Transform Minion messages
+	-disable all inputs/highlights while choosing
+	-Transform Minion messages
 
 = Secret removal without trigger (Flare)
 = Overload
@@ -58,6 +59,7 @@ Mechanics for next demo:
 - rope (chess timer?)
 
 - simple play history, updated in visual que? confirm play/trigger/battlecry would have to include targets in message
+- deck counter color change
 
 ===============================================
 =====================DONE======================

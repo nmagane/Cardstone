@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -201,6 +202,10 @@ public class Card : MonoBehaviour
 
         Fatigue,
 
+        Wrath,
+        Wrath_Big,
+        Wrath_Small,
+
         _COUNT,
     }
 
@@ -237,6 +242,7 @@ public class Card : MonoBehaviour
 
     int spellDamage = 0;
     int comboDamage = 0;
+    List<Card.Cardname> choiceList = new List<Cardname>();
     public void Set(HandCard c)
     {
         card = c;
@@ -261,6 +267,11 @@ public class Card : MonoBehaviour
         _manaCost = c.manaCost;
         spellDamage = cardInfo.spellDamage;
         comboDamage = cardInfo.comboSpellDamage;
+        if (cardInfo.CHOOSE)
+        {
+            choiceList.Add(cardInfo.choice1);
+            choiceList.Add(cardInfo.choice2);
+        }
         if (c.tribe != Tribe.None)
         {
             tribe.text = c.tribe.ToString();
@@ -457,7 +468,8 @@ public class Card : MonoBehaviour
             //UNTARGETED NON-MINION
             if (card.CHOOSE)
             {
-
+                StartChoice(choiceList);
+                HideCard(this.transform.position);
             }
             else 
                 board.PlayCard(card);
@@ -495,9 +507,25 @@ public class Card : MonoBehaviour
         }
     }
 
-    public void StartChoice()
+    List<Choice> currChoices = new();
+    public void StartChoice(List<Card.Cardname> choices)
     {
+        float dist = 8;
+        float count = choices.Count;
+        Vector3 offset = new Vector3(-((count - 1) / 2f * dist), 0);
 
+        int i = 0;
+        foreach (var card in choices)
+        {
+            Choice c = Instantiate(board.choiceObject).GetComponent<Choice>();
+            c.transform.parent = transform.parent;
+            c.transform.localScale = Vector3.one * 1.75f;
+            c.Set(i, card, this);
+            c.transform.localPosition = offset + new Vector3(dist * i, 0, -3);
+
+            i++;
+            currChoices.Add(c);
+        }
     }
     public void ChooseOption(int x)
     {
@@ -505,7 +533,22 @@ public class Card : MonoBehaviour
     }
     public void CancelChoice()
     {
-
+        foreach (Choice c in currChoices)
+        {
+            Destroy(c.gameObject);
+        }
+        currChoices.Clear();
+        EndPlay();
+    }
+    private void Update()
+    {
+        if (currChoices.Count > 0)
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                CancelChoice();
+            }
+        }
     }
 
     int FindMinionPosition()
@@ -613,6 +656,7 @@ public class Card : MonoBehaviour
             return;
         }
         if (dragCoroutine != null|| board.playingCard == this) return;
+        if (board.playingCard != null && board.playingCard!=this) return;
         if (board.currHand.mulliganMode != Hand.MulliganState.Done) return;
         if (card.played) return;
         if (board.disableInput) return;

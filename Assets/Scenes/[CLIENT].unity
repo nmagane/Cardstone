@@ -3251,6 +3251,7 @@ MonoBehaviour:
   enemySide: {fileID: 1683278172}
   cardObject: {fileID: 4505397687313927827, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
   minionObject: {fileID: 6155155200194002578, guid: 79fc45fb48031eb4d87233bb4c886ce1, type: 3}
+  choiceObject: {fileID: 8959673603964463656, guid: a3f262174c7ecda4cbf6a33a6da72766, type: 3}
   UISprite: {fileID: 3855120183959039949, guid: 2fa7455c809adff4eaa1c42fbb7453cd, type: 3}
   splashObject: {fileID: 6159032695919385113, guid: a3261918d5809f846a6ef34ce4304938, type: 3}
   playerID: 100
@@ -3339,6 +3340,7 @@ MonoBehaviour:
     TARGETED: 0
     COMBO_TARGETED: 0
     COMBO: 0
+    CHOOSE: 0
     BATTLECRY: 0
     played: 0
     cardObject: {fileID: 0}
@@ -5683,6 +5685,7 @@ MonoBehaviour:
   enemySide: {fileID: 1979287438}
   cardObject: {fileID: 4505397687313927827, guid: 4463d03a43600a744ae70e4773d7debe, type: 3}
   minionObject: {fileID: 6155155200194002578, guid: 79fc45fb48031eb4d87233bb4c886ce1, type: 3}
+  choiceObject: {fileID: 8959673603964463656, guid: a3f262174c7ecda4cbf6a33a6da72766, type: 3}
   UISprite: {fileID: 3855120183959039949, guid: 2fa7455c809adff4eaa1c42fbb7453cd, type: 3}
   splashObject: {fileID: 6159032695919385113, guid: a3261918d5809f846a6ef34ce4304938, type: 3}
   playerID: 101
@@ -5771,6 +5774,7 @@ MonoBehaviour:
     TARGETED: 0
     COMBO_TARGETED: 0
     COMBO: 0
+    CHOOSE: 0
     BATTLECRY: 0
     played: 0
     cardObject: {fileID: 0}

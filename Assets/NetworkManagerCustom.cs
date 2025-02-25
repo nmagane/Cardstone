@@ -78,7 +78,9 @@ public class NetworkManagerCustom : NetworkManager
     private void ClientHandleConnect()
     {
         Board.Instance.ConfirmConnection();
+#if (UNITY_EDITOR)
         Board.InstanceTest.ConfirmConnection();
+#endif
     }
     private void ClientHandleDisconnect()
     {

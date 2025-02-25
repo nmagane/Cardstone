@@ -11,7 +11,7 @@ public class NetworkHandler : NetworkBehaviour
     public bool CLIENT = false;
     public bool SERVER = false;
 #if UNITY_EDITOR
-    string serverAddress = "127.0.0.1";
+    string serverAddress = "localhost";
 #else
     string serverAddress = "161.35.25.172";
 #endif

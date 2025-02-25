@@ -28,6 +28,7 @@ public partial class Board : MonoBehaviour
 
     public GameObject cardObject;
     public GameObject minionObject;
+    public GameObject choiceObject;
     public GameObject UISprite;
     public GameObject splashObject;
 
