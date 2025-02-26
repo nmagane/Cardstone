@@ -60,8 +60,10 @@ Mechanics for next demo:
 
 - simple play history, updated in visual que? confirm play/trigger/battlecry would have to include targets in message
 - deck counter color change
+
 - stop the insta-targeting on choose cards (dragtargeting = false)
 - set board eligible targets according to the new choice spell, not the original card
+- change choice1 and choice2 to list of choicecards.
 
 ===============================================
 =====================DONE======================

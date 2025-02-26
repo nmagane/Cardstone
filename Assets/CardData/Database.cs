@@ -413,6 +413,13 @@ public partial class Database
             case Card.Cardname.Wrath_Small:
                 return Wrath_Small();
 
+            case Card.Cardname.Ancient_of_War:
+                return Ancient_of_War();
+            case Card.Cardname.Ancient_of_War_Attack:
+                return Ancient_of_War_Attack();
+            case Card.Cardname.Ancient_of_War_Taunt:
+                return Ancient_of_War_Taunt();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 return null;

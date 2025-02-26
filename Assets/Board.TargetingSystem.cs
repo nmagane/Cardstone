@@ -179,11 +179,11 @@ public partial class Board
         }
 
     }
-    public Vector3 StartMinionPreview(Card card, int position)
+    public Vector3 StartMinionPreview(Card card, int position, bool target=true)
     {
         Vector3 p = currMinions.SpawnPreviewMinion(card.card.card, position);
         playingCard = card;
-        StartTargetingCard(card.card,currMinions.previewMinion);
+        if (target) StartTargetingCard(card.card,currMinions.previewMinion);
         targetMode = TargetMode.Battlecry;
         return p;
     }

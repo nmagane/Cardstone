@@ -59,4 +59,55 @@
         return c;
     }
     
+    static CardInfo Ancient_of_War()
+    {
+        CardInfo c = new();
+
+        c.name = "Ancient of War";
+        c.text = "Choose one:\n+5 Attack; or +5 Health and Taunt.";
+        c.manaCost = 7;
+        c.classType = Card.Class.Druid;
+        c.damage = 5;
+        c.health = 5;
+
+        c.MINION = true;
+        c.CHOOSE = true;
+        c.choice1 = Card.Cardname.Ancient_of_War_Attack;
+        c.choice2 = Card.Cardname.Ancient_of_War_Taunt;
+
+        return c;
+    }
+    static CardInfo Ancient_of_War_Attack()
+    {
+        CardInfo c = new();
+
+        c.name = "Uproot";
+        c.text = "+5 Attack.";
+        c.manaCost = 7;
+        c.classType = Card.Class.Druid;
+
+        c.SPELL = true;
+        c.TARGETED = false;
+        c.TOKEN = true;
+
+        return c;
+    }
+    static CardInfo Ancient_of_War_Taunt()
+    {
+        CardInfo c = new();
+
+        c.name = "Rooted";
+        c.text = "+5 Health\nand Taunt.";
+        c.manaCost = 7;
+        c.classType = Card.Class.Druid;
+
+        c.SPELL = true;
+        c.TARGETED = false;
+        c.TOKEN = true;
+
+        return c;
+    }
+
+    
+    
 }

@@ -487,6 +487,9 @@ public partial class Server
             case Card.Cardname.Wrath:
                 Wrath(spell);
                 break;
+            case Card.Cardname.Ancient_of_War:
+                Ancient_of_War(spell);
+                break;
 
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);

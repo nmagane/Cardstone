@@ -206,6 +206,14 @@ public class Card : MonoBehaviour
         Wrath_Big,
         Wrath_Small,
 
+        Ancient_of_War,
+        Ancient_of_War_Attack,
+        Ancient_of_War_Taunt,
+
+        Keeper_of_the_Grove,
+        Keeper_of_the_Grove_Silence,
+        Keeper_of_the_Grove_Damage,
+
         _COUNT,
     }
 
@@ -456,8 +464,37 @@ public class Card : MonoBehaviour
 
         if (card.CHOOSE)
         {
-            StartChoice(choiceList);
-            HideCard(this.transform.position);
+            if (card.MINION)
+            {
+                //MINION WITH TARGET ABILITY or with COMBO TARGET (SI 7 agent)
+                //place temporary minion and start targetining effect
+
+                int position = FindMinionPosition();
+                bool validTargetsExist = true;
+                foreach (Cardname minionChoice in choiceList)
+                {
+                    if (board.ValidTargetsAvailable(Database.GetCardData(minionChoice).eligibleTargets) == false)
+                    {
+                        validTargetsExist = false;
+                    }
+                }
+                if (validTargetsExist)
+                {
+                    Vector3 p = board.StartMinionPreview(this, position,false);
+                    StartChoice(choiceList);
+                    HideCard(p);
+                }
+                else
+                {
+                    board.PlayCard(card, -1, position);
+                }
+                return;
+            }
+            else
+            {
+                StartChoice(choiceList);
+                HideCard(this.transform.position);
+            }
             return;
         }
         
@@ -542,6 +579,18 @@ public class Card : MonoBehaviour
             }
             else
                 board.PlayCard(card, -1, -1, false, false, x);
+        }
+        else
+        {
+            if (info.TARGETED)
+            {
+                board.StartTargetingCard(card, board.currMinions.previewMinion, x, info.eligibleTargets);
+                board.targetMode = Board.TargetMode.Battlecry;
+            }
+            else
+            {
+                board.PlayCard(card, -1, board.currMinions.previewMinion.index, false, false, x);
+            }
         }
 
         foreach (Choice c in currChoices)
