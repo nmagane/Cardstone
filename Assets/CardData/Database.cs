@@ -427,6 +427,11 @@ public partial class Database
             case Card.Cardname.Keeper_of_the_Grove_Silence:
                 return Keeper_of_the_Grove_Silence();
 
+            case Card.Cardname.Polymorph:
+                return Polymorph();
+            case Card.Cardname.Sheep:
+                return Sheep();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 return null;
@@ -1599,7 +1604,7 @@ public partial class Database
         CardInfo c = new();
 
         c.name = "Harrison Jones";
-        c.text = "Battlecry: Destroy enemy weapon. Draw cards equal to its durability";
+        c.text = "Battlecry: Destroy enemy weapon. Draw cards equal to its durability.";
 
         c.manaCost = 5;
         c.damage = 5;
@@ -1611,4 +1616,5 @@ public partial class Database
 
         return c;
     }
+
 }

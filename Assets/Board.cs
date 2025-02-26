@@ -431,6 +431,12 @@ public partial class Board : MonoBehaviour
                 else
                     ConfirmRemoveSecret(removeSecretFriendly, removeSecretIndex, removeSecretCard);
                 break;
+            case Server.MessageType.TransformMinion:
+                bool transformFriendly = message.GetBool();
+                int transformIndex = message.GetInt();
+                Card.Cardname transformCard = (Card.Cardname)message.GetInt();
+                TransformMinion(transformFriendly, transformIndex, transformCard);
+                break;
             case Server.MessageType.ConfirmBattlecry: 
             case Server.MessageType.ConfirmTrigger:
                 bool battlecryFriendly = message.GetBool();
@@ -754,6 +760,16 @@ public partial class Board : MonoBehaviour
         anim.isFriendly = fatigueFriendly;
         anim.damage = fatigueDamage;
         QueueAnimation(anim);
+    }
+
+    private void TransformMinion(bool friendly, int index, Card.Cardname card)
+    {
+        MinionBoard board = friendly ? currMinions : enemyMinions;
+        Minion minion = board[index];
+        minion.Set(card);
+
+        //TODO: move this to anim queue.
+        minion.creature.Set(minion);
     }
 
 

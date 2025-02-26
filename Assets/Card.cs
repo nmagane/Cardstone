@@ -214,6 +214,9 @@ public class Card : MonoBehaviour
         Keeper_of_the_Grove_Silence,
         Keeper_of_the_Grove_Damage,
 
+        Polymorph,
+        Sheep,
+
         _COUNT,
     }
 

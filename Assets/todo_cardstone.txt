@@ -67,6 +67,8 @@ Mechanics for next demo:
 
 some anim for choice popup.
 choice pos on minions
+
+animqueue for transformation
 	
 ===============================================
 =====================DONE======================

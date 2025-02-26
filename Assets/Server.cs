@@ -8,7 +8,7 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Wrath, Card.Cardname.Keeper_of_the_Grove, Card.Cardname.Ancient_of_War, Card.Cardname.Keeper_of_the_Grove };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Wrath, Card.Cardname.Keeper_of_the_Grove, Card.Cardname.Ancient_of_War, Card.Cardname.Keeper_of_the_Grove, Card.Cardname.Polymorph };
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Ice_Lance };
     
     
@@ -1245,6 +1245,26 @@ public partial class Server : MonoBehaviour
 
         SendMessage(message, owner);
     }
+
+    public void TransformMinionMessage(Match match, Minion minion, Card.Cardname newMinion)
+    {
+        CustomMessage messageOwner = CreateMessage(MessageType.TransformMinion);
+        CustomMessage messageOpponent = CreateMessage(MessageType.TransformMinion);
+
+        messageOwner.AddBool(true);
+        messageOpponent.AddBool(false);
+
+        messageOwner.AddInt(minion.index);
+        messageOpponent.AddInt(minion.index);
+        
+        messageOwner.AddInt((int)newMinion);
+        messageOpponent.AddInt((int)newMinion);
+
+
+        SendMessage(messageOwner, minion.player);
+        SendMessage(messageOpponent, minion.player.opponent);
+    }
+
     public void Fatigue(Match match, Player player)
     {
         CustomMessage messageOwner = CreateMessage(MessageType.Fatigue);

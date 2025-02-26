@@ -189,6 +189,11 @@ public partial class Server
         match.server.AddAura(match, minion, new Aura(Aura.Type.Damage,diff));
     }
 
+    public void TransformMinion(Match match, Minion minion, Card.Cardname newMinion)
+    {
+        minion.Set(newMinion);
+        TransformMinionMessage(match, minion, newMinion);
+    }
 
 
     public bool ExecuteAttack(ref CastInfo action)
@@ -492,6 +497,9 @@ public partial class Server
                 break;
             case Card.Cardname.Keeper_of_the_Grove:
                 Keeper_of_the_Grove(spell);
+                break;
+            case Card.Cardname.Polymorph:
+                Polymorph(spell);
                 break;
 
             default:

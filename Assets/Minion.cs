@@ -54,12 +54,29 @@ public partial class Minion
     [System.NonSerialized]
     public Creature creature;
 
-    public void Set(Card.Cardname name, int ind)
+    public void Set(Card.Cardname name)
     {
-        //transform into another minion
         card = name;
-        index = ind;
-        //manaCost
+
+        Database.CardInfo info = Database.GetCardData(name);
+        health = info.health;
+        damage = info.damage;
+
+        auras.Clear();
+        triggers.Clear();
+        foreach (Aura.Type aura in info.auras)
+        {
+            AddAura(new Aura(aura));
+        }
+
+        foreach (var triggerInfo in info.triggers)
+        {
+            AddTrigger(triggerInfo.Item1, triggerInfo.Item2, triggerInfo.Item3);
+        }
+
+        maxHealth = health;
+        baseHealth = maxHealth;
+        baseDamage = damage;
     }
     public Minion(Card.Cardname c, int ind, MinionBoard _board, int order=0, Player p=null)
     {

@@ -8,6 +8,12 @@ public partial class Server
         int damage = 1;
         DamageTarget(damage, spell);
     }
+    void Polymorph(CastInfo spell)
+    {
+        if (spell.GetTargetMinion() == null) return;
+
+        TransformMinion(spell.match, spell.GetTargetMinion(), Card.Cardname.Sheep);
+    }
 
     private void Frostbolt(CastInfo spell)
     {

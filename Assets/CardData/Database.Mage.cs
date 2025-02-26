@@ -75,6 +75,42 @@ public partial class Database
 
         return c;
     }
+    static CardInfo Polymorph()
+    {
+        CardInfo c = new();
+
+        c.name = "Polymorph";
+        c.text = "Transform a minion into a 1/1 sheep.";
+
+        c.classType = Card.Class.Mage;
+        c.eligibleTargets = Board.EligibleTargets.AllMinions;
+
+        c.manaCost = 4;
+
+        c.SPELL = true;
+        c.TARGETED = true;
+
+        return c;
+    }
+
+    private static CardInfo Sheep()
+    {
+        CardInfo c = new();
+
+        c.name = "Sheep";
+        c.text = "A lamb without blemish.";
+
+        c.classType = Card.Class.Mage;
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+
+        c.MINION = true;
+        c.TOKEN = true;
+
+        return c;
+    }
 
     static CardInfo Arcane_Intellect()
     {
