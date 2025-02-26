@@ -35,7 +35,6 @@
         if (spell.choice == 1)
         {
             SilenceMinion(spell);
-            TransformMinion(spell.match, spell.minion, Card.Cardname.Sheep);
         }
     }
 }

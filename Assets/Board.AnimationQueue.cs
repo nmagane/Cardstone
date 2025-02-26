@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using System;
 
 public partial class Board
 {
@@ -167,6 +168,9 @@ public partial class Board
 
             case Server.MessageType.RemoveMinion:
                 return RemoveMinionVisual(message);
+
+            case Server.MessageType.TransformMinion:
+                return TransformMinionVisual(message);
                 
             
             default:
@@ -598,6 +602,12 @@ public partial class Board
         return null;
     }
 
+    private Coroutine TransformMinionVisual(VisualInfo message)
+    {
+        Minion minion = message.minions[0];
+        minion.creature.Set(minion);
+        return StartCoroutine(Wait(10));
+    }
     Coroutine RemoveAuraVisual(VisualInfo message)
     {
         if (message.minions[0].creature == null) return null;

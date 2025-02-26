@@ -768,8 +768,13 @@ public partial class Board : MonoBehaviour
         Minion minion = board[index];
         minion.Set(card);
 
-        //TODO: move this to anim queue.
-        minion.creature.Set(minion);
+        //TODO: move this to anim queue.   
+        VisualInfo anim = new();
+        anim.type = Server.MessageType.TransformMinion;
+        anim.isFriendly = friendly;
+        anim.minions.Add(minion);
+        anim.names.Add(card);
+        QueueAnimation(anim);
     }
 
 

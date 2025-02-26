@@ -117,10 +117,12 @@ public class Creature : MonoBehaviour
         Database.CardInfo info = Database.GetCardData(c.card);
         testname.text = "";// info.name;
 
-        prevDmg = c.damage;
-        prevHP = c.health;
-        health.text = c.health.ToString();
-        damage.text = c.damage.ToString();
+        prevDmg = c.baseDamage;
+        prevHP = c.baseHealth;
+        health.text = c.baseHealth.ToString();
+        damage.text = c.baseDamage.ToString();
+        basehp = c.baseHealth;
+        basedmg = c.baseDamage;
 
         spriteRenderer.sprite = frameSprites[(int)info.classType];
         icon.sprite = board.cardObject.GetComponent<Card>().cardSprites[(int)c.card];
@@ -182,7 +184,7 @@ public class Creature : MonoBehaviour
     {
     }
 
-    public int hp, dmg, maxhp;
+    public int hp, dmg, maxhp, basehp, basedmg;
 
     public void UpdateDisplay()
     {
@@ -202,7 +204,7 @@ public class Creature : MonoBehaviour
         //==================== 
         if (hp < maxhp)
             health.color = redText;
-        else if (hp > minion.baseHealth) //TODO: color should factor in max hp when its reduced then buffed by external
+        else if (hp > basehp) //TODO: color should factor in max hp when its reduced then buffed by external
         {
             health.color = greenText;
         }
@@ -210,7 +212,7 @@ public class Creature : MonoBehaviour
             health.color = baseText;
 
         //=====================
-        if (dmg > minion.baseDamage)
+        if (dmg > basedmg)
         {
             damage.color = greenText;
         }
