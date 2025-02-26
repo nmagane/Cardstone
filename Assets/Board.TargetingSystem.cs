@@ -66,6 +66,7 @@ public partial class Board
     public HandCard targetingCard = null;
 
     public Card playingCard = null;
+    public int playingChoice = -1;
 
     public bool dragTargeting = false;
 
@@ -99,6 +100,8 @@ public partial class Board
         HealthyMinions,
         MechMinions,
         Big_Game_Hunter,
+
+        None,
     }
 
     public void TargetMinion(Minion minion)
@@ -119,13 +122,13 @@ public partial class Board
         switch (targetMode)
         {
             case TargetMode.Battlecry:
-                PlayCard(targetingCard, friendly? minion.index : minion.index, currMinions.previewMinion.index, IsFriendly(minion));
+                PlayCard(targetingCard, friendly? minion.index : minion.index, currMinions.previewMinion.index, IsFriendly(minion),false,playingChoice);
                 break;
             case TargetMode.Attack:
                 AttackMinion(targetingMinion, minion);
                 break;
             case TargetMode.Spell:
-                PlayCard(targetingCard, minion.index, -1, friendly);
+                PlayCard(targetingCard, minion.index, -1, friendly,false,playingChoice);
                 break;
             case TargetMode.HeroPower:
                 CastHeroPower(targetingCard.card, minion.index, friendly,false);
@@ -156,13 +159,13 @@ public partial class Board
         switch (targetMode)
         {
             case TargetMode.Battlecry:
-                PlayCard(targetingCard, -1, currMinions.previewMinion.index, friendly,true);
+                PlayCard(targetingCard, -1, currMinions.previewMinion.index, friendly,true,playingChoice);
                 break;
             case TargetMode.Attack:
                 AttackFace(targetingMinion, hero);
                 break;
             case TargetMode.Spell:
-                PlayCard(targetingCard, -1, -1, friendly, true);
+                PlayCard(targetingCard, -1, -1, friendly, true,playingChoice);
                 break;
             case TargetMode.HeroPower:
                 CastHeroPower(targetingCard.card, -1, friendly, true);
@@ -207,12 +210,18 @@ public partial class Board
         StartTargetingAnim(source);
     }
 
-    public void StartTargetingCard(HandCard source, MonoBehaviour customPos=null)
+    public void StartTargetingCard(HandCard source, MonoBehaviour customPos=null, int choice=-1, EligibleTargets targetOverride=EligibleTargets.None)
     {
         targeting = true;
         targetMode = TargetMode.Spell;
         eligibleTargets = source.eligibleTargets;
         targetingCard = source;
+        playingChoice = choice;
+
+        if (targetOverride != EligibleTargets.None)
+        {
+            eligibleTargets = targetOverride;
+        }
 
         StartTargetingAnim(customPos!=null? customPos : currHero);
     }
@@ -257,6 +266,7 @@ public partial class Board
         targetingCard = null;
         targetingHero = null;
         dragTargeting = false;
+        playingChoice = -1;
 
         if (cancel) CheckHighlights();
         EndTargetingAnim();
@@ -505,7 +515,7 @@ public partial class Board
         {
             Database.CardInfo c = Database.GetCardData(targetingCard.card);
 
-            int d = c.spellDamage;
+            int d = playingChoice==1? c.comboSpellDamage : c.spellDamage;
             if (targetingCard.card == Card.Cardname.Ice_Lance && !target.minion.HasAura(Aura.Type.Freeze))
             {
                 return;

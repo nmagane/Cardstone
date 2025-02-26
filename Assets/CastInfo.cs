@@ -13,6 +13,7 @@ public class CastInfo
     public Minion minion;
     public Weapon weapon;
     public int playOrder = 0;
+    public int choice = -1;
     public bool combo => player.combo;
     public Minion targetMinion;
     public Player targetPlayer;

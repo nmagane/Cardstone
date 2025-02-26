@@ -454,7 +454,13 @@ public class Card : MonoBehaviour
         frame.transform.localPosition = Vector3.zero;
         transform.localPosition += new Vector3(0, f);
 
-
+        if (card.CHOOSE)
+        {
+            StartChoice(choiceList);
+            HideCard(this.transform.position);
+            return;
+        }
+        
 
         if ((card.SPELL || card.SECRET || card.WEAPON) && (card.TARGETED || (card.COMBO && board.combo && card.COMBO_TARGETED)))
         {
@@ -466,13 +472,7 @@ public class Card : MonoBehaviour
         if ((card.SPELL || card.SECRET || card.WEAPON) && card.TARGETED == false)
         {
             //UNTARGETED NON-MINION
-            if (card.CHOOSE)
-            {
-                StartChoice(choiceList);
-                HideCard(this.transform.position);
-            }
-            else 
-                board.PlayCard(card);
+            board.PlayCard(card);
             return;
         }
 
@@ -513,7 +513,6 @@ public class Card : MonoBehaviour
         float dist = 8;
         float count = choices.Count;
         Vector3 offset = new Vector3(-((count - 1) / 2f * dist), 0);
-
         int i = 0;
         foreach (var card in choices)
         {
@@ -521,16 +520,39 @@ public class Card : MonoBehaviour
             c.transform.parent = transform.parent;
             c.transform.localScale = Vector3.one * 1.75f;
             c.Set(i, card, this);
-            c.transform.localPosition = offset + new Vector3(dist * i, 0, -3);
+            c.transform.localPosition = offset + new Vector3(dist * i, 0, -8);
 
             i++;
             currChoices.Add(c);
         }
+
+        board.choiceBlocker.enabled = true;
     }
     public void ChooseOption(int x)
     {
+        Database.CardInfo info = Database.GetCardData(currChoices[x].display.card.card);
 
+        board.dragTargeting = false;
+
+        if (card.MINION==false)
+        {
+            if (info.TARGETED)
+            {
+                board.StartTargetingCard(card, null, x,info.eligibleTargets);
+            }
+            else
+                board.PlayCard(card, -1, -1, false, false, x);
+        }
+
+        foreach (Choice c in currChoices)
+        {
+            Destroy(c.gameObject);
+        }
+        currChoices.Clear();
+
+        board.choiceBlocker.enabled = false;
     }
+
     public void CancelChoice()
     {
         foreach (Choice c in currChoices)
@@ -539,6 +561,8 @@ public class Card : MonoBehaviour
         }
         currChoices.Clear();
         EndPlay();
+
+        board.choiceBlocker.enabled = false;
     }
     private void Update()
     {
@@ -596,7 +620,7 @@ public class Card : MonoBehaviour
             return;
         }
 
-        if ((card.SPELL || card.SECRET || card.WEAPON) && (card.TARGETED || (card.COMBO && board.combo && card.COMBO_TARGETED)))
+        if ((card.CHOOSE==false) && (card.SPELL || card.SECRET || card.WEAPON) && (card.TARGETED || (card.COMBO && board.combo && card.COMBO_TARGETED)))
         {
             if (preview) return;
             if (board.ValidTargetsAvailable(card.eligibleTargets) == false)

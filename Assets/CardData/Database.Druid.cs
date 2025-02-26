@@ -12,9 +12,10 @@
         c.comboSpellDamage = 1;
 
         c.classType = Card.Class.Druid;
-        
+        c.eligibleTargets = Board.EligibleTargets.AllMinions;
+
         c.SPELL = true;
-        c.TARGETED = false;
+        c.TARGETED = true;
 
         c.CHOOSE = true;
         c.choice1 = Card.Cardname.Wrath_Big;

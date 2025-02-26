@@ -229,7 +229,8 @@ public partial class Server : MonoBehaviour
                 int playPosition = message.GetInt();
                 bool playFriendlySide = message.GetBool();
                 bool playIsHero = message.GetBool();
-                PlayCard(matchID, clientID, playPlayerID, playIndex, playTarget, playPosition, playFriendlySide, playIsHero);
+                int playChoice = message.GetInt();
+                PlayCard(matchID, clientID, playPlayerID, playIndex, playTarget, playPosition, playFriendlySide, playIsHero, playChoice);
                 break;
             case MessageType.EndTurn:
                //ulong endMatchID = message.GetULong();
@@ -713,7 +714,7 @@ public partial class Server : MonoBehaviour
         return c;
     }
         
-    public void PlayCard(ulong matchID, int clientID, ulong playerID, int index, int target, int position, bool friendlySide, bool isHero)
+    public void PlayCard(ulong matchID, int clientID, ulong playerID, int index, int target, int position, bool friendlySide, bool isHero, int choice)
     {
         if (currentMatches.ContainsKey(matchID) == false) return;
         Match match = currentMatches[matchID];
@@ -770,6 +771,8 @@ public partial class Server : MonoBehaviour
 
         CastInfo spell = new CastInfo(match, match.players[p], card, target,position, friendlySide, isHero);
         spell.playOrder = match.playOrder;
+        spell.choice = choice;
+
         if (card.SPELL)
         {
             match.StartSequencePlaySpell(spell);

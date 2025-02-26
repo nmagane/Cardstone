@@ -483,6 +483,10 @@ public partial class Server
             case Card.Cardname.Harrison_Jones:
                 Harrison_Jones(spell);
                 break;
+                
+            case Card.Cardname.Wrath:
+                Wrath(spell);
+                break;
 
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);

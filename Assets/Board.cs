@@ -61,7 +61,7 @@ public partial class Board : MonoBehaviour
     public TMP_Text playerNameText;
     public TMP_Text enemyNameText;
     public SpriteRenderer mulliganBG;
-
+    public BoxCollider2D choiceBlocker;
 
     public Card CreateCard()
     {

@@ -72,7 +72,7 @@ public partial class Board
         SendMessage(message,true);
     }
 
-    public void PlayCard(HandCard card, int target = -1, int position = -1, bool friendlySide = false, bool isHero = false)
+    public void PlayCard(HandCard card, int target = -1, int position = -1, bool friendlySide = false, bool isHero = false, int choice = -1)
     {
         if (!currTurn) return;
         if (card.played) return;
@@ -87,6 +87,7 @@ public partial class Board
         message.AddInt(position);
         message.AddBool(friendlySide);
         message.AddBool(isHero);
+        message.AddInt(choice);
 
         mana.Spend(card.manaCost);
         mana.UpdateDisplay(-1,-1,-1);

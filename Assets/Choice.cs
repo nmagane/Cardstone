@@ -17,5 +17,9 @@ public class Choice : MonoBehaviour
         display.UpdateCardText();
     }
 
-
+    private void OnMouseDown()
+    {
+        if (owner!=null)
+            owner.ChooseOption(index);
+    }
 }
