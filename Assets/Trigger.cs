@@ -105,6 +105,7 @@ public class Trigger
         Zombie_Chow,
         Sludge_Belcher,
         Shade_of_Naxxrammas,
+        Sylvanas_Windrunner,
     }
     public enum Side
     {
@@ -246,6 +247,9 @@ public class Trigger
                 break;
             case Ability.Shade_of_Naxxrammas:
                 TriggerEffects.Shade_of_Naxxrammas(match, this);
+                break;
+            case Ability.Sylvanas_Windrunner:
+                TriggerEffects.Sylvanas_Windrunner(match, this);
                 break;
             default:
                 Debug.LogError("MISSING TRIGGER ABILITY");

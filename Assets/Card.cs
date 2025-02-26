@@ -217,6 +217,9 @@ public class Card : MonoBehaviour
         Polymorph,
         Sheep,
 
+        Sylvanas_Windrunner,
+        Mind_Control_Tech,
+
         _COUNT,
     }
 

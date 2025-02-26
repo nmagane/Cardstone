@@ -296,5 +296,14 @@ public class TriggerEffects
         match.server.AddAura(match, trigger.minion, new Aura(Aura.Type.Health,1,false,false,null,Card.Cardname.Shade_of_Naxxrammas));
         match.server.AddAura(match, trigger.minion, new Aura(Aura.Type.Damage,1,false,false,null,Card.Cardname.Shade_of_Naxxrammas));
     }
+    
+    public static void Sylvanas_Windrunner(Match match, Trigger trigger)
+    {
+        Player enemy = trigger.player.opponent;
+        if (enemy.board.Count() == 0) return;
+        Minion m = Board.RandElem(enemy.board.minions);
+
+        match.server.StealMinion(match, trigger.player, m);
+    }
 
 }

@@ -198,7 +198,11 @@ public partial class Server
     public void StealMinion(Match match, Player player, Minion minion, bool canAttack=false)
     {
         if (minion.player == player) return;
-        if (player.board.Count() >= 7) return;
+        if (player.board.Count() >= 7)
+        {
+            minion.DEAD = true;
+            return;
+        }
 
         if (minion.HasAura(Aura.Type.Charge))
             canAttack = true;
@@ -515,6 +519,9 @@ public partial class Server
                 break;
             case Card.Cardname.Polymorph:
                 Polymorph(spell);
+                break;
+            case Card.Cardname.Mind_Control_Tech:
+                Mind_Control_Tech(spell);
                 break;
 
             default:

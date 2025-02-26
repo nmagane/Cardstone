@@ -12,8 +12,8 @@ public partial class Server
     {
         if (spell.GetTargetMinion() == null) return;
 
-        //TransformMinion(spell.match, spell.GetTargetMinion(), Card.Cardname.Sheep);
-        StealMinion(spell.match, spell.player, spell.GetTargetMinion(), false);
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Polymorph, spell.player, spell);
+        TransformMinion(spell.match, spell.GetTargetMinion(), Card.Cardname.Sheep);
     }
 
     private void Frostbolt(CastInfo spell)

@@ -775,7 +775,7 @@ public partial class Board : MonoBehaviour
         Minion minion = board[index];
         minion.Set(card);
 
-        //TODO: move this to anim queue.   
+        //=============anim  
         VisualInfo anim = new();
         anim.type = Server.MessageType.TransformMinion;
         anim.isFriendly = friendly;
@@ -796,15 +796,15 @@ public partial class Board : MonoBehaviour
         targetBoard.minions.Remove(minion);
         stealerBoard.minions.Add(minion);
 
-        targetBoard.minionObjects.Remove(minion);
-        stealerBoard.minionObjects.Add(minion, minion.creature);
-        minion.creature.order = minion.index;
-
         targetBoard.OrderInds();
         stealerBoard.OrderInds();
 
-        targetBoard.OrderCreatures();
-        stealerBoard.OrderCreatures();
+        //=============anim  
+        VisualInfo anim = new();
+        anim.type = Server.MessageType.StealMinion;
+        anim.isFriendly = friendly;
+        anim.minions.Add(minion);
+        QueueAnimation(anim);
     }
 
     public bool IsFriendly(Minion m)

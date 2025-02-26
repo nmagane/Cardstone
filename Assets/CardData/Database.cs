@@ -431,6 +431,11 @@ public partial class Database
                 return Polymorph();
             case Card.Cardname.Sheep:
                 return Sheep();
+                
+            case Card.Cardname.Sylvanas_Windrunner:
+                return Sylvanas_Windrunner();
+            case Card.Cardname.Mind_Control_Tech:
+                return Mind_Control_Tech();
 
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
@@ -1613,6 +1618,40 @@ public partial class Database
         c.MINION = true;
         c.BATTLECRY = true;
         c.LEGENDARY = true;
+
+        return c;
+    }
+    private static CardInfo Sylvanas_Windrunner()
+    {
+        CardInfo c = new();
+
+        c.name = "Sylvanas Windrunner";
+        c.text = "Deathrattle: Take control of a random enemy minion.";
+
+        c.manaCost = 6;
+        c.damage = 5;
+        c.health = 5;
+
+        c.MINION = true;
+        c.LEGENDARY = true;
+
+        c.triggers.Add((Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.Sylvanas_Windrunner));
+
+        return c;
+    }
+    private static CardInfo Mind_Control_Tech()
+    {
+        CardInfo c = new();
+
+        c.name = "Mind Control Tech";
+        c.text = "Battlecry: If your opponent has 4+ minions, take control of a random one.";
+
+        c.manaCost = 3;
+        c.damage = 3;
+        c.health = 3;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
 
         return c;
     }

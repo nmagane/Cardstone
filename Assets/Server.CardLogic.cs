@@ -259,4 +259,13 @@ public partial class Server
         for (int i=0;i<count;i++)
             Draw(spell.player);
     }
+    void Mind_Control_Tech(CastInfo spell)
+    {
+        Player enemy = spell.player.opponent;
+        if (enemy.board.Count() < 4) return;
+
+        Minion m = Board.RandElem(enemy.board.minions);
+
+        spell.match.server.StealMinion(spell.match, spell.player, m);
+    }
 }

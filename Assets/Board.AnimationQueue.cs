@@ -172,7 +172,10 @@ public partial class Board
             case Server.MessageType.TransformMinion:
                 return TransformMinionVisual(message);
                 
-            
+            case Server.MessageType.StealMinion:
+                return StealMinionVisual(message);
+
+
             default:
                 Debug.LogError("ANIMATION NOT IMPLEMENTED: " + message.type);
                 return null;
@@ -265,6 +268,25 @@ public partial class Board
         MinionBoard board = message.isFriendly ? currMinions : enemyMinions;
         board.RemoveCreature(message.minions[0], false,true);
         return StartCoroutine(Wait(10));
+    }
+    Coroutine StealMinionVisual(VisualInfo message)
+    {
+        MinionBoard stealerBoard = message.isFriendly ? currMinions : enemyMinions;
+        MinionBoard targetBoard = message.isFriendly ? enemyMinions : currMinions;
+
+        Minion minion = message.minions[0];
+
+        targetBoard.minionObjects.Remove(minion);
+        stealerBoard.minionObjects.Add(minion, minion.creature);
+        minion.creature.order = minion.index;
+
+        targetBoard.OrderInds();
+        stealerBoard.OrderInds();
+
+        targetBoard.OrderCreatures();
+        stealerBoard.OrderCreatures();
+
+        return StartCoroutine(Wait(15));
     }
 
     Coroutine DestroyMinionVisual(VisualInfo message)

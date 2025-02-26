@@ -242,7 +242,7 @@ public partial class AnimationManager
             case Card.Cardname.Fatigue:
                 return StartCoroutine(SmokeTrailProjectile(data));
             default:
-                Debug.LogWarning("Animation Unimplemented? " + data.card);
+                Debug.LogWarning("Animation Unimplemented: " + data.card);
                 return null;
         }
 
