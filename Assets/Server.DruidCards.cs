@@ -26,4 +26,15 @@
             AddAura(spell.match, spell.minion, new Aura(Aura.Type.Taunt));
         }
     }
+    void Keeper_of_the_Grove(CastInfo spell)
+    {
+        if (spell.choice == 0)
+        {
+            DamageTarget(2, spell);
+        }
+        if (spell.choice == 1)
+        {
+            SilenceMinion(spell);
+        }
+    }
 }

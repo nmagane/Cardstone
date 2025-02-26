@@ -107,6 +107,64 @@
 
         return c;
     }
+    
+    static CardInfo Keeper_of_the_Grove()
+    {
+        CardInfo c = new();
+
+        c.name = "Keeper of the Grove";
+        c.text = "Choose one: Deal 2 damage; or Silence a minion.";
+        c.manaCost = 4;
+        c.classType = Card.Class.Druid;
+        c.damage = 2;
+        c.health = 4;
+
+        c.spellDamage = 2;
+
+        c.MINION = true;
+        c.CHOOSE = true;
+        c.choice1 = Card.Cardname.Keeper_of_the_Grove_Damage;
+        c.choice2 = Card.Cardname.Keeper_of_the_Grove_Silence;
+
+        return c;
+    }
+    static CardInfo Keeper_of_the_Grove_Damage()
+    {
+        CardInfo c = new();
+
+        c.name = "Moonfire";
+        c.text = "Deal 2 damage";
+        c.manaCost = 4;
+        c.classType = Card.Class.Druid;
+
+        c.SPELL = true;
+        c.TARGETED = true;
+
+        c.eligibleTargets = Board.EligibleTargets.AllCharacters;
+        c.spellDamage = 2;
+
+        c.TOKEN = true;
+
+        return c;
+    }
+    static CardInfo Keeper_of_the_Grove_Silence()
+    {
+        CardInfo c = new();
+
+        c.name = "Dispel";
+        c.text = "Silence a minion.";
+        c.manaCost = 4;
+        c.classType = Card.Class.Druid;
+
+        c.SPELL = true;
+        c.TARGETED = true;
+
+        c.eligibleTargets = Board.EligibleTargets.AllMinions;
+
+        c.TOKEN = true;
+
+        return c;
+    }
 
     
     

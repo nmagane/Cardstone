@@ -552,7 +552,7 @@ public partial class Board
                 return;
             }
             Database.CardInfo c = Database.GetCardData(targetingCard.card);
-            int d = c.spellDamage;
+            int d = playingChoice == 1 ? c.comboSpellDamage : c.spellDamage;
             if (c.COMBO && c.comboSpellDamage > 0 && currHero.combo) d = c.comboSpellDamage;
             if (c.SPELL && targetingCard.card != heroPower.card.card && c.spellDamage > 0) d += currHero.spellpower;
 

@@ -420,6 +420,13 @@ public partial class Database
             case Card.Cardname.Ancient_of_War_Taunt:
                 return Ancient_of_War_Taunt();
 
+            case Card.Cardname.Keeper_of_the_Grove:
+                return Keeper_of_the_Grove();
+            case Card.Cardname.Keeper_of_the_Grove_Damage:
+                return Keeper_of_the_Grove_Damage();
+            case Card.Cardname.Keeper_of_the_Grove_Silence:
+                return Keeper_of_the_Grove_Silence();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 return null;

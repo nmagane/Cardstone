@@ -59,15 +59,22 @@ Mechanics for next demo:
 - rope (chess timer?)
 
 - simple play history, updated in visual que? confirm play/trigger/battlecry would have to include targets in message
+
 - deck counter color change
 
-- stop the insta-targeting on choose cards (dragtargeting = false)
-- set board eligible targets according to the new choice spell, not the original card
-- change choice1 and choice2 to list of choicecards.
+- change database choice1 and choice2 to a list of choicecards.
+	-get sp for skulls from database calls on tokens by index. not combodamage crap
 
+some anim for choice popup.
+choice pos on minions
+	
 ===============================================
 =====================DONE======================
 ================================================ 
+
+- stop the insta-targeting on choose cards (dragtargeting = false)
+- set board eligible targets according to the new choice spell, not the original card
+
 - freeze and immune auras appear out of order. but only on receiving side HERO.. need auraconfirm anim que..
 
 -fatigue anim

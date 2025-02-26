@@ -15,6 +15,14 @@ public class Choice : MonoBehaviour
         display.Set(new HandCard(displayCard,0));
         display.board = owner.board;
         display.UpdateCardText();
+        if (owner.board.ValidTargetsAvailable(display.card.eligibleTargets))
+        {
+            display.Highlight();
+        }
+        else
+        {
+            GetComponent<BoxCollider2D>().enabled = false;
+        }
     }
 
     private void OnMouseDown()

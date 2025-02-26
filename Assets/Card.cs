@@ -470,12 +470,12 @@ public class Card : MonoBehaviour
                 //place temporary minion and start targetining effect
 
                 int position = FindMinionPosition();
-                bool validTargetsExist = true;
+                bool validTargetsExist = false;
                 foreach (Cardname minionChoice in choiceList)
                 {
-                    if (board.ValidTargetsAvailable(Database.GetCardData(minionChoice).eligibleTargets) == false)
+                    if (board.ValidTargetsAvailable(Database.GetCardData(minionChoice).eligibleTargets) == true)
                     {
-                        validTargetsExist = false;
+                        validTargetsExist = true;
                     }
                 }
                 if (validTargetsExist)
@@ -573,6 +573,7 @@ public class Card : MonoBehaviour
 
         if (card.MINION==false)
         {
+            //Spells
             if (info.TARGETED)
             {
                 board.StartTargetingCard(card, null, x,info.eligibleTargets);
@@ -582,6 +583,7 @@ public class Card : MonoBehaviour
         }
         else
         {
+            //Minions
             if (info.TARGETED)
             {
                 board.StartTargetingCard(card, board.currMinions.previewMinion, x, info.eligibleTargets);
@@ -593,6 +595,7 @@ public class Card : MonoBehaviour
             }
         }
 
+        //==============================
         foreach (Choice c in currChoices)
         {
             Destroy(c.gameObject);

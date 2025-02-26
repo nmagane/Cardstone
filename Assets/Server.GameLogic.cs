@@ -490,6 +490,9 @@ public partial class Server
             case Card.Cardname.Ancient_of_War:
                 Ancient_of_War(spell);
                 break;
+            case Card.Cardname.Keeper_of_the_Grove:
+                Keeper_of_the_Grove(spell);
+                break;
 
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);

@@ -88,7 +88,7 @@ public partial class Server
         Player p = spell.player;
         Match match = spell.match;
         Minion minion = spell.GetTargetMinion();
-
+        if (minion == null) return;
         List<Aura> auras = new List<Aura>(minion.auras);
         List<Trigger> triggers = new List<Trigger>(minion.triggers);
         foreach (var a in auras)
