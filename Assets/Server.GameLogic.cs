@@ -195,6 +195,21 @@ public partial class Server
         TransformMinionMessage(match, minion, newMinion);
     }
 
+    public void StealMinion(Match match, Player player, Minion minion, bool canAttack=false)
+    {
+        if (minion.player == player) return;
+        if (player.board.Count() >= 7) return;
+
+        if (minion.HasAura(Aura.Type.Charge))
+            canAttack = true;
+        int newInd = player.board.Count();
+        StealMinionMessage(match, player, minion, newInd, canAttack);
+        minion.player.board.Remove(minion);
+        minion.canAttack = canAttack;
+        minion.player = player;
+        player.board.minions.Add(minion);
+        player.board.OrderInds();
+    }
 
     public bool ExecuteAttack(ref CastInfo action)
     {

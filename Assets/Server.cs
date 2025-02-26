@@ -1264,6 +1264,26 @@ public partial class Server : MonoBehaviour
         SendMessage(messageOwner, minion.player);
         SendMessage(messageOpponent, minion.player.opponent);
     }
+    public void StealMinionMessage(Match match, Player player, Minion minion, int newInd, bool canAttack)
+    {
+        CustomMessage messageOwner = CreateMessage(MessageType.StealMinion);
+        CustomMessage messageOpponent = CreateMessage(MessageType.StealMinion);
+
+        messageOwner.AddBool(true);
+        messageOpponent.AddBool(false);
+
+        messageOwner.AddInt(minion.index);
+        messageOpponent.AddInt(minion.index);
+
+        messageOwner.AddInt(newInd);
+        messageOpponent.AddInt(newInd);
+
+        messageOwner.AddBool(canAttack);
+        messageOpponent.AddBool(canAttack);
+
+        SendMessage(messageOwner, player);
+        SendMessage(messageOpponent, player.opponent);
+    }
 
     public void Fatigue(Match match, Player player)
     {

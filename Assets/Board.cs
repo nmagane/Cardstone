@@ -437,6 +437,13 @@ public partial class Board : MonoBehaviour
                 Card.Cardname transformCard = (Card.Cardname)message.GetInt();
                 TransformMinion(transformFriendly, transformIndex, transformCard);
                 break;
+            case Server.MessageType.StealMinion:
+                bool stealFriendly = message.GetBool();
+                bool stealCanAttack = message.GetBool();
+                int stealIndex = message.GetInt();
+                int stealNewIndex = message.GetInt();
+                StealMinion(stealFriendly,stealIndex,stealNewIndex,stealCanAttack);
+                break;
             case Server.MessageType.ConfirmBattlecry: 
             case Server.MessageType.ConfirmTrigger:
                 bool battlecryFriendly = message.GetBool();
@@ -777,6 +784,28 @@ public partial class Board : MonoBehaviour
         QueueAnimation(anim);
     }
 
+    private void StealMinion(bool friendly, int index, int newIndex, bool canAttack)
+    {
+        MinionBoard stealerBoard = friendly ? currMinions : enemyMinions;
+        MinionBoard targetBoard = friendly ? enemyMinions : currMinions;
+
+        Minion minion = targetBoard[index];
+        minion.index = newIndex;
+        minion.canAttack = canAttack;
+
+        targetBoard.minions.Remove(minion);
+        stealerBoard.minions.Add(minion);
+
+        targetBoard.minionObjects.Remove(minion);
+        stealerBoard.minionObjects.Add(minion, minion.creature);
+        minion.creature.order = minion.index;
+
+        targetBoard.OrderInds();
+        stealerBoard.OrderInds();
+
+        targetBoard.OrderCreatures();
+        stealerBoard.OrderCreatures();
+    }
 
     public bool IsFriendly(Minion m)
     {
