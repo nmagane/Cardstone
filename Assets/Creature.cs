@@ -297,7 +297,12 @@ public class Creature : MonoBehaviour
     {
         if (minion.HasAura(Aura.Type.Silence))
         {
-            silenceSprite.enabled = true;
+            if (silenceSprite.enabled == false)
+            {
+                silenceSprite.enabled = true;
+                silenceSprite.transform.localScale = Vector3.one * 1.15f;
+                board.animationManager.LerpZoom(silenceSprite.gameObject, Vector3.one, 10, 0.1f);
+            }
         }
         else
         {

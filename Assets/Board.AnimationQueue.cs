@@ -620,6 +620,7 @@ public partial class Board
 
     Coroutine ConfirmHeroPowerVisual(VisualInfo message)
     {
+        history.AddElement(message.isFriendly ? heroPower.card.card : enemyHeroPower.card.card, message.isFriendly, HistoryElement.Type.Play);
         
         if (message.isFriendly)
         {

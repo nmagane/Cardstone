@@ -150,6 +150,7 @@ MonoBehaviour:
   layerGap: 1
   sortingLayer: shadow
   elevation: 0
+  customShadow: 0
 --- !u!1 &1775170452512210478
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,7 +218,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0545bc6aef221e340a2bdb043c7fe5d2, type: 3}
   - {fileID: 21300000, guid: ce15f2d1b88107145a38acf0cb2124a3, type: 3}
   - {fileID: 21300000, guid: 18a5788e475121f4b99618cdbd7100d9, type: 3}
-  - {fileID: 21300000, guid: 18a5788e475121f4b99618cdbd7100d9, type: 3}
+  - {fileID: 21300000, guid: 042135ed4d4e27b4daee2885ca221498, type: 3}
   - {fileID: 21300000, guid: 18a5788e475121f4b99618cdbd7100d9, type: 3}
   - {fileID: 21300000, guid: 18a5788e475121f4b99618cdbd7100d9, type: 3}
   - {fileID: 21300000, guid: 18a5788e475121f4b99618cdbd7100d9, type: 3}
@@ -734,6 +735,7 @@ MonoBehaviour:
   layerGap: 1
   sortingLayer: shadow
   elevation: 0
+  customShadow: 0
 --- !u!1 &3267457054782022449
 GameObject:
   m_ObjectHideFlags: 0

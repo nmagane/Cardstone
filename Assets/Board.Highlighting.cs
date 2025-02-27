@@ -44,7 +44,7 @@ public partial class Board
         animationManager.LerpZoom(hoverTip.gameObject,Vector3.one, 5,0.1f);
         hoverTip.Set(p.card.card);
     }
-    public void ShowHoverTip(GameObject wep, Card.Cardname c)
+    public void ShowHoverTip(GameObject wep, Card.Cardname c, bool swapSides = false)
     {
         if (wep.transform.position.y<0)
         {
@@ -52,6 +52,11 @@ public partial class Board
         }
         else
             hoverTip.transform.position = wep.transform.position + new Vector3(-6, -6);
+
+        if (swapSides)
+        {
+            hoverTip.transform.position = new Vector3(wep.transform.position.x + 6, 0);
+        }
 
         hoverTip.transform.localScale = Vector3.one * 0.3f;
         animationManager.LerpZoom(hoverTip.gameObject,Vector3.one, 5,0.1f);
@@ -183,8 +188,7 @@ public partial class Board
                 if (m.TAUNT)
                 {
                     m.creature.Highlight(true);
-
-                    //todo: bounce taunters?
+                    animationManager.BounceZoom(m.creature.spriteRenderer.gameObject, 0.1f);
                 }
             }
         }

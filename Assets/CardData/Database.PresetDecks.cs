@@ -84,7 +84,7 @@ public partial class Database
         Card.Cardname.SI7_Agent,
         Card.Cardname.SI7_Agent,
 
-        Card.Cardname.Earthen_Ring_Farseer,
+        Card.Cardname.Edwin_VanCleef,
 
         Card.Cardname.Tinkers_Oil,
         Card.Cardname.Tinkers_Oil,
@@ -295,7 +295,8 @@ public partial class Database
         Card.Cardname.Ancient_of_Lore,
 
         Card.Cardname.Ancient_of_War,
-        Card.Cardname.Ancient_of_War,
+
+        Card.Cardname.Cenarius,
 
         Card.Cardname.Big_Game_Hunter,
 

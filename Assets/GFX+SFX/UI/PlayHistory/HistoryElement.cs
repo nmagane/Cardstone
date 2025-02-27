@@ -30,4 +30,20 @@ public class HistoryElement : MonoBehaviour
         icon.sprite = board.cardObject.GetComponent<Card>().cardSprites[(int)card];
 
     }
+
+    int hoverTimer = 0;
+    private void OnMouseOver()
+    {
+        if (hoverTimer < 30)
+        {
+            hoverTimer++;
+            if (hoverTimer == 30)
+                board.ShowHoverTip(gameObject,card, true);
+        }
+    }
+    private void OnMouseExit()
+    {
+        hoverTimer = 0;
+        board.HideHoverTip();
+    }
 }

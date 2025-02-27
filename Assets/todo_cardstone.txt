@@ -59,14 +59,11 @@ Mechanics for next demo:
 - rope (chess timer?)
 
 - simple play history, updated in visual que? confirm play/trigger/battlecry would have to include targets in message
+	-play history hover
 
 - deck counter color change
 
-- change database choice1 and choice2 to a list of choicecards.
-	-get sp for skulls from database calls on tokens by index. not combodamage crap
-
-some anim for choice popup.
-choice pos on minions
+choice pos on minions (goes off screen if too far on edge)
 
 =======
 Combo Druid Decklist:                     
@@ -91,12 +88,12 @@ Shapeshift - Hero power         - DONE
 1x Loatheb                      - DONE
 1x Sludge Belcher               - DONE
 1x Emperor Thaurissan           - DONE
-1x Sylvanas Windunner           - NO
+1x Sylvanas Windunner           - DONE
 1x Dr. Boom                     - DONE
-1x Mind Control Tech            - NO
+1x Mind Control Tech            - DONE
 1x Treant Tokens                - DONE
 
-1x Polymorph                    - NO - TOKEN - NO
+1x Polymorph                    - DONE
 
 ===============================================
 =====================DONE======================
