@@ -76,5 +76,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3e8a4a8735abd9b408d2368af4b8dfa1, type: 3}
   - {fileID: 21300000, guid: a2b9ba3460c69d14d960449ff4e7f610, type: 3}
   - {fileID: 21300000, guid: 371f6fe5d6c63a040a322a9e764b26ee, type: 3}
+  - {fileID: 21300000, guid: 912931f69c03335428e04a82a2c98c2e, type: 3}
+  - {fileID: 21300000, guid: 4b67077d2ae830c49847b347bdfd8ee6, type: 3}
   shadowMat: {fileID: 2100000, guid: ab167aeb60df8ca4cb7736e375cabbc2, type: 2}
   board: {fileID: 0}

@@ -26,6 +26,7 @@
     }
     void Savage_Roar(CastInfo spell)
     {
+        var anim = new AnimationInfo(Card.Cardname.Savage_Roar, spell.player);
         spell.player.AddAura(new Aura(Aura.Type.Damage, 2, true));
         foreach (Minion m in spell.player.board)
         {
@@ -35,6 +36,8 @@
 
     void Wrath(CastInfo spell)
     {
+
+        var anim = new AnimationInfo(Card.Cardname.Wrath, spell.player,spell);
         if (spell.choice == 0)
         {
             DamageTarget(3, spell);
@@ -63,6 +66,7 @@
     {
         if (spell.choice == 0)
         {
+            var anim = new AnimationInfo(Card.Cardname.Wrath, spell.player, spell.minion,spell);
             DamageTarget(2, spell);
         }
         if (spell.choice == 1)
@@ -134,6 +138,8 @@
 
     void Swipe(CastInfo spell)
     {
+        var anim = new AnimationInfo(Card.Cardname.Swipe, spell.player,spell);
+
         DamageTarget(4, spell);
         if (spell.isHero)
         {

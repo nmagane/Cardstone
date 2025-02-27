@@ -51,6 +51,9 @@ public partial class AnimationManager
         bomb,
 
         boom_shadow,
+
+        swipeTarget,
+        swipeBoard,
     }
     public Sprite[] effectSprites;
     GameObject CreateEffect(Effect e)
@@ -164,6 +167,7 @@ public partial class AnimationManager
                 return StartCoroutine(SoulfireAnim(data));
 
             case Card.Cardname.Mortal_Coil:
+            case Card.Cardname.Wrath:
                 return StartCoroutine(Simple_Projectile(data, Effect.greenSmall, 12, 10));
             case Card.Cardname.Implosion:
                 return StartCoroutine(Simple_Projectile(data, Effect.greenBig, 12, 12));
@@ -241,6 +245,12 @@ public partial class AnimationManager
 
             case Card.Cardname.Fatigue:
                 return StartCoroutine(SmokeTrailProjectile(data));
+
+            case Card.Cardname.Savage_Roar:
+                return StartCoroutine(SavageRoar(data));
+
+            case Card.Cardname.Swipe:
+                return StartCoroutine(Swipe(data));
             default:
                 Debug.LogWarning("Animation Unimplemented: " + data.card);
                 return null;
@@ -370,22 +380,31 @@ public partial class AnimationManager
 
     IEnumerator RageEffect(AnimationData data)
     {
-        StartCoroutine(RageEffectInternal(data));
+        StartCoroutine(RageEffectInternal(data.targetPos, data.GetTarget()));
         yield return Wait(10);
     }
-    IEnumerator RageEffectInternal(AnimationData data)
+    IEnumerator SavageRoar(AnimationData data)
+    {
+        MinionBoard b = data.friendly ? board.currMinions : board.enemyMinions;
+        foreach (var c in b.minionObjects.Values)
+        {
+            StartCoroutine(RageEffectInternal(c.transform.localPosition, c));
+        }
+        yield return Wait(10);
+    }
+    IEnumerator RageEffectInternal(Vector3 targetPos, MonoBehaviour target)
     {
         GameObject p = CreateEffect(Effect.rage);
 
-        p.transform.localPosition = data.targetPos;
+        p.transform.localPosition = targetPos;
         SpriteRenderer s = p.GetComponentInChildren<SpriteRenderer>();
         var color = s.color;
         color.a = 0;
         s.color = color;
         for (int i = 0; i < 20; i++)
         {
-            p.transform.localPosition = data.targetPos;
-            p.transform.localScale = data.GetTarget().transform.localScale;
+            p.transform.localPosition = targetPos;
+            p.transform.localScale = target.transform.localScale;
 
             if (i < 10) color.a += 1 / 20f;
             else color.a -= 1 / 20f;
@@ -586,4 +605,23 @@ public partial class AnimationManager
         SpriteFade(p, 20,5);
     }
 
+    IEnumerator Swipe(AnimationData data)
+    {
+        GameObject p = CreateEffect(Effect.swipeTarget);
+
+        p.transform.localPosition = data.GetTargetPos();
+        p.transform.localScale = Vector3.one * 0.5f;
+        LerpZoom(p, Vector3.one, 5, 0.2f);
+        yield return Wait(15);
+        GameObject q = CreateEffect(Effect.swipeBoard);
+        q.GetComponentInChildren<SpriteRenderer>().flipY = !data.friendly;
+        q.transform.localPosition = new Vector3(0, (data.friendly?1:-1) * (2.57f));
+        BounceZoom(q, 0.15f);
+        q.transform.localScale = Vector3.one;
+
+        SpriteFade(q, 10, 5);
+        SpriteFade(p, 10, 5);
+        yield return Wait(10);
+
+    }
 }
