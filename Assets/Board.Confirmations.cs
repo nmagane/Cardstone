@@ -198,6 +198,7 @@ public partial class Board
         VisualInfo anim = new VisualInfo();
         anim.type = Server.MessageType.SummonMinion;
         anim.minions.Add(m);
+        anim.names.Add(m.card);
         anim.isFriendly = friendlySide;
         anim.ints.Add((int)source);
 

@@ -258,7 +258,16 @@ public partial class Board
     Coroutine SummonMinionVisual(VisualInfo message)
     {
         MinionBoard board = message.isFriendly ? currMinions : enemyMinions;
+        Minion m = message.minions[0];
+
         board.AddCreature(message.minions[0], (MinionBoard.MinionSource)message.ints[0]);
+        
+        if (m.card != message.names[0])
+        {
+            //TRANSFORMED MINION. SHOW ORIGINAL
+            m = new Minion(message.names[0], m.index, m.board, m.playOrder);
+            message.minions[0].creature.Set(m);
+        }
         CheckHighlights();
         return StartCoroutine(Wait(15));
     }
@@ -628,6 +637,8 @@ public partial class Board
     {
         Minion minion = message.minions[0];
         minion.creature.Set(minion);
+        animationManager.BounceZoom(minion.creature.icon.gameObject, 0.2f);
+        animationManager.BounceZoom(minion.creature.spriteRenderer.gameObject, 0.15f);
         return StartCoroutine(Wait(10));
     }
     Coroutine RemoveAuraVisual(VisualInfo message)

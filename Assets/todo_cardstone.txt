@@ -84,7 +84,7 @@ Shapeshift - Hero power         - DONE
 2x Force of Nature              - DONE
 2x Ancient of Lore              - DONE
 2x Ancient of War               - DONE
-1x Cenarius                     - NO
+1x Cenarius                     - DONE
 1x Big Game Hunter              - DONE
 1x Piloted Shredder / (Yeti)    - DONE
 1x Harrison Jones               - DONE
