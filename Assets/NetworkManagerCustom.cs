@@ -62,7 +62,7 @@ public class NetworkManagerCustom : NetworkManager
     //===============SERVER CODE=============================
     private void ServerHandleConnect(NetworkConnectionToClient conn)
     {
-        Debug.Log($"ClientID {conn.connectionId} connected.");
+        Debug.Log($"ClientID {conn.connectionId} connected. {conn.address}");
 
         Server.Instance.HandleConnection();
     }
