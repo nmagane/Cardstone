@@ -61,7 +61,7 @@ public partial class Board : MonoBehaviour
     public TMP_Text playerNameText;
     public TMP_Text enemyNameText;
     public SpriteRenderer mulliganBG;
-    public BoxCollider2D choiceBlocker;
+    public GameObject choiceBlocker;
 
     public Card CreateCard()
     {
@@ -827,7 +827,7 @@ public partial class Board : MonoBehaviour
 #if (UNITY_EDITOR)
         if (Input.GetKeyDown(KeyCode.Q) && playerID!=101)
         {
-            StartMatchmaking(new SaveManager.Decklist("zoo",Card.Class.Warlock,Database.Zoo_Lock));
+            StartMatchmaking(new SaveManager.Decklist("combo",Card.Class.Druid,Database.Combo_Druid));
         }
         if (Input.GetKeyDown(KeyCode.A) && playerID!=101)
         {

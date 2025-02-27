@@ -507,7 +507,10 @@ public partial class Server
             case Card.Cardname.Harrison_Jones:
                 Harrison_Jones(spell);
                 break;
-                
+
+            case Card.Cardname.Shapeshift:
+                Shapeshift(spell);
+                break;
             case Card.Cardname.Wrath:
                 Wrath(spell);
                 break;
@@ -522,6 +525,37 @@ public partial class Server
                 break;
             case Card.Cardname.Mind_Control_Tech:
                 Mind_Control_Tech(spell);
+                break;
+
+            case Card.Cardname.Innervate:
+                Innervate(spell);
+                break;
+            case Card.Cardname.Wild_Growth:
+                Wild_Growth(spell);
+                break;
+            case Card.Cardname.Excess_Mana:
+                Excess_Mana(spell);
+                break;
+            case Card.Cardname.Savage_Roar:
+                Savage_Roar(spell);
+                break;
+            case Card.Cardname.Druid_of_the_Flame:
+                Druid_of_the_Flame(spell);
+                break;
+            case Card.Cardname.Druid_of_the_Claw:
+                Druid_of_the_Claw(spell);
+                break;
+            case Card.Cardname.Ancient_of_Lore:
+                Ancient_of_Lore(spell);
+                break;
+            case Card.Cardname.Cenarius:
+                Cenarius(spell);
+                break;
+            case Card.Cardname.Force_of_Nature:
+                Force_of_Nature(spell);
+                break;
+            case Card.Cardname.Swipe:
+                Swipe(spell);
                 break;
 
             default:

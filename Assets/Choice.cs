@@ -25,6 +25,20 @@ public class Choice : MonoBehaviour
         }
     }
 
+    public void Destroy()
+    {
+        GetComponent<BoxCollider2D>().enabled = false;
+        Board.Instance.animationManager.LerpZoom(gameObject, Vector3.zero, 5, 0);
+        StartCoroutine(death());
+    }
+    IEnumerator death()
+    {
+        for (int i=0;i<6;i++)
+        {
+            yield return null;
+        }
+        Destroy(gameObject);
+    }
     private void OnMouseDown()
     {
         if (owner!=null)

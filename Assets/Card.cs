@@ -220,6 +220,38 @@ public class Card : MonoBehaviour
         Sylvanas_Windrunner,
         Mind_Control_Tech,
 
+        Shapeshift,
+
+        Innervate,
+
+        Wild_Growth,
+        Excess_Mana,
+
+        Druid_of_the_Flame,
+        Druid_of_the_Flame_Attack,
+        Druid_of_the_Flame_Health,
+
+        Savage_Roar,
+        Swipe,
+
+        Druid_of_the_Claw,
+        Druid_of_the_Claw_Charge,
+        Druid_of_the_Claw_Taunt,
+
+        Force_of_Nature,
+
+        Ancient_of_Lore,
+        Ancient_of_Lore_Draw,
+        Ancient_of_Lore_Heal,
+
+        Cenarius,
+        Cenarius_Buff,
+        Cenarius_Treants,
+
+        Treant,
+        Treant_Taunt,
+        Treant_Charge,
+
         _COUNT,
     }
 
@@ -281,11 +313,7 @@ public class Card : MonoBehaviour
         _manaCost = c.manaCost;
         spellDamage = cardInfo.spellDamage;
         comboDamage = cardInfo.comboSpellDamage;
-        if (cardInfo.CHOOSE)
-        {
-            choiceList.Add(cardInfo.choice1);
-            choiceList.Add(cardInfo.choice2);
-        }
+        choiceList = new List<Cardname>(cardInfo.choices);
         if (c.tribe != Tribe.None)
         {
             tribe.text = c.tribe.ToString();
@@ -487,7 +515,7 @@ public class Card : MonoBehaviour
                 if (validTargetsExist)
                 {
                     Vector3 p = board.StartMinionPreview(this, position,false);
-                    StartChoice(choiceList);
+                    StartChoice(choiceList, board.currMinions.previewMinion);
                     HideCard(p);
                 }
                 else
@@ -551,17 +579,22 @@ public class Card : MonoBehaviour
     }
 
     List<Choice> currChoices = new();
-    public void StartChoice(List<Card.Cardname> choices)
+    public void StartChoice(List<Card.Cardname> choices, Creature obj = null)
     {
-        float dist = 8;
+        float dist = 12;
         float count = choices.Count;
         Vector3 offset = new Vector3(-((count - 1) / 2f * dist), 0);
+        if (obj!=null)
+        {
+            offset += obj.transform.localPosition+new Vector3(-0.4f, -0.5f);
+        }
         int i = 0;
         foreach (var card in choices)
         {
             Choice c = Instantiate(board.choiceObject).GetComponent<Choice>();
             c.transform.parent = transform.parent;
-            c.transform.localScale = Vector3.one * 1.75f;
+            c.transform.localScale = Vector3.one;
+            board.animationManager.LerpZoom(c.gameObject, Vector3.one * 1.75f, 5, 0.1f);
             c.Set(i, card, this);
             c.transform.localPosition = offset + new Vector3(dist * i, 0, -8);
 
@@ -569,7 +602,8 @@ public class Card : MonoBehaviour
             currChoices.Add(c);
         }
 
-        board.choiceBlocker.enabled = true;
+        //board.choiceBlocker.transform.localScale = new Vector3(640,400);
+        board.choiceBlocker.SetActive(true);
     }
     public void ChooseOption(int x)
     {
@@ -604,23 +638,25 @@ public class Card : MonoBehaviour
         //==============================
         foreach (Choice c in currChoices)
         {
-            Destroy(c.gameObject);
+            c.Destroy();
         }
         currChoices.Clear();
 
-        board.choiceBlocker.enabled = false;
+        //board.choiceBlocker.transform.localScale = Vector3.zero;
+        board.choiceBlocker.SetActive(false);
     }
 
     public void CancelChoice()
     {
         foreach (Choice c in currChoices)
         {
-            Destroy(c.gameObject);
+            c.Destroy();
         }
         currChoices.Clear();
         EndPlay();
 
-        board.choiceBlocker.enabled = false;
+        //board.choiceBlocker.transform.localScale = Vector3.zero;
+        board.choiceBlocker.SetActive(false);
     }
     private void Update()
     {

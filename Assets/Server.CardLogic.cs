@@ -6,6 +6,7 @@ public partial class Server
 
     public void HealTarget(int heal, CastInfo spell)
     {
+        if (spell.targetMinion == null && spell.targetPlayer == null) return;
         if (spell.isHero)
         {
             Player player = spell.isFriendly ? spell.player : spell.player.opponent;

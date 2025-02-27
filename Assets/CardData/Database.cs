@@ -31,8 +31,7 @@ public partial class Database
         public bool COMBO = false;
         public bool COMBO_TARGETED = false; //for cards that are only targeted when combo is active (SI7)
         public bool CHOOSE = false;
-        public Card.Cardname choice1 = Card.Cardname.Cardback;
-        public Card.Cardname choice2 = Card.Cardname.Cardback;
+        public List<Card.Cardname> choices = new();
 
         public bool LEGENDARY = false;
         public bool TOKEN = false;
@@ -436,7 +435,58 @@ public partial class Database
                 return Sylvanas_Windrunner();
             case Card.Cardname.Mind_Control_Tech:
                 return Mind_Control_Tech();
+                
+            case Card.Cardname.Shapeshift:
+                return Shapeshift();
 
+            case Card.Cardname.Innervate:
+                return Innervate();
+            case Card.Cardname.Wild_Growth:
+                return Wild_Growth();
+            case Card.Cardname.Excess_Mana:
+                return Excess_Mana();
+            case Card.Cardname.Savage_Roar:
+                return Savage_Roar();
+                
+            case Card.Cardname.Druid_of_the_Flame:
+                return Druid_of_the_Flame();
+            case Card.Cardname.Druid_of_the_Flame_Attack:
+                return Druid_of_the_Flame_Attack();
+            case Card.Cardname.Druid_of_the_Flame_Health:
+                return Druid_of_the_Flame_Health();
+
+            case Card.Cardname.Ancient_of_Lore:
+                return Ancient_of_Lore();
+            case Card.Cardname.Ancient_of_Lore_Draw:
+                return Ancient_of_Lore_Draw();
+            case Card.Cardname.Ancient_of_Lore_Heal:
+                return Ancient_of_Lore_Heal();
+
+            case Card.Cardname.Druid_of_the_Claw:
+                return Druid_of_the_Claw();
+            case Card.Cardname.Druid_of_the_Claw_Charge:
+                return Druid_of_the_Claw_Charge();
+            case Card.Cardname.Druid_of_the_Claw_Taunt:
+                return Druid_of_the_Claw_Taunt();
+
+            case Card.Cardname.Swipe:
+                return Swipe();
+            case Card.Cardname.Force_of_Nature:
+                return Force_of_Nature();
+
+            case Card.Cardname.Treant:
+                return Treant();
+            case Card.Cardname.Treant_Charge:
+                return Treant_Charge();
+            case Card.Cardname.Treant_Taunt:
+                return Treant_Taunt();
+
+            case Card.Cardname.Cenarius:
+                return Cenarius();
+            case Card.Cardname.Cenarius_Buff:
+                return Cenarius_Buff();
+            case Card.Cardname.Cenarius_Treants:
+                return Cenarius_Treants();
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 return null;
@@ -489,14 +539,14 @@ public partial class Database
             case Card.Class.Warlock:
                 return Card.Cardname.Lifetap;
 
+            case Card.Class.Druid:
+                return Card.Cardname.Shapeshift;
             /*
            case Card.Class.Hunter:
                break;
            case Card.Class.Paladin:
                break;
            case Card.Class.Priest:
-               break;
-           case Card.Class.Druid:
                break;
            case Card.Class.Shaman:
                break;

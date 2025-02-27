@@ -45,13 +45,13 @@ refactor hasaura(taunt / stealth)
 change button gfx to not be fishlike
 
 Mechanics for next demo:
-= Choose one cards + Druid deck: https://www.hearthpwn.com/decks/232369-superdiogos-legendary-druid-top-50-eu 
+= Choose one cards + Druid deck: 
 	-disable all inputs/highlights while choosing
 	-Transform Minion messages
 
 = Secret removal without trigger (Flare)
 = Overload
-= Discover
+= Discover (server initiated choose from 3, no input until choice is made)
 
 
 - Serverside target eligibilty check (anti lag/cheating)
@@ -68,11 +68,38 @@ Mechanics for next demo:
 some anim for choice popup.
 choice pos on minions
 
-animqueue for transformation
+=======
+Combo Druid Decklist:                     
+
+Shapeshift - Hero power         - DONE
+
+2x Innervate                    - DONE
+2x Wild Growth                  - DONE - TOKEN - DONE
+2x Wrath                        - DONE
+2x Druid of the Flame           - DONE
+2x Savage Roar                  - DONE
+2x Swipe                        - DONE
+2x Keeper of the Grove          - DONE
+2x Druid of the Claw            - DONE
+2x Force of Nature              - DONE - TOKEN - DONE
+2x Ancient of Lore              - DONE
+2x Ancient of War               - DONE
+1x Big Game Hunter              - DONE
+1x Piloted Shredder / (Yeti)    - DONE
+1x Harrison Jones               - DONE
+1x Loatheb                      - DONE
+1x Sludge Belcher               - DONE
+1x Emperor Thaurissan           - DONE
+1x Sylvanas Windunner           - DONE
+1x Dr. Boom                     - DONE
+
+1x Cenarius                     - DONE - TOKEN - DONE
 	
 ===============================================
 =====================DONE======================
 ================================================ 
+
+animqueue for transformation
 
 - stop the insta-targeting on choose cards (dragtargeting = false)
 - set board eligible targets according to the new choice spell, not the original card

@@ -41,7 +41,7 @@ public partial class Hero : MonoBehaviour
     public bool FREEZE = false;
     public bool IMMUNE = false;
 
-    bool _canAttack = false;
+    bool _canAttack = true;
     public bool canAttack
     {
         get

@@ -262,6 +262,57 @@ public partial class Database
         Card.Cardname.Malygos,
 
     };
+    public static List<Card.Cardname> Combo_Druid = new List<Card.Cardname>()
+    {
+        Card.Cardname.Innervate,
+        Card.Cardname.Innervate,
+
+        Card.Cardname.Wild_Growth,
+        Card.Cardname.Wild_Growth,
+
+        Card.Cardname.Wrath,
+        Card.Cardname.Wrath,
+
+        Card.Cardname.Druid_of_the_Flame,
+        Card.Cardname.Druid_of_the_Flame,
+
+        Card.Cardname.Savage_Roar,
+        Card.Cardname.Savage_Roar,
+
+        Card.Cardname.Swipe,
+        Card.Cardname.Swipe,
+
+        Card.Cardname.Keeper_of_the_Grove,
+        Card.Cardname.Keeper_of_the_Grove,
+
+        Card.Cardname.Druid_of_the_Claw,
+        Card.Cardname.Druid_of_the_Claw,
+
+        Card.Cardname.Force_of_Nature,
+        Card.Cardname.Force_of_Nature,
+
+        Card.Cardname.Ancient_of_Lore,
+        Card.Cardname.Ancient_of_Lore,
+
+        Card.Cardname.Ancient_of_War,
+        Card.Cardname.Ancient_of_War,
+
+        Card.Cardname.Big_Game_Hunter,
+
+        Card.Cardname.Chillwind_Yeti,
+
+        Card.Cardname.Harrison_Jones,
+
+        Card.Cardname.Loatheb,
+
+        Card.Cardname.Sludge_Belcher,
+
+        Card.Cardname.Emperor_Thaurissan,
+
+        Card.Cardname.Sylvanas_Windrunner,
+
+        Card.Cardname.Dr_Boom,
+    };
 
 
 }
