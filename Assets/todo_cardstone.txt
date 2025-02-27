@@ -65,35 +65,7 @@ Mechanics for next demo:
 
 choice pos on minions (goes off screen if too far on edge)
 
-=======
-Combo Druid Decklist:                     
 
-Shapeshift - Hero power         - DONE
-
-2x Innervate                    - DONE
-2x Wild Growth                  - DONE
-2x Wrath                        - DONE
-2x Druid of the Flame           - DONE
-2x Savage Roar                  - DONE
-2x Swipe                        - DONE
-2x Keeper of the Grove          - DONE
-2x Druid of the Claw            - DONE
-2x Force of Nature              - DONE
-2x Ancient of Lore              - DONE
-2x Ancient of War               - DONE
-1x Cenarius                     - DONE
-1x Big Game Hunter              - DONE
-1x Piloted Shredder / (Yeti)    - DONE
-1x Harrison Jones               - DONE
-1x Loatheb                      - DONE
-1x Sludge Belcher               - DONE
-1x Emperor Thaurissan           - DONE
-1x Sylvanas Windunner           - DONE
-1x Dr. Boom                     - DONE
-1x Mind Control Tech            - DONE
-1x Treant Tokens                - DONE
-
-1x Polymorph                    - DONE
 
 ===============================================
 =====================DONE======================
@@ -310,6 +282,7 @@ DARK IRON DWARF       - DONE
 DEFENDER OF ARGUS     - DONE
 DOOMGUARD             - DONE
 
+====================================
 Zoo lock Decklist:
 2x Flame Imp                       -- DONE
 1x Mortal coil                     -- DONE
@@ -352,6 +325,7 @@ Freeze mage Decklist:
 1x Archmage Antonidas              -- DONE
 1x Alexstrasza                     -- DONE
 1x Pyroblast                       -- DONE
+1x Polymorph                       -- DONE
 
 ====================================
 Patron warrior Decklist:
@@ -395,4 +369,31 @@ Oil rogue Decklist:
 1x Loatheb                         -- DONE
 2x Sprint                          -- DONE
 1x Dr. Boom                        -- DONE
+
+====================================
+Combo Druid Decklist:                     
+
+Shapeshift - Hero power            -- DONE
+2x Innervate                       -- DONE
+2x Wild Growth                     -- DONE
+2x Wrath                           -- DONE
+2x Druid of the Flame              -- DONE
+2x Savage Roar                     -- DONE
+2x Swipe                           -- DONE
+2x Keeper of the Grove             -- DONE
+2x Druid of the Claw               -- DONE
+2x Force of Nature                 -- DONE
+2x Ancient of Lore                 -- DONE
+2x Ancient of War                  -- DONE
+1x Cenarius                        -- DONE
+1x Big Game Hunter                 -- DONE
+1x Piloted Shredder / (Yeti)       -- DONE
+1x Harrison Jones                  -- DONE
+1x Loatheb                         -- DONE
+1x Sludge Belcher                  -- DONE
+1x Emperor Thaurissan              -- DONE
+1x Sylvanas Windunner              -- DONE
+1x Dr. Boom                        -- DONE
+1x Mind Control Tech               -- DONE
+1x Treant Tokens                   -- DONE
 

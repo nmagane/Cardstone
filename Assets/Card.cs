@@ -587,6 +587,12 @@ public class Card : MonoBehaviour
         if (obj!=null)
         {
             offset += obj.transform.localPosition+new Vector3(-0.4f, -0.5f);
+            if (obj.transform.localPosition.x > 12)
+                offset += new Vector3(-2, 0);
+            if (obj.transform.localPosition.x < -10.5 && obj.transform.localPosition.x > -12)
+                offset += new Vector3(0.5f, 0);
+            if (obj.transform.localPosition.x < -12)
+                offset += new Vector3(2.5f, 0);
         }
         int i = 0;
         foreach (var card in choices)
