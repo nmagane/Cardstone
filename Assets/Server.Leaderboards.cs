@@ -170,7 +170,9 @@ public partial class Server
 
         foreach (string dir in files)
         {
+#if UNITY_EDITOR
             if (dir.Contains(".meta")) continue;
+#endif
             LeaderboardPlayer playerData = null;
             if (File.Exists(dir))
             {

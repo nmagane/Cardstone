@@ -7543,6 +7543,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mainmenu
       objectReference: {fileID: 0}
+    - target: {fileID: 2652833641551526380, guid: de7ed2021eae97b4ab2bd8b902c5cee7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.93
+      objectReference: {fileID: 0}
+    - target: {fileID: 2652833641551526381, guid: de7ed2021eae97b4ab2bd8b902c5cee7, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a6794a966f8b42d4898dfbfd4c368e59, type: 3}
     - target: {fileID: 2949252805516380160, guid: de7ed2021eae97b4ab2bd8b902c5cee7, type: 3}
       propertyPath: board
       value: 
