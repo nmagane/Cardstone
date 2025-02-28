@@ -45,6 +45,8 @@ public partial class Server
             }
         }
     }
+
+
     public void RecordGame(PlayerConnection winner, PlayerConnection loser)
     {
         UpdatePlayerStats(winner, loser, true);

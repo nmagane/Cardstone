@@ -135,6 +135,13 @@ public class NetworkHandler : NetworkBehaviour
         };
         NetworkClient.Send(msg);
     }
+    public void SendServer(Server.CustomMessage m, int clientID)
+    {
+        Player p = new Player();
+        p.connection = new Server.PlayerConnection();
+        p.connection.clientID = clientID;
+        SendServer(m, p);
+    }
     public void SendServer(Server.CustomMessage m,Player player)
     {
         if (connections.ContainsKey(player.connection.clientID)==false)
