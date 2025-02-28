@@ -249,4 +249,22 @@ public partial class Board
         message.AddULong(playerID);
         SendMessage(message);
     }
+
+
+    public void ChooseDiscover(int x)
+    {
+
+    }
+
+    public void RequestStatScreen()
+    {
+        Server.CustomMessage message = CreateMessage(Server.MessageType.RequestStatsScreen);
+        SendMessage(message,true);
+    }
+    public void RequestPlayerStats(ulong playerID)
+    {
+        Server.CustomMessage message = CreateMessage(Server.MessageType.RequestPlayerStats);
+        message.AddULong(playerID);
+        SendMessage(message,true);
+    }
 }

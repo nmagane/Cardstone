@@ -10,6 +10,7 @@ public class Mainmenu : MonoBehaviour
     public bool inQueue = false;
     public TMP_InputField textbox;
     public CollectionMenu editorMenu;
+    public LeaderboardsMenu statsMenu;
 
     public UIButton findMatchButton;
     public UIButton collectionButton;

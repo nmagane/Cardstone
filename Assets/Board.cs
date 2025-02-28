@@ -148,6 +148,14 @@ public partial class Board : MonoBehaviour
     {
         Server.MessageType messageID = message.type;
         int count = message.order;
+        switch (messageID)
+        {
+            //OUT OF GAME MESSAGES FOR MENUS ETC...
+            case Server.MessageType.RequestStatsScreen:
+            case Server.MessageType.RequestPlayerStats:
+                ParseMessage(message);
+                return;
+        };
         ReceiveMessage(message.type, message, count);
 
     }
@@ -462,6 +470,11 @@ public partial class Board : MonoBehaviour
                 string animJson = message.GetString();
                 AnimationInfo animInfo = JsonUtility.FromJson<AnimationInfo>(animJson);
                 ConfirmAnimation(animInfo, animationFriendly);
+                break;
+
+            case Server.MessageType.RequestStatsScreen:
+                string statsJson = message.GetString();
+                mainmenu.statsMenu.DisplayStatsScreen(statsJson);
                 break;
             default:
                 Debug.LogError("UNKNOWN MESSAGE TYPE");
@@ -836,6 +849,10 @@ public partial class Board : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z) && playerID!=101)
         {
             SubmitEndTurn();
+        }
+        if (Input.GetKeyDown(KeyCode.Y) && playerID!=101)
+        {
+            RequestStatScreen();
         }
         //===============================
         if (Input.GetKeyDown(KeyCode.W) && playerID==101)

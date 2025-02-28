@@ -674,22 +674,29 @@ public partial class Match
         //todo: check gameover
     }
 
+    bool gameOver = false;
+
     bool WinCheck()
     {
+        if (gameOver) return true;
+
         if (players[0].health<=0 && players[1].health<=0)
         {
             //Draw
             server.EndMatch(this,null);
+            gameOver = true;
             return true;
         }
         else if (players[0].health<=0)
         {
             server.EndMatch(this,players[1]);
+            gameOver = true;
             return true;
         }
         else if (players[1].health<=0)
         {
             server.EndMatch(this,players[0]);
+            gameOver = true;
             return true;
         }
 

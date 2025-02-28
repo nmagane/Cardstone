@@ -115,6 +115,10 @@ public partial class Server : MonoBehaviour
 
         StartSequence,
         EndSequence,
+
+        RequestStatsScreen,
+        RequestPlayerStats,
+
         _TEST
     }
 
@@ -168,21 +172,12 @@ public partial class Server : MonoBehaviour
         //UNORDERED MESSAGES, OUT OF GAME (NO MATCH ID ATTACHED)
         switch (messageID)
         {
-            case MessageType.Matchmaking:
-                ParseMessage(messageID, clientID, message, 0);
-                orderedMessage = false;
-                break;
-            case MessageType.LeaveMatchmaking:
-                ParseMessage(messageID, clientID, message, 0);
-                orderedMessage = false;
-                break;
-
-            case MessageType.SubmitMulligan:
-                ParseMessage(messageID, clientID, message, 0);
-                orderedMessage = false;
-                break;
-                
+            case MessageType.RequestStatsScreen:
+            case MessageType.RequestPlayerStats:
             case MessageType.Concede:
+            case MessageType.Matchmaking:
+            case MessageType.LeaveMatchmaking:
+            case MessageType.SubmitMulligan:
                 ParseMessage(messageID, clientID, message, 0);
                 orderedMessage = false;
                 break;
@@ -208,6 +203,9 @@ public partial class Server : MonoBehaviour
 
         switch (messageID)
         {
+            case MessageType.RequestStatsScreen:
+                RequestStatsScreen(clientID);
+                break;
             case MessageType.Matchmaking:
                 ulong queuePlayerID = message.GetULong();
                 string queuePlayerName = message.GetString();
@@ -434,6 +432,7 @@ public partial class Server : MonoBehaviour
             message1.AddInt((int)Match.Result.Win);
         }
 
+
         SendMessage(message0, match.players[0]);
         SendMessage(message1, match.players[1]);
 
@@ -445,6 +444,7 @@ public partial class Server : MonoBehaviour
         }
         else
         {
+            RecordGame(winner.connection, winner.opponent.connection);
             Debug.Log($"{match.matchID}: {winner.connection.name} ({winner.connection.classType}) defeats {winner.opponent.connection.name} ({winner.opponent.connection.classType})"); 
         }
         clientConnections.Remove(match.players[0].connection.clientID);

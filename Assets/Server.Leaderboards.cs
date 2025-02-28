@@ -10,8 +10,8 @@ public partial class Server
         public Card.Class className;
         public int wins;
         public int losses;
-        public List<int> matchupWins;
-        public List<int> matchupLosses;
+        public List<int> matchupWins = new();
+        public List<int> matchupLosses = new();
 
         public LeaderboardClass(Card.Class hero)
         {
@@ -30,9 +30,10 @@ public partial class Server
     public class LeaderboardPlayer
     {
         public ulong playerID;
+        public string playerName;
         public int wins;
         public int losses;
-        public List<LeaderboardClass> classStats;
+        public List<LeaderboardClass> classStats = new();
 
         public LeaderboardPlayer(ulong id)
         {
@@ -46,6 +47,14 @@ public partial class Server
         }
     }
 
+    [System.Serializable]
+    public class LeaderboardStatView
+    {
+        public List<ulong> playerIDs = new();
+        public List<string> names = new();
+        public List<int> wins = new();
+        public List<int> losses = new();
+    }
 
     public void RecordGame(PlayerConnection winner, PlayerConnection loser)
     {
@@ -55,6 +64,7 @@ public partial class Server
     public void UpdatePlayerStats(PlayerConnection playerInfo, PlayerConnection opponentInfo, bool win)
     {
         LeaderboardPlayer player = GetPlayerData(playerInfo.playerID);
+        player.playerName = playerInfo.name;
 
         if (win)
         {
@@ -130,5 +140,52 @@ public partial class Server
         string jsonText = JsonUtility.ToJson(playerData);
 
         File.WriteAllText(dir, jsonText);
+    }
+
+    public void RequestStatsScreen(int clientID)
+    {
+        LeaderboardStatView stats = GetStatView();
+        string s = JsonUtility.ToJson(stats);
+        CustomMessage message = CreateMessage(MessageType.RequestStatsScreen);
+
+        message.AddString(s);
+        Debug.Log("send stats to player: "+s);
+        SendMessageClientID(message, clientID);
+    }
+
+    public LeaderboardStatView GetStatView()
+    {
+        LeaderboardStatView stats = new LeaderboardStatView();
+        string saveDir = GetSaveDir();
+
+        string[] files = Directory.GetFiles(saveDir);
+
+        foreach (string dir in files)
+        {
+            if (dir.Contains(".meta")) continue;
+            LeaderboardPlayer playerData = null;
+            if (File.Exists(dir))
+            {
+                try //try to load json
+                {
+                    string jsonText = File.ReadAllText(dir);
+                    playerData = JsonUtility.FromJson<LeaderboardPlayer>(jsonText);
+                }
+                catch //save corrupt, cant load json
+                {
+                    continue;
+                }
+            }
+            else //no save present
+            {
+                continue;
+            }
+            stats.playerIDs.Add(playerData.playerID);
+            stats.names.Add(playerData.playerName);
+            stats.wins.Add(playerData.wins);
+            stats.losses.Add(playerData.losses);
+        }
+
+        return stats;
     }
 }
