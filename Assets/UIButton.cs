@@ -23,6 +23,8 @@ public class UIButton : MonoBehaviour
         ChangeDeckPage,
         MainmenuEditDecks,
         ExpandStats,
+        ExpandClass,
+        LeaderboardReturn,
     }
     public AudioClip[] sounds;
     public SpriteRenderer bg;
@@ -157,6 +159,15 @@ public class UIButton : MonoBehaviour
         owner.GetComponent<LeaderboardEntry>().Expand();
     }
     
+    public void ExpandClass()
+    {
+        owner.GetComponent<LeaderboardsMenu>().ExpandClassStats(data);
+    }    
+    
+    public void LeaderboardReturn()
+    {
+        owner.GetComponent<LeaderboardsMenu>().Return();
+    }    
 
 
 
@@ -248,6 +259,12 @@ public class UIButton : MonoBehaviour
                 break;
             case func.ExpandStats:
                 ExpandStats();
+                break;
+            case func.ExpandClass:
+                ExpandClass();
+                break;
+            case func.LeaderboardReturn:
+                LeaderboardReturn();
                 break;
             default:
                 Debug.LogError("NO BUTTON FUNCTION");

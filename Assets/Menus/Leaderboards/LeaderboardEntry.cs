@@ -16,7 +16,7 @@ public class LeaderboardEntry : MonoBehaviour
         nameText.text = $"[{index}] {name}";
         int winrate = (int)(100*(float)(wins) / (wins + losses));
         string color = (winrate >= 50) ? "#D6F264" : "#F5A097";
-        statsText.text = $"<color=#D6F264>{wins.ToString("00")} W</color> - <color=#F5A097>{losses.ToString("00")} L</color>    <color={color}>{winrate.ToString("00")}%</color>";
+        statsText.text = $"<color=#D6F264>{wins.ToString("00")}</color> - <color=#F5A097>{losses.ToString("00")}</color>    <color={color}>{winrate.ToString("00")}%</color>";
     }
 
     public void Expand()

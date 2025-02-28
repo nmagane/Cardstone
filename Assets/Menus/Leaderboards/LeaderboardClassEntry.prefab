@@ -100,7 +100,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Warrior:'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2c47b24953a7b6844913389d701d3204, type: 2}
   m_sharedMaterial: {fileID: -1391578826462515569, guid: 2c47b24953a7b6844913389d701d3204, type: 2}
@@ -272,7 +272,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '200     104 W - 006 L     70% '
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2c47b24953a7b6844913389d701d3204, type: 2}
   m_sharedMaterial: {fileID: -1391578826462515569, guid: 2c47b24953a7b6844913389d701d3204, type: 2}
@@ -518,11 +518,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3424200545100828800, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
       propertyPath: m_Size.x
-      value: 1.86
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3424200545100828800, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
       propertyPath: m_Size.y
-      value: 1.25
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3424200545100828800, guid: b668120db74ef9b4095cdd008ac81f22, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.x
