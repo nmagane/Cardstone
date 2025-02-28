@@ -8,7 +8,7 @@ players in que counter in menu
  ./ts3server  daemon=1 pid_file=ts3server.pid
  
 only way to run server in background? ctrl+z and & stops the server for some reason
-	screen -d -m -s "card server" ./cardserver.x86_64
+	screen -L -d -m -s "card server" ./cardserver.x86_64
 
 todo: 
 rare bug when sequencing a ton of stuff at once in <5 frames? not sure if its a disconnect from pausing in editor. Impossible to replicate by humans.
@@ -61,11 +61,11 @@ Mechanics for next demo:
 - simple play history, updated in visual que? confirm play/trigger/battlecry would have to include targets in message
 	- attacks in playhistory
 
-- simple leaderboard (w-l (+winrate) with each class, and vs each class, and total)	
-
 ===============================================
 =====================DONE======================
 ================================================ 
+- simple leaderboard (w-l (+winrate) with each class, and vs each class, and total)	
+
 - deck counter fatigue counter
 
 - deck counter color change

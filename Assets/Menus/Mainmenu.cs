@@ -141,4 +141,9 @@ public class Mainmenu : MonoBehaviour
         editorMenu.InitDecks();
         Camera.main.transform.position = new Vector3(0, 40, -10);
     }
+    internal void Stats()
+    {
+        statsMenu.GetStats();
+        Camera.main.transform.position = new Vector3(-40, 40, -10);
+    }
 }

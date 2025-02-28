@@ -18,11 +18,19 @@ public class LeaderboardsMenu : MonoBehaviour
 
     public GameObject statsScreen;
     public GameObject expandedScreen;
-
+    public void GetStats()
+    {
+        Board.Instance.RequestStatScreen();
+    }
     public void DisplayStatsScreen(string s)
     {
         ClearList();
+
         currState = state.Stats;
+        statsScreen.transform.localScale = Vector3.one;
+        expandedScreen.transform.localScale = Vector3.zero;
+        header.text = "LEADERBOARD";
+
         Server.LeaderboardStatView stats = JsonUtility.FromJson<Server.LeaderboardStatView>(s);
         
         for (int i=0;i<stats.playerIDs.Count;i++)
@@ -52,6 +60,12 @@ public class LeaderboardsMenu : MonoBehaviour
     public GameObject profileBG;
     public GameObject matchupsBG;
     public Server.LeaderboardPlayer currData = null;
+
+    public void SelfProfile()
+    {
+        ExpandPlayerStats(Board.Instance.playerID);
+    }
+
     public void ShowPlayerProfile(string playerJson)
     {
         currState = state.Profile;
