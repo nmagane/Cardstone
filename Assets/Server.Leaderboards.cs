@@ -149,7 +149,15 @@ public partial class Server
         CustomMessage message = CreateMessage(MessageType.RequestStatsScreen);
 
         message.AddString(s);
-        Debug.Log("send stats to player: "+s);
+        SendMessageClientID(message, clientID);
+    }
+    public void RequestPlayerStats(int clientID, ulong playerID)
+    {
+        LeaderboardPlayer stats = GetPlayerData(playerID);
+        string s = JsonUtility.ToJson(stats);
+        CustomMessage message = CreateMessage(MessageType.RequestPlayerStats);
+
+        message.AddString(s);
         SendMessageClientID(message, clientID);
     }
 

@@ -22,6 +22,7 @@ public class UIButton : MonoBehaviour
         NewDeckClass,
         ChangeDeckPage,
         MainmenuEditDecks,
+        ExpandStats,
     }
     public AudioClip[] sounds;
     public SpriteRenderer bg;
@@ -151,6 +152,10 @@ public class UIButton : MonoBehaviour
         board.RestartScene();
         Destroy(this.gameObject);
     }
+    public void ExpandStats()
+    {
+        owner.GetComponent<LeaderboardEntry>().Expand();
+    }
     
 
 
@@ -240,6 +245,9 @@ public class UIButton : MonoBehaviour
                 break;
             case func.MainmenuEditDecks:
                 MainmenuEditDecks();
+                break;
+            case func.ExpandStats:
+                ExpandStats();
                 break;
             default:
                 Debug.LogError("NO BUTTON FUNCTION");

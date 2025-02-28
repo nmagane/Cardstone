@@ -206,6 +206,10 @@ public partial class Server : MonoBehaviour
             case MessageType.RequestStatsScreen:
                 RequestStatsScreen(clientID);
                 break;
+            case MessageType.RequestPlayerStats:
+                ulong requestPlayerID = message.GetULong();
+                RequestPlayerStats(clientID, requestPlayerID);
+                break;
             case MessageType.Matchmaking:
                 ulong queuePlayerID = message.GetULong();
                 string queuePlayerName = message.GetString();

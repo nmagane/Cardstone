@@ -476,6 +476,11 @@ public partial class Board : MonoBehaviour
                 string statsJson = message.GetString();
                 mainmenu.statsMenu.DisplayStatsScreen(statsJson);
                 break;
+            case Server.MessageType.RequestPlayerStats:
+                string profileJson = message.GetString();
+                mainmenu.statsMenu.ShowPlayerProfile(profileJson);
+                break;
+
             default:
                 Debug.LogError("UNKNOWN MESSAGE TYPE");
                 break;
