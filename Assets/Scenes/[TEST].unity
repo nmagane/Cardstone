@@ -160,13 +160,13 @@ MonoBehaviour:
   sendTimeout: 5000
   receiveTimeout: 20000
   noDelay: 1
-  sslEnabled: 0
+  sslEnabled: 1
   sslProtocols: 3072
   sslCertJson: ./cert.json
   port: 8888
   batchSend: 1
   waitBeforeSend: 1
-  clientUseWss: 0
+  clientUseWss: 1
   clientWebsocketSettings:
     ClientPortOption: 0
     CustomClientPort: 7777
