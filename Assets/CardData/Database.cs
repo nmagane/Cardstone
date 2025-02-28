@@ -487,6 +487,26 @@ public partial class Database
                 return Cenarius_Buff();
             case Card.Cardname.Cenarius_Treants:
                 return Cenarius_Treants();
+
+
+            case Card.Cardname.Shield_Slam:
+                return Shield_Slam();
+            case Card.Cardname.Shield_Block:
+                return Shield_Block();
+            case Card.Cardname.Shieldmaiden:
+                return Shieldmaiden();
+            case Card.Cardname.Revenge:
+                return Revenge();
+            case Card.Cardname.Brawl:
+                return Brawl();
+            case Card.Cardname.Grommash_Hellscream:
+                return Grommash_Hellscream();
+
+            case Card.Cardname.Baron_Geddon:
+                return Baron_Geddon();
+            case Card.Cardname.Ragnaros:
+                return Ragnaros();
+
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 return null;
@@ -1705,5 +1725,41 @@ public partial class Database
 
         return c;
     }
+    private static CardInfo Baron_Geddon()
+    {
+        CardInfo c = new();
 
+        c.name = "Baron Geddon";
+        c.text = "End of Turn: Deal 2 damage to all other characters.";
+
+        c.manaCost = 7;
+        c.damage = 7;
+        c.health = 5;
+
+        c.MINION = true;
+        c.LEGENDARY = true;
+
+        c.triggers.Add((Trigger.Type.EndTurn, Trigger.Side.Friendly, Trigger.Ability.Baron_Geddon));
+
+        return c;
+    }
+    private static CardInfo Ragnaros()
+    {
+        CardInfo c = new();
+
+        c.name = "Ragnaros the Firelord";
+        c.text = "Can't attack.\nEnd of Turn: Deal 8 damage to a random enemy.";
+
+        c.manaCost = 8;
+        c.damage = 8;
+        c.health = 8;
+
+        c.MINION = true;
+        c.LEGENDARY = true;
+
+        c.auras.Add(Aura.Type.NoAttack);
+        c.triggers.Add((Trigger.Type.EndTurn, Trigger.Side.Friendly, Trigger.Ability.Ragnaros));
+
+        return c;
+    }
 }

@@ -400,17 +400,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2547159853987201026, guid: 06dc05703f6f28d43a34573092f5d22c, type: 2}
     - target: {fileID: 3647834787025814128, guid: 27af3c6cc3c8950478c478747d6f10a8, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 06dc05703f6f28d43a34573092f5d22c, type: 2}
-    - target: {fileID: 3647834787025814128, guid: 27af3c6cc3c8950478c478747d6f10a8, type: 3}
       propertyPath: m_fontSizeBase
       value: 13.64
       objectReference: {fileID: 0}
-    - target: {fileID: 3647834787025814128, guid: 27af3c6cc3c8950478c478747d6f10a8, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 2547159853987201026, guid: 06dc05703f6f28d43a34573092f5d22c, type: 2}
     - target: {fileID: 3647834787025814128, guid: 27af3c6cc3c8950478c478747d6f10a8, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
@@ -2905,9 +2897,13 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4737483206825246324, guid: 27af3c6cc3c8950478c478747d6f10a8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.42
+      objectReference: {fileID: 0}
     - target: {fileID: 5086234376074951711, guid: 27af3c6cc3c8950478c478747d6f10a8, type: 3}
       propertyPath: m_Name
-      value: Deck (1)
+      value: enemyDeck
       objectReference: {fileID: 0}
     - target: {fileID: 8274018235606404503, guid: 27af3c6cc3c8950478c478747d6f10a8, type: 3}
       propertyPath: m_RootOrder
@@ -9274,18 +9270,6 @@ PrefabInstance:
       propertyPath: board
       value: 
       objectReference: {fileID: 716059625}
-    - target: {fileID: 3201840216127571770, guid: e191c75d080628747ae367018f2c9c5a, type: 3}
-      propertyPath: effectSprites.Array.size
-      value: 31
-      objectReference: {fileID: 0}
-    - target: {fileID: 3201840216127571770, guid: e191c75d080628747ae367018f2c9c5a, type: 3}
-      propertyPath: effectSprites.Array.data[29]
-      value: 
-      objectReference: {fileID: 21300000, guid: a2b9ba3460c69d14d960449ff4e7f610, type: 3}
-    - target: {fileID: 3201840216127571770, guid: e191c75d080628747ae367018f2c9c5a, type: 3}
-      propertyPath: effectSprites.Array.data[30]
-      value: 
-      objectReference: {fileID: 21300000, guid: 371f6fe5d6c63a040a322a9e764b26ee, type: 3}
     - target: {fileID: 3201840216127571772, guid: e191c75d080628747ae367018f2c9c5a, type: 3}
       propertyPath: m_Name
       value: AnimationManager

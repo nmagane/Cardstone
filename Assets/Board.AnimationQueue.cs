@@ -615,6 +615,15 @@ public partial class Board
         c.Flip();
         animationManager.MillAnim(c, friendly);
 
+        if (friendly)
+        {
+            deck.SetFatigue(message.damage + 1);
+        }
+        else
+        {
+            enemyDeck.SetFatigue(message.damage + 1);
+        }
+
         return StartCoroutine(Wait(15));
     }
 

@@ -305,5 +305,48 @@ public class TriggerEffects
 
         match.server.StealMinion(match, trigger.player, m);
     }
+    public static void Baron_Geddon(Match match, Trigger trigger)
+    {
+        var anim = new AnimationInfo(Card.Cardname.Baron_Geddon, trigger.player,trigger.minion,trigger.player.opponent);
+        
+        MinionBoard b = trigger.minion.player.board;
+        MinionBoard b2 = trigger.minion.player.opponent.board;
+        match.server.DamageFace(match, trigger.player, 2, trigger.minion.player);
+        match.server.DamageFace(match, trigger.player.opponent, 2, trigger.minion.player);
+        foreach (Minion m in b)
+        {
+            if (m == trigger.minion) continue;
+            match.server.DamageMinion(match, m, 2, trigger.minion.player);
+        }
+        foreach (Minion m in b2)
+        {
+            if (m == trigger.minion) continue;
+            match.server.DamageMinion(match, m, 2, trigger.minion.player);
+        }
+    }
 
+    public static void Ragnaros(Match match, Minion minion)
+    {
+        int damage = 8;
+        Player opponent = match.FindOpponent(minion);
+        int tar = Random.Range(-1, opponent.board.Count());
+
+        if (tar != -1)
+        {
+            while (opponent.board[tar].health <= 0 || opponent.board[tar].DEAD)
+            {
+                tar = Random.Range(-1, opponent.board.Count());
+                if (tar == -1) break;
+            }
+        }
+
+        if (tar == -1)
+        {
+            AnimationInfo animFace = new AnimationInfo(Card.Cardname.Ragnaros, minion.player, minion, opponent);
+            match.server.DamageFace(match, opponent, damage, minion.player);
+            return;
+        }
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Ragnaros, minion.player, minion, opponent.board[tar]);
+        match.server.DamageMinion(match, opponent.board[tar], damage, minion.player);
+    }
 }

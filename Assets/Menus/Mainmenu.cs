@@ -20,6 +20,7 @@ public class Mainmenu : MonoBehaviour
         textbox.SetTextWithoutNotify(board.playerName);
         SetDeck(board.saveData.selectedDeck);
         InitDecks();
+        SetPlayerID();
     }
 
     public Sprite[] deckSprites;
@@ -55,9 +56,17 @@ public class Mainmenu : MonoBehaviour
 
     public void SetPlayerID()
     {
-        System.DateTime time = System.DateTime.Now;
-        long t = time.ToFileTimeUtc();
-        board.playerID = (ulong)t;
+        if (PlayerPrefs.HasKey("playerID"))
+        {
+            board.playerID = ulong.Parse(PlayerPrefs.GetString("playerID"));
+        }
+        else
+        {
+            System.DateTime time = System.DateTime.Now;
+            long t = time.ToFileTimeUtc();
+            board.playerID = (ulong)t;
+            PlayerPrefs.SetString("playerID", board.playerID.ToString());
+        }
         board.playerName = textbox.text;
         board.saveData.playerName = textbox.text;
 
@@ -76,6 +85,7 @@ public class Mainmenu : MonoBehaviour
             board.LeaveMatchmaking();
             findMatchButton.text.text = "FIND MATCH";
             StartCoroutine(findMatchButton.bigBouncer());
+            textbox.enabled = true;
             return;
         }
         //if (board.mirror)  TODO: dont queue if not connected?

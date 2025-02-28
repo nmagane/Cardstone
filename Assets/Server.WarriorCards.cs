@@ -1,4 +1,5 @@
-﻿public partial class Server
+﻿using System.Collections.Generic;
+public partial class Server
 {
 
     private void Armor_Up(CastInfo spell)
@@ -84,6 +85,54 @@
         {
             var anim2 = new AnimationInfo(Card.Cardname.Inner_Rage, spell.player, m);
             spell.match.server.AddAura(spell.match, m, new Aura(Aura.Type.Damage, 2, false, false, null, Card.Cardname.Cruel_Taskmaster));
+        }
+    }
+
+    void Shield_Slam(CastInfo spell)
+    {
+        if (spell.targetMinion == null) return;
+
+        var anim = new AnimationInfo(Card.Cardname.Shield_Slam, spell.player, spell);
+        DamageTarget(spell.player.armor, spell);
+    }
+    void Shieldmaiden(CastInfo spell)
+    {
+        spell.player.armor += 5;
+    }
+    void Shield_Block(CastInfo spell)
+    {
+        spell.player.armor += 5;
+        Draw(spell.player);
+    }
+    void Revenge(CastInfo spell)
+    {
+        int damage = spell.player.health <= 12 ? 3 : 1;
+        Card.Cardname animCard = spell.player.health <= 12 ? Card.Cardname.Revenge : Card.Cardname.Whirlwind;
+        AnimationInfo anim = new AnimationInfo(animCard, spell.player);
+        MinionBoard b = spell.player.board;
+        MinionBoard b2 = spell.player.opponent.board;
+        foreach (Minion m in b)
+        {
+            Damage(m, damage, spell);
+        }
+        foreach (Minion m in b2)
+        {
+            Damage(m, damage, spell);
+        }
+    }
+
+    void Brawl(CastInfo spell)
+    {
+        List<Minion> minions = new List<Minion>();
+        minions.AddRange(spell.player.board.minions);
+        minions.AddRange(spell.player.opponent.board.minions);
+        if (minions.Count == 0) return;
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Whirlwind, spell.player);
+        Minion survivor = Board.RandElem(minions);
+        foreach( Minion m in minions)
+        {
+            if (m == survivor) continue;
+            m.DEAD = true;
         }
     }
 }

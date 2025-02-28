@@ -315,5 +315,52 @@ public partial class Database
         Card.Cardname.Dr_Boom,
     };
 
+    public static List<Card.Cardname> Control_Warrior = new List<Card.Cardname>()
+    {
+        Card.Cardname.Execute,
+        Card.Cardname.Execute,
 
+        Card.Cardname.Shield_Slam,
+        Card.Cardname.Shield_Slam,
+
+        Card.Cardname.Fiery_War_Axe,
+        Card.Cardname.Fiery_War_Axe,
+
+        Card.Cardname.Cruel_Taskmaster,
+        Card.Cardname.Cruel_Taskmaster,
+
+        Card.Cardname.Armorsmith,
+        Card.Cardname.Armorsmith,
+
+        Card.Cardname.Revenge,
+
+        Card.Cardname.Acolyte_of_Pain,
+        Card.Cardname.Acolyte_of_Pain,
+
+        Card.Cardname.Shield_Block,
+        Card.Cardname.Shield_Block,
+
+        Card.Cardname.Shieldmaiden,
+        Card.Cardname.Shieldmaiden,
+
+        Card.Cardname.Brawl,
+
+        Card.Cardname.Deaths_Bite,
+        Card.Cardname.Deaths_Bite,
+
+        Card.Cardname.Grommash_Hellscream,
+
+        Card.Cardname.Big_Game_Hunter,
+
+        Card.Cardname.Harrison_Jones,
+
+        Card.Cardname.Sludge_Belcher,
+        Card.Cardname.Sludge_Belcher,
+
+        Card.Cardname.Sylvanas_Windrunner,
+        Card.Cardname.Baron_Geddon,
+        Card.Cardname.Dr_Boom,
+        Card.Cardname.Alexstrasza,
+        Card.Cardname.Ragnaros,
+    };
 }

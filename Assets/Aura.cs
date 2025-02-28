@@ -44,6 +44,7 @@ public class Aura
         Preparation,
         Millhouse,
         Southsea_Deckhand,
+        Grommash,
     }
 
     public Type type = Type.Health;
@@ -111,6 +112,7 @@ public class Aura
                 break;
 
             case Type.Amani: //ENRAGE AURAS GO HERE?
+            case Type.Grommash:
                 enrage = true;
                 break;
         }
@@ -172,6 +174,9 @@ public class Aura
                 break;
             case Type.Sorcerers_Apprentice:
                 AuraEffects.Sorcerers_Apprentice(match, minion, this);
+                break;
+            case Type.Grommash:
+                AuraEffects.Grommash(match, minion, this);
                 break;
         }
     }

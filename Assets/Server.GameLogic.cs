@@ -558,6 +558,22 @@ public partial class Server
                 Swipe(spell);
                 break;
 
+            case Card.Cardname.Shield_Slam:
+                Shield_Slam(spell);
+                break;
+            case Card.Cardname.Shield_Block:
+                Shield_Block(spell);
+                break;
+            case Card.Cardname.Shieldmaiden:
+                Shieldmaiden(spell);
+                break;
+            case Card.Cardname.Revenge:
+                Revenge(spell);
+                break;
+            case Card.Cardname.Brawl:
+                Brawl(spell);
+                break;
+
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);
                 break;

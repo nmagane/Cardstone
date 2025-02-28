@@ -54,6 +54,8 @@ public partial class AnimationManager
 
         swipeTarget,
         swipeBoard,
+        
+        revenge,
     }
     public Sprite[] effectSprites;
     GameObject CreateEffect(Effect e)
@@ -159,6 +161,11 @@ public partial class AnimationManager
             case Card.Cardname.Big_Game_Hunter:
                 return StartCoroutine(Simple_Projectile(data,Effect.brownSmall,12,5));
 
+            case Card.Cardname.Ragnaros:
+                return StartCoroutine(Simple_Projectile(data,Effect.fireballBig,18,10));
+            case Card.Cardname.Baron_Geddon:
+                return StartCoroutine(GeddonEffect(data));
+
             case Card.Cardname.Ping:
                 return StartCoroutine(Ping(data));
 
@@ -185,6 +192,10 @@ public partial class AnimationManager
             case Card.Cardname.Execute:
                 return StartCoroutine(Simple_Projectile(data, Effect.brownSmall, 12, 12));
 
+
+            case Card.Cardname.Shield_Slam:
+                return StartCoroutine(Simple_Projectile(data, Effect.brownBig, 5, 10));
+
             case Card.Cardname.Pyroblast:
                 return StartCoroutine(Simple_Projectile(data, Effect.pyroblast, 20, 20));
 
@@ -194,6 +205,8 @@ public partial class AnimationManager
             case Card.Cardname.Whirlwind:
             case Card.Cardname.Deaths_Bite:
                 return StartCoroutine(WhirlwindEffect(data,Effect.whirlwind));
+            case Card.Cardname.Revenge:
+                return StartCoroutine(WhirlwindEffect(data,Effect.revenge));
             case Card.Cardname.Blade_Flurry:
                 return StartCoroutine(WhirlwindEffect(data,Effect.flurry));
 
@@ -623,5 +636,17 @@ public partial class AnimationManager
         SpriteFade(p, 10, 5);
         yield return Wait(10);
 
+    }
+
+    IEnumerator GeddonEffect(AnimationData data)
+    {
+        StartCoroutine(GeddonEffectInternal(data));
+        yield return Wait(15);
+    }
+    IEnumerator GeddonEffectInternal(AnimationData data)
+    {
+        StartCoroutine(Boom(data, Effect.boom));
+        yield return Wait(10);
+        StartCoroutine(Boom(data, Effect.boom));
     }
 }

@@ -82,6 +82,7 @@ public class SaveManager : MonoBehaviour
             saveData.decks.Add(new Decklist("FREEZE", Card.Class.Mage, Database.Freeze_Mage));
             saveData.decks.Add(new Decklist("MALYGOS", Card.Class.Warlock, Database.Malygos_Lock));
             saveData.decks.Add(new Decklist("COMBO", Card.Class.Druid, Database.Combo_Druid));
+            saveData.decks.Add(new Decklist("CONTROL", Card.Class.Warrior, Database.Control_Warrior));
         }
 
         List<Decklist> decklists = new List<Decklist>(saveData.decks);

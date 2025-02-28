@@ -59,18 +59,18 @@ Mechanics for next demo:
 - rope (chess timer?)
 
 - simple play history, updated in visual que? confirm play/trigger/battlecry would have to include targets in message
-	-play history hover
+	- attacks in playhistory
 
-- deck counter color change
-
-choice pos on minions (goes off screen if too far on edge)
-
-
+- simple leaderboard (w-l (+winrate) with each class, and vs each class, and total)	
 
 ===============================================
 =====================DONE======================
 ================================================ 
+- deck counter fatigue counter
 
+- deck counter color change
+
+choice pos on minions (goes off screen if too far on edge)
 animqueue for transformation
 
 - stop the insta-targeting on choose cards (dragtargeting = false)
@@ -396,4 +396,16 @@ Shapeshift - Hero power            -- DONE
 1x Dr. Boom                        -- DONE
 1x Mind Control Tech               -- DONE
 1x Treant Tokens                   -- DONE
+
+
+====================================
+Control Warrior Decklist
+
+2x Shield Slam                     -- DONE
+1x Revenge                         -- DONE
+2x Shield Block                    -- DONE
+1x Brawl                           -- DONE
+2x Shieldmaiden                    -- DONE
+1x Baron Geddon                    -- DONE
+1x Ragnaros                        -- DONE
 

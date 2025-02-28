@@ -106,6 +106,8 @@ public class Trigger
         Sludge_Belcher,
         Shade_of_Naxxrammas,
         Sylvanas_Windrunner,
+        Baron_Geddon,
+        Ragnaros,
     }
     public enum Side
     {
@@ -250,6 +252,12 @@ public class Trigger
                 break;
             case Ability.Sylvanas_Windrunner:
                 TriggerEffects.Sylvanas_Windrunner(match, this);
+                break;
+            case Ability.Baron_Geddon:
+                TriggerEffects.Baron_Geddon(match, this);
+                break;
+            case Ability.Ragnaros:
+                TriggerEffects.Ragnaros(match, this.minion);
                 break;
             default:
                 Debug.LogError("MISSING TRIGGER ABILITY");

@@ -156,4 +156,8 @@ public static class AuraEffects
         int i = owner.weapon.damage;
         match.server.AddCardAura(match, card, new Aura(Aura.Type.Cost, -i, false, true, aura));
     }
+    public static void Grommash(Match match, Minion sourceMinion, Aura sourceAura)
+    {
+        match.server.AddAura(match, sourceMinion, new Aura(Aura.Type.Damage, 6, false, true, sourceAura));
+    }
 }

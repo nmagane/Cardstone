@@ -32,6 +32,87 @@
         c.TARGETED = false;
         return c;
     }
+    static CardInfo Shield_Slam()
+    {
+        CardInfo c = new();
+
+        c.name = "Shield Slam";
+        c.text = "Deal damage to a minion equal to your armor.";
+
+        c.classType = Card.Class.Warrior;
+
+        c.manaCost = 1;
+
+        c.eligibleTargets = Board.EligibleTargets.AllMinions;
+
+        c.SPELL = true;
+        c.TARGETED = true;
+        return c;
+    }
+    static CardInfo Shield_Block()
+    {
+        CardInfo c = new();
+
+        c.name = "Shield Block";
+        c.text = "Gain +5 Armor.\nDraw a card.";
+
+        c.classType = Card.Class.Warrior;
+
+        c.manaCost = 3;
+
+        c.SPELL = true;
+        c.TARGETED = false;
+        return c;
+    }
+    static CardInfo Revenge()
+    {
+        CardInfo c = new();
+
+        c.name = "Revenge";
+        c.text = "Deal {0} damage to all minions.\nIf you have 12 or less Health, deal {1}.";
+
+        c.classType = Card.Class.Warrior;
+        c.spellDamage = 1;
+        c.comboSpellDamage = 3;
+
+        c.manaCost = 2;
+
+        c.SPELL = true;
+        c.TARGETED = false;
+        return c;
+    }
+    static CardInfo Brawl()
+    {
+        CardInfo c = new();
+
+        c.name = "Brawl";
+        c.text = "Destroy all minions except one.\n(Chosen randomly)";
+
+        c.classType = Card.Class.Warrior;
+
+        c.manaCost = 5;
+
+        c.SPELL = true;
+        c.TARGETED = false;
+        return c;
+    }
+    static CardInfo Shieldmaiden()
+    {
+        CardInfo c = new();
+
+        c.name = "Shieldmaiden";
+        c.text = "Battlecry: Gain +5 Armor.";
+
+        c.classType = Card.Class.Warrior;
+
+        c.manaCost = 6;
+        c.damage = 5;
+        c.health = 5;
+
+        c.MINION=true;
+        c.BATTLECRY = true;
+        return c;
+    }
     static CardInfo Inner_Rage()
     {
         CardInfo c = new();
@@ -225,6 +306,27 @@
         c.WEAPON = true;
 
         c.triggers.Add((Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.Unstable_Ghoul));
+
+        return c;
+    }
+    private static CardInfo Grommash_Hellscream()
+    {
+        CardInfo c = new();
+
+        c.name = "Grommash Hellscream";
+        c.text = "Charge.\nEnrage: +6 Attack.";
+
+        c.manaCost = 8;
+        c.damage = 4;
+        c.health = 9;
+
+        c.classType = Card.Class.Warrior;
+
+        c.MINION = true;
+        c.LEGENDARY = true;
+
+        c.auras.Add(Aura.Type.Charge);
+        c.auras.Add(Aura.Type.Grommash);
 
         return c;
     }

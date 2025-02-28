@@ -252,6 +252,15 @@ public class Card : MonoBehaviour
         Treant_Taunt,
         Treant_Charge,
 
+        Shield_Slam,
+        Shield_Block,
+        Shieldmaiden,
+        Revenge,
+        Brawl,
+        Grommash_Hellscream,
+        Baron_Geddon,
+        Ragnaros,
+
         _COUNT,
     }
 
@@ -718,6 +727,15 @@ public class Card : MonoBehaviour
         {
             EndPlay();
             return;
+        }
+
+        if (card.CHOOSE && card.TARGETED)
+        {
+            if (board.ValidTargetsAvailable(card.eligibleTargets) == false)
+            {
+                EndPlay();
+                return;
+            }
         }
 
         if ((card.CHOOSE==false) && (card.SPELL || card.SECRET || card.WEAPON) && (card.TARGETED || (card.COMBO && board.combo && card.COMBO_TARGETED)))
