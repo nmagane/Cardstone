@@ -28,6 +28,10 @@ public partial class Server : MonoBehaviour
         message.order = player.messageCount++;
         mirror.SendServer(message, player);
     }
+    public void SendMessageClientID(CustomMessage message, int clientID)
+    {
+        mirror.SendServer(message, clientID);
+    }
     public enum MessageType
     {
         Matchmaking,
