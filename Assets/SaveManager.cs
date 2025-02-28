@@ -45,6 +45,19 @@ public class SaveManager : MonoBehaviour
 
         string dir = saveDir + "/save.json";
         string videoDir = saveDir + "/video.prefs";
+#if UNITY_WEBGL
+        if (PlayerPrefs.HasKey("save"))
+        {
+            saveData = JsonUtility.FromJson<GameSave>(PlayerPrefs.GetString("save"));
+        }
+        else
+        {
+            saveData = new GameSave();
+            string jsonText = JsonUtility.ToJson(saveData);
+            PlayerPrefs.SetString("save", jsonText);
+
+        }
+#else
         if (File.Exists(dir))
         {
             try //try to load json
@@ -73,7 +86,7 @@ public class SaveManager : MonoBehaviour
             string jsonText = JsonUtility.ToJson(saveData);
             File.WriteAllText(dir, jsonText);
         }
-
+#endif
         if (saveData.decks.Count==0)
         {
             saveData.decks.Add(new Decklist("ZOO", Card.Class.Warlock, Database.Zoo_Lock));
