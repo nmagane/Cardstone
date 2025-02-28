@@ -33,8 +33,6 @@ triggers should return true/false to know whether or not to confirm anim
 
 batch removecreature visual animation for Vanish when adding that
 
-
-NOTE: millhouse/loatheb etc are currently set to minion costs for testing instead of spells
 	
 -move triggereffects and auraeffects into trigger and aura class?
 
@@ -45,10 +43,6 @@ refactor hasaura(taunt / stealth)
 change button gfx to not be fishlike
 
 Mechanics for next demo:
-= Choose one cards + Druid deck: 
-	-disable all inputs/highlights while choosing
-	-Transform Minion messages
-
 = Secret removal without trigger (Flare)
 = Overload
 = Discover (server initiated choose from 3, no input until choice is made)
@@ -64,6 +58,10 @@ Mechanics for next demo:
 ===============================================
 =====================DONE======================
 ================================================ 
+= Choose one cards + Druid deck: 
+	-disable all inputs/highlights while choosing
+	-Transform Minion messages
+
 - simple leaderboard (w-l (+winrate) with each class, and vs each class, and total)	
 
 - deck counter fatigue counter

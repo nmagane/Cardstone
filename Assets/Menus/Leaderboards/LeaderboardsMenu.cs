@@ -35,12 +35,14 @@ public class LeaderboardsMenu : MonoBehaviour
         
         for (int i=0;i<stats.playerIDs.Count;i++)
         {
+            if (stats.wins[i] + stats.losses[i] == 0) continue;
             //Debug.Log($"{stats.names[i]} ({stats.playerIDs[i]}): {stats.wins[i]}-{stats.losses[i]} ({(float)stats.wins[i] / (stats.losses[i] + stats.wins[i]) * 100}%)");
             LeaderboardEntry entry = Instantiate(entryObj).GetComponent<LeaderboardEntry>();
             entry.menu = this;
             entry.Set(stats.names[i], i, stats.wins[i], stats.losses[i], stats.playerIDs[i]);
             entry.transform.parent = statsScreen.transform;
             entry.transform.localPosition = new Vector3(0, 7 - i * 1.75f);
+            entries.Add(entry);
         }
     }
 
