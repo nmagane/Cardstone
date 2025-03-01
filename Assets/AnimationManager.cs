@@ -180,7 +180,7 @@ public partial class AnimationManager : MonoBehaviour
             yield return Wait(1);
         }
 
-        if (bounce > 0)
+        if (bounce > 0 && obj !=null)
         {
             OP = obj.transform.localScale;
             DP = tar;

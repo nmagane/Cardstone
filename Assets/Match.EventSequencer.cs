@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public partial class Match
@@ -453,6 +454,7 @@ public partial class Match
 
     public List<Trigger> triggerQueue = new List<Trigger>();
     public List<Trigger> triggerBuffer = new List<Trigger>();
+    public bool midPhase = false;
     public void ResolveTriggerQueue(ref CastInfo spell)
     {
         ReadTriggerBuffer();
@@ -466,7 +468,7 @@ public partial class Match
             t.ActivateTrigger(this, ref spell);
         }
 
-        UpdateAuras();
+        UpdateAuras(midPhase);
     }
     void ConfirmTriggerAnim(Trigger t)
     {
@@ -550,7 +552,7 @@ public partial class Match
         damagedPlayers.Clear();
         healedPlayers.Clear();
     }
-    void UpdateAuras()
+    void UpdateAuras(bool noDeaths=false)
     {
         //Initial visual update
 
@@ -575,37 +577,40 @@ public partial class Match
             }
         }
 
-        //death resolution phase
-        foreach (var m in destroyList)
+        if (noDeaths == false)
         {
-            AddTrigger(Trigger.Type.OnMinionDeath, null, m);
-            server.DestroyMinion(this, m);
-        }
-        foreach (Weapon w in destroyListWeapon)
-        {
-            AddTrigger(Trigger.Type.OnWeaponDeath, null, null,w);
-            server.DestroyWeapon(this, w);
-        }
+            //death resolution phase
+            foreach (var m in destroyList)
+            {
+                AddTrigger(Trigger.Type.OnMinionDeath, null, m);
+                server.DestroyMinion(this, m);
+            }
+            foreach (Weapon w in destroyListWeapon)
+            {
+                AddTrigger(Trigger.Type.OnWeaponDeath, null, null, w);
+                server.DestroyWeapon(this, w);
+            }
 
-        if (triggerBuffer.Count > 0 || triggerQueue.Count > 0)
-        {
-            CastInfo deathResolution = new CastInfo();
-            ResolveTriggerQueue(ref deathResolution);
-        }
+            if (triggerBuffer.Count > 0 || triggerQueue.Count > 0)
+            {
+                CastInfo deathResolution = new CastInfo();
+                ResolveTriggerQueue(ref deathResolution);
+            }
 
-        //deathrattles happen after "on deaths"
-        foreach (Minion m in destroyList)
-        {
-            TriggerMinion(Trigger.Type.Deathrattle, m);
-        }
-        foreach (Weapon w in destroyListWeapon)
-        {
-            TriggerWeapon(Trigger.Type.Deathrattle, w);
-        }
-        if (triggerBuffer.Count > 0 || triggerQueue.Count > 0)
-        {
-            CastInfo deathResolution = new CastInfo();
-            ResolveTriggerQueue(ref deathResolution);
+            //deathrattles happen after "on deaths"
+            foreach (Minion m in destroyList)
+            {
+                TriggerMinion(Trigger.Type.Deathrattle, m);
+            }
+            foreach (Weapon w in destroyListWeapon)
+            {
+                TriggerWeapon(Trigger.Type.Deathrattle, w);
+            }
+            if (triggerBuffer.Count > 0 || triggerQueue.Count > 0)
+            {
+                CastInfo deathResolution = new CastInfo();
+                ResolveTriggerQueue(ref deathResolution);
+            }
         }
         //=====================================
         //Aura activation

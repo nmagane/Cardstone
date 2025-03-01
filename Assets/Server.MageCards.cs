@@ -110,7 +110,10 @@ public partial class Server
         {
             Damage(m, damage, spell);
         }
+
+        spell.match.midPhase = true;
         spell.match.ResolveTriggerQueue(ref spell);
+        spell.match.midPhase = false;
 
         foreach (var m in opp.board)
         {

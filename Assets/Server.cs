@@ -8,8 +8,8 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() {Card.Cardname.Ragnaros,Card.Cardname.Baron_Geddon,Card.Cardname.Grommash_Hellscream,Card.Cardname.Brawl, Card.Cardname.Shield_Slam, Card.Cardname.Shieldmaiden, Card.Cardname.Shield_Block, Card.Cardname.Revenge };
-    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() {Card.Cardname.Ragnaros, Card.Cardname.Baron_Geddon };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Blizzard,Card.Cardname.Blizzard,Card.Cardname.Fan_of_Knives};
+    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() {Card.Cardname.Imp_Gang_Boss, Card.Cardname.Grim_Patron,Card.Cardname.Nerubian_Egg };
     
     
 #else
