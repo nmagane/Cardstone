@@ -56,6 +56,7 @@ public partial class Board
     public void InitGame(ulong matchID, string enemyName, Card.Class allyClass, Card.Class enemyClass)
     {
         Debug.Log("Player " + playerID + " entered game " + matchID);
+        if (playerID != 101) audioManager.PlayMatchNotification();
         Camera.main.transform.position = new Vector3(0, 0, -10);
         gameStarted = true;
         //TODO: ENEMY CLASS COMMUNICATED IN MESSAGE

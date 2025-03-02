@@ -8,6 +8,7 @@ using System;
 public partial class Board : MonoBehaviour
 {
     public AnimationManager animationManager;
+    public AudioManager audioManager;
     public SaveManager saveManager;
     public SaveManager.GameSave saveData => saveManager.saveData;
     public Mainmenu mainmenu;

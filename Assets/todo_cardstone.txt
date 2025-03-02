@@ -55,13 +55,14 @@ Mechanics for next demo:
 - simple play history, updated in visual que? confirm play/trigger/battlecry would have to include targets in message
 	- attacks in playhistory
 	
--alert when match found
-
-nerubian froze  blizz after deathrattle. bug.
 
 ===============================================
 =====================DONE======================
 ================================================ 
+-alert when match found
+
+nerubian froze  blizz after deathrattle. bug.
+
 = Choose one cards + Druid deck: 
 	-disable all inputs/highlights while choosing
 	-Transform Minion messages
