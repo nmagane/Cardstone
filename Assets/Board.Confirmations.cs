@@ -251,7 +251,7 @@ public partial class Board
         QueueAnimation(anim);
     }
 
-    public void ConfirmPlayCard(bool friendlySide, int index, int manaCost, Card.Cardname card, int pos)
+    public void ConfirmPlayCard(bool friendlySide, int index, int manaCost, Card.Cardname card, int pos, int tar, bool isHero, bool friendlyFire)
     {
         if (friendlySide)
         {
@@ -259,6 +259,17 @@ public partial class Board
             animFriendly.type = Server.MessageType.PlayCard;
             animFriendly.names.Add(card);
             animFriendly.isFriendly = friendlySide;
+
+            animFriendly.ints.Add(tar);
+            animFriendly.trigger = isHero;
+            animFriendly.ints.Add(friendlyFire ? 0 : 1);
+
+            if (tar!=-1)
+            {
+                Minion m = friendlyFire ? currMinions[tar] : enemyMinions[tar];
+                animFriendly.minions.Add(m);
+            }
+
             QueueAnimation(animFriendly);
 
             return;
@@ -280,6 +291,16 @@ public partial class Board
         anim.isFriendly = friendlySide;
         anim.manaCost = manaCost;
         anim.index = pos;
+
+        anim.ints.Add(tar);
+        anim.trigger = isHero;
+        anim.ints.Add(friendlyFire ? 0 : 1);
+
+        if (tar != -1)
+        {
+            Minion m = friendlyFire ? enemyMinions[tar] : currMinions[tar];
+            anim.minions.Add(m);
+        }
 
         QueueAnimation(anim);
 
@@ -323,6 +344,7 @@ public partial class Board
 
         VisualInfo anim = new VisualInfo();
         anim.type = Server.MessageType.ConfirmAttackMinion;
+        anim.isFriendly = allyAttack;
         anim.minions.Add(attacker);
         anim.minions.Add(target);
 
@@ -359,7 +381,8 @@ public partial class Board
         }
 
         VisualInfo anim = new VisualInfo();
-        anim.type = Server.MessageType.ConfirmAttackFace;
+        anim.type = Server.MessageType.ConfirmAttackFace; 
+        anim.isFriendly = allyAttack;
         anim.minions.Add(attacker);
         anim.vectors.Add(tar.transform.localPosition);
 

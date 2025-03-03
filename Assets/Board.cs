@@ -261,7 +261,11 @@ public partial class Board : MonoBehaviour
                 int playedCard = message.GetInt();
                 int playedPos = message.GetInt();
 
-                ConfirmPlayCard(playedFriendlySide, playedIndex, playedManaCost, (Card.Cardname)playedCard,playedPos);
+                int playedTarget = message.GetInt();
+                bool playedIsHero = message.GetBool();
+                bool playedIsFriendly = message.GetBool();
+
+                ConfirmPlayCard(playedFriendlySide, playedIndex, playedManaCost, (Card.Cardname)playedCard,playedPos, playedTarget, playedIsHero, playedIsFriendly);
                 break;
             case Server.MessageType.SummonMinion:
                 bool summonedFriendlySide = message.GetBool();

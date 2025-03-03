@@ -10,16 +10,14 @@ public class HistoryManager : MonoBehaviour
     public List<HistoryElement> elements = new List<HistoryElement>();
 
 
-    public void AddElement(Card.Cardname card,bool friendly, HistoryElement.Type type, List<Minion> targetCreatures = null, List<Hero> targetHeroes = null)
+    public void AddElement(Card.Cardname card,bool friendly, HistoryElement.Type type, Card.Cardname target = Card.Cardname.Cardback, Hero tarHero = null, Hero attackHero=null)
     {
         HistoryElement newElem = Instantiate(elementObject).GetComponent<HistoryElement>();
         newElem.transform.parent = this.transform;
         newElem.transform.localScale = Vector3.zero;
         newElem.transform.localPosition = new Vector3(0, 3.75f);
         newElem.board = board;
-        newElem.Set(card,friendly,type);
-        newElem.targetHeroes = targetHeroes;
-        newElem.targetMinions = targetCreatures;
+        newElem.Set(card,friendly,type,target,tarHero, attackHero);
         elements.Insert(0,newElem);
         if (elements.Count > 6)
         {

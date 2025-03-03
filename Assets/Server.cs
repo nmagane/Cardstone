@@ -768,6 +768,11 @@ public partial class Server : MonoBehaviour
         }
         confirmPlay.AddInt(position); confirmPlayOpponent.AddInt(position);
 
+
+        confirmPlay.AddInt(target); confirmPlayOpponent.AddInt(target);
+        confirmPlay.AddBool(isHero); confirmPlayOpponent.AddBool(isHero);
+        confirmPlay.AddBool(friendlySide); confirmPlayOpponent.AddBool(friendlySide);
+
         //server.Send(confirmPlay, player.clientID);
         SendMessage(confirmPlay, match.players[p]);
         //server.Send(confirmPlayOpponent, opponent.clientID);

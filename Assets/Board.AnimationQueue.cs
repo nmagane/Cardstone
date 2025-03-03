@@ -335,7 +335,20 @@ public partial class Board
 
     Coroutine PlayCardVisual(VisualInfo message)
     {
-        history.AddElement(message.names[0], message.isFriendly, HistoryElement.Type.Play);
+        if (message.trigger == false)
+        {
+            if (message.ints[0] == -1)
+                history.AddElement(message.names[0], message.isFriendly, HistoryElement.Type.Play);
+            else
+                history.AddElement(message.names[0], message.isFriendly, HistoryElement.Type.Play, message.minions[0].card);
+        }
+        else
+        {
+            Hero h1 = message.isFriendly ? currHero : enemyHero;
+            Hero h2 = message.isFriendly ? enemyHero : currHero;
+            Hero hero = message.ints[1] == 0 ? h1 : h2;
+            history.AddElement(message.names[0], message.isFriendly, HistoryElement.Type.Play, Card.Cardname.Cardback, hero);
+        }
 
         if (message.isFriendly) return null;
 
@@ -438,7 +451,16 @@ public partial class Board
     }
     Coroutine ConfirmAttackMinionVisual(VisualInfo message)
     {
-        if (message.minions.Count > 1) message.vectors.Insert(0, message.minions[1].creature.transform.localPosition);
+        if (message.minions.Count > 1)
+        {
+            message.vectors.Insert(0, message.minions[1].creature.transform.localPosition);
+            history.AddElement(message.minions[0].card, message.isFriendly, HistoryElement.Type.Attack, message.minions[1].card);
+        }
+        else
+        {
+            Hero h = message.vectors[0].y > 0 ? enemyHero : currHero;
+            history.AddElement(message.minions[0].card, message.isFriendly, HistoryElement.Type.Attack, Card.Cardname.Cardback,h);
+        }
         return animationManager.ConfirmAttackMinion(message.minions[0].creature, message.vectors[0]);
     }
     Coroutine PreSwingVisual(VisualInfo message)
@@ -448,8 +470,18 @@ public partial class Board
     }
     Coroutine ConfirmSwingVisual(VisualInfo message)
     {
-        if (message.minions.Count > 0) message.vectors.Insert(0, message.minions[0].creature.transform.localPosition);
-        return animationManager.ConfirmSwing(message.isFriendly ? currHero : enemyHero, message.vectors[0]);
+        Hero swingHero = message.isFriendly ? currHero : enemyHero;
+        if (message.minions.Count > 0)
+        {
+            message.vectors.Insert(0, message.minions[0].creature.transform.localPosition);
+            history.AddElement(Card.Cardname.Cardback, message.isFriendly, HistoryElement.Type.Attack, message.minions[0].card,null,swingHero);
+        }
+        else
+        {
+            Hero h = message.vectors[0].y > 0 ? enemyHero : currHero;
+            history.AddElement(Card.Cardname.Cardback, message.isFriendly, HistoryElement.Type.Attack, Card.Cardname.Cardback, h,swingHero);
+        }
+        return animationManager.ConfirmSwing(swingHero, message.vectors[0]);
     }
 
     Coroutine UpdateMinionVisual(VisualInfo message)
