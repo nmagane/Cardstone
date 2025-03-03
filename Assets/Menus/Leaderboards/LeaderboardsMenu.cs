@@ -32,16 +32,27 @@ public class LeaderboardsMenu : MonoBehaviour
         header.text = "LEADERBOARD";
 
         Server.LeaderboardStatView stats = JsonUtility.FromJson<Server.LeaderboardStatView>(s);
-        
-        for (int i=0;i<stats.playerIDs.Count;i++)
+        List<(ulong, string, int, int)> statList = new();
+        for (int i = 0; i < stats.playerIDs.Count; i++)
         {
             if (stats.wins[i] + stats.losses[i] == 0) continue;
-            //Debug.Log($"{stats.names[i]} ({stats.playerIDs[i]}): {stats.wins[i]}-{stats.losses[i]} ({(float)stats.wins[i] / (stats.losses[i] + stats.wins[i]) * 100}%)");
+            statList.Add((stats.playerIDs[i], stats.names[i], stats.wins[i], stats.losses[i]));
+        }
+        
+        statList.Sort((x, y) => y.Item3.CompareTo(x.Item3));
+        int ind = 0;
+        foreach (var x in statList)
+        {
+            ulong playerID = x.Item1;
+            string name = x.Item2;
+            int wins = x.Item3;
+            int losses = x.Item4;
+            if (wins + losses == 0) continue;
             LeaderboardEntry entry = Instantiate(entryObj).GetComponent<LeaderboardEntry>();
             entry.menu = this;
-            entry.Set(stats.names[i], i, stats.wins[i], stats.losses[i], stats.playerIDs[i]);
+            entry.Set(name, ind+1, wins, losses, playerID);
             entry.transform.parent = statsScreen.transform;
-            entry.transform.localPosition = new Vector3(0, 7 - i * 1.75f);
+            entry.transform.localPosition = new Vector3(0, 7 - ind++ * 1.75f);
             entries.Add(entry);
         }
     }
