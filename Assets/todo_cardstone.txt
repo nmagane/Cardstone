@@ -52,13 +52,12 @@ Mechanics for next demo:
 
 - rope (chess timer?)
 
-- simple play history, updated in visual que? confirm play/trigger/battlecry would have to include targets in message
-	- attacks in playhistory
-	
-
 ===============================================
 =====================DONE======================
 ================================================ 
+- simple play history, updated in visual que? confirm play/trigger/battlecry would have to include targets in message
+	- attacks in playhistory
+	
 -alert when match found
 
 nerubian froze  blizz after deathrattle. bug.

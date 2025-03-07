@@ -262,8 +262,10 @@ public class TriggerEffects
     }
     public static void Haunted_Creeper(Match match, Trigger trigger, CastInfo spell)
     {
+		match.midPhase = true;
         match.server.SummonToken(match, trigger.minion.player, Card.Cardname.Spectral_Spider, trigger.minion.index);
         match.server.SummonToken(match, trigger.minion.player, Card.Cardname.Spectral_Spider, trigger.minion.index);
+		match.midPhase = false;
     }
     public static void Nerubian_Egg(Match match, Trigger trigger)
     {
