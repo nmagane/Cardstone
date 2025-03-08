@@ -430,5 +430,19 @@ Mill Druid Decklist
 2x Big Game Hunter                 -- DONE
 2x Coldlight Oracle                -- DONE?
 1x King Mukla
+1x King Mukla
+
+
+====================================
+Burn Mage TODOs
+
+Arcane Missiles
+Mirror Image
+Mana Wyrm
+Mad Bomber
+Cone of Cold
+Ethereal Arcanist
+
+
 
 
