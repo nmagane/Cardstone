@@ -271,11 +271,17 @@ public class Card : MonoBehaviour
         Youthful_Brewmaster,
         Tree_of_Life,
         Poison_Seeds,
-
         Lord_Jaraxxus,
         Inferno,
         Infernal,
         Blood_Fury,
+        Grove_Tender,
+        Grove_Tender_Draw,
+        Grove_Tender_Mana,
+        King_Mukla,
+        Mukla_Bananas,
+        Leeroy_Jenkins,
+        Leeroy_Whelp,
 
         _COUNT,
     }

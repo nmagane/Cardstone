@@ -455,6 +455,57 @@ public partial class Database
         return c;
     }
 
+    static CardInfo Grove_Tender()
+    {
+        CardInfo c = new();
+
+        c.name = "Grove Tender";
+        c.text = "Choose one: Give each player a Mana Crystal; or Each player draws a card.";
+        c.manaCost = 3;
+        c.classType = Card.Class.Druid;
+        c.damage = 2;
+        c.health = 4;
+
+        c.MINION = true;
+        c.CHOOSE = true;
+        c.choices = new List<Card.Cardname>() { Card.Cardname.Grove_Tender_Mana, Card.Cardname.Grove_Tender_Draw };
+
+        return c;
+    }
+    static CardInfo Grove_Tender_Draw()
+    {
+        CardInfo c = new();
+
+        c.name = "Gift of Cards";
+        c.text = "Each player draws a card.";
+        c.manaCost = 3;
+        c.classType = Card.Class.Druid;
+
+        c.SPELL = true;
+        c.TARGETED = false;
+
+
+        c.TOKEN = true;
+
+        return c;
+    }
+    static CardInfo Grove_Tender_Mana()
+    {
+        CardInfo c = new();
+
+        c.name = "Gift of Mana";
+        c.text = "Give each player a Mana Crystal.";
+        c.manaCost = 3;
+        c.classType = Card.Class.Druid;
+
+        c.SPELL = true;
+        c.TARGETED = false;
+
+        c.TOKEN = true;
+
+        return c;
+    }
+
     static CardInfo Ancient_of_Lore()
     {
         CardInfo c = new();
@@ -495,7 +546,7 @@ public partial class Database
 
         c.name = "Ancient Secrets";
         c.text = "Restore 5 Health.";
-        c.manaCost = 4;
+        c.manaCost = 7;
         c.classType = Card.Class.Druid;
 
         c.SPELL = true;

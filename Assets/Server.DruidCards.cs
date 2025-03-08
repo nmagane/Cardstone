@@ -265,4 +265,24 @@ public partial class Server
             spell.match.server.SummonToken(spell.match, spell.player.opponent, Card.Cardname.Treant, i);
         }
     }
+
+    void Grove_Tender(CastInfo spell)
+    {
+        foreach (Player p in new List<Player>(){spell.player,spell.player.opponent})
+        {
+            if (spell.choice == 0)
+            {
+                if (p.maxMana<10 && p.currMana<10)
+                {
+                    p.maxMana++;
+                    p.currMana++;
+                }  
+            }
+
+            if (spell.choice == 1)
+            {
+                Draw(p);
+            }
+        }
+    }
 }

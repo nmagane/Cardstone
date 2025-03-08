@@ -240,6 +240,18 @@ public partial class Database
            case Card.Cardname.Youthful_Brewmaster:
                 return Youthful_Brewmaster();
 
+           case Card.Cardname.King_Mukla:
+                return King_Mukla();
+
+           case Card.Cardname.Mukla_Bananas:
+                return Mukla_Bananas();
+
+           case Card.Cardname.Leeroy_Jenkins:
+                return Leeroy_Jenkins();
+
+           case Card.Cardname.Leeroy_Whelp:
+                return Leeroy_Whelp();
+
            case Card.Cardname.Sprint:
                 return Sprint();
 
@@ -497,6 +509,8 @@ public partial class Database
                 return Tree_of_Life();
             case Card.Cardname.Poison_Seeds:
                 return Poison_Seeds();
+            case Card.Cardname.Grove_Tender:
+                return Grove_Tender();
 
             case Card.Cardname.Treant:
                 return Treant();
@@ -1215,6 +1229,72 @@ public partial class Database
         c.BATTLECRY = true;
         c.TARGETED = true;
         c.eligibleTargets = Board.EligibleTargets.FriendlyMinions;
+
+        return c;
+    }
+    private static CardInfo King_Mukla()
+    {
+        CardInfo c = new();
+
+        c.name = "King Mukla";
+        c.text = "Battlecry: Give your opponent two Bananas.";
+
+        c.manaCost = 3;
+        c.damage = 5;
+        c.health = 5;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+        c.LEGENDARY = true;
+
+        return c;
+    }
+    private static CardInfo Mukla_Bananas()
+    {
+        CardInfo c = new();
+
+        c.name = "Bananas";
+        c.text = "Give a minion +1/+1.";
+        c.manaCost = 1;
+
+        c.eligibleTargets = Board.EligibleTargets.AllMinions;
+
+        c.TOKEN = true;
+        c.SPELL = true;
+        c.TARGETED = true;
+
+        return c;
+    }
+    private static CardInfo Leeroy_Jenkins()
+    {
+        CardInfo c = new();
+
+        c.name = "Leeroy Jenkins";
+        c.text = "Charge.\nBattlecry: Summon two 1/1 Whelps for your opponent.";
+
+        c.manaCost = 5;
+        c.damage = 6;
+        c.health = 2;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+        c.LEGENDARY = true;
+
+        return c;
+    }
+    private static CardInfo Leeroy_Whelp()
+    {
+        CardInfo c = new();
+
+        c.name = "Whelp";
+        c.text = "";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+
+        c.MINION = true;
+        c.TOKEN = true;
 
         return c;
     }
