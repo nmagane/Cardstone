@@ -70,18 +70,11 @@ public partial class Server
             spell.match.server.DiscardCard(spell.match, player, rand);
         }
     }
-    public void Draw(CastInfo spell, int count, bool enemyDraw = false)
-    {
-        for (int i = 0; i < count; i++)
-        {
-            if (enemyDraw) spell.player = spell.player.opponent;
-            spell.match.StartSequenceDrawCard(spell);
-        }
-    }
 
-    public void Draw(Player p)
+    public void Draw(Player p,int count=1)
     {
-        p.match.StartSequenceDrawCard(new CastInfo(p.match,p,null,-1,-1,false,false));
+        for (int i=0;i<count;i++)
+            p.match.StartSequenceDrawCard(new CastInfo(p.match,p,null,-1,-1,false,false));
     }
 
     public void SilenceMinion(CastInfo spell)
@@ -187,10 +180,10 @@ public partial class Server
 
     void Coldlight_Oracle(CastInfo spell)
     {
-        match.midPhase = true;
-        Draw(spell, 2);
-        Draw(spell, 2, enemyDraw: true);
-        match.midPhase = false;
+        spell.match.midPhase = true;
+        Draw(spell.player, 2);
+        Draw(spell.player.opponent, 2);
+        spell.match.midPhase = false;
     }
     
     void Gnomish_Inventor(CastInfo spell)
