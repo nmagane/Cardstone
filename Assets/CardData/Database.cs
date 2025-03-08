@@ -531,6 +531,14 @@ public partial class Database
             case Card.Cardname.Ragnaros:
                 return Ragnaros();
 
+            case Card.Cardname.Lord_Jarraxus:
+                return Lord_Jarraxus();
+            case Card.Cardname.Inferno:
+                return Inferno();
+            case Card.Cardname.Infernal:
+                return Infernal();
+            case Card.Cardname.Blood_Fury:
+                return Blood_Fury();
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 return null;

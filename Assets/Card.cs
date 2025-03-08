@@ -272,6 +272,11 @@ public class Card : MonoBehaviour
         Tree_of_Life,
         Poison_Seeds,
 
+        Lord_Jarraxus,
+        Inferno,
+        Infernal,
+        Blood_Fury,
+
         _COUNT,
     }
 
