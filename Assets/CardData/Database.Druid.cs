@@ -337,7 +337,7 @@ public partial class Database
     {
         CardInfo c = new();
 
-        c.name = "Healing_Touch";
+        c.name = "Healing Touch";
         c.text = "Restore 8 Health.";
         c.manaCost = 3;
         c.classType = Card.Class.Druid;
