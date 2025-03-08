@@ -129,6 +129,7 @@ public class Card : MonoBehaviour
         Violet_Teacher,
         Antique_Healbot,
         Azure_Drake,
+        Coldlight_Oracle,
 
         Sprint,
         Dr_Boom,
@@ -284,6 +285,7 @@ public class Card : MonoBehaviour
         Demon,
         Dragon,
         Mech,
+        Murloc,
     }
     public Sprite[] minionCards;
     public Sprite[] spellCards;

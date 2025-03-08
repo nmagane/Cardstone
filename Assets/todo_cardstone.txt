@@ -411,3 +411,24 @@ Control Warrior Decklist
 1x Baron Geddon                    -- DONE
 1x Ragnaros                        -- DONE
 
+
+====================================
+Mill Druid Decklist
+
+2x Innervate                       -- DONE
+2x Naturalize
+2x Wrath                           -- DONE
+2x Healing Touch
+2x Bite
+2x Keeper of the Grove             -- DONE
+2x Starfall
+2x Starfire
+2x Ancient of Lore                 -- DONE
+1x Bloodmage Thalnos               -- DONE
+2x Doomsayer                       -- DONE
+2x Youthful Brewmaster
+2x Big Game Hunter                 -- DONE
+2x Coldlight Oracle                -- DONE?
+1x King Mukla
+
+

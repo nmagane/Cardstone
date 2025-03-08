@@ -234,6 +234,9 @@ public partial class Database
            case Card.Cardname.Azure_Drake:
                 return Azure_Drake();
 
+           case Card.Cardname.Coldlight_Oracle:
+                return Coldlight_Oracle();
+
            case Card.Cardname.Sprint:
                 return Sprint();
 
@@ -1148,6 +1151,23 @@ public partial class Database
         c.tribe = Card.Tribe.Dragon;
 
         c.auras.Add(Aura.Type.Spellpower);
+
+        return c;
+    }
+    private static CardInfo Coldlight_Oracle()
+    {
+        CardInfo c = new();
+
+        c.name = "Coldlight Oracle";
+        c.text = "Battlecry: Each player draws 2 cards.";
+
+        c.manaCost = 3;
+        c.damage = 2;
+        c.health = 2;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+        c.tribe = Card.Tribe.Murloc;
 
         return c;
     }

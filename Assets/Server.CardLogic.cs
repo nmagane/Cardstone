@@ -184,6 +184,13 @@ public partial class Server
     {
         Draw(spell.player);
     }
+
+    void Coldlight_Oracle(CastInfo spell)
+    {
+        Draw(spell.player, 2);
+        Draw(spell.player, 2, enemyDraw: true);
+    }
+    
     void Gnomish_Inventor(CastInfo spell)
     {
         Draw(spell.player);
