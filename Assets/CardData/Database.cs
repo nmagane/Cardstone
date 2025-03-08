@@ -476,6 +476,20 @@ public partial class Database
                 return Swipe();
             case Card.Cardname.Force_of_Nature:
                 return Force_of_Nature();
+            case Card.Cardname.Naturalize:
+                return Naturalize();
+            case Card.Cardname.Bite:
+                return Bite();
+            case Card.Cardname.Healing_Touch:
+                return Healing_Touch();
+            case Card.Cardname.Starfall:
+                return Starfall();
+            case Card.Cardname.Starfall_AoE:
+                return Starfall_AoE();
+            case Card.Cardname.Starfall_Single:
+                return Starfall_Single();
+            case Card.Cardname.Starfire:
+                return Starfire();
 
             case Card.Cardname.Treant:
                 return Treant();

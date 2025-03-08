@@ -159,4 +159,54 @@
             }
         }
     }
+
+    void Naturalize(CastInfo spell)
+    {
+        Minion m = spell.GetTargetMinion();
+
+        m.DEAD = true;
+        Draw(spell.player.opponent, 2);
+    }
+
+    void Bite(CastInfo spell)
+    {
+        spell.player.AddAura(new Aura(Aura.Type.Damage, 4, true));
+        spell.player.armor += 4;
+    }
+
+    void Healing_Touch(CastInfo spell)
+    {
+        Heal(spell.player,8,spell);
+    }
+
+    void Starfall(CastInfo spell)
+    {
+        if (spell.choice == 0)
+        {
+            // AnimationInfo anim = new AnimationInfo(Card.Cardname.Starfall_Single, spell.player, spell);
+            DamageTarget(5, spell);
+        }
+        if (spell.choice == 1)
+        {
+            int damage = 2;
+            Player opp = spell.match.Opponent(spell.player);
+
+            // AnimationInfo anim = new AnimationInfo(Card.Cardname.Starfall_AoE, spell.player);
+            foreach (var m in opp.board)
+            {
+                Damage(m, damage, spell);
+            }
+        }
+    }
+
+    void Starfire(CastInfo spell)
+    {
+        // AnimationInfo anim = new AnimationInfo(Card.Cardname.Starfire, spell.player, spell);
+        DamageTarget(5, spell);
+
+        spell.match.midPhase = true;
+        spell.match.ResolveTriggerQueue(ref spell);
+        Draw(spell.player);
+        spell.match.midPhase = false;
+    }
 }

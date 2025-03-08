@@ -561,6 +561,21 @@ public partial class Server
             case Card.Cardname.Swipe:
                 Swipe(spell);
                 break;
+            case Card.Cardname.Naturalize:
+                Naturalize(spell);
+                break;
+            case Card.Cardname.Bite:
+                Bite(spell);
+                break;
+            case Card.Cardname.Healing_Touch:
+                Healing_Touch(spell);
+                break;
+            case Card.Cardname.Starfall:
+                Starfall(spell);
+                break;
+            case Card.Cardname.Starfire:
+                Starfire(spell);
+                break;
 
             case Card.Cardname.Shield_Slam:
                 Shield_Slam(spell);

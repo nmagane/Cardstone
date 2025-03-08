@@ -261,6 +261,13 @@ public class Card : MonoBehaviour
         Baron_Geddon,
         Ragnaros,
         Coldlight_Oracle,
+        Naturalize,
+        Bite,
+        Healing_Touch,
+        Starfall,
+        Starfall_AoE,
+        Starfall_Single,
+        Starfire,
 
         _COUNT,
     }
