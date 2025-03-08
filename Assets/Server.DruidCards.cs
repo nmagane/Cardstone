@@ -214,7 +214,7 @@
     {
         Player p = spell.player;
         Player opp = spell.player.opponent;
-        
+
         Heal(p,p.maxHealth - p.health,spell);
         Heal(opp,opp.maxHealth - opp.health,spell);
 
@@ -231,8 +231,12 @@
 
     void Poison_Seeds(CastInfo spell)
     {
-        MinionBoard[] boards = { spell.player.opponent.board, spell.player.board };
-        foreach (MinionBoard board in boards)
+        MinionBoard pb = spell.player.board;
+        MinionBoard ob = spell.player.opponent.board;
+        int p_count = pb.Count;
+        int o_count = ob.Count;
+
+        foreach (MinionBoard board in {pb,ob})
         {
             foreach (Minion m in board)
             {
@@ -242,12 +246,14 @@
 
         spell.match.ResolveTriggerQueue(ref spell);
 
-        foreach (MinionBoard board in boards)
+        for (int i = 0; i < p_count; i++)
         {
-            foreach (Minion m in board)
-            {
-                spell.match.server.SummonToken(spell.match, m.player, Card.Cardname.Treant, m.index);
-            }
+            spell.match.server.SummonToken(spell.match, spell.player, Card.Cardname.Treant, i);
+        }
+
+        for (int i = 0; i < o_count; i++)
+        {
+            spell.match.server.SummonToken(spell.match, spell.player.opponent, Card.Cardname.Treant, i);
         }
     }
 }
