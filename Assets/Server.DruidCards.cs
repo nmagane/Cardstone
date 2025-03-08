@@ -272,12 +272,9 @@ public partial class Server
         {
             if (spell.choice == 0)
             {
-                if (p.maxMana<10)
+                if (p.maxMana<10 && p.currMana<10)
                 {
                     p.maxMana++;
-                } 
-                if (p.currMana<10)
-                {
                     p.currMana++;
                 }  
             }
