@@ -493,6 +493,10 @@ public partial class Database
                 return Starfall_Single();
             case Card.Cardname.Starfire:
                 return Starfire();
+            case Card.Cardname.Tree_of_Life:
+                return Tree_of_Life();
+            case Card.Cardname.Poison_Seeds:
+                return Poison_Seeds();
 
             case Card.Cardname.Treant:
                 return Treant();
