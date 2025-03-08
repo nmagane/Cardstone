@@ -56,6 +56,11 @@ public partial class AnimationManager
         swipeBoard,
         
         revenge,
+
+        whiteSmall,
+        whiteBig,
+
+        potionBrew,
     }
     public Sprite[] effectSprites;
     GameObject CreateEffect(Effect e)
@@ -175,6 +180,7 @@ public partial class AnimationManager
 
             case Card.Cardname.Mortal_Coil:
             case Card.Cardname.Wrath:
+            case Card.Cardname.Naturalize:
                 return StartCoroutine(Simple_Projectile(data, Effect.greenSmall, 12, 10));
             case Card.Cardname.Implosion:
                 return StartCoroutine(Simple_Projectile(data, Effect.greenBig, 12, 12));
@@ -264,6 +270,22 @@ public partial class AnimationManager
 
             case Card.Cardname.Swipe:
                 return StartCoroutine(Swipe(data));
+
+
+            case Card.Cardname.Keeper_of_the_Grove:
+                return StartCoroutine(Simple_Projectile(data, Effect.whiteSmall, 12, 5));
+            case Card.Cardname.Starfall_Single:
+            case Card.Cardname.Starfire:
+                return StartCoroutine(Simple_Projectile(data, Effect.whiteBig, 12, 5));
+            case Card.Cardname.Starfall_AoE:
+                return StartCoroutine(FanOfKnives(data, Effect.whiteSmall));
+            case Card.Cardname.Poison_Seeds:
+                return StartCoroutine(FanOfKnives(data, Effect.brownSmall, allMinions: true));
+
+            case Card.Cardname.Youthful_Brewmaster:
+                return StartCoroutine(PotionProjectile(data, Effect.potionBrew));
+
+
             default:
                 Debug.LogWarning("Animation Unimplemented: " + data.card);
                 return null;
@@ -551,13 +573,14 @@ public partial class AnimationManager
         yield return Wait(anim? 10:0);
     }
 
-    IEnumerator FanOfKnives(AnimationData data)
+    IEnumerator FanOfKnives(AnimationData data, Effect effect = Effect.dagger, bool allMinions=false)
     {
         MinionBoard b = data.friendly ? board.enemyMinions : board.currMinions;
+        MinionBoard bOpp = data.friendly ? board.currMinions : board.enemyMinions;
         List<GameObject> objs = new List<GameObject>();
         foreach(var c in b.minionObjects.Values)
         {
-            GameObject p = CreateEffect(Effect.dagger);
+            GameObject p = CreateEffect(effect);
 
             p.transform.localPosition = data.GetSourcePos();
             Vector3 targetPos = c.transform.localPosition;
@@ -566,8 +589,23 @@ public partial class AnimationManager
             LerpTo(p, targetPos, 10);
             objs.Add(p);
         }
-        
-        yield return Wait(10);
+
+        if (allMinions)
+        {
+            foreach (var c in bOpp.minionObjects.Values)
+            {
+                GameObject p = CreateEffect(effect);
+
+                p.transform.localPosition = data.GetSourcePos();
+                Vector3 targetPos = c.transform.localPosition;
+
+                PointTo(p, targetPos, 90);
+                LerpTo(p, targetPos, 10);
+
+            }
+        }
+
+            yield return Wait(10);
         foreach (GameObject g in objs) Destroy(g);
     }
 
@@ -587,6 +625,9 @@ public partial class AnimationManager
                 break;
             case Effect.bomb:
                 c = Board.GetColor("73172D");
+                break;
+            case Effect.potionBrew:
+                c = Board.GetColor("FA6A0A");
                 break;
         }
         Effect[] particles = { Effect.particle1, Effect.particle2, Effect.particleCross };

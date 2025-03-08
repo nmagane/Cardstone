@@ -68,7 +68,7 @@ public partial class Server
     {
         if (spell.choice == 0)
         {
-            var anim = new AnimationInfo(Card.Cardname.Wrath, spell.player, spell.minion,spell);
+            var anim = new AnimationInfo(Card.Cardname.Keeper_of_the_Grove, spell.player, spell.minion,spell);
             DamageTarget(2, spell);
         }
         if (spell.choice == 1)
@@ -165,7 +165,7 @@ public partial class Server
     void Naturalize(CastInfo spell)
     {
         Minion m = spell.GetTargetMinion();
-
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Naturalize, spell.player, spell);
         m.DEAD = true;
         Draw(spell.player.opponent, 2);
     }
@@ -185,7 +185,7 @@ public partial class Server
     {
         if (spell.choice == 0)
         {
-            // AnimationInfo anim = new AnimationInfo(Card.Cardname.Starfall_Single, spell.player, spell);
+            AnimationInfo anim = new AnimationInfo(Card.Cardname.Starfall_Single, spell.player, spell);
             DamageTarget(5, spell);
         }
         if (spell.choice == 1)
@@ -193,7 +193,7 @@ public partial class Server
             int damage = 2;
             Player opp = spell.match.Opponent(spell.player);
 
-            // AnimationInfo anim = new AnimationInfo(Card.Cardname.Starfall_AoE, spell.player);
+            AnimationInfo anim = new AnimationInfo(Card.Cardname.Starfall_AoE, spell.player);
             foreach (var m in opp.board)
             {
                 Damage(m, damage, spell);
@@ -203,7 +203,7 @@ public partial class Server
 
     void Starfire(CastInfo spell)
     {
-        // AnimationInfo anim = new AnimationInfo(Card.Cardname.Starfire, spell.player, spell);
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Starfire, spell.player, spell);
         DamageTarget(5, spell);
 
         spell.match.midPhase = true;
@@ -233,10 +233,17 @@ public partial class Server
 
     void Poison_Seeds(CastInfo spell)
     {
+
         MinionBoard pb = spell.player.board;
         MinionBoard ob = spell.player.opponent.board;
         int p_count = pb.Count();
         int o_count = ob.Count();
+
+        if (p_count + o_count > 0)
+        {
+            //don't waste sending anim data without targets present
+            AnimationInfo anim = new AnimationInfo(Card.Cardname.Poison_Seeds, spell.player);
+        }
 
         foreach (MinionBoard board in new List<MinionBoard>(){pb,ob})
         {

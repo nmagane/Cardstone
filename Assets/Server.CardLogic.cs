@@ -189,6 +189,10 @@ public partial class Server
     void Youthful_Brewmaster(CastInfo spell)
     {
         Minion m = spell.GetTargetMinion();
+        if (m == null) return;
+        
+        var anim = new AnimationInfo(Card.Cardname.Youthful_Brewmaster, spell.player, spell.minion,spell);
+
         spell.match.server.AddCard(spell.match, m.player, m.card, m, 0);
         spell.match.server.RemoveMinion(spell.match, m);
     }
