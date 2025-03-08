@@ -8,7 +8,7 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Youthful_Brewmaster, Card.Cardname.Coldlight_Oracle, Card.Cardname.Starfall,Card.Cardname.Starfire,Card.Cardname.Healing_Touch, Card.Cardname.Bite,Card.Cardname.Poison_Seeds,Card.Cardname.Tree_of_Life,Card.Cardname.Naturalize };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Lord_Jarraxus, Card.Cardname.Coldlight_Oracle, Card.Cardname.Starfall,Card.Cardname.Starfire,Card.Cardname.Healing_Touch, Card.Cardname.Bite,Card.Cardname.Poison_Seeds,Card.Cardname.Tree_of_Life,Card.Cardname.Naturalize };
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() {Card.Cardname.Imp_Gang_Boss, Card.Cardname.Grim_Patron,Card.Cardname.Nerubian_Egg };
     
     
@@ -108,6 +108,9 @@ public partial class Server : MonoBehaviour
         Fatigue,
         TransformMinion,
         StealMinion,
+
+        ReplaceHero,
+        ReplaceHeroPower,
 
         Concede,
 
@@ -1298,6 +1301,36 @@ public partial class Server : MonoBehaviour
         SendMessage(messageOpponent, player.opponent);
     }
 
+    public void ReplaceHero(Player player, Card.Cardname card)
+    {
+        CustomMessage messageOwner = CreateMessage(MessageType.ReplaceHero);
+        CustomMessage messageOpponent = CreateMessage(MessageType.ReplaceHero);
+        messageOwner.AddBool(true);
+        messageOpponent.AddBool(false);
+
+        messageOwner.AddInt((int)card);
+        messageOpponent.AddInt((int)card);
+
+        SendMessage(messageOwner, player);
+        SendMessage(messageOpponent, player.opponent);
+    }
+    public void ReplaceHeroPower(Player player, Card.Cardname card)
+    {
+        player.heroPower = card;
+        player.heroPowerCost = Database.GetCardData(card).manaCost;
+
+        CustomMessage messageOwner = CreateMessage(MessageType.ReplaceHeroPower);
+        CustomMessage messageOpponent = CreateMessage(MessageType.ReplaceHeroPower);
+        messageOwner.AddBool(true);
+        messageOpponent.AddBool(false);
+
+        messageOwner.AddInt((int)card);
+        messageOpponent.AddInt((int)card);
+
+        SendMessage(messageOwner, player);
+        SendMessage(messageOpponent, player.opponent);
+    }
+
     public void Fatigue(Match match, Player player)
     {
         CustomMessage messageOwner = CreateMessage(MessageType.Fatigue);
@@ -1367,7 +1400,11 @@ public partial class Server : MonoBehaviour
         if (connection.clientID != clientID || connection.playerID != playerID) return;
 
         Card.Cardname ability = (Card.Cardname)heroPower;
-        if (ability != player.heroPower) return;
+        if (ability != player.heroPower)
+        {
+            //return;
+            ability = player.heroPower;
+        }
 
         HandCard card = new HandCard(ability, 0);
 

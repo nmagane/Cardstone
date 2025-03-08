@@ -276,7 +276,7 @@ public partial class AnimationManager
                 return StartCoroutine(Simple_Projectile(data, Effect.whiteSmall, 12, 5));
             case Card.Cardname.Starfall_Single:
             case Card.Cardname.Starfire:
-                return StartCoroutine(Simple_Projectile(data, Effect.whiteBig, 12, 5));
+                return StartCoroutine(Simple_Projectile(data, Effect.whiteBig, 12, 12));
             case Card.Cardname.Starfall_AoE:
                 return StartCoroutine(FanOfKnives(data, Effect.whiteSmall));
             case Card.Cardname.Poison_Seeds:

@@ -122,5 +122,20 @@ public partial class Server
     }
 
 
+    void Inferno(CastInfo spell)
+    {
+        SummonToken(spell.match, spell.player, Card.Cardname.Infernal);
+    }
+    void Lord_Jarraxus(CastInfo spell)
+    {
+        RemoveMinion(spell.match, spell.minion);
+
+        spell.player.maxHealth = 15;
+        spell.player.health = 15;
+        ReplaceHero(spell.player, Card.Cardname.Lord_Jarraxus);
+        ReplaceHeroPower(spell.player, Card.Cardname.Inferno);
+        SummonWeapon(spell.match, spell.player, Card.Cardname.Blood_Fury);
+
+    }
 
 }

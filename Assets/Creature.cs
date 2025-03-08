@@ -17,7 +17,7 @@ public class Creature : MonoBehaviour
         set
         {
             _alpha = value;
-            battlecrySprite.color = new Color(battlecrySprite.color.r, battlecrySprite.color.g, battlecrySprite.color.b, _alpha);
+            battlecrySprite.color = new Color(battlecrySprite.color.r, battlecrySprite.color.g, battlecrySprite.color.b, 0);
             spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, _alpha);
             icon.color = new Color(icon.color.r, icon.color.g, icon.color.b, _alpha);
             highlight.color = new Color(highlight.color.r, highlight.color.g, highlight.color.b, _alpha);

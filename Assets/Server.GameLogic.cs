@@ -603,6 +603,13 @@ public partial class Server
                 Brawl(spell);
                 break;
 
+            case Card.Cardname.Lord_Jarraxus:
+                Lord_Jarraxus(spell);
+                break;
+            case Card.Cardname.Inferno:
+                Inferno(spell);
+                break;
+
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);
                 break;

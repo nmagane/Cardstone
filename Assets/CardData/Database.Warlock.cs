@@ -120,6 +120,77 @@
 
         return c;
     }
+    static CardInfo Lord_Jarraxus()
+    {
+        CardInfo c = new();
+
+        c.classType = Card.Class.Warlock;
+        c.name = "Lord Jarraxus";
+        c.text = "Battlecry: Replace your hero with Lord Jarraxus.";
+
+        c.manaCost = 9;
+        c.damage = 3;
+        c.health = 15;
+        c.tribe = Card.Tribe.Demon;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+        c.LEGENDARY = true;
+
+        return c;
+    }
+    static CardInfo Infernal()
+    {
+        CardInfo c = new();
+
+        c.classType = Card.Class.Warlock;
+        c.name = "Infernal";
+        c.text = "Demon from below.";
+
+        c.manaCost = 6;
+        c.damage = 6;
+        c.health = 6;
+        c.tribe = Card.Tribe.Demon;
+
+        c.MINION = true;
+        c.TOKEN = true;
+
+        return c;
+    }
+    static CardInfo Inferno()
+    {
+        CardInfo c = new();
+
+        c.classType = Card.Class.Warlock;
+        c.name = "INFERNO!";
+        c.text = "Summon a 6/6 Infernal.";
+
+        c.manaCost = 2;
+
+        c.SPELL = true;
+        c.TARGETED = false;
+        c.TOKEN = true;
+
+        return c;
+    }
+    static CardInfo Blood_Fury()
+    {
+        CardInfo c = new();
+
+        c.classType = Card.Class.Warlock;
+        c.name = "Blood Fury";
+        c.text = "";
+
+        c.manaCost = 3;
+        c.damage = 3;
+        c.health = 8;
+
+        c.WEAPON = true;
+        c.TOKEN = true;
+
+        return c;
+    }
+
     static CardInfo Imp_Gang_Boss()
     {
         CardInfo c = new();
