@@ -129,7 +129,6 @@ public class Card : MonoBehaviour
         Violet_Teacher,
         Antique_Healbot,
         Azure_Drake,
-        Coldlight_Oracle,
 
         Sprint,
         Dr_Boom,
@@ -261,6 +260,7 @@ public class Card : MonoBehaviour
         Grommash_Hellscream,
         Baron_Geddon,
         Ragnaros,
+        Coldlight_Oracle,
 
         _COUNT,
     }
