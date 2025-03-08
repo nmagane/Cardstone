@@ -163,7 +163,6 @@ public class Mainmenu : MonoBehaviour
 
     public void SetPlayerCount(int x)
     {
-        Debug.Log(x);
         playerCount.text = $"PLAYERS IN GAME: {x}";
     }
     IEnumerator countChecker()
@@ -171,7 +170,7 @@ public class Mainmenu : MonoBehaviour
         while (true)
         {
             board.RequestPlayerCount();
-            yield return Board.Wait(180); //request update every 3 seconds
+            yield return Board.Wait(120); //request update every 2 seconds
         }
     }
 }

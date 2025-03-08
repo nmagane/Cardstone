@@ -278,7 +278,11 @@ public partial class Server
                     p.maxMana++;
                     if (p.currMana < 10)
                         p.currMana++;
-                }  
+                }
+                else if (p.currMana<10)
+                {
+                    p.currMana++;
+                }
             }
 
             if (spell.choice == 1)
