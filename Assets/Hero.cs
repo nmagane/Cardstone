@@ -58,6 +58,7 @@ public partial class Hero : MonoBehaviour
 
     public SpriteRenderer spriteRenderer;
     public Sprite[] classSprites;
+    public Sprite[] specialClassSprites;
     public SpriteRenderer damageSpriteRenderer;
     public SpriteRenderer armorSpriteRenderer;
 
@@ -101,6 +102,19 @@ public partial class Hero : MonoBehaviour
     public void Set(Card.Class hero)
     {
         spriteRenderer.sprite = classSprites[(int)hero];
+    }
+    public void Set(Card.Cardname card, int maxHP)
+    {
+        int i = 0;
+        maxHealth = maxHP;
+        switch (card)
+        {
+            case Card.Cardname.Lord_Jaraxxus:
+                i = 0;
+                break;
+        }
+        spriteRenderer.sprite = specialClassSprites[i];
+        board.animationManager.BounceZoom(spriteRenderer.gameObject, 0.1f);
     }
 
     public void SetHealth(int x)

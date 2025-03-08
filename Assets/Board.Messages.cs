@@ -267,4 +267,9 @@ public partial class Board
         message.AddULong(playerID);
         SendMessage(message,true);
     }
+    public void RequestPlayerCount()
+    {
+        Server.CustomMessage message = CreateMessage(Server.MessageType.RequestPlayerCount);
+        SendMessage(message, true);
+    }
 }

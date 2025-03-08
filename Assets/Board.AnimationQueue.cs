@@ -175,11 +175,30 @@ public partial class Board
             case Server.MessageType.StealMinion:
                 return StealMinionVisual(message);
 
+            case Server.MessageType.ReplaceHero:
+                return ReplaceHeroVisual(message);
+            case Server.MessageType.ReplaceHeroPower:
+                return ReplaceHeroPowerVisual(message);
+
 
             default:
                 Debug.LogError("ANIMATION NOT IMPLEMENTED: " + message.type);
                 return null;
         }
+    }
+
+    private Coroutine ReplaceHeroPowerVisual(VisualInfo message)
+    {
+        HeroPower hp = message.isFriendly ? heroPower : enemyHeroPower;
+        hp.Set(message.names[0]);
+        return null;
+    }
+
+    private Coroutine ReplaceHeroVisual(VisualInfo message)
+    {
+        Hero h = message.isFriendly ? currHero : enemyHero;
+        h.Set(message.names[0], message.ints[0]);
+        return null;
     }
 
     Coroutine ConfirmMulliganVisual(VisualInfo message)

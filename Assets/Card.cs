@@ -271,7 +271,7 @@ public class Card : MonoBehaviour
         Youthful_Brewmaster,
         Tree_of_Life,
         Poison_Seeds,
-        Lord_Jarraxus,
+        Lord_Jaraxxus,
         Inferno,
         Infernal,
         Blood_Fury,

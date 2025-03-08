@@ -545,8 +545,8 @@ public partial class Database
             case Card.Cardname.Ragnaros:
                 return Ragnaros();
 
-            case Card.Cardname.Lord_Jarraxus:
-                return Lord_Jarraxus();
+            case Card.Cardname.Lord_Jaraxxus:
+                return Lord_Jaraxxus();
             case Card.Cardname.Inferno:
                 return Inferno();
             case Card.Cardname.Infernal:

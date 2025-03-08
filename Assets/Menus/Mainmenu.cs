@@ -11,7 +11,7 @@ public class Mainmenu : MonoBehaviour
     public TMP_InputField textbox;
     public CollectionMenu editorMenu;
     public LeaderboardsMenu statsMenu;
-
+    public TMP_Text playerCount;
     public UIButton findMatchButton;
     public UIButton collectionButton;
     public UIButton resetButton;
@@ -87,6 +87,8 @@ public class Mainmenu : MonoBehaviour
             findMatchButton.text.text = "FIND MATCH";
             StartCoroutine(findMatchButton.bigBouncer());
             textbox.enabled = true;
+
+            board.RequestPlayerCount();
             return;
         }
         //if (board.mirror)  TODO: dont queue if not connected?
@@ -95,17 +97,23 @@ public class Mainmenu : MonoBehaviour
         textbox.enabled = false;
         findMatchButton.text.text = "IN QUEUE";
         board.StartMatchmaking(board.currDecklist);
+
+        board.RequestPlayerCount();
     }
 
 
     public GameObject disconnectedContainer;
     public GameObject connectedContainer;
+    Coroutine countCoroutine = null;
     public void ConfirmConnection()
     {
         findMatchButton.transform.localScale = Vector3.one;
         textbox.transform.localScale = Vector3.one;
         connectedContainer.transform.localScale = Vector3.one;
         disconnectedContainer.transform.localScale = Vector3.zero;
+
+        if (countCoroutine ==null) countCoroutine = StartCoroutine(countChecker());
+        
     }
 
     public void ConfirmDisconnect()
@@ -114,6 +122,12 @@ public class Mainmenu : MonoBehaviour
         textbox.transform.localScale = Vector3.zero;
         connectedContainer.transform.localScale = Vector3.zero;
         disconnectedContainer.transform.localScale = Vector3.one;
+
+        if (countCoroutine != null)
+        {
+            StopCoroutine(countCoroutine);
+            countCoroutine = null;
+        }
     }
 
 
@@ -145,5 +159,19 @@ public class Mainmenu : MonoBehaviour
     {
         statsMenu.GetStats();
         Camera.main.transform.position = new Vector3(-40, 40, -10);
+    }
+
+    public void SetPlayerCount(int x)
+    {
+        Debug.Log(x);
+        playerCount.text = $"PLAYERS IN GAME: {x}";
+    }
+    IEnumerator countChecker()
+    {
+        while (true)
+        {
+            board.RequestPlayerCount();
+            yield return Board.Wait(180); //request update every 3 seconds
+        }
     }
 }
