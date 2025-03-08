@@ -392,6 +392,10 @@ public partial class Server
                 Coldlight_Oracle(spell);
                 break;
 
+            case Card.Cardname.Youthful_Brewmaster:
+                Youthful_Brewmaster(spell);
+                break;
+
             case Card.Cardname.Sprint:
                 Sprint(spell);
                 break;
@@ -560,6 +564,27 @@ public partial class Server
                 break;
             case Card.Cardname.Swipe:
                 Swipe(spell);
+                break;
+            case Card.Cardname.Naturalize:
+                Naturalize(spell);
+                break;
+            case Card.Cardname.Bite:
+                Bite(spell);
+                break;
+            case Card.Cardname.Healing_Touch:
+                Healing_Touch(spell);
+                break;
+            case Card.Cardname.Starfall:
+                Starfall(spell);
+                break;
+            case Card.Cardname.Starfire:
+                Starfire(spell);
+                break;
+            case Card.Cardname.Tree_of_Life:
+                Tree_of_Life(spell);
+                break;
+            case Card.Cardname.Poison_Seeds:
+                Poison_Seeds(spell);
                 break;
 
             case Card.Cardname.Shield_Slam:

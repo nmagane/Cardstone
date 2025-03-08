@@ -159,4 +159,101 @@
             }
         }
     }
+
+    void Naturalize(CastInfo spell)
+    {
+        Minion m = spell.GetTargetMinion();
+
+        m.DEAD = true;
+        Draw(spell.player.opponent, 2);
+    }
+
+    void Bite(CastInfo spell)
+    {
+        spell.player.AddAura(new Aura(Aura.Type.Damage, 4, true));
+        spell.player.armor += 4;
+    }
+
+    void Healing_Touch(CastInfo spell)
+    {
+        HealTarget(8,spell);
+    }
+
+    void Starfall(CastInfo spell)
+    {
+        if (spell.choice == 0)
+        {
+            // AnimationInfo anim = new AnimationInfo(Card.Cardname.Starfall_Single, spell.player, spell);
+            DamageTarget(5, spell);
+        }
+        if (spell.choice == 1)
+        {
+            int damage = 2;
+            Player opp = spell.match.Opponent(spell.player);
+
+            // AnimationInfo anim = new AnimationInfo(Card.Cardname.Starfall_AoE, spell.player);
+            foreach (var m in opp.board)
+            {
+                Damage(m, damage, spell);
+            }
+        }
+    }
+
+    void Starfire(CastInfo spell)
+    {
+        // AnimationInfo anim = new AnimationInfo(Card.Cardname.Starfire, spell.player, spell);
+        DamageTarget(5, spell);
+
+        spell.match.midPhase = true;
+        spell.match.ResolveTriggerQueue(ref spell);
+        Draw(spell.player);
+        spell.match.midPhase = false;
+    }
+
+    void Tree_of_Life(CastInfo spell)
+    {
+        Player p = spell.player;
+        Player opp = spell.player.opponent;
+
+        Heal(p,p.maxHealth - p.health,spell);
+        Heal(opp,opp.maxHealth - opp.health,spell);
+
+        MinionBoard[] boards = { opp.board, p.board };
+        foreach (MinionBoard board in boards)
+        {
+            foreach (Minion m in board)
+            {
+                Heal(m, m.maxHealth - m.health, spell);
+            }
+        }
+        
+    }
+
+    void Poison_Seeds(CastInfo spell)
+    {
+        MinionBoard pb = spell.player.board;
+        MinionBoard ob = spell.player.opponent.board;
+        int p_count = pb.Count;
+        int o_count = ob.Count;
+
+        foreach (MinionBoard board in {pb,ob})
+        {
+            foreach (Minion m in board)
+            {
+                m.DEAD = true;
+            }
+        }
+
+        spell.match.ResolveTriggerQueue(ref spell);
+
+        for (int i = 0; i < p_count; i++)
+        {
+            spell.match.server.SummonToken(spell.match, spell.player, Card.Cardname.Treant, i);
+        }
+
+        for (int i = 0; i < o_count; i++)
+        {
+            spell.match.server.SummonToken(spell.match, spell.player.opponent, Card.Cardname.Treant, i);
+        }
+    }
 }

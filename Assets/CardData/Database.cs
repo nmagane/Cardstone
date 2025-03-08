@@ -237,6 +237,9 @@ public partial class Database
            case Card.Cardname.Coldlight_Oracle:
                 return Coldlight_Oracle();
 
+           case Card.Cardname.Youthful_Brewmaster:
+                return Youthful_Brewmaster();
+
            case Card.Cardname.Sprint:
                 return Sprint();
 
@@ -476,6 +479,24 @@ public partial class Database
                 return Swipe();
             case Card.Cardname.Force_of_Nature:
                 return Force_of_Nature();
+            case Card.Cardname.Naturalize:
+                return Naturalize();
+            case Card.Cardname.Bite:
+                return Bite();
+            case Card.Cardname.Healing_Touch:
+                return Healing_Touch();
+            case Card.Cardname.Starfall:
+                return Starfall();
+            case Card.Cardname.Starfall_AoE:
+                return Starfall_AoE();
+            case Card.Cardname.Starfall_Single:
+                return Starfall_Single();
+            case Card.Cardname.Starfire:
+                return Starfire();
+            case Card.Cardname.Tree_of_Life:
+                return Tree_of_Life();
+            case Card.Cardname.Poison_Seeds:
+                return Poison_Seeds();
 
             case Card.Cardname.Treant:
                 return Treant();
@@ -1168,6 +1189,24 @@ public partial class Database
         c.MINION = true;
         c.BATTLECRY = true;
         c.tribe = Card.Tribe.Murloc;
+
+        return c;
+    }
+    private static CardInfo Youthful_Brewmaster()
+    {
+        CardInfo c = new();
+
+        c.name = "Youthful Brewmaster";
+        c.text = "Battlecry: Return a friendly minion from the battlefield to your hand.";
+
+        c.manaCost = 2;
+        c.damage = 3;
+        c.health = 2;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+        c.TARGETED = true;
+        c.eligibleTargets = Board.EligibleTargets.FriendlyMinions;
 
         return c;
     }

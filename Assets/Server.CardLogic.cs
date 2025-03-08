@@ -185,6 +185,13 @@ public partial class Server
         Draw(spell.player.opponent, 2);
         spell.match.midPhase = false;
     }
+
+    void Youthful_Brewmaster(CastInfo spell)
+    {
+        Minion m = spell.GetTargetMinion();
+        spell.match.server.AddCard(spell.match, m.player, m.card, m, 0);
+        spell.match.server.RemoveMinion(spell.match, m);
+    }
     
     void Gnomish_Inventor(CastInfo spell)
     {

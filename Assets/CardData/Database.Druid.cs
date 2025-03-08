@@ -301,6 +301,159 @@ public partial class Database
 
         return c;
     }
+    static CardInfo Naturalize()
+    {
+        CardInfo c = new();
+
+        c.name = "Naturalize";
+        c.text = "Destroy a minion. Your opponent draws 2 cards.";
+        c.manaCost = 1;
+        c.classType = Card.Class.Druid;
+
+
+        c.SPELL = true;
+        c.TARGETED = true;
+        c.eligibleTargets = Board.EligibleTargets.AllMinions;
+            
+
+        return c;
+    }
+    static CardInfo Bite()
+    {
+        CardInfo c = new();
+
+        c.name = "Bite";
+        c.text = "Give your hero +4 Attack this turn. Gain 4 Armor.";
+        c.manaCost = 4;
+        c.classType = Card.Class.Druid;
+
+
+        c.SPELL = true;
+            
+
+        return c;
+    }
+    static CardInfo Healing_Touch()
+    {
+        CardInfo c = new();
+
+        c.name = "Healing_Touch";
+        c.text = "Restore 8 Health.";
+        c.manaCost = 3;
+        c.classType = Card.Class.Druid;
+
+
+        c.SPELL = true;
+        c.TARGETED = true;
+        c.eligibleTargets = Board.EligibleTargets.AllCharacters;
+            
+
+        return c;
+    }
+    static CardInfo Starfall()
+    {
+        CardInfo c = new();
+
+        c.name = "Starfall";
+        c.text = "Choose one: Deal {0} damage to a minion; or {1} damage to all enemy minions.";
+        c.manaCost = 5;
+        c.spellDamage = 5;
+        c.comboSpellDamage = 2;
+        c.classType = Card.Class.Druid;
+
+
+        c.SPELL = true;
+        c.CHOOSE = true;
+        c.choices = new List<Card.Cardname>() { Card.Cardname.Starfall_Single, Card.Cardname.Starfall_AoE };
+            
+
+        return c;
+    }
+    static CardInfo Starfall_Single()
+    {
+        CardInfo c = new();
+
+        c.name = "Starlord";
+        c.text = "Deal {0} damage to a minion.";
+        c.manaCost = 5;
+        c.spellDamage = 5;
+        c.classType = Card.Class.Druid;
+
+        c.SPELL = true;
+        c.TARGETED = true;
+        c.TOKEN = true;
+        c.eligibleTargets = Board.EligibleTargets.AllMinions;
+
+
+        return c;
+    }
+    static CardInfo Starfall_AoE()
+    {
+        CardInfo c = new();
+
+        c.name = "Stellar Drift";
+        c.text = "Deal {0} damage to all enemy minions.";
+        c.manaCost = 5;
+        c.spellDamage = 2;
+        c.classType = Card.Class.Druid;
+
+        c.SPELL = true;
+        c.TARGETED = false;
+        c.TOKEN = true;
+
+        return c;
+    }
+
+    static CardInfo Starfire()
+    {
+        CardInfo c = new();
+
+        c.name = "Starfire";
+        c.text = "Deal {0} damage. Draw a card.";
+        c.manaCost = 6;
+        c.spellDamage = 5;
+        c.classType = Card.Class.Druid;
+
+
+        c.SPELL = true;
+        c.TARGETED = true;
+        c.eligibleTargets = Board.EligibleTargets.AllCharacters;
+            
+
+        return c;
+    }
+
+    static CardInfo Tree_of_Life()
+    {
+        CardInfo c = new();
+
+        c.name = "Tree of Life";
+        c.text = "Restore all characters to full Health.";
+        c.manaCost = 9;
+        c.classType = Card.Class.Druid;
+
+
+        c.SPELL = true;
+            
+
+        return c;
+    }
+
+    static CardInfo Poison_Seeds()
+    {
+        CardInfo c = new();
+
+        c.name = "Poison Seeds";
+        c.text = "Destroy all minions and summon 2/2 Treants to replace them.";
+        c.manaCost = 4;
+        c.classType = Card.Class.Druid;
+
+
+        c.SPELL = true;
+            
+
+        return c;
+    }
 
     static CardInfo Ancient_of_Lore()
     {
