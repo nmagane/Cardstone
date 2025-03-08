@@ -16,11 +16,11 @@ public class HeroPower : MonoBehaviour
     public SpriteRenderer highlight;
 
     public Sprite[] heroPowerSprites;
+    public Sprite[] specialHeroPowerSprites;
 
     public int manaCost => card.manaCost;
 
     public new bool enabled = true;
-    public bool TARGETED = false;
 
     public HandCard card;
 
@@ -28,6 +28,19 @@ public class HeroPower : MonoBehaviour
     {
         card = new HandCard(heroPower, 0);
         icon.sprite = heroPowerSprites[(int)classType];
+    }
+    public void Set(Card.Cardname heroPower)
+    {
+        Enable();
+
+        card = new HandCard(heroPower, 0);
+        switch (heroPower)
+        {
+            case Card.Cardname.Inferno:
+                icon.sprite = specialHeroPowerSprites[0];
+                break;
+        }
+        board.animationManager.BounceZoom(this.gameObject, 0.1f);
     }
 
     public void Enable()

@@ -601,11 +601,11 @@ public partial class AnimationManager
 
                 PointTo(p, targetPos, 90);
                 LerpTo(p, targetPos, 10);
-
+                objs.Add(p);
             }
         }
 
-            yield return Wait(10);
+        yield return Wait(10);
         foreach (GameObject g in objs) Destroy(g);
     }
 

@@ -54,6 +54,7 @@ public class LeaderboardsMenu : MonoBehaviour
             entry.transform.parent = statsScreen.transform;
             entry.transform.localPosition = new Vector3(0, 7 - ind++ * 1.75f);
             entries.Add(entry);
+            if (ind == 10) break;
         }
     }
 

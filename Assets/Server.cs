@@ -1311,6 +1311,9 @@ public partial class Server : MonoBehaviour
         messageOwner.AddInt((int)card);
         messageOpponent.AddInt((int)card);
 
+        messageOwner.AddInt(player.maxHealth);
+        messageOpponent.AddInt(player.maxHealth);
+
         SendMessage(messageOwner, player);
         SendMessage(messageOpponent, player.opponent);
     }

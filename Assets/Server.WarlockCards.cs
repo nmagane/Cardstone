@@ -131,6 +131,7 @@ public partial class Server
         RemoveMinion(spell.match, spell.minion);
 
         spell.player.maxHealth = 15;
+        spell.player.armor = 0;
         spell.player.health = 15;
         ReplaceHero(spell.player, Card.Cardname.Lord_Jarraxus);
         ReplaceHeroPower(spell.player, Card.Cardname.Inferno);

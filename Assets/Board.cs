@@ -457,6 +457,17 @@ public partial class Board : MonoBehaviour
                 int stealNewIndex = message.GetInt();
                 StealMinion(stealFriendly,stealIndex,stealNewIndex,stealCanAttack);
                 break;
+            case Server.MessageType.ReplaceHero:
+                bool replaceHeroFriendly = message.GetBool();
+                Card.Cardname replaceHeroCard = (Card.Cardname)message.GetInt();
+                int replaceHeroHP = message.GetInt();
+                ReplaceHero(replaceHeroFriendly, replaceHeroCard, replaceHeroHP);
+                break;
+            case Server.MessageType.ReplaceHeroPower:
+                bool replaceHeroPowerFriendly = message.GetBool();
+                Card.Cardname replaceHeroPowerCard = (Card.Cardname)message.GetInt();
+                ReplaceHeroPower(replaceHeroPowerFriendly, replaceHeroPowerCard);
+                break;
             case Server.MessageType.ConfirmBattlecry: 
             case Server.MessageType.ConfirmTrigger:
                 bool battlecryFriendly = message.GetBool();
@@ -827,6 +838,24 @@ public partial class Board : MonoBehaviour
         anim.type = Server.MessageType.StealMinion;
         anim.isFriendly = friendly;
         anim.minions.Add(minion);
+        QueueAnimation(anim);
+    }
+
+    private void ReplaceHero(bool friendly, Card.Cardname card, int hp)
+    {
+        VisualInfo anim = new();
+        anim.type = Server.MessageType.ReplaceHero;
+        anim.isFriendly = friendly;
+        anim.names.Add(card);
+        anim.ints.Add(hp);
+        QueueAnimation(anim);
+    }
+    private void ReplaceHeroPower(bool friendly, Card.Cardname card)
+    {
+        VisualInfo anim = new();
+        anim.type = Server.MessageType.ReplaceHeroPower;
+        anim.isFriendly = friendly;
+        anim.names.Add(card);
         QueueAnimation(anim);
     }
 

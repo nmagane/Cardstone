@@ -223,6 +223,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 18a5788e475121f4b99618cdbd7100d9, type: 3}
   - {fileID: 21300000, guid: 18a5788e475121f4b99618cdbd7100d9, type: 3}
   - {fileID: 21300000, guid: 18a5788e475121f4b99618cdbd7100d9, type: 3}
+  specialClassSprites:
+  - {fileID: 21300000, guid: 2d29548600c326247a0b0f566aca097c, type: 3}
   damageSpriteRenderer: {fileID: 2609343458304010595}
   armorSpriteRenderer: {fileID: 2194483140440141548}
   shadowSpriteRenderer: {fileID: 3562002092613296251}
