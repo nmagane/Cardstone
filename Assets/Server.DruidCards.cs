@@ -1,4 +1,6 @@
-﻿public partial class Server
+﻿using System.Collections.Generic;
+
+public partial class Server
 {
     void Shapeshift(CastInfo spell)
     {
@@ -233,10 +235,10 @@
     {
         MinionBoard pb = spell.player.board;
         MinionBoard ob = spell.player.opponent.board;
-        int p_count = pb.Count;
-        int o_count = ob.Count;
+        int p_count = pb.Count();
+        int o_count = ob.Count();
 
-        foreach (MinionBoard board in {pb,ob})
+        foreach (MinionBoard board in new List<MinionBoard>(){pb,ob})
         {
             foreach (Minion m in board)
             {
