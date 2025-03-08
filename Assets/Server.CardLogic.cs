@@ -201,27 +201,28 @@ public partial class Server
     {
         for (int i = 0; i < 2; i++)
         {
-            if (spell.player.opponent.hand.Count() >= 10) return;
-            spell.match.server.AddCard(spell.match, spell.player.opponent, Card.Cardname.Banana, null, 0);
+            spell.match.server.AddCard(spell.match, spell.player.opponent, Card.Cardname.Bananas, null, 0);
         }
     }
 
-    void Mukla_Bananas(CastInfo spell)
+    void Bananas(CastInfo spell)
     {
         if (spell.targetMinion == null) return;
         Minion m = spell.targetMinion;
-        spell.match.server.AddAura(spell.match, m, new Aura(Aura.Type.Damage, 1, true, false, null, Card.Cardname.Mukla_Bananas));
-        spell.match.server.AddAura(spell.match, m, new Aura(Aura.Type.Health, 1, true, false, null, Card.Cardname.Mukla_Bananas));
+        spell.match.server.AddAura(spell.match, m, new Aura(Aura.Type.Damage, 1, false, false, null, Card.Cardname.Bananas));
+        spell.match.server.AddAura(spell.match, m, new Aura(Aura.Type.Health, 1, false, false, null, Card.Cardname.Bananas));
 
     }
     
     void Leeroy_Jenkins(CastInfo spell)
     {
+        spell.match.midPhase = true;
         for (int i = 0; i < 2; i++)
         {
             if (spell.player.opponent.board.Count() >= 7) return;
             spell.match.server.SummonToken(spell.match, spell.player.opponent, Card.Cardname.Whelp, spell.player.opponent.board.Count());
         }
+        spell.match.midPhase = false;
     }
     
     void Gnomish_Inventor(CastInfo spell)

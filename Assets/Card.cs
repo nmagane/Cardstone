@@ -279,9 +279,9 @@ public class Card : MonoBehaviour
         Grove_Tender_Draw,
         Grove_Tender_Mana,
         King_Mukla,
-        Mukla_Bananas,
+        Bananas,
         Leeroy_Jenkins,
-        Leeroy_Whelp,
+        Whelp,
 
         _COUNT,
     }

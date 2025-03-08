@@ -243,14 +243,14 @@ public partial class Database
            case Card.Cardname.King_Mukla:
                 return King_Mukla();
 
-           case Card.Cardname.Mukla_Bananas:
-                return Mukla_Bananas();
+           case Card.Cardname.Bananas:
+                return Bananas();
 
            case Card.Cardname.Leeroy_Jenkins:
                 return Leeroy_Jenkins();
 
-           case Card.Cardname.Leeroy_Whelp:
-                return Leeroy_Whelp();
+           case Card.Cardname.Whelp:
+                return Whelp();
 
            case Card.Cardname.Sprint:
                 return Sprint();
@@ -511,6 +511,10 @@ public partial class Database
                 return Poison_Seeds();
             case Card.Cardname.Grove_Tender:
                 return Grove_Tender();
+            case Card.Cardname.Grove_Tender_Mana:
+                return Grove_Tender_Mana();
+            case Card.Cardname.Grove_Tender_Draw:
+                return Grove_Tender_Draw();
 
             case Card.Cardname.Treant:
                 return Treant();
@@ -1249,7 +1253,7 @@ public partial class Database
 
         return c;
     }
-    private static CardInfo Mukla_Bananas()
+    private static CardInfo Bananas()
     {
         CardInfo c = new();
 
@@ -1280,9 +1284,11 @@ public partial class Database
         c.BATTLECRY = true;
         c.LEGENDARY = true;
 
+        c.auras.Add(Aura.Type.Charge);
+
         return c;
     }
-    private static CardInfo Leeroy_Whelp()
+    private static CardInfo Whelp()
     {
         CardInfo c = new();
 
@@ -1292,6 +1298,7 @@ public partial class Database
         c.manaCost = 1;
         c.damage = 1;
         c.health = 1;
+        c.tribe = Card.Tribe.Dragon;
 
         c.MINION = true;
         c.TOKEN = true;

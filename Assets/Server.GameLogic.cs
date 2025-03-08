@@ -399,8 +399,8 @@ public partial class Server
             case Card.Cardname.King_Mukla:
                 King_Mukla(spell);
                 break;
-            case Card.Cardname.Mukla_Bananas:
-                Mukla_Bananas(spell);
+            case Card.Cardname.Bananas:
+                Bananas(spell);
                 break;
 
             case Card.Cardname.Leeroy_Jenkins:

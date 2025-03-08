@@ -268,14 +268,16 @@ public partial class Server
 
     void Grove_Tender(CastInfo spell)
     {
+        spell.match.midPhase = true;
         foreach (Player p in new List<Player>(){spell.player,spell.player.opponent})
         {
             if (spell.choice == 0)
             {
-                if (p.maxMana<10 && p.currMana<10)
+                if (p.maxMana<10)
                 {
                     p.maxMana++;
-                    p.currMana++;
+                    if (p.currMana < 10)
+                        p.currMana++;
                 }  
             }
 
@@ -284,5 +286,6 @@ public partial class Server
                 Draw(p);
             }
         }
+        spell.match.midPhase = false;
     }
 }
