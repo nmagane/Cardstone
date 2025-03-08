@@ -423,6 +423,38 @@ public partial class Database
         return c;
     }
 
+    static CardInfo Tree_of_Life()
+    {
+        CardInfo c = new();
+
+        c.name = "Tree of Life";
+        c.text = "Restore all characters to full Health.";
+        c.manaCost = 9;
+        c.classType = Card.Class.Druid;
+
+
+        c.SPELL = true;
+            
+
+        return c;
+    }
+
+    static CardInfo Poison_Seeds()
+    {
+        CardInfo c = new();
+
+        c.name = "Poison Seeds";
+        c.text = "Destroy all minions and summon 2/2 Treants to replace them.";
+        c.manaCost = 4;
+        c.classType = Card.Class.Druid;
+
+
+        c.SPELL = true;
+            
+
+        return c;
+    }
+
     static CardInfo Ancient_of_Lore()
     {
         CardInfo c = new();

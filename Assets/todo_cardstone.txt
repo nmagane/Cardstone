@@ -426,10 +426,16 @@ Mill Druid Decklist
 2x Ancient of Lore                 -- DONE
 1x Bloodmage Thalnos               -- DONE
 2x Doomsayer                       -- DONE
-2x Youthful Brewmaster
+2x Youthful Brewmaster             -- DONE?
 2x Big Game Hunter                 -- DONE
 2x Coldlight Oracle                -- DONE
 1x King Mukla
+
++Kripp list:
+Wild Pyromancer
+Grove Tender
+Poison Seeds                      -- DONE?
+Tree of Life                      -- DONE?
 
 
 ====================================

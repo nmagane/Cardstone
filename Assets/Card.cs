@@ -269,6 +269,8 @@ public class Card : MonoBehaviour
         Starfall_Single,
         Starfire,
         Youthful_Brewmaster,
+        Tree_of_Life,
+        Poison_Seeds,
 
         _COUNT,
     }

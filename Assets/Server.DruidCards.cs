@@ -209,4 +209,24 @@
         Draw(spell.player);
         spell.match.midPhase = false;
     }
+
+    void Tree_of_Life(CastInfo spell)
+    {
+        Heal(spell.player,30,spell);
+        Heal(spell.opponent,30,spell);
+    }
+
+    void Poison_Seeds(CastInfo spell)
+    {
+        MinionBoard b = spell.player.opponent.board;
+        foreach (Minion m in b)
+        {
+            TransformMinion(spell.match, m, Card.Cardname.Treant);
+        }
+        MinionBoard p = spell.player.board;
+        foreach (Minion m in p)
+        {
+            TransformMinion(spell.match, m, Card.Cardname.Treant);
+        }
+    }
 }

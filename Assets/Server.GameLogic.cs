@@ -580,6 +580,12 @@ public partial class Server
             case Card.Cardname.Starfire:
                 Starfire(spell);
                 break;
+            case Card.Cardname.Tree_of_Life:
+                Tree_of_Life(spell);
+                break;
+            case Card.Cardname.Poison_Seeds:
+                Poison_Seeds(spell);
+                break;
 
             case Card.Cardname.Shield_Slam:
                 Shield_Slam(spell);
