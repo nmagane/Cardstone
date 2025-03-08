@@ -154,6 +154,7 @@ public partial class Board : MonoBehaviour
             //OUT OF GAME MESSAGES FOR MENUS ETC...
             case Server.MessageType.RequestStatsScreen:
             case Server.MessageType.RequestPlayerStats:
+            case Server.MessageType.RequestPlayerCount:
                 ParseMessage(message);
                 return;
         };
@@ -495,6 +496,10 @@ public partial class Board : MonoBehaviour
             case Server.MessageType.RequestPlayerStats:
                 string profileJson = message.GetString();
                 mainmenu.statsMenu.ShowPlayerProfile(profileJson);
+                break;
+            case Server.MessageType.RequestPlayerCount:
+                int playerCount = message.GetInt();
+                mainmenu.SetPlayerCount(playerCount);
                 break;
 
             default:

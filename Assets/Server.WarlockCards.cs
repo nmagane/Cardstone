@@ -126,14 +126,14 @@ public partial class Server
     {
         SummonToken(spell.match, spell.player, Card.Cardname.Infernal);
     }
-    void Lord_Jarraxus(CastInfo spell)
+    void Lord_Jaraxxus(CastInfo spell)
     {
         RemoveMinion(spell.match, spell.minion);
 
         spell.player.maxHealth = 15;
         spell.player.armor = 0;
         spell.player.health = 15;
-        ReplaceHero(spell.player, Card.Cardname.Lord_Jarraxus);
+        ReplaceHero(spell.player, Card.Cardname.Lord_Jaraxxus);
         ReplaceHeroPower(spell.player, Card.Cardname.Inferno);
         SummonWeapon(spell.match, spell.player, Card.Cardname.Blood_Fury);
 

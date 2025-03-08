@@ -603,8 +603,8 @@ public partial class Server
                 Brawl(spell);
                 break;
 
-            case Card.Cardname.Lord_Jarraxus:
-                Lord_Jarraxus(spell);
+            case Card.Cardname.Lord_Jaraxxus:
+                Lord_Jaraxxus(spell);
                 break;
             case Card.Cardname.Inferno:
                 Inferno(spell);

@@ -160,6 +160,21 @@ public partial class Server
         message.AddString(s);
         SendMessageClientID(message, clientID);
     }
+    public void RequestPlayerCount(int clientID)
+    {
+        int c = 0;
+        foreach (Match m in currentMatches.Values)
+        {
+            c += 2;
+        }
+        foreach (var p in playerQueue)
+            c += 1;
+
+        CustomMessage message = CreateMessage(MessageType.RequestPlayerCount);
+
+        message.AddInt(c);
+        SendMessageClientID(message, clientID);
+    }
 
     public LeaderboardStatView GetStatView()
     {

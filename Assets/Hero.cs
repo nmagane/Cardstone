@@ -109,7 +109,7 @@ public partial class Hero : MonoBehaviour
         maxHealth = maxHP;
         switch (card)
         {
-            case Card.Cardname.Lord_Jarraxus:
+            case Card.Cardname.Lord_Jaraxxus:
                 i = 0;
                 break;
         }

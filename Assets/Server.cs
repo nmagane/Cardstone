@@ -8,7 +8,7 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Lord_Jarraxus, Card.Cardname.Coldlight_Oracle, Card.Cardname.Starfall,Card.Cardname.Starfire,Card.Cardname.Healing_Touch, Card.Cardname.Bite,Card.Cardname.Poison_Seeds,Card.Cardname.Tree_of_Life,Card.Cardname.Naturalize };
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Lord_Jaraxxus, Card.Cardname.Coldlight_Oracle, Card.Cardname.Starfall,Card.Cardname.Starfire,Card.Cardname.Healing_Touch, Card.Cardname.Bite,Card.Cardname.Poison_Seeds,Card.Cardname.Tree_of_Life,Card.Cardname.Naturalize };
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() {Card.Cardname.Imp_Gang_Boss, Card.Cardname.Grim_Patron,Card.Cardname.Nerubian_Egg };
     
     
@@ -121,6 +121,7 @@ public partial class Server : MonoBehaviour
 
         RequestStatsScreen,
         RequestPlayerStats,
+        RequestPlayerCount,
 
         _TEST
     }
@@ -177,6 +178,7 @@ public partial class Server : MonoBehaviour
         {
             case MessageType.RequestStatsScreen:
             case MessageType.RequestPlayerStats:
+            case MessageType.RequestPlayerCount:
             case MessageType.Concede:
             case MessageType.Matchmaking:
             case MessageType.LeaveMatchmaking:
@@ -212,6 +214,9 @@ public partial class Server : MonoBehaviour
             case MessageType.RequestPlayerStats:
                 ulong requestPlayerID = message.GetULong();
                 RequestPlayerStats(clientID, requestPlayerID);
+                break;
+            case MessageType.RequestPlayerCount:
+                RequestPlayerCount(clientID);
                 break;
             case MessageType.Matchmaking:
                 ulong queuePlayerID = message.GetULong();

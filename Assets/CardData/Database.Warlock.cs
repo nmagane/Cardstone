@@ -120,13 +120,13 @@
 
         return c;
     }
-    static CardInfo Lord_Jarraxus()
+    static CardInfo Lord_Jaraxxus()
     {
         CardInfo c = new();
 
         c.classType = Card.Class.Warlock;
-        c.name = "Lord Jarraxus";
-        c.text = "Battlecry: Replace your hero with Lord Jarraxus.";
+        c.name = "Lord Jaraxxus";
+        c.text = "Battlecry: Replace your hero with \nLord Jaraxxus.";
 
         c.manaCost = 9;
         c.damage = 3;
