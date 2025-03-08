@@ -9,7 +9,7 @@ public partial class Server
         
         Damage(spell.player, 2, spell);
         spell.match.ResolveTriggerQueue(ref spell);
-        Draw(spell, 1);
+        Draw(spell.player, 1);
     }
 
     void Flame_Imp(CastInfo spell)
