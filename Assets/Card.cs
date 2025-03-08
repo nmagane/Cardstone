@@ -271,6 +271,15 @@ public class Card : MonoBehaviour
         Youthful_Brewmaster,
         Tree_of_Life,
         Poison_Seeds,
+        Grove_Tender,
+        Grove_Tender_Draw,
+        Grove_Tender_Mana,
+        Grove_Tender,
+        King_Mukla,
+        Mukla_Bananas,
+        Wild_Pyromancer,
+        Leeroy_Jenkins,
+        Leeroy_Jenkins_Token,
 
         _COUNT,
     }

@@ -429,11 +429,11 @@ Mill Druid Decklist
 2x Youthful Brewmaster             -- DONE?
 2x Big Game Hunter                 -- DONE
 2x Coldlight Oracle                -- DONE
-1x King Mukla
+1x King Mukla                      -- DONE?
 
 +Kripp list:
-Wild Pyromancer
-Grove Tender
+Wild Pyromancer                   -- DONE?
+Grove Tender                      -- DONE?
 Poison Seeds                      -- DONE?
 Tree of Life                      -- DONE?
 
@@ -449,5 +449,10 @@ Cone of Cold
 Ethereal Arcanist
 
 
+====================================
+Handlock
 
+Lord Jaraxxus                     -- DONE?
+Leeroy Jenkins                    -- DONE?
+Faceless Manipulator
 

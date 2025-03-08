@@ -497,6 +497,8 @@ public partial class Database
                 return Tree_of_Life();
             case Card.Cardname.Poison_Seeds:
                 return Poison_Seeds();
+            case Card.Cardname.Grove_Tender:
+                return Grove_Tender();
 
             case Card.Cardname.Treant:
                 return Treant();
