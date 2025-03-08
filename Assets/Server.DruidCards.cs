@@ -212,21 +212,42 @@
 
     void Tree_of_Life(CastInfo spell)
     {
-        Heal(spell.player,30,spell);
-        Heal(spell.opponent,30,spell);
+        Player p = spell.player;
+        Player opp = spell.player.opponent;
+        
+        Heal(p,p.maxHealth - p.health,spell);
+        Heal(opp,opp.maxHealth - opp.health,spell);
+
+        MinionBoard[] boards = { opp.board, p.board };
+        foreach (MinionBoard board in boards)
+        {
+            foreach (Minion m in board)
+            {
+                Heal(m, m.maxHealth - m.health, spell);
+            }
+        }
+        
     }
 
     void Poison_Seeds(CastInfo spell)
     {
-        MinionBoard b = spell.player.opponent.board;
-        foreach (Minion m in b)
+        MinionBoard[] boards = { spell.player.opponent.board, spell.player.board };
+        foreach (MinionBoard board in boards)
         {
-            TransformMinion(spell.match, m, Card.Cardname.Treant);
+            foreach (Minion m in board)
+            {
+                m.DEAD = true;
+            }
         }
-        MinionBoard p = spell.player.board;
-        foreach (Minion m in p)
+
+        spell.match.ResolveTriggerQueue(ref spell);
+
+        foreach (MinionBoard board in boards)
         {
-            TransformMinion(spell.match, m, Card.Cardname.Treant);
+            foreach (Minion m in board)
+            {
+                spell.match.server.SummonToken(spell.match, m.player, Card.Cardname.Treant, m.index);
+            }
         }
     }
 }
