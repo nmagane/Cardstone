@@ -196,6 +196,33 @@ public partial class Server
         spell.match.server.AddCard(spell.match, m.player, m.card, m, 0);
         spell.match.server.RemoveMinion(spell.match, m);
     }
+
+    void King_Mukla(CastInfo spell)
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            if (spell.player.opponent.hand.Count() >= 10) return;
+            spell.match.server.AddCard(spell.match, spell.player.opponent, Card.Cardname.Banana, null, 0);
+        }
+    }
+
+    void Mukla_Bananas(CastInfo spell)
+    {
+        if (spell.targetMinion == null) return;
+        Minion m = spell.targetMinion;
+        spell.match.server.AddAura(spell.match, m, new Aura(Aura.Type.Damage, 1, true, false, null, Card.Cardname.Mukla_Bananas));
+        spell.match.server.AddAura(spell.match, m, new Aura(Aura.Type.Health, 1, true, false, null, Card.Cardname.Mukla_Bananas));
+
+    }
+    
+    void Leeroy_Jenkins(CastInfo spell)
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            if (spell.player.opponent.board.Count() >= 7) return;
+            spell.match.server.SummonToken(spell.match, spell.player.opponent, Card.Cardname.Whelp, spell.player.opponent.board.Count());
+        }
+    }
     
     void Gnomish_Inventor(CastInfo spell)
     {

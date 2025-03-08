@@ -468,7 +468,7 @@ public partial class Database
 
         c.MINION = true;
         c.CHOOSE = true;
-        c.choices = new List<Card.Cardname>() { Card.Cardname.Grove_Tender_Draw, Card.Cardname.Grove_Tender_Mana };
+        c.choices = new List<Card.Cardname>() { Card.Cardname.Grove_Tender_Mana, Card.Cardname.Grove_Tender_Draw };
 
         return c;
     }

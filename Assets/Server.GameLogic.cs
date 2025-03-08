@@ -396,6 +396,17 @@ public partial class Server
                 Youthful_Brewmaster(spell);
                 break;
 
+            case Card.Cardname.King_Mukla:
+                King_Mukla(spell);
+                break;
+            case Card.Cardname.Mukla_Bananas:
+                Mukla_Bananas(spell);
+                break;
+
+            case Card.Cardname.Leeroy_Jenkins:
+                Leeroy_Jenkins(spell);
+                break;
+
             case Card.Cardname.Sprint:
                 Sprint(spell);
                 break;
@@ -585,6 +596,9 @@ public partial class Server
                 break;
             case Card.Cardname.Poison_Seeds:
                 Poison_Seeds(spell);
+                break;
+            case Card.Cardname.Grove_Tender:
+                Grove_Tender(spell);
                 break;
 
             case Card.Cardname.Shield_Slam:

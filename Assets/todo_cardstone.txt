@@ -432,7 +432,7 @@ Mill Druid Decklist
 1x King Mukla                      -- DONE?
 
 +Kripp list:
-Wild Pyromancer                   -- DONE?
+Wild Pyromancer
 Grove Tender                      -- DONE?
 Poison Seeds                      -- DONE?
 Tree of Life                      -- DONE?

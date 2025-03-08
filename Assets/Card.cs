@@ -280,9 +280,8 @@ public class Card : MonoBehaviour
         Grove_Tender_Mana,
         King_Mukla,
         Mukla_Bananas,
-        Wild_Pyromancer,
         Leeroy_Jenkins,
-        Leeroy_Jenkins_Token,
+        Leeroy_Whelp,
 
         _COUNT,
     }
