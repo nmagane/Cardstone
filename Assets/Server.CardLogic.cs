@@ -184,6 +184,15 @@ public partial class Server
     {
         Draw(spell.player);
     }
+
+    void Coldlight_Oracle(CastInfo spell)
+    {
+        match.midPhase = true;
+        Draw(spell, 2);
+        Draw(spell, 2, enemyDraw: true);
+        match.midPhase = false;
+    }
+    
     void Gnomish_Inventor(CastInfo spell)
     {
         Draw(spell.player);

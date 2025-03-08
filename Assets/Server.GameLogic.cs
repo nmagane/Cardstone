@@ -388,6 +388,10 @@ public partial class Server
                 Azure_Drake(spell);
                 break;
 
+            case Card.Cardname.Coldlight_Oracle:
+                Coldlight_Oracle(spell);
+                break;
+
             case Card.Cardname.Sprint:
                 Sprint(spell);
                 break;

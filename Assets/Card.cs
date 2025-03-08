@@ -260,6 +260,7 @@ public class Card : MonoBehaviour
         Grommash_Hellscream,
         Baron_Geddon,
         Ragnaros,
+        Coldlight_Oracle,
 
         _COUNT,
     }
@@ -284,6 +285,7 @@ public class Card : MonoBehaviour
         Demon,
         Dragon,
         Mech,
+        Murloc,
     }
     public Sprite[] minionCards;
     public Sprite[] spellCards;
