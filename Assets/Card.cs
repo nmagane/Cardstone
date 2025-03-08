@@ -268,6 +268,7 @@ public class Card : MonoBehaviour
         Starfall_AoE,
         Starfall_Single,
         Starfire,
+        Youthful_Brewmaster,
 
         _COUNT,
     }

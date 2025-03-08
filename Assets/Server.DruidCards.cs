@@ -176,7 +176,7 @@
 
     void Healing_Touch(CastInfo spell)
     {
-        Heal(spell.player,8,spell);
+        HealTarget(8,spell);
     }
 
     void Starfall(CastInfo spell)

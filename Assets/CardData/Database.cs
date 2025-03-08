@@ -237,6 +237,9 @@ public partial class Database
            case Card.Cardname.Coldlight_Oracle:
                 return Coldlight_Oracle();
 
+           case Card.Cardname.Youthful_Brewmaster:
+                return Youthful_Brewmaster();
+
            case Card.Cardname.Sprint:
                 return Sprint();
 
@@ -1182,6 +1185,24 @@ public partial class Database
         c.MINION = true;
         c.BATTLECRY = true;
         c.tribe = Card.Tribe.Murloc;
+
+        return c;
+    }
+    private static CardInfo Youthful_Brewmaster()
+    {
+        CardInfo c = new();
+
+        c.name = "Youthful Brewmaster";
+        c.text = "Battlecry: Return a friendly minion from the battlefield to your hand.";
+
+        c.manaCost = 2;
+        c.damage = 3;
+        c.health = 2;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+        c.TARGETED = true;
+        c.eligibleTargets = Board.EligibleTargets.FriendlyMinions;
 
         return c;
     }

@@ -392,6 +392,10 @@ public partial class Server
                 Coldlight_Oracle(spell);
                 break;
 
+            case Card.Cardname.Youthful_Brewmaster:
+                Youthful_Brewmaster(spell);
+                break;
+
             case Card.Cardname.Sprint:
                 Sprint(spell);
                 break;

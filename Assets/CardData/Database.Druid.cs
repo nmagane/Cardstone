@@ -344,6 +344,8 @@ public partial class Database
 
 
         c.SPELL = true;
+        c.TARGETED = true;
+        c.eligibleTargets = Board.EligibleTargets.AllCharacters;
             
 
         return c;
