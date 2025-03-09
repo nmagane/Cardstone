@@ -22,7 +22,7 @@ public class NetworkHandler : NetworkBehaviour
         NetworkManager.singleton.exceptionsDisconnect = false;
         Debug.Log("Server Started"); 
         RegisterMessages();
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "[CLIENT]")
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "[TEST]")
         {
             SERVER_EDITOR_TEST = true;
         }

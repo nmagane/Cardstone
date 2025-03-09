@@ -611,12 +611,13 @@ public partial class Database
 
             case Card.Class.Druid:
                 return Card.Cardname.Shapeshift;
+
+            case Card.Class.Priest:
+                return Card.Cardname.Lesser_Heal;
             /*
            case Card.Class.Hunter:
                break;
            case Card.Class.Paladin:
-               break;
-           case Card.Class.Priest:
                break;
            case Card.Class.Shaman:
                break;

@@ -283,6 +283,33 @@ public class Card : MonoBehaviour
         Leeroy_Jenkins,
         Whelp,
 
+        Wild_Pyromancer,
+        Lightwarden,
+        Deathlord,
+        Injured_Blademaster,
+
+        Lesser_Heal,
+        Silence,
+        Circle_of_Healing,
+        Holy_Smite,
+        Inner_Fire,
+        Light_of_the_Naaru,
+        Northshire_Cleric,
+        Power_Word_Shield,
+        Shadow_Word_Pain,
+        Shadow_Word_Death,
+        Divine_Spirit,
+        Resurrect,
+        Mind_Blast,
+        Dark_Cultist,
+        Thoughtsteal,
+        Velens_Chosen,
+        Holy_Nova,
+        Auchenai_Soulpriest,
+        Cabal_Shadow_Priest,
+        Lightbomb,
+
+
         _COUNT,
     }
 
