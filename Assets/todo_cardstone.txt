@@ -80,6 +80,52 @@ Auchenai_Soulpriest,     -- DONE
 Cabal_Shadow_Priest,     -- DONE
 Lightbomb,               -- DONE
 
+Piloted Shredder,        -- NO
+
+Annoy-o-Tron             -- NO
+Anodized Robo Cub        -- NO
+Explosive Sheep          -- NO
+Gilbin Stalker           -- NO
+Goblin Auto-Barber       -- NO
+Micro Machine            -- NO
+Mechwarper               -- NO
+One-eyed Cheat           -- NO
+Puddlestomper            -- NO
+Queen of Pain            -- NO
+Recombobulator           -- NO
+Shadowboxer              -- NO
+Shielded Minibot         -- NO
+Ship's Cannon            -- NO
+Shrinkmeister            -- NO
+Snowchugger              -- NO
+Steamwheedle Sniper      -- NO
+Stonesplinter Trogg      -- NO
+Vitality Totem           -- NO
+Whirling Zap-o-matic     -- NO
+Argent Protected         -- NO
+Bloodfen Raptor          -- NO
+Bloodsail Raider         -- NO
+Bluegill Warrior         -- NO
+Captain's Parrot         -- NO
+Defias Ringleader        -- NO
+Faerie Dragon            -- NO
+Succubus                 -- NO
+Flametongue Totem        -- NO
+Frostwolf Grunt          -- NO
+Lightwell                -- NO
+Lorewalker Cho           -- NO
+Mad Bomber               -- NO
+Mana Addict              -- NO
+Master Swordsmith        -- NO
+Murloc Tidehunter        -- NO
+1/1 Murloc Scout Tokens  -- NO
+Nat Palge                -- NO
+Patient Assassin         -- NO
+Pint-Sized Summoner      -- NO
+River Crocolisk          -- NO
+Scavenging Hyena         -- NO
+Starving Buzzard         -- NO
+
 ===============================================
 =====================DONE======================
 ================================================ 
