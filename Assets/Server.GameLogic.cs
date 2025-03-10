@@ -65,7 +65,11 @@ public partial class Server
     public void HealMinion(Match match, Minion minion, int heal, Player source)
     {
         if (heal == 0) return;
-        if (source.HasAura(Aura.Type.AUCH_PLAYER_BUFF)) DamageMinion(match, minion, heal, source);
+        if (source.HasAura(Aura.Type.AUCH_PLAYER_BUFF))
+        {
+            DamageMinion(match, minion, heal, source);
+            return;
+        }
         bool healed = false;
         if (minion.health<minion.maxHealth)
         {
@@ -83,6 +87,11 @@ public partial class Server
     public void HealFace(Match match, Player target, int heal, Player source)
     {
         if (heal == 0) return;
+        if (source.HasAura(Aura.Type.AUCH_PLAYER_BUFF))
+        {
+            DamageFace(match, target, heal, source);
+            return;
+        }
         bool healed = false;
         if (target.health < target.maxHealth)
             healed = true;
@@ -624,7 +633,60 @@ public partial class Server
             case Card.Cardname.Inferno:
                 Inferno(spell);
                 break;
-
+            case Card.Cardname.Lesser_Heal:
+                Lesser_Heal(spell);
+                break;
+            case Card.Cardname.Shadow_Word_Pain:
+                Shadow_Word_Pain(spell);
+                break;
+            case Card.Cardname.Shadow_Word_Death:
+                Shadow_Word_Death(spell);
+                break;
+            case Card.Cardname.Cabal_Shadow_Priest:
+                Cabal_Shadow_Priest(spell);
+                break;
+            case Card.Cardname.Holy_Nova:
+                Holy_Nova(spell);
+                break;
+            case Card.Cardname.Holy_Smite:
+                Holy_Smite(spell);
+                break;
+            case Card.Cardname.Circle_of_Healing:
+                Circle_of_Healing(spell);
+                break;
+            case Card.Cardname.Lightbomb:
+                Lightbomb(spell);
+                break;
+            case Card.Cardname.Mind_Blast:
+                Mind_Blast(spell);
+                break;
+            case Card.Cardname.Resurrect:
+                Resurrect(spell);
+                break;
+            case Card.Cardname.Silence:
+                Silence(spell);
+                break;
+            case Card.Cardname.Divine_Spirit:
+                Divine_Spirit(spell);
+                break;
+            case Card.Cardname.Inner_Fire:
+                Inner_Fire(spell);
+                break;
+            case Card.Cardname.Velens_Chosen:
+                Velens_Chosen(spell);
+                break;
+            case Card.Cardname.Thoughtsteal:
+                Thoughtsteal(spell);
+                break;
+            case Card.Cardname.Light_of_the_Naaru:
+                Light_of_the_Naaru(spell);
+                break;
+            case Card.Cardname.Power_Word_Shield:
+                Power_Word_Shield(spell);
+                break;
+            case Card.Cardname.Injured_Blademaster:
+                Injured_Blademaster(spell);
+                break;
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);
                 break;

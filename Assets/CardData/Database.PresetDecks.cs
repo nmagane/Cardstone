@@ -363,4 +363,158 @@ public partial class Database
         Card.Cardname.Alexstrasza,
         Card.Cardname.Ragnaros,
     };
-}
+
+    public static List<Card.Cardname> Hand_Lock = new List<Card.Cardname>()
+    {
+        Card.Cardname.Mortal_Coil,
+
+        Card.Cardname.Darkbomb,
+        Card.Cardname.Darkbomb,
+
+        Card.Cardname.Hellfire,
+
+        Card.Cardname.Shadowflame,
+
+        Card.Cardname.Siphon_Soul,
+
+        Card.Cardname.Lord_Jaraxxus,
+
+        Card.Cardname.Zombie_Chow,
+
+        Card.Cardname.Acidic_Swamp_Ooze,
+
+        Card.Cardname.Ancient_Watcher,
+        Card.Cardname.Ancient_Watcher,
+
+        Card.Cardname.Sunfury_Protector,
+        Card.Cardname.Sunfury_Protector,
+
+        Card.Cardname.Ironbeak_Owl,
+
+        Card.Cardname.Big_Game_Hunter,
+
+        Card.Cardname.Defender_of_Argus,
+
+        Card.Cardname.Twilight_Drake,
+        Card.Cardname.Twilight_Drake,
+
+        Card.Cardname.Antique_Healbot,
+        Card.Cardname.Antique_Healbot,
+
+        Card.Cardname.Emperor_Thaurissan,
+
+        Card.Cardname.Loatheb,
+
+        Card.Cardname.Sludge_Belcher,
+        Card.Cardname.Sludge_Belcher,
+
+        Card.Cardname.Sylvanas_Windrunner,
+
+        Card.Cardname.Dr_Boom,
+
+        Card.Cardname.Mountain_Giant,
+        Card.Cardname.Mountain_Giant,
+
+        Card.Cardname.Molten_Giant,
+        Card.Cardname.Molten_Giant,
+    };
+
+    public static List<Card.Cardname> Miracle_Priest = new List<Card.Cardname>()
+    {
+        Card.Cardname.Silence,
+        Card.Cardname.Holy_Smite,
+        Card.Cardname.Holy_Smite,
+
+        Card.Cardname.Inner_Fire,
+        Card.Cardname.Inner_Fire,
+
+        Card.Cardname.Power_Word_Shield,
+        Card.Cardname.Power_Word_Shield,
+
+        Card.Cardname.Divine_Spirit,
+        Card.Cardname.Divine_Spirit,
+        
+        Card.Cardname.Resurrect,
+        Card.Cardname.Resurrect,
+
+        Card.Cardname.Shadow_Word_Death,
+        Card.Cardname.Shadow_Word_Death,
+
+        Card.Cardname.Shadow_Word_Pain,
+        Card.Cardname.Shadow_Word_Pain,
+
+        Card.Cardname.Dark_Cultist,
+        Card.Cardname.Dark_Cultist,
+
+        Card.Cardname.Velens_Chosen,
+
+        Card.Cardname.Holy_Nova,
+
+        Card.Cardname.Wild_Pyromancer,
+        Card.Cardname.Wild_Pyromancer,
+
+        Card.Cardname.Acolyte_of_Pain,
+        Card.Cardname.Acolyte_of_Pain,
+
+        Card.Cardname.Shade_of_Naxxrammas,
+        Card.Cardname.Shade_of_Naxxrammas,
+
+        Card.Cardname.Gnomish_Inventor,
+        Card.Cardname.Gnomish_Inventor,
+
+        Card.Cardname.Emperor_Thaurissan,
+
+        Card.Cardname.Gadgetzan_Auctioneer,
+        Card.Cardname.Gadgetzan_Auctioneer,
+    };
+
+    public static List<Card.Cardname> Heal_Priest = new List<Card.Cardname>()
+    {
+        Card.Cardname.Circle_of_Healing,
+        Card.Cardname.Circle_of_Healing,
+
+        Card.Cardname.Light_of_the_Naaru,
+        Card.Cardname.Light_of_the_Naaru,
+
+        Card.Cardname.Northshire_Cleric,
+        Card.Cardname.Northshire_Cleric,
+
+        Card.Cardname.Power_Word_Shield,
+        Card.Cardname.Power_Word_Shield,
+
+        Card.Cardname.Shadow_Word_Death,
+        Card.Cardname.Shadow_Word_Death,
+
+        Card.Cardname.Thoughtsteal,
+        Card.Cardname.Thoughtsteal,
+
+        Card.Cardname.Holy_Nova,
+        Card.Cardname.Holy_Nova,
+
+        Card.Cardname.Velens_Chosen,
+        Card.Cardname.Velens_Chosen,
+
+        Card.Cardname.Auchenai_Soulpriest,
+        Card.Cardname.Auchenai_Soulpriest,
+
+        Card.Cardname.Cabal_Shadow_Priest,
+        Card.Cardname.Cabal_Shadow_Priest,
+
+        Card.Cardname.Lightbomb,
+
+        Card.Cardname.Zombie_Chow,
+        Card.Cardname.Zombie_Chow,
+
+        Card.Cardname.Wild_Pyromancer,
+        Card.Cardname.Wild_Pyromancer,
+
+        Card.Cardname.Deathlord,
+        Card.Cardname.Deathlord,
+
+        Card.Cardname.Injured_Blademaster,
+        Card.Cardname.Injured_Blademaster,
+
+        Card.Cardname.Harrison_Jones,
+    };
+
+};

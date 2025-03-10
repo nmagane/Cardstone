@@ -621,6 +621,10 @@ public partial class Server : MonoBehaviour
         }
         RefreshAttackCharge(match.currPlayer);
         match.currPlayer.comboCounter = 0;
+
+        match.currPlayer.turn_graveyard.Clear();
+        match.currPlayer.opponent.turn_graveyard.Clear();
+
         //TODO: start of turn effects
         message.AddBool(true);
         message.AddInt(match.currPlayer.maxMana);
@@ -955,6 +959,9 @@ public partial class Server : MonoBehaviour
         int ind = minion.index;
 
         owner.board.RemoveAt(ind);
+        owner.graveyard.Add(minion.card);
+        owner.turn_graveyard.Add(minion.card);
+
         CustomMessage messageOwner = CreateMessage(MessageType.DestroyMinion);
         CustomMessage messageOpponent = CreateMessage(MessageType.DestroyMinion);
 

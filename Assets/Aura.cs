@@ -209,6 +209,7 @@ public class Aura
             case Type.Loatheb:
             case Type.Spellpower:
             case Type.SP_PLAYER_BUFF:
+            case Type.AUCH_PLAYER_BUFF:
             case Type.Charge: //should this be stackable? idk
                 stackable = true;
                 break;

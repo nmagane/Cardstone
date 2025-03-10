@@ -7,7 +7,11 @@ public partial class Server
     public void HealTarget(int heal, CastInfo spell)
     {
 
-        if (spell.player.HasAura(Aura.Type.AUCH_PLAYER_BUFF)) DamageTarget(heal, spell);
+        if (spell.player.HasAura(Aura.Type.AUCH_PLAYER_BUFF))
+        {
+            DamageTarget(heal, spell);
+            return;
+        }
 
         if (spell.targetMinion == null && spell.targetPlayer == null) return;
         if (spell.isHero)
@@ -22,12 +26,20 @@ public partial class Server
     }
     public void Heal(Minion target, int heal, CastInfo spell)
     {
-        if (spell.player.HasAura(Aura.Type.AUCH_PLAYER_BUFF)) Damage(target, heal, spell);
+        if (spell.player.HasAura(Aura.Type.AUCH_PLAYER_BUFF))
+        {
+            Damage(target, heal, spell);
+            return;
+        }
         HealMinion(spell.match, target, heal,spell.player);
     }
     public void Heal(Player target, int heal, CastInfo spell)
     {
-        if (spell.player.HasAura(Aura.Type.AUCH_PLAYER_BUFF)) Damage(target, heal, spell);
+        if (spell.player.HasAura(Aura.Type.AUCH_PLAYER_BUFF))
+        {
+            Damage(target, heal, spell);
+            return;
+        }
         HealFace(spell.match, target, heal,spell.player);
     }
 
@@ -314,5 +326,9 @@ public partial class Server
         Minion m = Board.RandElem(enemy.board.minions);
 
         spell.match.server.StealMinion(spell.match, spell.player, m);
+    }
+    void Injured_Blademaster(CastInfo spell)
+    {
+        Damage(spell.minion, 4, spell);
     }
 }

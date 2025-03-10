@@ -199,7 +199,12 @@ public class TriggerEffects
         {
             var anim = new AnimationInfo(Card.Cardname.Deaths_Bite, trigger.player);
         }
-        else
+        else if (trigger.minion.card == Card.Cardname.Wild_Pyromancer)
+        {
+
+            var anim = new AnimationInfo(Card.Cardname.Unstable_Ghoul, trigger.player,trigger.minion,trigger.player.opponent);
+        }
+        else 
         {
             var anim = new AnimationInfo(Card.Cardname.Unstable_Ghoul, trigger.player);
         }

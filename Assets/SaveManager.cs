@@ -96,6 +96,10 @@ public class SaveManager : MonoBehaviour
             saveData.decks.Add(new Decklist("MALYGOS", Card.Class.Warlock, Database.Malygos_Lock));
             saveData.decks.Add(new Decklist("COMBO", Card.Class.Druid, Database.Combo_Druid));
             saveData.decks.Add(new Decklist("CONTROL", Card.Class.Warrior, Database.Control_Warrior));
+            saveData.decks.Add(new Decklist("HEAL", Card.Class.Priest, Database.Heal_Priest));
+            saveData.decks.Add(new Decklist("MIRACLE", Card.Class.Priest, Database.Miracle_Priest));
+            saveData.decks.Add(new Decklist("HANDLOCK", Card.Class.Warlock, Database.Hand_Lock));
+
         }
 
         List<Decklist> decklists = new List<Decklist>(saveData.decks);

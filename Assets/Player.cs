@@ -55,6 +55,8 @@ public class Player
     public List<Weapon> weaponList = new List<Weapon>();
     public bool turn = false;
     public List<Card.Cardname> deck = new List<Card.Cardname>();
+    public List<Card.Cardname> graveyard = new List<Card.Cardname>();
+    public List<Card.Cardname> turn_graveyard = new List<Card.Cardname>();
     public Hand hand = new Hand();
     public MinionBoard board = new MinionBoard();
     public List<Secret> secrets = new List<Secret>();

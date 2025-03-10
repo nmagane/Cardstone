@@ -349,7 +349,7 @@ public partial class Board
         foreach (var m in enemyMinions)
         {
             if (m.creature == null) continue;
-            if (m.damage < 2) m.creature.Highlight(true);
+            if (m.damage < 3) m.creature.Highlight(true);
         }
     }
 

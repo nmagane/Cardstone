@@ -118,5 +118,11 @@ public partial class Server
         if (spell.targetMinion == null) return;
         StealMinion(spell.match,spell.player,spell.targetMinion);
     }
+    public void Resurrect(CastInfo spell)
+    {
+        if (spell.player.graveyard.Count == 0) return;
+        Card.Cardname c = Board.RandElem(spell.player.graveyard);
+        SummonToken(spell.match, spell.player, c);
+    }
 
 }
