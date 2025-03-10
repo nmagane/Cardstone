@@ -20,8 +20,8 @@ public class TriggerEffects
                 if (tar == -1) break;
             }
         }
-        
-        
+
+
 
         if (tar == -1)
         {
@@ -148,7 +148,7 @@ public class TriggerEffects
 
     public static void Boom_Bot(Match match, Trigger trigger, CastInfo spell)
     {
-        int damage = Random.Range(1,5);
+        int damage = Random.Range(1, 5);
         Player opponent = trigger.minion.player.opponent;
 
         int tar = Random.Range(-1, opponent.board.Count());
@@ -192,12 +192,12 @@ public class TriggerEffects
     {
         trigger.minion.player.armor += 1;
     }
-    
+
     public static void Unstable_Ghoul(Match match, Trigger trigger, CastInfo spell)
     {
-        if (trigger.minion.card==Card.Cardname.Deaths_Bite)
+        if (trigger.minion.card == Card.Cardname.Deaths_Bite)
         {
-            var anim = new AnimationInfo(Card.Cardname.Deaths_Bite,trigger.player);
+            var anim = new AnimationInfo(Card.Cardname.Deaths_Bite, trigger.player);
         }
         else
         {
@@ -243,14 +243,16 @@ public class TriggerEffects
             {
                 if (p.HasSecret(c) == false)
                 {
-                    match.server.AddSecret(c, p, match);
                     secret = c;
                     break;
                 }
             }
         }
         if (secret != Card.Cardname.Cardback)
+        {
             p.deck.Remove(secret);
+            match.server.AddSecret(secret, p, match);
+        }
     }
     public static void Power_Overwhelming(Match match, Trigger trigger, CastInfo spell)
     {
@@ -262,10 +264,10 @@ public class TriggerEffects
     }
     public static void Haunted_Creeper(Match match, Trigger trigger, CastInfo spell)
     {
-		match.midPhase = true;
+        match.midPhase = true;
         match.server.SummonToken(match, trigger.minion.player, Card.Cardname.Spectral_Spider, trigger.minion.index);
         match.server.SummonToken(match, trigger.minion.player, Card.Cardname.Spectral_Spider, trigger.minion.index);
-		match.midPhase = false;
+        match.midPhase = false;
     }
     public static void Nerubian_Egg(Match match, Trigger trigger)
     {
@@ -291,14 +293,14 @@ public class TriggerEffects
     }
     public static void Zombie_Chow(Match match, Trigger trigger)
     {
-        match.server.HealFace(match, trigger.player.opponent, 5);
+        match.server.HealFace(match, trigger.player.opponent, 5, trigger.player);
     }
     public static void Shade_of_Naxxrammas(Match match, Trigger trigger)
     {
-        match.server.AddAura(match, trigger.minion, new Aura(Aura.Type.Health,1,false,false,null,Card.Cardname.Shade_of_Naxxrammas));
-        match.server.AddAura(match, trigger.minion, new Aura(Aura.Type.Damage,1,false,false,null,Card.Cardname.Shade_of_Naxxrammas));
+        match.server.AddAura(match, trigger.minion, new Aura(Aura.Type.Health, 1, false, false, null, Card.Cardname.Shade_of_Naxxrammas));
+        match.server.AddAura(match, trigger.minion, new Aura(Aura.Type.Damage, 1, false, false, null, Card.Cardname.Shade_of_Naxxrammas));
     }
-    
+
     public static void Sylvanas_Windrunner(Match match, Trigger trigger)
     {
         Player enemy = trigger.player.opponent;
@@ -309,8 +311,8 @@ public class TriggerEffects
     }
     public static void Baron_Geddon(Match match, Trigger trigger)
     {
-        var anim = new AnimationInfo(Card.Cardname.Baron_Geddon, trigger.player,trigger.minion,trigger.player.opponent);
-        
+        var anim = new AnimationInfo(Card.Cardname.Baron_Geddon, trigger.player, trigger.minion, trigger.player.opponent);
+
         MinionBoard b = trigger.minion.player.board;
         MinionBoard b2 = trigger.minion.player.opponent.board;
         match.server.DamageFace(match, trigger.player, 2, trigger.minion.player);
@@ -351,4 +353,37 @@ public class TriggerEffects
         AnimationInfo anim = new AnimationInfo(Card.Cardname.Ragnaros, minion.player, minion, opponent.board[tar]);
         match.server.DamageMinion(match, opponent.board[tar], damage, minion.player);
     }
+
+    internal static void Dark_Cultist(Match match, Minion minion)
+    {
+        Minion m = Board.RandElem(minion.player.board.minions);
+        while (m == minion) Board.RandElem(minion.player.board.minions);
+        match.server.AddAura(match, m, new Aura(Aura.Type.Health, 3, cardname: Card.Cardname.Dark_Cultist));
+    }
+    internal static void Lightwarden(Match match, Minion minion)
+    {
+        match.server.AddAura(match, minion, new Aura(Aura.Type.Damage, 2));
+    }
+    internal static void Deathlord(Match match, Minion minion)
+    {
+        Player p = minion.player.opponent;
+        Card.Cardname m = Card.Cardname.Cardback;
+        foreach (Card.Cardname c in p.deck)
+        {
+            if (Database.GetCardData(c).MINION)
+            {
+                if (p.HasSecret(c) == false)
+                {
+                    m = c;
+                    break;
+                }
+            }
+        }
+        if (m != Card.Cardname.Cardback)
+        {
+            p.deck.Remove(m);
+            match.server.SummonToken(match,p,m);
+        }
+    }
+
 }

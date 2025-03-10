@@ -62,9 +62,10 @@ public partial class Server
 
     }
 
-    public void HealMinion(Match match, Minion minion, int heal)
+    public void HealMinion(Match match, Minion minion, int heal, Player source)
     {
         if (heal == 0) return;
+        if (source.HasAura(Aura.Type.AUCH_PLAYER_BUFF)) DamageMinion(match, minion, heal, source);
         bool healed = false;
         if (minion.health<minion.maxHealth)
         {
@@ -79,7 +80,7 @@ public partial class Server
         //this is for the client to know if its not an aura change
         match.healedMinions.Add(minion);
     }
-    public void HealFace(Match match, Player target, int heal)
+    public void HealFace(Match match, Player target, int heal, Player source)
     {
         if (heal == 0) return;
         bool healed = false;

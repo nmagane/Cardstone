@@ -303,12 +303,12 @@ public class Card : MonoBehaviour
         Mind_Blast,
         Dark_Cultist,
         Thoughtsteal,
+        Shadow_of_Nothing,
         Velens_Chosen,
         Holy_Nova,
         Auchenai_Soulpriest,
         Cabal_Shadow_Priest,
         Lightbomb,
-
 
         _COUNT,
     }

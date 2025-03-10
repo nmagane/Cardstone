@@ -6,6 +6,9 @@ public partial class Server
 
     public void HealTarget(int heal, CastInfo spell)
     {
+
+        if (spell.player.HasAura(Aura.Type.AUCH_PLAYER_BUFF)) DamageTarget(heal, spell);
+
         if (spell.targetMinion == null && spell.targetPlayer == null) return;
         if (spell.isHero)
         {
@@ -19,11 +22,13 @@ public partial class Server
     }
     public void Heal(Minion target, int heal, CastInfo spell)
     {
-        HealMinion(spell.match, target, heal);
+        if (spell.player.HasAura(Aura.Type.AUCH_PLAYER_BUFF)) Damage(target, heal, spell);
+        HealMinion(spell.match, target, heal,spell.player);
     }
     public void Heal(Player target, int heal, CastInfo spell)
     {
-        HealFace(spell.match, target, heal);
+        if (spell.player.HasAura(Aura.Type.AUCH_PLAYER_BUFF)) Damage(target, heal, spell);
+        HealFace(spell.match, target, heal,spell.player);
     }
 
     public void DamageTarget(int damage, CastInfo spell)

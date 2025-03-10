@@ -45,6 +45,8 @@ public class Aura
         Millhouse,
         Southsea_Deckhand,
         Grommash,
+        Auchenai_Soulpriest,
+        AUCH_PLAYER_BUFF,
     }
 
     public Type type = Type.Health;
@@ -177,6 +179,9 @@ public class Aura
                 break;
             case Type.Grommash:
                 AuraEffects.Grommash(match, minion, this);
+                break;
+            case Type.Auchenai_Soulpriest:
+                AuraEffects.Auchenai_Soulpriest(match, minion, this);
                 break;
         }
     }

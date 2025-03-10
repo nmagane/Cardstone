@@ -247,6 +247,15 @@ public partial class Board
             case EligibleTargets.Big_Game_Hunter:
                 HighlightBigGameHunter();
                 break;
+            case EligibleTargets.Attack_Under_4:
+                HighlightUnder4Attack();
+                break;
+            case EligibleTargets.Attack_Over_4:
+                HighlightOver4Attack();
+                break;
+            case EligibleTargets.Cabal_Shadow_Priest:
+                HighlightCabalShadowPriest();
+                break;
             default:
                 Debug.LogError("NO HIGHLIGHT IMPLEMENTED: " + eligibleTargets);
                 break;
@@ -307,6 +316,43 @@ public partial class Board
             if (m.damage >= 7) m.creature.Highlight(true);
         }
     }
+    void HighlightUnder4Attack()
+    {
+        foreach (var m in currMinions)
+        {
+            if (m.creature == null) continue;
+            if (m.damage < 4) m.creature.Highlight(true);
+        }
+
+        foreach (var m in enemyMinions)
+        {
+            if (m.creature == null) continue;
+            if (m.damage < 4) m.creature.Highlight(true);
+        }
+    }
+    void HighlightOver4Attack()
+    {
+        foreach (var m in currMinions)
+        {
+            if (m.creature == null) continue;
+            if (m.damage > 4) m.creature.Highlight(true);
+        }
+
+        foreach (var m in enemyMinions)
+        {
+            if (m.creature == null) continue;
+            if (m.damage > 4) m.creature.Highlight(true);
+        }
+    }
+    void HighlightCabalShadowPriest()
+    {
+        foreach (var m in enemyMinions)
+        {
+            if (m.creature == null) continue;
+            if (m.damage < 2) m.creature.Highlight(true);
+        }
+    }
+
     
     void HighlightDamagedMinions()
     {

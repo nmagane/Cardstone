@@ -557,6 +557,57 @@ public partial class Database
                 return Infernal();
             case Card.Cardname.Blood_Fury:
                 return Blood_Fury();
+
+            case Card.Cardname.Northshire_Cleric:
+                return Northshire_Cleric();
+            case Card.Cardname.Lesser_Heal:
+                return Lesser_Heal();
+            case Card.Cardname.Shadow_Word_Pain:
+                return Shadow_Word_Pain();
+            case Card.Cardname.Shadow_Word_Death:
+                return Shadow_Word_Death();
+            case Card.Cardname.Dark_Cultist:
+                return Dark_Cultist();
+            case Card.Cardname.Cabal_Shadow_Priest:
+                return Cabal_Shadow_Priest();
+            case Card.Cardname.Holy_Nova:
+                return Holy_Nova();
+            case Card.Cardname.Holy_Smite:
+                return Holy_Smite();
+            case Card.Cardname.Circle_of_Healing:
+                return Circle_of_Healing();
+            case Card.Cardname.Auchenai_Soulpriest:
+                return Auchenai_Soulpriest();
+            case Card.Cardname.Lightbomb:
+                return Lightbomb();
+            case Card.Cardname.Mind_Blast:
+                return Mind_Blast();
+            case Card.Cardname.Resurrect:
+                return Resurrect();
+            case Card.Cardname.Silence:
+                return Silence();
+            case Card.Cardname.Divine_Spirit:
+                return Divine_Spirit();
+            case Card.Cardname.Inner_Fire:
+                return Inner_Fire();
+            case Card.Cardname.Velens_Chosen:
+                return Velens_Chosen();
+            case Card.Cardname.Thoughtsteal:
+                return Thoughtsteal();
+            case Card.Cardname.Shadow_of_Nothing:
+                return Shadow_of_Nothing();
+            case Card.Cardname.Lightwarden:
+                return Lightwarden();
+            case Card.Cardname.Wild_Pyromancer:
+                return Wild_Pyromancer();
+            case Card.Cardname.Deathlord:
+                return Deathlord();
+            case Card.Cardname.Injured_Blademaster:
+                return Injured_Blademaster();
+            case Card.Cardname.Light_of_the_Naaru:
+                return Light_of_the_Naaru();
+            case Card.Cardname.Power_Word_Shield:
+                return Power_Word_Shield();
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 return null;
@@ -627,7 +678,6 @@ public partial class Database
                 return Card.Cardname.Cardback;
         }
     }
-
     static CardInfo Coin()
     { 
         CardInfo c = new();
@@ -1917,4 +1967,77 @@ public partial class Database
 
         return c;
     }
+    private static CardInfo Lightwarden()
+    {
+        CardInfo c = new();
+
+        c.name = "Lightwarden";
+        c.text = "Whenever a character is healed, gain +2 attack";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 2;
+
+        c.MINION = true;
+
+        c.triggers.Add((Trigger.Type.OnMinionHealed, Trigger.Side.Both, Trigger.Ability.Lightwarden));
+        c.triggers.Add((Trigger.Type.OnFaceHealed, Trigger.Side.Both, Trigger.Ability.Lightwarden));
+
+        return c;
+    }
+    private static CardInfo Wild_Pyromancer()
+    {
+        CardInfo c = new();
+
+        c.name = "Wild Pyromancer";
+        c.text = "After you play a spell, deal 1 damage to all minions";
+
+        c.manaCost = 2;
+        c.damage = 3;
+        c.health = 2;
+
+        c.MINION = true;
+
+        c.triggers.Add((Trigger.Type.AfterPlaySpell, Trigger.Side.Friendly, Trigger.Ability.Unstable_Ghoul));
+
+        return c;
+    }
+    private static CardInfo Deathlord()
+    {
+        CardInfo c = new();
+
+        c.name = "Deathlord";
+        c.text = "Taunt. Deathrattle: Your opponent puts a minion from their deck into play.";
+
+        c.manaCost = 3;
+        c.damage = 2;
+        c.health = 8;
+
+        c.MINION = true;
+
+        c.auras.Add(Aura.Type.Taunt);
+
+        c.triggers.Add((Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.Deathlord));
+
+        return c;
+    }
+
+    private static CardInfo Injured_Blademaster()
+    {
+        CardInfo c = new();
+
+        c.name = "Injured_Blademaster";
+        c.text = "Battlecry: Deals 4 damage to himself.";
+
+        c.manaCost = 3;
+        c.damage = 4;
+        c.health = 7;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+
+        return c;
+    }
+
+
 }

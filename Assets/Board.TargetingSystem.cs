@@ -101,6 +101,10 @@ public partial class Board
         MechMinions,
         Big_Game_Hunter,
 
+        Cabal_Shadow_Priest,
+        Attack_Under_4,
+        Attack_Over_4,
+
         None,
     }
 
@@ -308,6 +312,24 @@ public partial class Board
             if (m.damage >= 7) return true;
             else return false;
         }
+
+        if (eligibleTargets == EligibleTargets.Attack_Over_4)
+        {
+            if (m.damage > 4) return true;
+            else return false;
+        }
+        if (eligibleTargets == EligibleTargets.Attack_Under_4)
+        {
+            if (m.damage < 4) return true;
+            else return false;
+        }
+
+        if (eligibleTargets == EligibleTargets.Cabal_Shadow_Priest)
+        {
+            if (IsFriendly(m)) return false;
+            if (m.damage < 3) return true;
+            else return false;
+        }
         return false;
 
     }
@@ -334,8 +356,10 @@ public partial class Board
             return IsFriendly(h);
         if (eligibleTargets == EligibleTargets.EnemyHero)
             return !IsFriendly(h);
-        if (eligibleTargets.ToString().Contains("Minions") || eligibleTargets == EligibleTargets.Big_Game_Hunter)
+
+        if (eligibleTargets.ToString().Contains("Hero") == false)
             return false;
+
         return false;
     }
 
@@ -379,6 +403,32 @@ public partial class Board
                 foreach(Minion m in enemyMinions)
                 {
                     if (m.damage >= 7) return true;
+                }
+                return false;
+            case EligibleTargets.Attack_Over_4:
+                foreach(Minion m in currMinions)
+                {
+                    if (m.damage > 4) return true;
+                }
+                foreach(Minion m in enemyMinions)
+                {
+                    if (m.damage > 4) return true;
+                }
+                return false;
+            case EligibleTargets.Attack_Under_4:
+                foreach(Minion m in currMinions)
+                {
+                    if (m.damage < 4) return true;
+                }
+                foreach(Minion m in enemyMinions)
+                {
+                    if (m.damage < 4) return true;
+                }
+                return false;
+            case EligibleTargets.Cabal_Shadow_Priest:
+                foreach(Minion m in enemyMinions)
+                {
+                    if (m.damage < 3) return true;
                 }
                 return false;
             default:

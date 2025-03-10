@@ -108,6 +108,9 @@ public class Trigger
         Sylvanas_Windrunner,
         Baron_Geddon,
         Ragnaros,
+        Dark_Cultist,
+        Lightwarden,
+        Deathlord,
     }
     public enum Side
     {
@@ -258,6 +261,15 @@ public class Trigger
                 break;
             case Ability.Ragnaros:
                 TriggerEffects.Ragnaros(match, this.minion);
+                break;
+            case Ability.Dark_Cultist:
+                TriggerEffects.Dark_Cultist(match, this.minion);
+                break;
+            case Ability.Lightwarden:
+                TriggerEffects.Lightwarden(match, this.minion);
+                break;
+            case Ability.Deathlord:
+                TriggerEffects.Deathlord(match, this.minion);
                 break;
             default:
                 Debug.LogError("MISSING TRIGGER ABILITY");

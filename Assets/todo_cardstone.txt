@@ -52,6 +52,34 @@ Mechanics for next demo:
 
 - rope (chess timer?)
 
+Priest List:
+
+Wild_Pyromancer,         -- DONE
+Lightwarden,             -- DONE
+Deathlord,               -- DONE
+Injured_Blademaster,     -- DONE
+
+Lesser_Heal, 			 -- DONE
+Silence,                 -- DONE
+Circle_of_Healing,       -- DONE
+Holy_Smite,              -- DONE
+Inner_Fire,              -- DONE
+Light_of_the_Naaru,      -- DONE
+Northshire_Cleric,       -- DONE
+Power_Word_Shield,       -- DONE
+Shadow_Word_Pain,        -- DONE
+Shadow_Word_Death,       -- DONE
+Divine_Spirit,           -- DONE
+Resurrect,               -- DONE
+Mind_Blast,              -- DONE
+Dark_Cultist,            -- DONE
+Thoughtsteal,            -- DONE
+Velens_Chosen,           -- DONE
+Holy_Nova,               -- DONE
+Auchenai_Soulpriest,     -- DONE
+Cabal_Shadow_Priest,     -- DONE
+Lightbomb,               -- DONE
+
 ===============================================
 =====================DONE======================
 ================================================ 

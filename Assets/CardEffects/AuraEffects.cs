@@ -160,4 +160,9 @@ public static class AuraEffects
     {
         match.server.AddAura(match, sourceMinion, new Aura(Aura.Type.Damage, 6, false, true, sourceAura));
     }
+
+    internal static void Auchenai_Soulpriest(Match match, Minion minion, Aura source)
+    {
+        minion.player.AddAura(new Aura(Aura.Type.AUCH_PLAYER_BUFF, 1, false, true, source));
+    }
 }

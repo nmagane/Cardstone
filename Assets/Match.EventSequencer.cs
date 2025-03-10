@@ -683,6 +683,7 @@ public partial class Match
     bool WinCheck()
     {
         if (gameOver) return true;
+        if (midPhase) return false;
 
         if (players[0].health<=0 && players[1].health<=0)
         {
