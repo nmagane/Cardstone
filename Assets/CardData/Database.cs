@@ -2026,7 +2026,7 @@ public partial class Database
     {
         CardInfo c = new();
 
-        c.name = "Injured_Blademaster";
+        c.name = "Injured Blademaster";
         c.text = "Battlecry: Deals 4 damage to himself.";
 
         c.manaCost = 3;

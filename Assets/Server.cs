@@ -10,12 +10,26 @@ public partial class Server : MonoBehaviour
 #if UNITY_EDITOR
     List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Northshire_Cleric,Card.Cardname.Earthen_Ring_Farseer,Card.Cardname.Divine_Spirit,Card.Cardname.Inner_Fire, Card.Cardname.Deathlord,Card.Cardname.Power_Word_Shield, Card.Cardname.Shadow_Word_Pain,Card.Cardname.Shadow_Word_Death,Card.Cardname.Cabal_Shadow_Priest};
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { };
-    
-    
+
+
 #else
     List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { };
     List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { };
 #endif
+
+    public List<Card.Cardname> Two_Mana_Minions = new List<Card.Cardname>();
+
+    void InitServer()
+    {
+        for (int i=1;i<(int)Card.Cardname._COUNT;i++)
+        {
+            Database.CardInfo c = Database.GetCardData((Card.Cardname)i);
+            if (c.TOKEN) continue;
+            if (c.MINION && c.manaCost == 2)
+                Two_Mana_Minions.Add((Card.Cardname)i);
+        }
+        Debug.Log("Server initialized.");
+    }
 
     public static CustomMessage CreateMessage(MessageType type)
     {
@@ -130,6 +144,7 @@ public partial class Server : MonoBehaviour
     void Start()
     {
         mirror.StartServer();
+        InitServer();
     }
 
     private static Server _instance;
