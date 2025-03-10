@@ -352,5 +352,22 @@
 
         return c;
     }
+    private static CardInfo Succubus()
+    {
+        CardInfo c = new();
 
+        c.name = "Succubus";
+        c.text = "Battlecry: Discard a random card.";
+
+        c.manaCost = 2;
+        c.damage = 4;
+        c.health = 3;
+        c.classType = Card.Class.Warlock;
+        c.tribe = Card.Tribe.Demon;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+
+        return c;
+    }
 }

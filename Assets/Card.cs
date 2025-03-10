@@ -340,6 +340,7 @@ public class Card : MonoBehaviour
         Bluegill_Warrior,
         Captains_Parrot,
         Defias_Ringleader,
+        Defias_Bandit,
         Faerie_Dragon,
         Succubus,
         Flametongue_Totem,

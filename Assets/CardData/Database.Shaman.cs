@@ -36,5 +36,24 @@
 
         return c;
     }
+    private static CardInfo Flametongue_Totem()
+    {
+        CardInfo c = new();
+
+        c.name = "Flametongue Totem";
+        c.text = "";
+
+        c.manaCost = 2;
+        c.damage = 0;
+        c.health = 3;
+        c.classType = Card.Class.Shaman;
+        c.tribe = Card.Tribe.Totem;
+
+        c.MINION = true;
+        c.auras.Add(Aura.Type.DireWolfAlpha);
+        c.auras.Add(Aura.Type.DireWolfAlpha);
+
+        return c;
+    }
 
 }

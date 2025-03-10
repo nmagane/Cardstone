@@ -297,4 +297,56 @@ public partial class Database
 
         return c;
     }
+    private static CardInfo Defias_Ringleader()
+    {
+        CardInfo c = new();
+
+        c.name = "Defias Ringleader";
+        c.text = "Combo: Summon a 2/1 Defias Bandit.";
+
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 2;
+        c.classType = Card.Class.Rogue;
+
+        c.MINION = true;
+        c.COMBO = true;
+
+        return c;
+    }
+    private static CardInfo Defias_Bandit()
+    {
+        CardInfo c = new();
+
+        c.name = "Defias Bandit";
+        c.text = "";
+
+        c.manaCost = 1;
+        c.damage = 2;
+        c.health = 1;
+        c.classType = Card.Class.Rogue;
+
+        c.MINION = true;
+        c.TOKEN = true;
+
+        return c;
+    }
+    private static CardInfo Patient_Assassin()
+    {
+        CardInfo c = new();
+
+        c.name = "Patient Assassin";
+        c.text = "Stealth.\nPoisonous.";
+
+        c.manaCost = 2;
+        c.damage = 1;
+        c.health = 1;
+        c.classType = Card.Class.Rogue;
+
+        c.MINION = true;
+        c.auras.Add(Aura.Type.Stealth);
+        c.auras.Add(Aura.Type.Poisonous);
+
+        return c;
+    }
 }

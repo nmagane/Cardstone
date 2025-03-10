@@ -669,6 +669,8 @@ public partial class Database
                 return Captains_Parrot();
             case Card.Cardname.Defias_Ringleader:
                 return Defias_Ringleader();
+            case Card.Cardname.Defias_Bandit:
+                return Defias_Bandit();
             case Card.Cardname.Faerie_Dragon:
                 return Faerie_Dragon();
             case Card.Cardname.Succubus:
@@ -2385,83 +2387,39 @@ public partial class Database
 
         return c;
     }
-    private static CardInfo Defias_Ringleader()
-    {
-        CardInfo c = new();
 
-        c.name = "Defias Ringleader";
-        c.text = "Combo: Summon a 2/1 Defias Bandit.";
-
-        c.manaCost = 2;
-        c.damage = 2;
-        c.health = 2;
-        c.classType = Card.Class.Rogue;
-
-        c.MINION = true;
-        c.COMBO = true;
-
-        return c;
-    }
     private static CardInfo Faerie_Dragon()
     {
         CardInfo c = new();
 
         c.name = "Faerie Dragon";
-        c.text = "";
+        c.text = "Cannot be targeted by spells or hero powers.";
 
-        c.manaCost = 1;
-        c.damage = 1;
-        c.health = 1;
+        c.manaCost = 2;
+        c.damage = 3;
+        c.health = 2;
 
+        c.tribe = Card.Tribe.Dragon;
         c.MINION = true;
+        c.auras.Add(Aura.Type.Elusive);
 
         return c;
     }
-    private static CardInfo Succubus()
-    {
-        CardInfo c = new();
 
-        c.name = "Succubus";
-        c.text = "";
-
-        c.manaCost = 1;
-        c.damage = 1;
-        c.health = 1;
-        c.classType = Card.Class.Warlock;
-
-        c.MINION = true;
-
-        return c;
-    }
-    private static CardInfo Flametongue_Totem()
-    {
-        CardInfo c = new();
-
-        c.name = "Flametongue Totem";
-        c.text = "";
-
-        c.manaCost = 1;
-        c.damage = 1;
-        c.health = 1;
-        c.classType = Card.Class.Shaman;
-
-        c.MINION = true;
-
-        return c;
-    }
     private static CardInfo Frostwolf_Grunt()
     {
         CardInfo c = new();
 
         c.name = "Frostwolf Grunt";
-        c.text = "";
+        c.text = "Taunt";
 
-        c.manaCost = 1;
-        c.damage = 1;
-        c.health = 1;
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 2;
 
         c.MINION = true;
 
+        c.auras.Add(Aura.Type.Taunt);
         return c;
     }
     private static CardInfo Lightwell()
@@ -2487,9 +2445,9 @@ public partial class Database
         c.name = "Lorewalker Cho";
         c.text = "";
 
-        c.manaCost = 1;
-        c.damage = 1;
-        c.health = 1;
+        c.manaCost = 2;
+        c.damage = 0;
+        c.health = 4;
 
         c.MINION = true;
         c.LEGENDARY = true;
@@ -2503,11 +2461,12 @@ public partial class Database
         c.name = "Mad Bomber";
         c.text = "";
 
-        c.manaCost = 1;
-        c.damage = 1;
-        c.health = 1;
+        c.manaCost = 2;
+        c.damage = 3;
+        c.health = 2;
 
         c.MINION = true;
+        c.BATTLECRY = true;
 
         return c;
     }
@@ -2518,9 +2477,9 @@ public partial class Database
         c.name = "Mana Addict";
         c.text = "";
 
-        c.manaCost = 1;
+        c.manaCost = 2;
         c.damage = 1;
-        c.health = 1;
+        c.health = 3;
 
         c.MINION = true;
 
@@ -2533,9 +2492,9 @@ public partial class Database
         c.name = "Master Swordsmith";
         c.text = "";
 
-        c.manaCost = 1;
+        c.manaCost = 2;
         c.damage = 1;
-        c.health = 1;
+        c.health = 3;
 
         c.MINION = true;
 
@@ -2548,8 +2507,8 @@ public partial class Database
         c.name = "Murloc Tidehunter";
         c.text = "";
 
-        c.manaCost = 1;
-        c.damage = 1;
+        c.manaCost = 2;
+        c.damage = 2;
         c.health = 1;
 
         c.MINION = true;
@@ -2578,31 +2537,16 @@ public partial class Database
         c.name = "Nat Pagle";
         c.text = "";
 
-        c.manaCost = 1;
-        c.damage = 1;
-        c.health = 1;
+        c.manaCost = 2;
+        c.damage = 0;
+        c.health = 4;
 
         c.MINION = true;
         c.LEGENDARY = true;
 
         return c;
     }
-    private static CardInfo Patient_Assassin()
-    {
-        CardInfo c = new();
 
-        c.name = "Patient Assassin";
-        c.text = "";
-
-        c.manaCost = 1;
-        c.damage = 1;
-        c.health = 1;
-        c.classType = Card.Class.Rogue;
-
-        c.MINION = true;
-
-        return c;
-    }
     private static CardInfo PintSized_Summoner()
     {
         CardInfo c = new();
@@ -2625,10 +2569,10 @@ public partial class Database
         c.name = "River Crocolisk";
         c.text = "";
 
-        c.manaCost = 1;
-        c.damage = 1;
-        c.health = 1;
-
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 3;
+        c.tribe = Card.Tribe.Beast;
         c.MINION = true;
 
         return c;

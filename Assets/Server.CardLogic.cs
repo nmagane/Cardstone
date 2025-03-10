@@ -338,4 +338,26 @@ public partial class Server
             AddAura(spell.match, spell.minion, new Aura(Aura.Type.Damage, spell.player.weapon.damage));
         }
     }
+
+    public void Captains_Parrot(CastInfo spell)
+    {
+        Player p = spell.player;
+        Card.Cardname card = Card.Cardname.Cardback;
+        foreach (Card.Cardname c in p.deck)
+        {
+            if (Database.GetCardData(c).tribe==Card.Tribe.Pirate)
+            {
+                if (p.HasSecret(c) == false)
+                {
+                    card = c;
+                    break;
+                }
+            }
+        }
+        if (card != Card.Cardname.Cardback)
+        {
+            p.deck.Remove(card);
+            AddCard(spell.match, spell.player, card);
+        }
+    }
 }

@@ -416,7 +416,10 @@ public class TriggerEffects
     {
         match.server.AddAura(match, trigger.minion, new Aura(Aura.Type.Stealth));
     }
-
+    internal static void Vitality_Totem(Match match, Trigger trigger)
+    {
+        match.server.HealFace(match, trigger.player, 4, trigger.player);
+    }
     internal static void Ships_Cannon(Match match, Trigger trigger)
     {
         Minion minion = trigger.minion;

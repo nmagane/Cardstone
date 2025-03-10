@@ -715,6 +715,15 @@ public partial class Server
             case Card.Cardname.Bloodsail_Raider:
                 Bloodsail_Raider(spell);
                 break;
+            case Card.Cardname.Captains_Parrot:
+                Captains_Parrot(spell);
+                break;
+            case Card.Cardname.Succubus:
+                Discard(spell);
+                break;
+            case Card.Cardname.Defias_Ringleader:
+                Defias_Ringleader(spell);
+                break;
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);
                 break;

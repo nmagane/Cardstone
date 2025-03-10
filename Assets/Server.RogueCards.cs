@@ -142,10 +142,14 @@ public partial class Server
     }
     void Goblin_Auto_Barber(CastInfo spell)
     {
-
         if (spell.player.weapon == null) return;
 
         var anim = new AnimationInfo(Card.Cardname.Deadly_Poison, spell.player,spell.minion,spell.player);
         spell.player.weapon.AddAura(new Aura(Aura.Type.Damage, 1));
+    }    
+    void Defias_Ringleader(CastInfo spell)
+    {
+        if (spell.combo)
+            SummonToken(spell.match, spell.player, Card.Cardname.Defias_Bandit, spell.minion.index + 1);
     }
 }

@@ -106,12 +106,12 @@ Argent Protected         -- DONE
 Bloodfen Raptor          -- DONE
 Bloodsail Raider         -- DONE
 Bluegill Warrior         -- DONE
-Captain's Parrot         -- NO
-Defias Ringleader        -- NO
+Captain's Parrot         -- DONE
+Defias Ringleader        -- DONE
 Faerie Dragon            -- NO
-Succubus                 -- NO
-Flametongue Totem        -- NO
-Frostwolf Grunt          -- NO
+Succubus                 -- DONE
+Flametongue Totem        -- DONE
+Frostwolf Grunt          -- DONE
 Lightwell                -- NO
 Lorewalker Cho           -- NO
 Mad Bomber               -- NO
@@ -120,9 +120,9 @@ Master Swordsmith        -- NO
 Murloc Tidehunter        -- NO
 1/1 Murloc Scout Tokens  -- NO
 Nat Palge                -- NO
-Patient Assassin         -- NO
+Patient Assassin         -- DONE
 Pint-Sized Summoner      -- NO
-River Crocolisk          -- NO
+River Crocolisk          -- DONE
 Scavenging Hyena         -- NO
 Starving Buzzard         -- NO
 Echoing Ooze             -- NO

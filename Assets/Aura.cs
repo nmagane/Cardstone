@@ -52,6 +52,7 @@ public class Aura
         Lifesteal,
         Frostbite,
         Poisonous,
+        Elusive,
     }
 
     public Type type = Type.Health;

@@ -105,7 +105,9 @@ public partial class Server
             Damage(x, m.damage, spell);
         }
 
+        spell.match.midPhase = true;
         spell.match.ResolveTriggerQueue(ref spell);
+        spell.match.midPhase = false;
 
         m.DEAD = true;
     }
