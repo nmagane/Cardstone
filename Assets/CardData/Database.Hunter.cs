@@ -32,4 +32,21 @@
         c.TARGETED = true;
         return c;
     }
+
+    private static CardInfo Steamwheedle_Sniper()
+    {
+        CardInfo c = new();
+
+        c.name = "Steamwheedle Sniper";
+        c.text = "Your hero power can target minions.";
+
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 3;
+        c.classType = Card.Class.Hunter;
+
+        c.MINION = true;
+
+        return c;
+    }
 }

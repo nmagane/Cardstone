@@ -111,6 +111,10 @@ public class Trigger
         Dark_Cultist,
         Lightwarden,
         Deathlord,
+        Piloted_Shredder,
+        Explosive_Sheep,
+        One_Eyed_Cheat,
+        Ships_Cannon,
     }
     public enum Side
     {
@@ -270,6 +274,18 @@ public class Trigger
                 break;
             case Ability.Deathlord:
                 TriggerEffects.Deathlord(match, this.minion);
+                break;
+            case Ability.Piloted_Shredder:
+                TriggerEffects.Piloted_Shredder(match, this.minion);
+                break;
+            case Ability.Explosive_Sheep:
+                TriggerEffects.Explosive_Sheep(match, this);
+                break;
+            case Ability.One_Eyed_Cheat:
+                TriggerEffects.One_Eyed_Cheat(match, this);
+                break;
+            case Ability.Ships_Cannon:
+                TriggerEffects.Ships_Cannon(match, this);
                 break;
             default:
                 Debug.LogError("MISSING TRIGGER ABILITY");

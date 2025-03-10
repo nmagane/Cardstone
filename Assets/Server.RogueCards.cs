@@ -140,4 +140,12 @@ public partial class Server
             AddAura(spell.match, spell.minion, new Aura(Aura.Type.Damage, i, false, false, null, Card.Cardname.Edwin_VanCleef));
         }
     }
+    void Goblin_Auto_Barber(CastInfo spell)
+    {
+
+        if (spell.player.weapon == null) return;
+
+        var anim = new AnimationInfo(Card.Cardname.Deadly_Poison, spell.player,spell.minion,spell.player);
+        spell.player.weapon.AddAura(new Aura(Aura.Type.Damage, 1));
+    }
 }

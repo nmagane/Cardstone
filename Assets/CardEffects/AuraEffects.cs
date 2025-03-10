@@ -165,4 +165,13 @@ public static class AuraEffects
     {
         minion.player.AddAura(new Aura(Aura.Type.AUCH_PLAYER_BUFF, 1, false, true, source));
     }
+
+    internal static void Mechwarper(Match match, Minion minion, Aura aura)
+    {
+        Player owner = match.FindOwner(minion);
+
+        foreach (HandCard c in owner.hand)
+            if (c.tribe==Card.Tribe.Mech)
+                match.server.AddCardAura(match, c, new Aura(Aura.Type.Cost, -1, false, true, aura));
+    }
 }

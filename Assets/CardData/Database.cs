@@ -608,6 +608,106 @@ public partial class Database
                 return Light_of_the_Naaru();
             case Card.Cardname.Power_Word_Shield:
                 return Power_Word_Shield();
+                
+            case Card.Cardname.Piloted_Shredder:
+                return Piloted_Shredder();
+            case Card.Cardname.Annoy_o_Tron:
+                return Annoy_o_Tron();
+
+            case Card.Cardname.Anodized_Robo_Cub:
+                return Anodized_Robo_Cub();
+            case Card.Cardname.Anodized_Robo_Cub_Attack:
+                return Anodized_Robo_Cub_Attack();
+            case Card.Cardname.Anodized_Robo_Cub_Health:
+                return Anodized_Robo_Cub_Health();
+
+            case Card.Cardname.Explosive_Sheep:
+                return Explosive_Sheep();
+            case Card.Cardname.Gilbin_Stalker:
+                return Gilbin_Stalker();
+            case Card.Cardname.Goblin_Auto_Barber:
+                return Goblin_Auto_Barber();
+            case Card.Cardname.Micro_Machine:
+                return Micro_Machine();
+            case Card.Cardname.Mechwarper:
+                return Mechwarper();
+            case Card.Cardname.One_eyed_Cheat:
+                return One_eyed_Cheat();
+            case Card.Cardname.Puddlestomper:
+                return Puddlestomper();
+            case Card.Cardname.Queen_of_Pain:
+                return Queen_of_Pain();
+            case Card.Cardname.Recombobulator:
+                return Recombobulator();
+            case Card.Cardname.Shadowboxer:
+                return Shadowboxer();
+            case Card.Cardname.Shielded_Minibot:
+                return Shielded_Minibot();
+            case Card.Cardname.Ships_Cannon:
+                return Ships_Cannon();
+            case Card.Cardname.Shrinkmeister:
+                return Shrinkmeister();
+            case Card.Cardname.Snowchugger:
+                return Snowchugger();
+            case Card.Cardname.Steamwheedle_Sniper:
+                return Steamwheedle_Sniper();
+            case Card.Cardname.Stonesplinter_Trogg:
+                return Stonesplinter_Trogg();
+            case Card.Cardname.Vitality_Totem:
+                return Vitality_Totem();
+            case Card.Cardname.Whirling_Zapomatic:
+                return Whirling_Zapomatic();
+            case Card.Cardname.Argent_Protector:
+                return Argent_Protector();
+            case Card.Cardname.Bloodfen_Raptor:
+                return Bloodfen_Raptor();
+            case Card.Cardname.Bloodsail_Raider:
+                return Bloodsail_Raider();
+            case Card.Cardname.Bluegill_Warrior:
+                return Bluegill_Warrior();
+            case Card.Cardname.Captains_Parrot:
+                return Captains_Parrot();
+            case Card.Cardname.Defias_Ringleader:
+                return Defias_Ringleader();
+            case Card.Cardname.Faerie_Dragon:
+                return Faerie_Dragon();
+            case Card.Cardname.Succubus:
+                return Succubus();
+            case Card.Cardname.Flametongue_Totem:
+                return Flametongue_Totem();
+            case Card.Cardname.Frostwolf_Grunt:
+                return Frostwolf_Grunt();
+            case Card.Cardname.Lightwell:
+                return Lightwell();
+            case Card.Cardname.Lorewalker_Cho:
+                return Lorewalker_Cho();
+            case Card.Cardname.Mad_Bomber:
+                return Mad_Bomber();
+            case Card.Cardname.Mana_Addict:
+                return Mana_Addict();
+            case Card.Cardname.Master_Swordsmith:
+                return Master_Swordsmith();
+            case Card.Cardname.Murloc_Tidehunter:
+                return Murloc_Tidehunter();
+            case Card.Cardname.Murloc_Scout:
+                return Murloc_Scout();
+            case Card.Cardname.Nat_Pagle:
+                return Nat_Pagle();
+            case Card.Cardname.Patient_Assassin:
+                return Patient_Assassin();
+            case Card.Cardname.PintSized_Summoner:
+                return PintSized_Summoner();
+            case Card.Cardname.River_Crocolisk:
+                return River_Crocolisk();
+            case Card.Cardname.Scavenging_Hyena:
+                return Scavenging_Hyena();
+            case Card.Cardname.Starving_Buzzard:
+                return Starving_Buzzard();
+            case Card.Cardname.Echoing_Ooze:
+                return Echoing_Ooze();
+            case Card.Cardname.Nerubar_Weblord:
+                return Nerubar_Weblord();
+                
             default:
                 Debug.LogError("ERROR: UNDEFINED CARD: " + card);
                 return null;
@@ -1074,6 +1174,7 @@ public partial class Database
         c.health = 1;
 
         c.MINION = true;
+        c.tribe = Card.Tribe.Pirate;
 
         c.auras.Add(Aura.Type.Southsea_Deckhand);
         return c;
@@ -1456,6 +1557,7 @@ public partial class Database
         c.MINION = true;
         c.auras.Add(Aura.Type.Taunt);
         c.cardAuras.Add(Aura.Type.Dread_Corsair);
+        c.tribe = Card.Tribe.Pirate;
 
         return c;
     }
@@ -2039,5 +2141,562 @@ public partial class Database
         return c;
     }
 
+    private static CardInfo Piloted_Shredder()
+    {
+        CardInfo c = new();
+
+        c.name = "Piloted Shredder";
+        c.text = "Deathrattle: Summon a random 2-cost minion.";
+
+        c.manaCost = 4;
+        c.damage = 4;
+        c.health = 3;
+
+        c.MINION = true;
+        c.tribe = Card.Tribe.Mech;
+
+        c.triggers.Add((Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.Piloted_Shredder));
+
+        return c;
+    }
+    private static CardInfo Annoy_o_Tron()
+    {
+        CardInfo c = new();
+
+        c.name = "Annoy-o-Tron";
+        c.text = "Taunt.\nDivine Shield.";
+
+        c.manaCost = 2;
+        c.damage = 1;
+        c.health = 2;
+
+        c.MINION = true;
+        c.tribe = Card.Tribe.Mech;
+
+        c.auras.Add(Aura.Type.Taunt);
+        c.auras.Add(Aura.Type.Shield);
+
+        return c;
+    }
+
+    private static CardInfo Explosive_Sheep()
+    {
+        CardInfo c = new();
+
+        c.name = "Explosive Sheep";
+        c.text = "Deathrattle: Deal 2 damage to all minions.";
+
+        c.manaCost = 2;
+        c.damage = 1;
+        c.health = 1;
+
+        c.MINION = true;
+        c.tribe = Card.Tribe.Mech;
+
+        c.triggers.Add((Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.Explosive_Sheep));
+
+        return c;
+    }
+    private static CardInfo Gilbin_Stalker()
+    {
+        CardInfo c = new();
+
+        c.name = "Gilbin Stalker";
+        c.text = "Stealth.";
+
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 3;
+
+        c.MINION = true;
+        c.auras.Add(Aura.Type.Stealth);
+
+        return c;
+    }
+
+    private static CardInfo Micro_Machine()
+    {
+        CardInfo c = new();
+
+        c.name = "Micro Machine";
+        c.text = "At the start of each turn, gain +1 attack.";
+
+        c.manaCost = 2;
+        c.damage = 1;
+        c.health = 2;
+
+        c.MINION = true;
+        c.tribe = Card.Tribe.Mech;
+
+        c.triggers.Add((Trigger.Type.StartTurn, Trigger.Side.Both, Trigger.Ability.Frothing_Berserker));
+
+        return c;
+    }
+    private static CardInfo Mechwarper()
+    {
+        CardInfo c = new();
+
+        c.name = "Mechwarper";
+        c.text = "Your mechs cost 1 less.";
+
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 3;
+
+        c.MINION = true;
+        c.tribe = Card.Tribe.Mech;
+        c.auras.Add(Aura.Type.Mechwarper);
+
+        return c;
+    }
+
+    private static CardInfo Puddlestomper()
+    {
+        CardInfo c = new();
+
+        c.name = "Puddlestomper";
+        c.text = "";
+
+        c.manaCost = 2;
+        c.damage = 3;
+        c.health = 2;
+        c.tribe = Card.Tribe.Murloc;
+
+        c.MINION = true;
+
+        return c;
+    }
+
+    private static CardInfo Recombobulator()
+    {
+        CardInfo c = new();
+
+        c.name = "Recombobulator";
+        c.text = "[EFFECT UNIMPLEMENTED]";
+
+        c.manaCost = 2;
+        c.damage = 3;
+        c.health = 2;
+
+        c.MINION = true;
+
+        return c;
+    }
+
+    private static CardInfo Ships_Cannon()
+    {
+        CardInfo c = new();
+
+        c.name = "Ship's Cannon";
+        c.text = "Whenever you summon a pirate, deal 2 damage to a random enemy";
+
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 3;
+
+        c.MINION = true;
+        c.triggers.Add((Trigger.Type.AfterPlayMinion, Trigger.Side.Friendly, Trigger.Ability.Ships_Cannon));
+        c.triggers.Add((Trigger.Type.AfterSummonMinion, Trigger.Side.Friendly, Trigger.Ability.Ships_Cannon));
+
+        return c;
+    }
+
+    private static CardInfo Stonesplinter_Trogg()
+    {
+        CardInfo c = new();
+
+        c.name = "Stonesplinter Trogg";
+        c.text = "Whenever your opponent cast a spell, gain +1 Attack.";
+
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 3;
+
+        c.MINION = true;
+        c.triggers.Add((Trigger.Type.OnPlaySpell, Trigger.Side.Enemy, Trigger.Ability.Frothing_Berserker));
+
+        return c;
+    }
+
+    private static CardInfo Bloodfen_Raptor()
+    {
+        CardInfo c = new();
+
+        c.name = "Bloodfen Raptor";
+        c.text = "";
+
+        c.manaCost = 2;
+        c.damage = 3;
+        c.health = 2;
+
+        c.tribe = Card.Tribe.Beast;
+        c.MINION = true;
+
+        return c;
+    }
+    private static CardInfo Bloodsail_Raider()
+    {
+        CardInfo c = new();
+
+        c.name = "Bloodsail Raider";
+        c.text = "Battlecry: Gain attack equal to your weapon's.";
+
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 3;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+        c.tribe = Card.Tribe.Pirate;
+
+        return c;
+    }
+    private static CardInfo Bluegill_Warrior()
+    {
+        CardInfo c = new();
+
+        c.name = "Bluegill Warrior";
+        c.text = "Charge";
+
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 1;
+        c.tribe = Card.Tribe.Murloc;
+        c.auras.Add(Aura.Type.Charge);
+
+        c.MINION = true;
+
+        return c;
+    }
+    private static CardInfo Captains_Parrot()
+    {
+        CardInfo c = new();
+
+        c.name = "Captain's Parrot";
+        c.text = "Battlecry: Draw a pirate from your deck.";
+
+        c.manaCost = 2;
+        c.damage = 1;
+        c.health = 1;
+        c.tribe = Card.Tribe.Beast;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+
+        return c;
+    }
+    private static CardInfo Defias_Ringleader()
+    {
+        CardInfo c = new();
+
+        c.name = "Defias Ringleader";
+        c.text = "Combo: Summon a 2/1 Defias Bandit.";
+
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 2;
+        c.classType = Card.Class.Rogue;
+
+        c.MINION = true;
+        c.COMBO = true;
+
+        return c;
+    }
+    private static CardInfo Faerie_Dragon()
+    {
+        CardInfo c = new();
+
+        c.name = "Faerie Dragon";
+        c.text = "";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+
+        c.MINION = true;
+
+        return c;
+    }
+    private static CardInfo Succubus()
+    {
+        CardInfo c = new();
+
+        c.name = "Succubus";
+        c.text = "";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+        c.classType = Card.Class.Warlock;
+
+        c.MINION = true;
+
+        return c;
+    }
+    private static CardInfo Flametongue_Totem()
+    {
+        CardInfo c = new();
+
+        c.name = "Flametongue Totem";
+        c.text = "";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+        c.classType = Card.Class.Shaman;
+
+        c.MINION = true;
+
+        return c;
+    }
+    private static CardInfo Frostwolf_Grunt()
+    {
+        CardInfo c = new();
+
+        c.name = "Frostwolf Grunt";
+        c.text = "";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+
+        c.MINION = true;
+
+        return c;
+    }
+    private static CardInfo Lightwell()
+    {
+        CardInfo c = new();
+
+        c.name = "Lightwell";
+        c.text = "";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+        c.classType = Card.Class.Priest;
+
+        c.MINION = true;
+
+        return c;
+    }
+    private static CardInfo Lorewalker_Cho()
+    {
+        CardInfo c = new();
+
+        c.name = "Lorewalker Cho";
+        c.text = "";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+
+        c.MINION = true;
+        c.LEGENDARY = true;
+
+        return c;
+    }
+    private static CardInfo Mad_Bomber()
+    {
+        CardInfo c = new();
+
+        c.name = "Mad Bomber";
+        c.text = "";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+
+        c.MINION = true;
+
+        return c;
+    }
+    private static CardInfo Mana_Addict()
+    {
+        CardInfo c = new();
+
+        c.name = "Mana Addict";
+        c.text = "";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+
+        c.MINION = true;
+
+        return c;
+    }
+    private static CardInfo Master_Swordsmith()
+    {
+        CardInfo c = new();
+
+        c.name = "Master Swordsmith";
+        c.text = "";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+
+        c.MINION = true;
+
+        return c;
+    }
+    private static CardInfo Murloc_Tidehunter()
+    {
+        CardInfo c = new();
+
+        c.name = "Murloc Tidehunter";
+        c.text = "";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+
+        c.MINION = true;
+
+        return c;
+    }
+    private static CardInfo Murloc_Scout()
+    {
+        CardInfo c = new();
+
+        c.name = "Murloc Scout";
+        c.text = "";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+
+        c.MINION = true;
+
+        return c;
+    }
+    private static CardInfo Nat_Pagle()
+    {
+        CardInfo c = new();
+
+        c.name = "Nat Pagle";
+        c.text = "";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+
+        c.MINION = true;
+        c.LEGENDARY = true;
+
+        return c;
+    }
+    private static CardInfo Patient_Assassin()
+    {
+        CardInfo c = new();
+
+        c.name = "Patient Assassin";
+        c.text = "";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+        c.classType = Card.Class.Rogue;
+
+        c.MINION = true;
+
+        return c;
+    }
+    private static CardInfo PintSized_Summoner()
+    {
+        CardInfo c = new();
+
+        c.name = "Pint-Sized Summoner";
+        c.text = "";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+
+        c.MINION = true;
+
+        return c;
+    }
+    private static CardInfo River_Crocolisk()
+    {
+        CardInfo c = new();
+
+        c.name = "River Crocolisk";
+        c.text = "";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+
+        c.MINION = true;
+
+        return c;
+    }
+    private static CardInfo Scavenging_Hyena()
+    {
+        CardInfo c = new();
+
+        c.name = "Scavenging Hyena";
+        c.text = "";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+
+        c.classType = Card.Class.Hunter;
+        c.tribe = Card.Tribe.Beast;
+
+        c.MINION = true;
+
+        return c;
+    }
+    private static CardInfo Starving_Buzzard()
+    {
+        CardInfo c = new();
+
+        c.name = "Starving Buzzard";
+        c.text = "";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+
+        c.MINION = true;
+        c.classType = Card.Class.Hunter;
+        c.tribe = Card.Tribe.Beast;
+
+        return c;
+    }
+    private static CardInfo Echoing_Ooze()
+    {
+        CardInfo c = new();
+
+        c.name = "Echoing Ooze";
+        c.text = "";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+
+        c.MINION = true;
+
+        return c;
+    }
+    private static CardInfo Nerubar_Weblord()
+    {
+        CardInfo c = new();
+
+        c.name = "Nerub'ar Weblord";
+        c.text = "";
+
+        c.manaCost = 2;
+        c.damage = 1;
+        c.health = 4;
+
+        c.MINION = true;
+
+        return c;
+    }
 
 }

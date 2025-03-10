@@ -80,32 +80,32 @@ Auchenai_Soulpriest,     -- DONE
 Cabal_Shadow_Priest,     -- DONE
 Lightbomb,               -- DONE
 
-Piloted Shredder,        -- NO
+Piloted Shredder,        -- DONE
 
-Annoy-o-Tron             -- NO
-Anodized Robo Cub        -- NO
-Explosive Sheep          -- NO
-Gilbin Stalker           -- NO
-Goblin Auto-Barber       -- NO
-Micro Machine            -- NO
-Mechwarper               -- NO
-One-eyed Cheat           -- NO
-Puddlestomper            -- NO
-Queen of Pain            -- NO
-Recombobulator           -- NO
-Shadowboxer              -- NO
-Shielded Minibot         -- NO
-Ship's Cannon            -- NO
-Shrinkmeister            -- NO
-Snowchugger              -- NO
-Steamwheedle Sniper      -- NO
-Stonesplinter Trogg      -- NO
-Vitality Totem           -- NO
-Whirling Zap-o-matic     -- NO
-Argent Protected         -- NO
-Bloodfen Raptor          -- NO
-Bloodsail Raider         -- NO
-Bluegill Warrior         -- NO
+Annoy-o-Tron             -- DONE
+Anodized Robo Cub        -- DONE
+Explosive Sheep          -- DONE
+Gilbin Stalker           -- DONE
+Goblin Auto-Barber       -- DONE
+Micro Machine            -- DONE
+Mechwarper               -- DONE
+One-eyed Cheat           -- DONE
+Puddlestomper            -- DONE
+Queen of Pain            -- DONE
+Recombobulator           -- DONE [NOT REALLY]
+Shadowboxer              -- DONE
+Shielded Minibot         -- DONE
+Ship's Cannon            -- DONE
+Shrinkmeister            -- DONE
+Snowchugger              -- DONE
+Steamwheedle Sniper      -- DONE [NOT REALLY]
+Stonesplinter Trogg      -- DONE
+Vitality Totem           -- DONE
+Whirling Zap-o-matic     -- DONE
+Argent Protected         -- DONE
+Bloodfen Raptor          -- DONE
+Bloodsail Raider         -- DONE
+Bluegill Warrior         -- DONE
 Captain's Parrot         -- NO
 Defias Ringleader        -- NO
 Faerie Dragon            -- NO
@@ -125,6 +125,8 @@ Pint-Sized Summoner      -- NO
 River Crocolisk          -- NO
 Scavenging Hyena         -- NO
 Starving Buzzard         -- NO
+Echoing Ooze             -- NO
+Nerub'ar Weblord         -- NO
 
 ===============================================
 =====================DONE======================

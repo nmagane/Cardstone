@@ -335,4 +335,22 @@
         return c;
     }
 
+    private static CardInfo Queen_of_Pain()
+    {
+        CardInfo c = new();
+
+        c.name = "Queen of Pain";
+        c.text = "Lifesteal.";
+
+        c.manaCost = 2;
+        c.damage = 1;
+        c.health = 4;
+
+        c.MINION = true;
+        c.classType = Card.Class.Warlock;
+        c.auras.Add(Aura.Type.Lifesteal);
+
+        return c;
+    }
+
 }

@@ -289,4 +289,24 @@ public partial class Database
         c.auras.Add(Aura.Type.Sorcerers_Apprentice);
         return c;
     }
+
+    private static CardInfo Snowchugger()
+    {
+        CardInfo c = new();
+
+        c.name = "Snowchugger";
+        c.text = "Freeze any character damaged by this minion";
+
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 3;
+        c.tribe = Card.Tribe.Mech;
+        c.classType = Card.Class.Mage;
+
+        c.auras.Add(Aura.Type.Frostbite);
+
+        c.MINION = true;
+
+        return c;
+    }
 }

@@ -52,6 +52,26 @@
 
         return c;
     }
+    private static CardInfo Shadowboxer()
+    {
+        CardInfo c = new();
+
+        c.name = "Shadowboxer";
+        c.text = "Whenever a character is healed, deal 1 damage to a random enemy";
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 1;
+
+        c.MINION = true;
+        c.classType = Card.Class.Priest;
+        c.tribe = Card.Tribe.Mech;
+
+        c.triggers.Add((Trigger.Type.OnMinionHealed, Trigger.Side.Both, Trigger.Ability.KnifeJuggler));
+        c.triggers.Add((Trigger.Type.OnFaceHealed, Trigger.Side.Both, Trigger.Ability.KnifeJuggler));
+
+        return c;
+    }
     static CardInfo Circle_of_Healing()
     {
         CardInfo c = new();
@@ -344,6 +364,24 @@
         c.BATTLECRY = true;
         c.TARGETED = true;
         c.eligibleTargets = Board.EligibleTargets.Cabal_Shadow_Priest;
+
+        return c;
+    }
+    private static CardInfo Shrinkmeister()
+    {
+        CardInfo c = new();
+
+        c.name = "Shrinkmeister";
+        c.text = "Battlecry: Give a minion -3 Attack this turn.";
+
+        c.manaCost = 2;
+        c.damage = 3;
+        c.health = 2;
+        c.classType = Card.Class.Priest;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+        c.eligibleTargets = Board.EligibleTargets.AllMinions;
 
         return c;
     }

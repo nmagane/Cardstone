@@ -331,4 +331,11 @@ public partial class Server
     {
         Damage(spell.minion, 4, spell);
     }
+    void Bloodsail_Raider(CastInfo spell)
+    {
+        if (spell.player.weapon!=null)
+        {
+            AddAura(spell.match, spell.minion, new Aura(Aura.Type.Damage, spell.player.weapon.damage));
+        }
+    }
 }

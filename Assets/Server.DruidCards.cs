@@ -292,4 +292,16 @@ public partial class Server
         }
         spell.match.midPhase = false;
     }
+
+    void Anodized_Robo_Cub(CastInfo spell)
+    {
+        if (spell.choice == 0)
+        {
+            AddAura(spell.match, spell.minion, new Aura(Aura.Type.Damage, 1));
+        }
+        if (spell.choice == 1)
+        {
+            AddAura(spell.match, spell.minion, new Aura(Aura.Type.Health, 1));
+        }
+    }
 }

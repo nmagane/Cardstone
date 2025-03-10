@@ -261,4 +261,40 @@ public partial class Database
 
         return c;
     }
+    private static CardInfo Goblin_Auto_Barber()
+    {
+        CardInfo c = new();
+
+        c.name = "Goblin Auto-Barber";
+        c.text = "Battlecry: Give your weapon +1 Attack.";
+
+        c.manaCost = 2;
+        c.damage = 3;
+        c.health = 2;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+        c.classType = Card.Class.Rogue;
+        c.tribe = Card.Tribe.Mech;
+
+        return c;
+    }
+    private static CardInfo One_eyed_Cheat()
+    {
+        CardInfo c = new();
+
+        c.name = "One-eyed Cheat";
+        c.text = "Whenever you summon a pirate, gain Stealth.";
+
+        c.manaCost = 2;
+        c.damage = 4;
+        c.health = 1;
+
+        c.tribe = Card.Tribe.Pirate;
+        c.MINION = true;
+        c.triggers.Add((Trigger.Type.OnPlayMinion, Trigger.Side.Friendly, Trigger.Ability.One_Eyed_Cheat));
+        c.triggers.Add((Trigger.Type.AfterSummonMinion, Trigger.Side.Friendly, Trigger.Ability.One_Eyed_Cheat));
+
+        return c;
+    }
 }

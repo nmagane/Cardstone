@@ -739,4 +739,52 @@ public partial class Database
 
         return c;
     }
+
+    private static CardInfo Anodized_Robo_Cub()
+    {
+        CardInfo c = new();
+
+        c.name = "Anodized Robo Cub";
+        c.text = "Taunt. Choose one: +1 Attack; or +1 Health.";
+
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 2;
+        c.classType = Card.Class.Druid;
+
+        c.MINION = true;
+        c.BATTLECRY = true;
+        c.choices = new List<Card.Cardname>() { Card.Cardname.Ancient_of_War_Attack, Card.Cardname.Anodized_Robo_Cub_Health };
+        c.tribe = Card.Tribe.Mech;
+
+        c.auras.Add(Aura.Type.Taunt);
+
+        return c;
+    }
+    private static CardInfo Anodized_Robo_Cub_Attack()
+    {
+        CardInfo c = new();
+
+        c.name = "Attack mode";
+        c.text = "+1 Attack.";
+        c.classType = Card.Class.Druid;
+
+        c.SPELL = true;
+        c.TOKEN = true;
+
+        return c;
+    }
+    private static CardInfo Anodized_Robo_Cub_Health()
+    {
+        CardInfo c = new();
+
+        c.name = "Tank mode";
+        c.text = "+1 Health.";
+        c.classType = Card.Class.Druid;
+
+        c.SPELL = true;
+        c.TOKEN = true;
+
+        return c;
+    }
 }

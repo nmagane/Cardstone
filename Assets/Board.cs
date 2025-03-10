@@ -927,8 +927,14 @@ public partial class Board : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
-            currHand.OrderInds();
+            string s = "";
+            for (int i=(int)Card.Cardname.Piloted_Shredder;i<(int)Card.Cardname._COUNT;i++)
+            {
+                s += $"    private static CardInfo {(Card.Cardname)i}()\r\n    {{\r\n        CardInfo c = new();\r\n\r\n        c.name = \"{((Card.Cardname)i).ToString().Replace("_"," ")}\";\r\n        c.text = \"\";\r\n\r\n        c.manaCost = 1;\r\n        c.damage = 1;\r\n        c.health = 1;\r\n\r\n        c.MINION = true;\r\n\r\n        return c;\r\n    }}";
+            }
+            Debug.Log(s);
         }
+
 #endif //END TESTING HOTKEYS
     }
     void Tester(Server.CustomMessage m)

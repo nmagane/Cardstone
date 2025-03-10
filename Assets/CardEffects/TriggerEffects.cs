@@ -201,7 +201,6 @@ public class TriggerEffects
         }
         else if (trigger.minion.card == Card.Cardname.Wild_Pyromancer)
         {
-
             var anim = new AnimationInfo(Card.Cardname.Unstable_Ghoul, trigger.player,trigger.minion,trigger.player.opponent);
         }
         else 
@@ -390,5 +389,57 @@ public class TriggerEffects
             match.server.SummonToken(match,p,m);
         }
     }
+    public static void Piloted_Shredder(Match match, Minion minion)
+    {
+        match.server.SummonToken(match, match.FindOwner(minion), Board.RandElem(match.server.Two_Mana_Minions), minion.index);
+    }
 
+    public static void Explosive_Sheep(Match match, Trigger trigger)
+    {
+        var anim = new AnimationInfo(Card.Cardname.Unstable_Ghoul, trigger.player);
+
+        MinionBoard b = trigger.minion.player.board;
+        MinionBoard b2 = trigger.minion.player.opponent.board;
+        foreach (Minion m in b)
+        {
+            if (m == trigger.minion) continue;
+            match.server.DamageMinion(match, m, 2, trigger.minion.player);
+        }
+        foreach (Minion m in b2)
+        {
+            if (m == trigger.minion) continue;
+            match.server.DamageMinion(match, m, 2, trigger.minion.player);
+        }
+    }
+
+    internal static void One_Eyed_Cheat(Match match, Trigger trigger)
+    {
+        match.server.AddAura(match, trigger.minion, new Aura(Aura.Type.Stealth));
+    }
+
+    internal static void Ships_Cannon(Match match, Trigger trigger)
+    {
+        Minion minion = trigger.minion;
+        int damage = 2;
+        Player opponent = match.FindOpponent(minion);
+        int tar = Random.Range(-1, opponent.board.Count());
+
+        if (tar != -1)
+        {
+            while (opponent.board[tar].health <= 0 || opponent.board[tar].DEAD)
+            {
+                tar = Random.Range(-1, opponent.board.Count());
+                if (tar == -1) break;
+            }
+        }
+
+        if (tar == -1)
+        {
+            AnimationInfo animFace = new AnimationInfo(Card.Cardname.Big_Game_Hunter, minion.player, minion, opponent);
+            match.server.DamageFace(match, opponent, damage, minion.player);
+            return;
+        }
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Big_Game_Hunter, minion.player, minion, opponent.board[tar]);
+        match.server.DamageMinion(match, opponent.board[tar], damage, minion.player);
+    }
 }

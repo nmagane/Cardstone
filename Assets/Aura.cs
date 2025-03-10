@@ -47,6 +47,11 @@ public class Aura
         Grommash,
         Auchenai_Soulpriest,
         AUCH_PLAYER_BUFF,
+
+        Mechwarper,
+        Lifesteal,
+        Frostbite,
+        Poisonous,
     }
 
     public Type type = Type.Health;
@@ -182,6 +187,9 @@ public class Aura
                 break;
             case Type.Auchenai_Soulpriest:
                 AuraEffects.Auchenai_Soulpriest(match, minion, this);
+                break;
+            case Type.Mechwarper:
+                AuraEffects.Mechwarper(match, minion, this);
                 break;
         }
     }

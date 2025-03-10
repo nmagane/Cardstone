@@ -261,6 +261,8 @@ public partial class Server
 
             ConsumeAttackCharge(attack.attacker);
             DamageFace(match, targetPlayer, attack.attacker.damage,attack.attacker.player);
+            if (attack.attacker.HasAura(Aura.Type.Lifesteal)) HealFace(match, attack.attacker.player, attack.attacker.damage, attack.attacker.player);
+            if (attack.attacker.HasAura(Aura.Type.Frostbite)) targetPlayer.AddAura(new Aura(Aura.Type.Freeze));
             return true;
         }
 
@@ -285,13 +287,24 @@ public partial class Server
             //Face to Minion
             ConsumeAttackCharge(action.player);
             DamageMinion(match, attack.target, action.player.damage, action.player);
-            DamageFace(match, action.player, attack.target.damage, attack.target.player);
+            DamageFace(match, action.player, attack.target.damage, attack.target.player); 
+            if (attack.target.HasAura(Aura.Type.Lifesteal)) HealFace(match, attack.target.player, attack.target.damage, attack.target.player);
+
+            if (attack.target.HasAura(Aura.Type.Frostbite)) action.player.AddAura(new Aura(Aura.Type.Freeze));
             return true;
         }
         //Minion to minion
         ConsumeAttackCharge(attack.attacker);
         DamageMinion(match, attack.target, attack.attacker.damage, attack.attacker.player);
         DamageMinion(match, attack.attacker, attack.target.damage, attack.target.player);
+        if (attack.attacker.HasAura(Aura.Type.Lifesteal)) HealFace(match, attack.attacker.player, attack.attacker.damage, attack.attacker.player);
+        if (attack.target.HasAura(Aura.Type.Lifesteal)) HealFace(match, attack.target.player, attack.target.damage, attack.target.player);
+
+        if (attack.attacker.HasAura(Aura.Type.Poisonous)) attack.target.DEAD = true;
+        if (attack.target.HasAura(Aura.Type.Poisonous)) attack.attacker.DEAD = true;
+
+        if (attack.attacker.HasAura(Aura.Type.Frostbite)) AddAura(match, attack.target, new Aura(Aura.Type.Freeze));
+        if (attack.target.HasAura(Aura.Type.Frostbite)) AddAura(match, attack.attacker, new Aura(Aura.Type.Freeze));
         return true;
     }
     public void CastSpell(CastInfo spell)
@@ -686,6 +699,21 @@ public partial class Server
                 break;
             case Card.Cardname.Injured_Blademaster:
                 Injured_Blademaster(spell);
+                break;
+            case Card.Cardname.Anodized_Robo_Cub:
+                Anodized_Robo_Cub(spell);
+                break;
+            case Card.Cardname.Goblin_Auto_Barber:
+                Goblin_Auto_Barber(spell);
+                break;
+            case Card.Cardname.Shrinkmeister:
+                Shrinkmeister(spell);
+                break;
+            case Card.Cardname.Argent_Protector:
+                Argent_Protector(spell);
+                break;
+            case Card.Cardname.Bloodsail_Raider:
+                Bloodsail_Raider(spell);
                 break;
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);

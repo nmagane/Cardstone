@@ -124,5 +124,8 @@ public partial class Server
         Card.Cardname c = Board.RandElem(spell.player.graveyard);
         SummonToken(spell.match, spell.player, c);
     }
-
+    private void Shrinkmeister(CastInfo spell)
+    {
+        AddAura(spell.match, spell.targetMinion, new Aura(Aura.Type.Damage, -3, true));
+    }
 }
