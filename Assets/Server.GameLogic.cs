@@ -724,6 +724,12 @@ public partial class Server
             case Card.Cardname.Defias_Ringleader:
                 Defias_Ringleader(spell);
                 break;
+            case Card.Cardname.Mad_Bomber:
+                Mad_Bomber(spell);
+                break;
+            case Card.Cardname.Murloc_Tidehunter:
+                Murloc_Tidehunter(spell);
+                break;
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);
                 break;

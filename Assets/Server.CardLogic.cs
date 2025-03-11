@@ -347,17 +347,75 @@ public partial class Server
         {
             if (Database.GetCardData(c).tribe==Card.Tribe.Pirate)
             {
-                if (p.HasSecret(c) == false)
-                {
-                    card = c;
-                    break;
-                }
+                card = c;
+                break;
             }
         }
         if (card != Card.Cardname.Cardback)
         {
             p.deck.Remove(card);
-            AddCard(spell.match, spell.player, card);
+            if (spell.player.hand.Count() < 10) AddCard(spell.match, spell.player, card);
+            else
+            {
+                p.deck.Insert(0, card);
+                MillCard(spell.match,spell.player);
+            }
+
         }
+    }
+
+    public void Mad_Bomber(CastInfo spell)
+    {
+        List<Minion> minions = new List<Minion>();
+        minions.AddRange(spell.player.board.minions);
+        minions.AddRange(spell.player.opponent.board.minions);
+        minions.Add(spell.player.sentinel);
+        minions.Add(spell.player.opponent.sentinel);
+
+        minions.Remove(spell.minion); //cant hit self
+
+        spell.match.midPhase = true;
+
+        for (int i = 0; i < 3; i++)
+        {
+            minions = new List<Minion>();
+            minions.AddRange(spell.player.board.minions);
+            minions.AddRange(spell.player.opponent.board.minions);
+            minions.Add(spell.player.sentinel);
+            minions.Add(spell.player.opponent.sentinel);
+            
+            minions.Remove(spell.minion); //cant hit self
+
+            List<Minion> removes = new List<Minion>();
+            foreach (Minion x in minions)
+            {
+                if ((x.player.sentinel!=x && (x.DEAD || x.health <= 0)) || (x.player.sentinel == x && x.player.health <= 0))
+                    removes.Add(x);
+            }
+            foreach (Minion x in removes)
+                minions.Remove(x);
+
+            Minion m = Board.RandElem(minions);
+            
+            if (m.player.sentinel == m)
+            {
+                var animFace = new AnimationInfo(Card.Cardname.Boom_Bot, spell.player, spell.minion, m.player);
+                Damage(m.player, 1, spell);
+            }
+            else
+            {
+                var anim = new AnimationInfo(Card.Cardname.Boom_Bot, spell.player, spell.minion, m);
+                Damage(m, 1, spell);
+            }
+
+            spell.match.ResolveTriggerQueue(ref spell);
+        }
+
+        spell.match.midPhase = false;
+    }
+
+    void Murloc_Tidehunter(CastInfo spell)
+    {
+        SummonToken(spell.match, spell.player, Card.Cardname.Murloc_Scout, spell.minion.index + 1);
     }
 }

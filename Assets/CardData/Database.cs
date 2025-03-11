@@ -697,7 +697,7 @@ public partial class Database
                 return Nat_Pagle();
             case Card.Cardname.Patient_Assassin:
                 return Patient_Assassin();
-            case Card.Cardname.PintSized_Summoner:
+            case Card.Cardname.Pint_Sized_Summoner:
                 return PintSized_Summoner();
             case Card.Cardname.River_Crocolisk:
                 return River_Crocolisk();
@@ -2411,7 +2411,7 @@ public partial class Database
         CardInfo c = new();
 
         c.name = "Frostwolf Grunt";
-        c.text = "Taunt";
+        c.text = "Taunt.";
 
         c.manaCost = 2;
         c.damage = 2;
@@ -2422,28 +2422,13 @@ public partial class Database
         c.auras.Add(Aura.Type.Taunt);
         return c;
     }
-    private static CardInfo Lightwell()
-    {
-        CardInfo c = new();
 
-        c.name = "Lightwell";
-        c.text = "";
-
-        c.manaCost = 1;
-        c.damage = 1;
-        c.health = 1;
-        c.classType = Card.Class.Priest;
-
-        c.MINION = true;
-
-        return c;
-    }
     private static CardInfo Lorewalker_Cho()
     {
         CardInfo c = new();
 
         c.name = "Lorewalker Cho";
-        c.text = "";
+        c.text = "Whenever a player casts a spell, add it to the other's hand.";
 
         c.manaCost = 2;
         c.damage = 0;
@@ -2452,6 +2437,8 @@ public partial class Database
         c.MINION = true;
         c.LEGENDARY = true;
 
+        c.triggers.Add((Trigger.Type.OnPlaySpell, Trigger.Side.Both, Trigger.Ability.Lorewalker_Cho));
+
         return c;
     }
     private static CardInfo Mad_Bomber()
@@ -2459,7 +2446,7 @@ public partial class Database
         CardInfo c = new();
 
         c.name = "Mad Bomber";
-        c.text = "";
+        c.text = "Battlecry: Deal 1 damage to a random character. Repeat 3 times.";
 
         c.manaCost = 2;
         c.damage = 3;
@@ -2475,13 +2462,14 @@ public partial class Database
         CardInfo c = new();
 
         c.name = "Mana Addict";
-        c.text = "";
+        c.text = "Whenever you cast a spell, gain +2 attack this turn.";
 
         c.manaCost = 2;
         c.damage = 1;
         c.health = 3;
 
         c.MINION = true;
+        c.triggers.Add((Trigger.Type.OnPlaySpell, Trigger.Side.Friendly, Trigger.Ability.Mana_Addict));
 
         return c;
     }
@@ -2490,13 +2478,14 @@ public partial class Database
         CardInfo c = new();
 
         c.name = "Master Swordsmith";
-        c.text = "";
+        c.text = "End of your turn: Give a random friendly minion +1 Attack.";
 
         c.manaCost = 2;
         c.damage = 1;
         c.health = 3;
 
         c.MINION = true;
+        c.triggers.Add((Trigger.Type.EndTurn, Trigger.Side.Friendly, Trigger.Ability.Master_Swordsmith));
 
         return c;
     }
@@ -2505,13 +2494,15 @@ public partial class Database
         CardInfo c = new();
 
         c.name = "Murloc Tidehunter";
-        c.text = "";
+        c.text = "Battlecry: Summon a 1/1 Murloc Scout";
 
         c.manaCost = 2;
         c.damage = 2;
         c.health = 1;
+        c.tribe = Card.Tribe.Murloc;
 
         c.MINION = true;
+        c.BATTLECRY = true;
 
         return c;
     }
@@ -2525,8 +2516,10 @@ public partial class Database
         c.manaCost = 1;
         c.damage = 1;
         c.health = 1;
+        c.tribe = Card.Tribe.Murloc;
 
         c.MINION = true;
+        c.TOKEN = true;
 
         return c;
     }
@@ -2535,7 +2528,7 @@ public partial class Database
         CardInfo c = new();
 
         c.name = "Nat Pagle";
-        c.text = "";
+        c.text = "Start of turn: 50% chance to draw a card.";
 
         c.manaCost = 2;
         c.damage = 0;
@@ -2543,6 +2536,8 @@ public partial class Database
 
         c.MINION = true;
         c.LEGENDARY = true;
+
+        c.triggers.Add((Trigger.Type.StartTurn, Trigger.Side.Friendly, Trigger.Ability.Nat_Pagle));
 
         return c;
     }
@@ -2554,9 +2549,9 @@ public partial class Database
         c.name = "Pint-Sized Summoner";
         c.text = "";
 
-        c.manaCost = 1;
-        c.damage = 1;
-        c.health = 1;
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 2;
 
         c.MINION = true;
 
@@ -2582,16 +2577,17 @@ public partial class Database
         CardInfo c = new();
 
         c.name = "Scavenging Hyena";
-        c.text = "";
+        c.text = "Whenever a friendly beast dies, gain +2/+1";
 
-        c.manaCost = 1;
-        c.damage = 1;
-        c.health = 1;
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 2;
 
         c.classType = Card.Class.Hunter;
         c.tribe = Card.Tribe.Beast;
 
         c.MINION = true;
+        c.triggers.Add((Trigger.Type.OnMinionDeath, Trigger.Side.Friendly, Trigger.Ability.Scavenging_Hyena));
 
         return c;
     }
@@ -2602,8 +2598,8 @@ public partial class Database
         c.name = "Starving Buzzard";
         c.text = "";
 
-        c.manaCost = 1;
-        c.damage = 1;
+        c.manaCost = 2;
+        c.damage = 2;
         c.health = 1;
 
         c.MINION = true;
@@ -2621,7 +2617,7 @@ public partial class Database
 
         c.manaCost = 1;
         c.damage = 1;
-        c.health = 1;
+        c.health = 2;
 
         c.MINION = true;
 

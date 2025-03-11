@@ -115,7 +115,7 @@ public partial class Board
         foreach (var c in currHand.cardObjects)
         {
             if (c.Value.card.manaCost > currMana) continue;
-            if (c.Value.card.SPELL && c.Value.card.TARGETED && ValidTargetsAvailable(c.Value.card.eligibleTargets) == false) continue;
+            if (c.Value.card.SPELL && c.Value.card.TARGETED && ValidTargetsAvailable(c.Value.card.eligibleTargets,true) == false) continue;
             if (c.Value.card.eligibleTargets == EligibleTargets.Weapon && currHero.weapon == null) continue;
             if (c.Value.card.MINION && currMinions.Count() >= 7) continue;
             if (c.Value.card.SECRET && currHero.HasSecret(c.Value.card.card)) continue;

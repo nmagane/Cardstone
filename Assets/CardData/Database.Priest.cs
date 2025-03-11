@@ -385,4 +385,20 @@
 
         return c;
     }
+    private static CardInfo Lightwell()
+    {
+        CardInfo c = new();
+
+        c.name = "Lightwell";
+        c.text = "Start of turn: Restore 3 Health to a damaged friendly character.";
+
+        c.manaCost = 2;
+        c.damage = 0;
+        c.health = 5;
+        c.classType = Card.Class.Priest;
+
+        c.MINION = true;
+
+        return c;
+    }
 }

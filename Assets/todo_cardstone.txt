@@ -116,7 +116,7 @@ Lightwell                -- NO
 Lorewalker Cho           -- NO
 Mad Bomber               -- NO
 Mana Addict              -- NO
-Master Swordsmith        -- NO
+Master Swordsmith        -- DONE
 Murloc Tidehunter        -- NO
 1/1 Murloc Scout Tokens  -- NO
 Nat Palge                -- NO

@@ -52,6 +52,20 @@ public class TriggerEffects
 
         match.server.AddAura(match, m, new Aura(Aura.Type.Health, 1));
     }
+    public static void Master_Swordsmith(Match match, Minion minion)
+    {
+        Player p = match.FindOwner(minion);
+
+        //Skip trigger if no targets available
+        if (p.board.Count() == 0) return;
+        if (p.board.Count() == 1 && p.board[0] == minion) return;
+
+        Minion m = p.board[Random.Range(0, p.board.Count())];
+        //Cant target self
+        while (m == minion) m = p.board[Random.Range(0, p.board.Count())];
+
+        match.server.AddAura(match, m, new Aura(Aura.Type.Damage, 1));
+    }
 
     public static void HarvestGolem(Match match, Minion minion)
     {
@@ -126,6 +140,13 @@ public class TriggerEffects
         if (spell.minion.damage <= 3)
         {
             spell.match.server.AddAura(spell.match, spell.minion, new Aura(Aura.Type.Charge));
+        }
+    }
+    public static void Starving_Buzzard(Match match, Trigger trigger, CastInfo spell)
+    {
+        if (Database.GetCardData(spell.minion.card).tribe==Card.Tribe.Beast)
+        {
+            match.server.Draw(trigger.player);
         }
     }
     public static void Grim_Patron(Match match, Trigger trigger, CastInfo spell)
@@ -224,6 +245,11 @@ public class TriggerEffects
         Minion minion = trigger.minion;
         match.server.AddAura(match, minion, new Aura(Aura.Type.Damage, 1));
     }
+    public static void Mana_Addict(Match match, Trigger trigger)
+    {
+        Minion minion = trigger.minion;
+        match.server.AddAura(match, minion, new Aura(Aura.Type.Damage, 2,temp:true));
+    }
     public static void Doomsayer(Match match, Trigger trigger, CastInfo spell)
     {
         MinionBoard b = trigger.minion.player.board;
@@ -303,6 +329,11 @@ public class TriggerEffects
     {
         match.server.AddAura(match, trigger.minion, new Aura(Aura.Type.Health, 1, false, false, null, Card.Cardname.Shade_of_Naxxrammas));
         match.server.AddAura(match, trigger.minion, new Aura(Aura.Type.Damage, 1, false, false, null, Card.Cardname.Shade_of_Naxxrammas));
+    }
+    public static void Scavenging_Hyena(Match match, Trigger trigger, CastInfo spell)
+    {
+        match.server.AddAura(match, trigger.minion, new Aura(Aura.Type.Health, 1, false, false, null, Card.Cardname.Shade_of_Naxxrammas));
+        match.server.AddAura(match, trigger.minion, new Aura(Aura.Type.Damage, 2, false, false, null, Card.Cardname.Shade_of_Naxxrammas));
     }
 
     public static void Sylvanas_Windrunner(Match match, Trigger trigger)
@@ -420,6 +451,10 @@ public class TriggerEffects
     {
         match.server.HealFace(match, trigger.player, 4, trigger.player);
     }
+    internal static void Lorewalker_Cho(Match match, Trigger trigger, CastInfo spell)
+    {
+        match.server.AddCard(match, spell.player.opponent, spell.card.card,trigger.minion);
+    }
     internal static void Ships_Cannon(Match match, Trigger trigger)
     {
         Minion minion = trigger.minion;
@@ -444,5 +479,33 @@ public class TriggerEffects
         }
         AnimationInfo anim = new AnimationInfo(Card.Cardname.Big_Game_Hunter, minion.player, minion, opponent.board[tar]);
         match.server.DamageMinion(match, opponent.board[tar], damage, minion.player);
+    }
+    internal static void Nat_Pagle(Match match, Trigger trigger)
+    {
+        if (Board.RNG(50))
+        {
+            match.server.Draw(trigger.player);
+        }
+    }
+    internal static void Lightwell(Match match, Trigger trigger)
+    {
+        List<int> tars = new();
+        if (trigger.player.health < trigger.player.maxHealth)
+            tars.Add(-1);
+        foreach (Minion m in trigger.player.board)
+        {
+            if (m.health < m.maxHealth)
+                tars.Add(m.index);
+        }
+        if (tars.Count == 0) return;
+        int x = Board.RandElem(tars);
+        if (x==-1)
+        {
+            match.server.HealFace(match, trigger.player, 3, trigger.player);
+        }
+        else
+        {
+            match.server.HealMinion(match, trigger.player.board[x], 3, trigger.player);
+        }
     }
 }

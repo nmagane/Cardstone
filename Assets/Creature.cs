@@ -224,6 +224,7 @@ public class Creature : MonoBehaviour
     public void Highlight(bool target = false)
     {
         if (isElevated) return;
+        if (minion.ELUSIVE && (board.targetMode == Board.TargetMode.Spell || board.targetMode == Board.TargetMode.HeroPower)) return;
 
         if (tauntSprite.enabled)
             highlight.sprite = target? highlightTargetTaunt : highlightTaunt;

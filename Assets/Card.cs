@@ -327,7 +327,7 @@ public class Card : MonoBehaviour
         Recombobulator,
         Shadowboxer,
         Shielded_Minibot,
-        Ships_Cannon, Cannon,
+        Ships_Cannon,
         Shrinkmeister,
         Snowchugger,
         Steamwheedle_Sniper,
@@ -344,7 +344,7 @@ public class Card : MonoBehaviour
         Faerie_Dragon,
         Succubus,
         Flametongue_Totem,
-        Frostwolf_Grunt, Grunt,
+        Frostwolf_Grunt,
         Lightwell,
         Lorewalker_Cho,
         Mad_Bomber,
@@ -354,7 +354,7 @@ public class Card : MonoBehaviour
         Murloc_Scout,
         Nat_Pagle,
         Patient_Assassin,
-        PintSized_Summoner,
+        Pint_Sized_Summoner,
         River_Crocolisk,
         Scavenging_Hyena,
         Starving_Buzzard,
@@ -620,7 +620,7 @@ public class Card : MonoBehaviour
                 bool validTargetsExist = false;
                 foreach (Cardname minionChoice in choiceList)
                 {
-                    if (board.ValidTargetsAvailable(Database.GetCardData(minionChoice).eligibleTargets) == true)
+                    if (board.ValidTargetsAvailable(Database.GetCardData(minionChoice).eligibleTargets,card.SPELL) == true)
                     {
                         validTargetsExist = true;
                     }
@@ -667,7 +667,7 @@ public class Card : MonoBehaviour
 
             int position = FindMinionPosition();
             //TODO: VALID TARGET EXISTS CHECK
-            bool validTargetsExist = board.ValidTargetsAvailable(card.eligibleTargets);
+            bool validTargetsExist = board.ValidTargetsAvailable(card.eligibleTargets,card.SPELL);
             if (validTargetsExist)
             {
                 //EndPreview();
@@ -747,6 +747,7 @@ public class Card : MonoBehaviour
             {
                 board.StartTargetingCard(card, board.currMinions.previewMinion, x, info.eligibleTargets);
                 board.targetMode = Board.TargetMode.Battlecry;
+                board.CheckHighlights();
             }
             else
             {
@@ -835,7 +836,7 @@ public class Card : MonoBehaviour
 
         if (card.CHOOSE && card.TARGETED)
         {
-            if (board.ValidTargetsAvailable(card.eligibleTargets) == false)
+            if (board.ValidTargetsAvailable(card.eligibleTargets,card.SPELL) == false)
             {
                 EndPlay();
                 return;
@@ -845,7 +846,7 @@ public class Card : MonoBehaviour
         if ((card.CHOOSE==false) && (card.SPELL || card.SECRET || card.WEAPON) && (card.TARGETED || (card.COMBO && board.combo && card.COMBO_TARGETED)))
         {
             if (preview) return;
-            if (board.ValidTargetsAvailable(card.eligibleTargets) == false)
+            if (board.ValidTargetsAvailable(card.eligibleTargets,card.SPELL) == false)
             {
                 EndPlay();
                 return;

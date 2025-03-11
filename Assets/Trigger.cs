@@ -115,6 +115,11 @@ public class Trigger
         Explosive_Sheep,
         One_Eyed_Cheat,
         Ships_Cannon,
+        Master_Swordsmith,
+        Mana_Addict,
+        Lorewalker_Cho,
+        Nat_Pagle,
+        Scavenging_Hyena,
     }
     public enum Side
     {
@@ -128,6 +133,7 @@ public class Trigger
     public Side side;
     public Minion minion;
     public Secret secret;
+    public bool conditional = false;
     public Player player => minion.player;
     public Match match => minion.player.match;
 
@@ -149,6 +155,12 @@ public class Trigger
             case Type.OnMinionDeath:
                 //Does not trigger on self
                 if (minion == spell.minion) return false;
+                switch (ability)
+                {
+                    case Ability.Scavenging_Hyena:
+                        if (Database.GetCardData(spell.minion.card).tribe!=Card.Tribe.Beast) return false;
+                        break;
+                }
                 break;
             case Type.Deathrattle:
                 if (minion == spell.minion) return true;
@@ -286,6 +298,21 @@ public class Trigger
                 break;
             case Ability.Ships_Cannon:
                 TriggerEffects.Ships_Cannon(match, this);
+                break;
+            case Ability.Master_Swordsmith:
+                TriggerEffects.Master_Swordsmith(match, minion);
+                break;
+            case Ability.Mana_Addict:
+                TriggerEffects.Mana_Addict(match, this);
+                break;
+            case Ability.Lorewalker_Cho:
+                TriggerEffects.Lorewalker_Cho(match, this, spell);
+                break;
+            case Ability.Nat_Pagle:
+                TriggerEffects.Nat_Pagle(match, this);
+                break;
+            case Ability.Scavenging_Hyena:
+                TriggerEffects.Scavenging_Hyena(match, this, spell);
                 break;
             default:
                 Debug.LogError("MISSING TRIGGER ABILITY");

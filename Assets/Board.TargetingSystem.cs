@@ -123,6 +123,12 @@ public partial class Board
             Debug.Log("Invalid target");
             return;
         }
+        if (minion.ELUSIVE && (targetMode == Board.TargetMode.Spell || targetMode == Board.TargetMode.HeroPower))
+        {
+            Debug.Log("Invalid target");
+            return;
+        }
+
         switch (targetMode)
         {
             case TargetMode.Battlecry:
@@ -189,6 +195,7 @@ public partial class Board
         playingCard = card;
         if (target) StartTargetingCard(card.card,currMinions.previewMinion);
         targetMode = TargetMode.Battlecry;
+        CheckHighlights();
         return p;
     }
     public void StartTargetingAttack(Minion source)
@@ -363,8 +370,23 @@ public partial class Board
         return false;
     }
 
-    public bool ValidTargetsAvailable(EligibleTargets targets)
+    public bool ValidTargetsAvailable(EligibleTargets targets, bool SPELL)
     {
+        List<Minion> enemyMinions = new List<Minion>();
+        List<Minion> currMinions = new List<Minion>();
+
+        foreach (Minion m in this.enemyMinions)
+        {
+            if (m.STEALTH) continue;
+            if (SPELL && m.ELUSIVE) continue;
+            enemyMinions.Add(m);
+        }
+        foreach (Minion m in this.currMinions)
+        {
+            if (SPELL && m.ELUSIVE) continue;
+            currMinions.Add(m);
+        }
+
         switch (targets)
         {
             case EligibleTargets.Weapon:
