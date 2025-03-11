@@ -490,6 +490,18 @@ public partial class Server
             case Card.Cardname.Alexstrasza:
                 Alexstrasza(spell);
                 break;
+            case Card.Cardname.Arcane_Missiles:
+                Arcane_Missiles(spell);
+                break;
+            case Card.Cardname.Arcane_Explosion:
+                Arcane_Explosion(spell);
+                break;
+            case Card.Cardname.Mirror_Image:
+                Mirror_Image(spell);
+                break;
+            case Card.Cardname.Cone_of_Cold:
+                Cone_of_Cold(spell);
+                break;
             case Card.Cardname.Mortal_Coil:
                 Mortal_Coil(spell);
                 break;

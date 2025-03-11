@@ -337,6 +337,27 @@ public partial class Database
 
             case Card.Cardname.Mad_Scientist:
                 return Mad_Scientist();
+
+            case Card.Cardname.Arcane_Missiles:
+                return Arcane_Missiles();
+
+            case Card.Cardname.Arcane_Explosion:
+                return Arcane_Explosion();
+
+            case Card.Cardname.Mirror_Image:
+                return Mirror_Image();
+
+            case Card.Cardname.Mirror_Image_Token:
+                return Mirror_Image_Token();
+
+            case Card.Cardname.Cone_of_Cold:
+                return Cone_of_Cold();
+
+            case Card.Cardname.Mana_Wyrm:
+                return Mana_Wyrm();
+
+            case Card.Cardname.Ethereal_Arcanist:
+                return Ethereal_Arcanist();
                 
             case Card.Cardname.Mortal_Coil:
                 return Mortal_Coil();

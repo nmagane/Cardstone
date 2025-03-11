@@ -240,6 +240,22 @@ public class TriggerEffects
         }
     }
 
+    public static void Mana_Wyrm(Match match, Trigger trigger, CastInfo spell)
+    {
+        Minion minion = trigger.minion;
+        match.server.AddAura(match, minion, new Aura(Aura.Type.Damage, 1));
+    }
+
+    public static void Ethereal_Arcanist(Match match, Trigger trigger)
+    {
+        Minion minion = trigger.minion;
+        if (trigger.player.secrets.Count() > 0)
+        {
+            match.server.AddAura(match, minion, new Aura(Aura.Type.Damage, 2));
+            match.server.AddAura(match, minion, new Aura(Aura.Type.Health, 2));
+        }
+    }
+
     public static void Frothing_Berserker(Match match, Trigger trigger, CastInfo spell)
     {
         Minion minion = trigger.minion;

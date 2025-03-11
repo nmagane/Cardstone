@@ -124,6 +124,8 @@ public class Trigger
         Echoing_Ooze,
         Pint_Sized_Summoner,
         Pint_Sized_Exhaust,
+        Mana_Wyrm,
+        Ethereal_Arcanist
     }
     public enum Side
     {
@@ -246,6 +248,12 @@ public class Trigger
                 break;
             case Ability.Unstable_Ghoul:
                 TriggerEffects.Unstable_Ghoul(match, this, spell);
+                break;
+            case Ability.Mana_Wyrm:
+                TriggerEffects.Mana_Wyrm(match, this, spell);
+                break;
+            case Ability.Ethereal_Arcanist:
+                TriggerEffects.Ethereal_Arcanist(match, this);
                 break;
             case Ability.Frothing_Berserker:
                 TriggerEffects.Frothing_Berserker(match, this, spell);

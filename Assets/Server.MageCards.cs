@@ -121,4 +121,96 @@ public partial class Server
         }
 
     }
+
+    void Arcane_Missiles(CastInfo spell)
+    {
+        int damage = 3;
+        Player opp = spell.match.Opponent(spell.player);
+        List<Minion> targets = new List<Minion>();
+
+        spell.match.midPhase = true;
+        
+        for (int i = 0; i < damage; i++)
+        {
+            minions.AddRange(opp.board.minions);
+            minions.Add(opp.sentinel);
+
+            List<Minion> removes = new List<Minion>();
+            foreach (Minion x in minions)
+            {
+                if ((x.player.sentinel!=x && (x.DEAD || x.health <= 0)) || (x.player.sentinel == x && x.player.health <= 0))
+                    removes.Add(x);
+            }
+            foreach (Minion x in removes)
+                minions.Remove(x);
+
+            Minion m = Board.RandElem(minions);
+            
+            if (m.player.sentinel == m)
+            {
+                var animFace = new AnimationInfo(Card.Cardname.Boom_Bot, spell.player, spell.minion, m.player);
+                Damage(m.player, 1, spell);
+            }
+            else
+            {
+                var anim = new AnimationInfo(Card.Cardname.Boom_Bot, spell.player, spell.minion, m);
+                Damage(m, 1, spell);
+            }
+            
+            spell.match.ResolveTriggerQueue(ref spell);
+        }
+
+        spell.match.midPhase = false;
+    }
+
+    void Arcane_Explosion(CastInfo spell)
+    {
+        int damage = 1;
+        Player opp = spell.match.Opponent(spell.player);
+
+        // AnimationInfo anim = new AnimationInfo(Card.Cardname.Arcane_Explosion, spell.player);
+
+        foreach (var m in opp.board)
+        {
+            Damage(m, damage, spell);
+        }
+    }
+
+    void Mirror_Image(CastInfo spell)
+    {
+        spell.match.midPhase = true;
+        for (int i = 0; i < 2; i++)
+        {
+            if (spell.player.board.Count() >= 7) return;
+            spell.match.server.SummonToken(spell.match, spell.player.opponent, Card.Cardname.Mirror_Image_Token, spell.player.board.Count());
+        }
+        spell.match.midPhase = false;
+    }
+
+    void Cone_of_Cold(CastInfo spell)
+    {
+        int damage = 1;
+        Player opp = spell.match.Opponent(spell.player);
+
+        // AnimationInfo anim = new AnimationInfo(Card.Cardname.Cone_of_Cold, spell.player, spell);
+
+        Minion target = spell.GetTargetMinion();
+
+        if (target != null)
+        {
+            Damage(target, damage, spell);
+            spell.match.server.AddAura(spell.match, target, new Aura(Aura.Type.Freeze));
+
+            if (target.index > 0)
+            {
+                Damage(opp.board[target.index - 1], damage, spell);
+                spell.match.server.AddAura(spell.match, opp.board[target.index - 1], new Aura(Aura.Type.Freeze));
+            }
+            if (target.index < opp.board.Count - 1)
+            {
+                Damage(opp.board[target.index + 1], damage, spell);
+                spell.match.server.AddAura(spell.match, opp.board[target.index + 1], new Aura(Aura.Type.Freeze));
+            }
+        }
+    }
 }
