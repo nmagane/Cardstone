@@ -121,6 +121,9 @@ public class Trigger
         Nat_Pagle,
         Scavenging_Hyena,
         Starving_Buzzard,
+        Echoing_Ooze,
+        Pint_Sized_Summoner,
+        Pint_Sized_Exhaust,
     }
     public enum Side
     {
@@ -155,7 +158,15 @@ public class Trigger
             case Type.AfterPlaySpell:
             case Type.OnMinionDeath:
                 //Does not trigger on self
-                if (minion == spell.minion) return false;
+                switch (ability)
+                {
+                    case Ability.Pint_Sized_Exhaust:
+                        //this triggers on self play
+                        break;
+                    default:
+                        if (minion == spell.minion) return false;
+                        break;
+                }
                 switch (ability)
                 {
                     case Ability.Scavenging_Hyena:
@@ -317,6 +328,15 @@ public class Trigger
                 break;
             case Ability.Starving_Buzzard:
                 TriggerEffects.Starving_Buzzard(match, this, spell);
+                break;
+            case Ability.Echoing_Ooze:
+                TriggerEffects.Echoing_Ooze(match, this);
+                break;
+            case Ability.Pint_Sized_Exhaust:
+                TriggerEffects.Pint_Sized_Exhaust(match, minion);
+                break;
+            case Ability.Pint_Sized_Summoner:
+                TriggerEffects.Pint_Sized_Summoner(match, minion);
                 break;
             default:
                 Debug.LogError("MISSING TRIGGER ABILITY");

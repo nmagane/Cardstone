@@ -108,25 +108,25 @@ Bloodsail Raider         -- DONE
 Bluegill Warrior         -- DONE
 Captain's Parrot         -- DONE
 Defias Ringleader        -- DONE
-Faerie Dragon            -- NO
+Faerie Dragon            -- DONE
 Succubus                 -- DONE
 Flametongue Totem        -- DONE
 Frostwolf Grunt          -- DONE
-Lightwell                -- NO
-Lorewalker Cho           -- NO
-Mad Bomber               -- NO
-Mana Addict              -- NO
+Lightwell                -- DONE
+Lorewalker Cho           -- DONE
+Mad Bomber               -- DONE
+Mana Addict              -- DONE
 Master Swordsmith        -- DONE
-Murloc Tidehunter        -- NO
-1/1 Murloc Scout Tokens  -- NO
-Nat Palge                -- NO
+Murloc Tidehunter        -- DONE
+1/1 Murloc Scout Tokens  -- DONE
+Nat Palge                -- DONE
 Patient Assassin         -- DONE
-Pint-Sized Summoner      -- NO
+Pint-Sized Summoner      -- DONE
 River Crocolisk          -- DONE
-Scavenging Hyena         -- NO
-Starving Buzzard         -- NO
-Echoing Ooze             -- NO
-Nerub'ar Weblord         -- NO
+Scavenging Hyena         -- DONE
+Starving Buzzard         -- DONE
+Echoing Ooze             -- DONE
+Nerub'ar Weblord         -- DONE
 
 ===============================================
 =====================DONE======================

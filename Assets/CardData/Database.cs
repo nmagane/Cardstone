@@ -698,7 +698,7 @@ public partial class Database
             case Card.Cardname.Patient_Assassin:
                 return Patient_Assassin();
             case Card.Cardname.Pint_Sized_Summoner:
-                return PintSized_Summoner();
+                return Pint_Sized_Summoner();
             case Card.Cardname.River_Crocolisk:
                 return River_Crocolisk();
             case Card.Cardname.Scavenging_Hyena:
@@ -1406,6 +1406,7 @@ public partial class Database
         c.MINION = true;
         c.BATTLECRY = true;
         c.LEGENDARY = true;
+        c.tribe = Card.Tribe.Beast;
 
         return c;
     }
@@ -2545,18 +2546,21 @@ public partial class Database
         return c;
     }
 
-    private static CardInfo PintSized_Summoner()
+    private static CardInfo Pint_Sized_Summoner()
     {
         CardInfo c = new();
 
         c.name = "Pint-Sized Summoner";
-        c.text = "";
+        c.text = "The first minion you play each turn costs 1 less.";
 
         c.manaCost = 2;
         c.damage = 2;
         c.health = 2;
 
         c.MINION = true;
+        c.auras.Add(Aura.Type.Pint_Sized_Summoner);
+        c.triggers.Add((Trigger.Type.StartTurn, Trigger.Side.Friendly, Trigger.Ability.Pint_Sized_Summoner));
+        c.triggers.Add((Trigger.Type.OnPlayMinion, Trigger.Side.Friendly, Trigger.Ability.Pint_Sized_Exhaust));
 
         return c;
     }

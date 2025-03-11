@@ -730,6 +730,9 @@ public partial class Server
             case Card.Cardname.Murloc_Tidehunter:
                 Murloc_Tidehunter(spell);
                 break;
+            case Card.Cardname.Echoing_Ooze:
+                Echoing_Ooze(spell);
+                break;
             default:
                 Debug.LogError("MISSING SPELL " + spell.card.card);
                 break;

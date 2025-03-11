@@ -508,4 +508,30 @@ public class TriggerEffects
             match.server.HealMinion(match, trigger.player.board[x], 3, trigger.player);
         }
     }
+
+    public static void Echoing_Ooze(Match match, Trigger trigger)
+    {
+        match.server.RemoveTrigger(match, trigger.minion, trigger);
+        if (trigger.player.board.Count() >= 7) return;
+        Minion m = match.server.SummonToken(match, trigger.minion.player, Card.Cardname.Echoing_Ooze, trigger.minion.index+1);
+        if (m == null) return;
+        foreach (Aura a in trigger.minion.auras)
+            match.server.AddAura(match, m, new Aura(a.type, a.value, a.temporary, a.foreignSource, a.sourceAura, a.name));
+        foreach (Trigger t in trigger.minion.triggers)
+            match.server.AddTrigger(match, m, t.type, t.side, t.ability);
+
+        m.health = trigger.minion.health;
+        m.maxHealth = trigger.minion.maxHealth;
+        m.damage = trigger.minion.damage;
+        
+    }
+
+    public static void Pint_Sized_Exhaust(Match m, Minion minion)
+    {
+        m.server.RemoveAura(m,minion, minion.FindAura(Aura.Type.Pint_Sized_Summoner));
+    }
+    public static void Pint_Sized_Summoner(Match m, Minion minion)
+    {
+        m.server.AddAura(m, minion, new Aura(Aura.Type.Pint_Sized_Summoner,temp:true));
+    }
 }

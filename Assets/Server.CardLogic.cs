@@ -418,4 +418,8 @@ public partial class Server
     {
         SummonToken(spell.match, spell.player, Card.Cardname.Murloc_Scout, spell.minion.index + 1);
     }
+    void Echoing_Ooze(CastInfo spell)
+    {
+        AddTrigger(spell.match, spell.minion, Trigger.Type.EndTurn, Trigger.Side.Friendly, Trigger.Ability.Echoing_Ooze);
+    }
 }

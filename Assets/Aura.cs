@@ -54,6 +54,7 @@ public class Aura
         Poisonous,
         Elusive,
         Nerubar_Weblord,
+        Pint_Sized_Summoner,
     }
 
     public Type type = Type.Health;
@@ -195,6 +196,9 @@ public class Aura
                 break;
             case Type.Nerubar_Weblord:
                 AuraEffects.Nerubar_Weblord(match, minion, this);
+                break;
+            case Type.Pint_Sized_Summoner:
+                AuraEffects.Pint_Sized_Summoner(match, minion, this);
                 break;
         }
     }
