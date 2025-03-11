@@ -59,9 +59,9 @@
         c.name = "Shadowboxer";
         c.text = "Whenever a character is healed, deal 1 damage to a random enemy";
 
-        c.manaCost = 1;
-        c.damage = 1;
-        c.health = 1;
+        c.manaCost = 2;
+        c.damage = 2;
+        c.health = 3;
 
         c.MINION = true;
         c.classType = Card.Class.Priest;

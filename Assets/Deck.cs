@@ -25,6 +25,11 @@ public class Deck : MonoBehaviour
             cardIcon.enabled = false;
             countText.color = Board.GetColor("FA6A0A");
             bg.color = Board.GetColor("B4202A");
+
+            if (fatigueFrame.transform.localScale == Vector3.zero)
+            {
+                Board.Instance.animationManager.LerpZoom(fatigueFrame, Vector3.one * 0.67f, 5, 0.1f);
+            }
         }
         else if (count<=5)
         {

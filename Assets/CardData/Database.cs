@@ -1840,6 +1840,7 @@ public partial class Database
         c.manaCost = 7;
         c.damage = 9;
         c.health = 5;
+        c.tribe = Card.Tribe.Beast;
 
         c.MINION = true;
 
@@ -2152,7 +2153,7 @@ public partial class Database
         CardInfo c = new();
 
         c.name = "Piloted Shredder";
-        c.text = "Deathrattle: Summon a random 2-cost minion.";
+        c.text = "Deathrattle: Summon a random\n2-cost minion.";
 
         c.manaCost = 4;
         c.damage = 4;
