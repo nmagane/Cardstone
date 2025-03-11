@@ -53,6 +53,7 @@ public class Aura
         Frostbite,
         Poisonous,
         Elusive,
+        Nerubar_Weblord,
     }
 
     public Type type = Type.Health;
@@ -191,6 +192,9 @@ public class Aura
                 break;
             case Type.Mechwarper:
                 AuraEffects.Mechwarper(match, minion, this);
+                break;
+            case Type.Nerubar_Weblord:
+                AuraEffects.Nerubar_Weblord(match, minion, this);
                 break;
         }
     }

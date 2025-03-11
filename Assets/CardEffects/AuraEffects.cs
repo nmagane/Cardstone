@@ -174,4 +174,12 @@ public static class AuraEffects
             if (c.tribe==Card.Tribe.Mech)
                 match.server.AddCardAura(match, c, new Aura(Aura.Type.Cost, -1, false, true, aura));
     }
+    internal static void Nerubar_Weblord(Match match, Minion minion, Aura aura)
+    {
+        Player owner = match.FindOwner(minion);
+
+        foreach (HandCard c in owner.hand)
+            if (c.BATTLECRY)
+                match.server.AddCardAura(match, c, new Aura(Aura.Type.Cost, +1, false, true, aura));
+    }
 }

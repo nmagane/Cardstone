@@ -865,6 +865,7 @@ public partial class Database
         c.manaCost = 2;
         c.damage = 2;
         c.health = 2;
+        c.tribe = Card.Tribe.Beast;
 
         c.MINION = true;
         c.auras.Add(Aura.Type.DireWolfAlpha);
@@ -900,6 +901,7 @@ public partial class Database
         c.manaCost = 2;
         c.damage = 2;
         c.health = 1;
+        c.tribe = Card.Tribe.Beast;
 
         c.MINION = true;
         c.BATTLECRY = true;
@@ -1644,6 +1646,7 @@ public partial class Database
         c.health = 2;
 
         c.MINION = true;
+        c.tribe = Card.Tribe.Beast;
 
         c.triggers.Add((Trigger.Type.Deathrattle, Trigger.Side.Both, Trigger.Ability.Haunted_Creeper));
         return c;
@@ -2358,7 +2361,7 @@ public partial class Database
         CardInfo c = new();
 
         c.name = "Bluegill Warrior";
-        c.text = "Charge";
+        c.text = "Charge.";
 
         c.manaCost = 2;
         c.damage = 2;
@@ -2596,7 +2599,7 @@ public partial class Database
         CardInfo c = new();
 
         c.name = "Starving Buzzard";
-        c.text = "";
+        c.text = "Whenever you summon a beast, draw a card.";
 
         c.manaCost = 2;
         c.damage = 2;
@@ -2606,6 +2609,9 @@ public partial class Database
         c.classType = Card.Class.Hunter;
         c.tribe = Card.Tribe.Beast;
 
+        c.triggers.Add((Trigger.Type.OnPlayMinion, Trigger.Side.Friendly, Trigger.Ability.Starving_Buzzard));
+        c.triggers.Add((Trigger.Type.AfterSummonMinion, Trigger.Side.Friendly, Trigger.Ability.Starving_Buzzard));
+
         return c;
     }
     private static CardInfo Echoing_Ooze()
@@ -2613,13 +2619,14 @@ public partial class Database
         CardInfo c = new();
 
         c.name = "Echoing Ooze";
-        c.text = "";
+        c.text = "Battlecry: Summon an exact copy of this minion at end of turn.";
 
-        c.manaCost = 1;
+        c.manaCost = 2;
         c.damage = 1;
         c.health = 2;
 
         c.MINION = true;
+        c.BATTLECRY = true;
 
         return c;
     }
@@ -2628,13 +2635,14 @@ public partial class Database
         CardInfo c = new();
 
         c.name = "Nerub'ar Weblord";
-        c.text = "";
+        c.text = "All Battlecry minions cost 1 more.";
 
         c.manaCost = 2;
         c.damage = 1;
         c.health = 4;
 
         c.MINION = true;
+        c.auras.Add(Aura.Type.Nerubar_Weblord);
 
         return c;
     }

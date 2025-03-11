@@ -41,7 +41,7 @@
         CardInfo c = new();
 
         c.name = "Flametongue Totem";
-        c.text = "";
+        c.text = "Give adjacent minions +2 attack.";
 
         c.manaCost = 2;
         c.damage = 0;

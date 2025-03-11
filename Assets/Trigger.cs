@@ -120,6 +120,7 @@ public class Trigger
         Lorewalker_Cho,
         Nat_Pagle,
         Scavenging_Hyena,
+        Starving_Buzzard,
     }
     public enum Side
     {
@@ -313,6 +314,9 @@ public class Trigger
                 break;
             case Ability.Scavenging_Hyena:
                 TriggerEffects.Scavenging_Hyena(match, this, spell);
+                break;
+            case Ability.Starving_Buzzard:
+                TriggerEffects.Starving_Buzzard(match, this, spell);
                 break;
             default:
                 Debug.LogError("MISSING TRIGGER ABILITY");
