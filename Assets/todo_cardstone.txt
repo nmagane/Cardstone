@@ -80,35 +80,35 @@ Priest List:
        Lightbomb,                 -- NO
        Piloted_Shredder,          -- DONE
        Annoy_o_Tron,              -- DONE
-       Anodized_Robo_Cub,         -- NO
+       Anodized_Robo_Cub,         -- DONE
        Explosive_Sheep,           -- DONE
        Gilbin_Stalker,            -- DONE
-       Goblin_Auto_Barber,        -- NO
+       Goblin_Auto_Barber,        -- DONE
        Micro_Machine,             -- DONE
        Mechwarper,                -- DONE
-       One_eyed_Cheat,            -- NO
+       One_eyed_Cheat,            -- DONE
        Puddlestomper,             -- DONE
-       Queen_of_Pain,             -- NO
+       Queen_of_Pain,             -- DONE
        Recombobulator,            -- DONE
        Shadowboxer,               -- NO
-       Shielded_Minibot,          -- NO
+       Shielded_Minibot,          -- DONE
        Ships_Cannon,              -- DONE
        Shrinkmeister,             -- NO
-       Snowchugger,               -- NO
-       Steamwheedle_Sniper,       -- NO
+       Snowchugger,               -- DONE
+       Steamwheedle_Sniper,       -- DONE
        Stonesplinter_Trogg,       -- DONE
-       Vitality_Totem,            -- NO
-       Whirling_Zapomatic,        -- NO
-       Argent_Protector,          -- NO
+       Vitality_Totem,            -- DONE
+       Whirling_Zapomatic,        -- DONE
+       Argent_Protector,          -- DONE
        Bloodfen_Raptor,           -- DONE
        Bloodsail_Raider,          -- DONE
        Bluegill_Warrior,          -- DONE
        Captains_Parrot,           -- DONE
-       Defias_Ringleader,         -- NO
-       Defias_Bandit,             -- NO
+       Defias_Ringleader,         -- DONE
+       Defias_Bandit,             -- DONE
        Faerie_Dragon,             -- DONE
-       Succubus,                  -- NO
-       Flametongue_Totem,         -- NO
+       Succubus,                  -- DONE
+       Flametongue_Totem,         -- DONE
        Frostwolf_Grunt,           -- DONE
        Lightwell,                 -- NO
        Lorewalker_Cho,            -- DONE
@@ -118,11 +118,11 @@ Priest List:
        Murloc_Tidehunter,         -- DONE
        Murloc_Scout,              -- DONE
        Nat_Pagle,                 -- DONE
-       Patient_Assassin,          -- NO
+       Patient_Assassin,          -- DONE
        Pint_Sized_Summoner,       -- DONE
        River_Crocolisk,           -- DONE
-       Scavenging_Hyena,          -- NO
-       Starving_Buzzard,          -- NO
+       Scavenging_Hyena,          -- DONE
+       Starving_Buzzard,          -- DONE
        Echoing_Ooze,              -- DONE
        Nerubar_Weblord,           -- DONE
 
