@@ -309,4 +309,134 @@ public partial class Database
 
         return c;
     }
+
+    static CardInfo Arcane_Missiles()
+    {
+        CardInfo c = new();
+
+        c.name = "Arcane Missiles";
+        c.text = "Deal {0} damage randomly split among all enemies.";
+
+        c.classType = Card.Class.Mage;
+
+        c.manaCost = 1;
+        c.spellDamage = 3;
+
+        c.SPELL = true;
+        c.TARGETED = false;
+
+        return c;
+    }
+
+    static CardInfo Arcane_Explosion()
+    {
+        CardInfo c = new();
+
+        c.name = "Arcane Explosion";
+        c.text = "Deal {0} damage to all enemy minions.";
+
+        c.classType = Card.Class.Mage;
+
+        c.manaCost = 2;
+        c.spellDamage = 1;
+
+        c.SPELL = true;
+        c.TARGETED = false;
+
+        return c;
+    }
+
+    static CardInfo Mirror_Image()
+    {
+        CardInfo c = new();
+
+        c.name = "Mirror Image";
+        c.text = "Summon two 0/2 minions with Taunt.";
+
+        c.classType = Card.Class.Mage;
+
+        c.SPELL = true;
+        c.TARGETED = false;
+
+        return c;
+    }
+
+    static CardInfo Mirror_Image_Token()
+    {
+        CardInfo c = new();
+
+        c.name = "Mirror Image";
+        c.text = "Taunt";
+
+        c.classType = Card.Class.Mage;
+
+        c.manaCost = 0;
+        c.damage = 0;
+        c.health = 2;
+
+        c.MINION = true;
+        c.TOKEN = true;
+
+        c.auras.Add(Aura.Type.Taunt);
+
+        return c;
+    }
+
+    static CardInfo Cone_of_Cold()
+    {
+        CardInfo c = new();
+
+        c.name = "Cone of Cold";
+        c.text = "Freeze a minion and the minions next to it, and deal {0} damage to them.";
+
+        c.classType = Card.Class.Mage;
+
+        c.manaCost = 4;
+        c.spellDamage = 1;
+
+        c.SPELL = true;
+        c.TARGETED = true;
+
+        return c;
+    }
+
+    static CardInfo Mana_Wyrm()
+    {
+        CardInfo c = new();
+
+        c.name = "Mana Wyrm";
+        c.text = "Whenever you cast a spell, gain +1 Attack.";
+
+        c.classType = Card.Class.Mage;
+
+        c.manaCost = 1;
+        c.damage = 1;
+        c.health = 3;
+
+        c.MINION = true;
+
+        c.triggers.Add((Trigger.Type.OnPlaySpell, Trigger.Side.Friendly, Trigger.Ability.Mana_Wyrm));
+
+        return c;
+    }
+    
+    static CardInfo Ethereal_Arcanist()
+    {
+        CardInfo c = new();
+
+        c.name = "Ethereal Arcanist";
+        c.text = "If you control a Secret at the end of your turn, gain +2/+2.";
+
+        c.classType = Card.Class.Mage;
+
+        c.manaCost = 4;
+        c.damage = 3;
+        c.health = 3;
+
+        c.MINION = true;
+
+        c.triggers.Add((Trigger.Type.OnEndTurn, Trigger.Side.Friendly, Trigger.Ability.Ethereal_Arcanist));
+
+        return c;
+    }
 }

@@ -360,6 +360,13 @@ public class Card : MonoBehaviour
         Starving_Buzzard,
         Echoing_Ooze,
         Nerubar_Weblord,
+        Arcane_Missiles,
+        Arcane_Explosion,
+        Mirror_Image,
+        Mirror_Image_Token,
+        Cone_of_Cold,
+        Mana_Wyrm,
+        Ethereal_Arcanist,
 
         _COUNT,
     }
