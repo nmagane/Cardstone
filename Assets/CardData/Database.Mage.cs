@@ -435,7 +435,7 @@ public partial class Database
 
         c.MINION = true;
 
-        c.triggers.Add((Trigger.Type.OnEndTurn, Trigger.Side.Friendly, Trigger.Ability.Ethereal_Arcanist));
+        c.triggers.Add((Trigger.Type.EndTurn, Trigger.Side.Friendly, Trigger.Ability.Ethereal_Arcanist));
 
         return c;
     }

@@ -126,7 +126,7 @@ public partial class Server
     {
         int damage = 3;
         Player opp = spell.match.Opponent(spell.player);
-        List<Minion> targets = new List<Minion>();
+        List<Minion> minions = new List<Minion>();
 
         spell.match.midPhase = true;
         
@@ -148,12 +148,12 @@ public partial class Server
             
             if (m.player.sentinel == m)
             {
-                var animFace = new AnimationInfo(Card.Cardname.Boom_Bot, spell.player, spell.minion, m.player);
+                var animFace = new AnimationInfo(Card.Cardname.Keeper_of_the_Grove,spell.player,m);
                 Damage(m.player, 1, spell);
             }
             else
             {
-                var anim = new AnimationInfo(Card.Cardname.Boom_Bot, spell.player, spell.minion, m);
+                var anim = new AnimationInfo(Card.Cardname.Keeper_of_the_Grove, spell.player, m);
                 Damage(m, 1, spell);
             }
             
@@ -168,7 +168,7 @@ public partial class Server
         int damage = 1;
         Player opp = spell.match.Opponent(spell.player);
 
-        // AnimationInfo anim = new AnimationInfo(Card.Cardname.Arcane_Explosion, spell.player);
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Fan_of_Knives, spell.player);
 
         foreach (var m in opp.board)
         {
@@ -192,7 +192,7 @@ public partial class Server
         int damage = 1;
         Player opp = spell.match.Opponent(spell.player);
 
-        // AnimationInfo anim = new AnimationInfo(Card.Cardname.Cone_of_Cold, spell.player, spell);
+        AnimationInfo anim = new AnimationInfo(Card.Cardname.Cone_of_Cold, spell.player, spell);
 
         Minion target = spell.GetTargetMinion();
 
@@ -206,7 +206,7 @@ public partial class Server
                 Damage(opp.board[target.index - 1], damage, spell);
                 spell.match.server.AddAura(spell.match, opp.board[target.index - 1], new Aura(Aura.Type.Freeze));
             }
-            if (target.index < opp.board.Count - 1)
+            if (target.index < opp.board.Count() - 1)
             {
                 Damage(opp.board[target.index + 1], damage, spell);
                 spell.match.server.AddAura(spell.match, opp.board[target.index + 1], new Aura(Aura.Type.Freeze));

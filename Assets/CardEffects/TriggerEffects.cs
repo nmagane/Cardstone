@@ -249,7 +249,7 @@ public class TriggerEffects
     public static void Ethereal_Arcanist(Match match, Trigger trigger)
     {
         Minion minion = trigger.minion;
-        if (trigger.player.secrets.Count() > 0)
+        if (trigger.player.secrets.Count > 0)
         {
             match.server.AddAura(match, minion, new Aura(Aura.Type.Damage, 2));
             match.server.AddAura(match, minion, new Aura(Aura.Type.Health, 2));
