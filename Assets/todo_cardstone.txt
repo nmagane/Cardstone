@@ -53,80 +53,80 @@ Mechanics for next demo:
 - rope (chess timer?)
 
 Priest List:
+       Wild_Pyromancer,           -- DONE
+       Lightwarden,               -- DONE
+       Deathlord,                 -- DONE
+       Injured_Blademaster,       -- DONE
+       Lesser_Heal,               -- NO
+       Silence,                   -- NO
+       Circle_of_Healing,         -- NO
+       Holy_Smite,                -- NO
+       Inner_Fire,                -- NO
+       Light_of_the_Naaru,        -- NO
+       Northshire_Cleric,         -- NO
+       Power_Word_Shield,         -- NO
+       Shadow_Word_Pain,          -- NO
+       Shadow_Word_Death,         -- NO
+       Divine_Spirit,             -- NO
+       Resurrect,                 -- NO
+       Mind_Blast,                -- NO
+       Dark_Cultist,              -- NO
+       Thoughtsteal,              -- NO
+       Shadow_of_Nothing,         -- NO
+       Velens_Chosen,             -- NO
+       Holy_Nova,                 -- NO
+       Auchenai_Soulpriest,       -- NO
+       Cabal_Shadow_Priest,       -- NO
+       Lightbomb,                 -- NO
+       Piloted_Shredder,          -- DONE
+       Annoy_o_Tron,              -- DONE
+       Anodized_Robo_Cub,         -- NO
+       Explosive_Sheep,           -- DONE
+       Gilbin_Stalker,            -- DONE
+       Goblin_Auto_Barber,        -- NO
+       Micro_Machine,             -- DONE
+       Mechwarper,                -- DONE
+       One_eyed_Cheat,            -- NO
+       Puddlestomper,             -- DONE
+       Queen_of_Pain,             -- NO
+       Recombobulator,            -- DONE
+       Shadowboxer,               -- NO
+       Shielded_Minibot,          -- NO
+       Ships_Cannon,              -- DONE
+       Shrinkmeister,             -- NO
+       Snowchugger,               -- NO
+       Steamwheedle_Sniper,       -- NO
+       Stonesplinter_Trogg,       -- DONE
+       Vitality_Totem,            -- NO
+       Whirling_Zapomatic,        -- NO
+       Argent_Protector,          -- NO
+       Bloodfen_Raptor,           -- DONE
+       Bloodsail_Raider,          -- DONE
+       Bluegill_Warrior,          -- NO
+       Captains_Parrot,           -- NO
+       Defias_Ringleader,         -- NO
+       Defias_Bandit,             -- NO
+       Faerie_Dragon,             -- NO
+       Succubus,                  -- NO
+       Flametongue_Totem,         -- NO
+       Frostwolf_Grunt,           -- NO
+       Lightwell,                 -- NO
+       Lorewalker_Cho,            -- NO
+       Mad_Bomber,                -- NO
+       Mana_Addict,               -- NO
+       Master_Swordsmith,         -- NO
+       Murloc_Tidehunter,         -- NO
+       Murloc_Scout,              -- NO
+       Nat_Pagle,                 -- NO
+       Patient_Assassin,          -- NO
+       Pint_Sized_Summoner,       -- NO
+       River_Crocolisk,           -- NO
+       Scavenging_Hyena,          -- NO
+       Starving_Buzzard,          -- NO
+       Echoing_Ooze,              -- NO
+       Nerubar_Weblord,           -- NO
 
-Wild_Pyromancer,         -- DONE
-Lightwarden,             -- DONE
-Deathlord,               -- DONE
-Injured_Blademaster,     -- DONE
-
-Lesser_Heal, 			 -- DONE
-Silence,                 -- DONE
-Circle_of_Healing,       -- DONE
-Holy_Smite,              -- DONE
-Inner_Fire,              -- DONE
-Light_of_the_Naaru,      -- DONE
-Northshire_Cleric,       -- DONE
-Power_Word_Shield,       -- DONE
-Shadow_Word_Pain,        -- DONE
-Shadow_Word_Death,       -- DONE
-Divine_Spirit,           -- DONE
-Resurrect,               -- DONE
-Mind_Blast,              -- DONE
-Dark_Cultist,            -- DONE
-Thoughtsteal,            -- DONE
-Velens_Chosen,           -- DONE
-Holy_Nova,               -- DONE
-Auchenai_Soulpriest,     -- DONE
-Cabal_Shadow_Priest,     -- DONE
-Lightbomb,               -- DONE
-
-Piloted Shredder,        -- DONE
-
-Annoy-o-Tron             -- DONE
-Anodized Robo Cub        -- DONE
-Explosive Sheep          -- DONE
-Gilbin Stalker           -- DONE
-Goblin Auto-Barber       -- DONE
-Micro Machine            -- DONE
-Mechwarper               -- DONE
-One-eyed Cheat           -- DONE
-Puddlestomper            -- DONE
-Queen of Pain            -- DONE
-Recombobulator           -- DONE [NOT REALLY]
-Shadowboxer              -- DONE
-Shielded Minibot         -- DONE
-Ship's Cannon            -- DONE
-Shrinkmeister            -- DONE
-Snowchugger              -- DONE
-Steamwheedle Sniper      -- DONE [NOT REALLY]
-Stonesplinter Trogg      -- DONE
-Vitality Totem           -- DONE
-Whirling Zap-o-matic     -- DONE
-Argent Protected         -- DONE
-Bloodfen Raptor          -- DONE
-Bloodsail Raider         -- DONE
-Bluegill Warrior         -- DONE
-Captain's Parrot         -- DONE
-Defias Ringleader        -- DONE
-Faerie Dragon            -- DONE
-Succubus                 -- DONE
-Flametongue Totem        -- DONE
-Frostwolf Grunt          -- DONE
-Lightwell                -- DONE
-Lorewalker Cho           -- DONE
-Mad Bomber               -- DONE
-Mana Addict              -- DONE
-Master Swordsmith        -- DONE
-Murloc Tidehunter        -- DONE
-1/1 Murloc Scout Tokens  -- DONE
-Nat Palge                -- DONE
-Patient Assassin         -- DONE
-Pint-Sized Summoner      -- DONE
-River Crocolisk          -- DONE
-Scavenging Hyena         -- DONE
-Starving Buzzard         -- DONE
-Echoing Ooze             -- DONE
-Nerub'ar Weblord         -- DONE
+-MORE DECK SLOTS         -- NO
 
 ===============================================
 =====================DONE======================
