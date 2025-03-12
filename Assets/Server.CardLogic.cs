@@ -389,7 +389,7 @@ public partial class Server
             List<Minion> removes = new List<Minion>();
             foreach (Minion x in minions)
             {
-                if ((x.player.sentinel!=x && (x.DEAD || x.health <= 0)) || (x.player.sentinel == x && x.player.health <= 0))
+                if ((x.PLAYER==false && (x.DEAD || x.health <= 0)) || (x.PLAYER && x.player.health <= 0))
                     removes.Add(x);
             }
             foreach (Minion x in removes)
@@ -397,7 +397,7 @@ public partial class Server
 
             Minion m = Board.RandElem(minions);
             
-            if (m.player.sentinel == m)
+            if (m.PLAYER)
             {
                 var animFace = new AnimationInfo(Card.Cardname.Boom_Bot, spell.player, spell.minion, m.player);
                 Damage(m.player, 1, spell);
