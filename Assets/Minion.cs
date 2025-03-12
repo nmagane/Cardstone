@@ -35,6 +35,8 @@ public partial class Minion
     public bool STEALTH => HasAura(Aura.Type.Stealth);
     public bool ELUSIVE => HasAura(Aura.Type.Elusive);
 
+    public bool PLAYER => player.sentinel == this;
+
     public bool DEAD = false;
     public bool SICKNESS = true;
 

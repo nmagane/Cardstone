@@ -138,7 +138,7 @@ public partial class Server
             List<Minion> removes = new List<Minion>();
             foreach (Minion x in minions)
             {
-                if ((x.player.sentinel!=x && (x.DEAD || x.health <= 0)) || (x.player.sentinel == x && x.player.health <= 0))
+                if ((x.PLAYER==false && (x.DEAD || x.health <= 0)) || (x.PLAYER && x.player.health <= 0))
                     removes.Add(x);
             }
             foreach (Minion x in removes)
@@ -146,9 +146,9 @@ public partial class Server
 
             Minion m = Board.RandElem(minions);
             
-            if (m.player.sentinel == m)
+            if (m.PLAYER)
             {
-                var animFace = new AnimationInfo(Card.Cardname.Keeper_of_the_Grove,spell.player,m);
+                var animFace = new AnimationInfo(Card.Cardname.Keeper_of_the_Grove,spell.player,spell.player.opponent);
                 Damage(m.player, 1, spell);
             }
             else
@@ -182,7 +182,7 @@ public partial class Server
         for (int i = 0; i < 2; i++)
         {
             if (spell.player.board.GetCount() >= 7) return;
-            spell.match.server.SummonToken(spell.match, spell.player.opponent, Card.Cardname.Mirror_Image_Token, spell.player.board.GetCount());
+            spell.match.server.SummonToken(spell.match, spell.player, Card.Cardname.Mirror_Image_Token, spell.player.board.GetCount());
         }
         spell.match.midPhase = false;
     }
