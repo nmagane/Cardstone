@@ -1192,7 +1192,7 @@ public partial class Database
         CardInfo c = new();
 
         c.name = "Southsea Deckhand";
-        c.text = "Has Change while you have a weapon equipped.";
+        c.text = "Has Charge while you have a weapon equipped.";
 
         c.manaCost = 1;
         c.damage = 2;

@@ -102,29 +102,29 @@ Priest List:
        Argent_Protector,          -- NO
        Bloodfen_Raptor,           -- DONE
        Bloodsail_Raider,          -- DONE
-       Bluegill_Warrior,          -- NO
-       Captains_Parrot,           -- NO
+       Bluegill_Warrior,          -- DONE
+       Captains_Parrot,           -- DONE
        Defias_Ringleader,         -- NO
        Defias_Bandit,             -- NO
-       Faerie_Dragon,             -- NO
+       Faerie_Dragon,             -- DONE
        Succubus,                  -- NO
        Flametongue_Totem,         -- NO
-       Frostwolf_Grunt,           -- NO
+       Frostwolf_Grunt,           -- DONE
        Lightwell,                 -- NO
-       Lorewalker_Cho,            -- NO
-       Mad_Bomber,                -- NO
-       Mana_Addict,               -- NO
-       Master_Swordsmith,         -- NO
-       Murloc_Tidehunter,         -- NO
-       Murloc_Scout,              -- NO
-       Nat_Pagle,                 -- NO
+       Lorewalker_Cho,            -- DONE
+       Mad_Bomber,                -- DONE
+       Mana_Addict,               -- DONE
+       Master_Swordsmith,         -- DONE
+       Murloc_Tidehunter,         -- DONE
+       Murloc_Scout,              -- DONE
+       Nat_Pagle,                 -- DONE
        Patient_Assassin,          -- NO
-       Pint_Sized_Summoner,       -- NO
-       River_Crocolisk,           -- NO
+       Pint_Sized_Summoner,       -- DONE
+       River_Crocolisk,           -- DONE
        Scavenging_Hyena,          -- NO
        Starving_Buzzard,          -- NO
-       Echoing_Ooze,              -- NO
-       Nerubar_Weblord,           -- NO
+       Echoing_Ooze,              -- DONE
+       Nerubar_Weblord,           -- DONE
 
 -MORE DECK SLOTS         -- NO
 
@@ -517,12 +517,12 @@ Tree of Life                      -- DONE
 ====================================
 Burn Mage TODOs
 
-Arcane Missiles                   -- DONE?
-Mirror Image                      -- DONE?
-Mana Wyrm                         -- DONE?
-Mad Bomber                        -- DONE?
-Cone of Cold                      -- DONE?
-Ethereal Arcanist                 -- DONE?
+Arcane Missiles                   -- DONE
+Mirror Image                      -- DONE
+Mana Wyrm                         -- DONE
+Mad Bomber                        -- DONE
+Cone of Cold                      -- DONE
+Ethereal Arcanist                 -- DONE
 
 
 ====================================
