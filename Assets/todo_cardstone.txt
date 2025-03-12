@@ -57,19 +57,19 @@ Priest List:
        Lightwarden,               -- DONE
        Deathlord,                 -- DONE
        Injured_Blademaster,       -- DONE
-       Lesser_Heal,               -- NO
-       Silence,                   -- NO
-       Circle_of_Healing,         -- NO
-       Holy_Smite,                -- NO
-       Inner_Fire,                -- NO
-       Light_of_the_Naaru,        -- NO
-       Northshire_Cleric,         -- NO
-       Power_Word_Shield,         -- NO
-       Shadow_Word_Pain,          -- NO
-       Shadow_Word_Death,         -- NO
-       Divine_Spirit,             -- NO
-       Resurrect,                 -- NO
-       Mind_Blast,                -- NO
+       Lesser_Heal,               -- DONE
+       Silence,                   -- DONE
+       Circle_of_Healing,         -- DONE
+       Holy_Smite,                -- DONE
+       Inner_Fire,                -- DONE
+       Light_of_the_Naaru,        -- DONE
+       Northshire_Cleric,         -- DONE
+       Power_Word_Shield,         -- DONE
+       Shadow_Word_Pain,          -- DONE
+       Shadow_Word_Death,         -- DONE
+       Divine_Spirit,             -- DONE
+       Resurrect,                 -- DONE
+       Mind_Blast,                -- DONE
        Dark_Cultist,              -- NO
        Thoughtsteal,              -- NO
        Shadow_of_Nothing,         -- NO
