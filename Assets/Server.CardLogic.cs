@@ -236,8 +236,8 @@ public partial class Server
         spell.match.midPhase = true;
         for (int i = 0; i < 2; i++)
         {
-            if (spell.player.opponent.board.Count() >= 7) return;
-            spell.match.server.SummonToken(spell.match, spell.player.opponent, Card.Cardname.Whelp, spell.player.opponent.board.Count());
+            if (spell.player.opponent.board.GetCount() >= 7) return;
+            spell.match.server.SummonToken(spell.match, spell.player.opponent, Card.Cardname.Whelp, spell.player.opponent.board.GetCount());
         }
         spell.match.midPhase = false;
     }
@@ -321,7 +321,7 @@ public partial class Server
     void Mind_Control_Tech(CastInfo spell)
     {
         Player enemy = spell.player.opponent;
-        if (enemy.board.Count() < 4) return;
+        if (enemy.board.GetCount() < 4) return;
 
         Minion m = Board.RandElem(enemy.board.minions);
 

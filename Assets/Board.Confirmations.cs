@@ -124,7 +124,7 @@ public partial class Board
         if (sourceIndex != -1)
         {
             MinionBoard board = sourceFriendly ? currMinions : enemyMinions;
-            if (sourceIndex < board.Count())
+            if (sourceIndex < board.GetCount())
             {
                 if (board[sourceIndex].creature != null)
                     pos = board[sourceIndex].creature.transform.position;
@@ -148,7 +148,7 @@ public partial class Board
         {
             int p = pos;
 
-            if (pos >= 7) pos = currMinions.Count();
+            if (pos >= 7) pos = currMinions.GetCount();
             Minion m = new Minion(card.card, pos, currMinions);
             prePlayMinions.Add(p, m);
             currMinions.AddCreature(m);
@@ -172,13 +172,13 @@ public partial class Board
 
             if (position == -1)
             {
-                position = currMinions.Count();
+                position = currMinions.GetCount();
             }
-            if (currMinions.Count() == 0)
+            if (currMinions.GetCount() == 0)
             {
                 currMinions.minions.Add(ppm);
             }
-            else if (currMinions.Count() != 0 && position >= currMinions.Count())
+            else if (currMinions.GetCount() != 0 && position >= currMinions.GetCount())
             {
                 currMinions.minions.Add(ppm);
             }

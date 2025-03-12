@@ -181,8 +181,8 @@ public partial class Server
         spell.match.midPhase = true;
         for (int i = 0; i < 2; i++)
         {
-            if (spell.player.board.Count() >= 7) return;
-            spell.match.server.SummonToken(spell.match, spell.player.opponent, Card.Cardname.Mirror_Image_Token, spell.player.board.Count());
+            if (spell.player.board.GetCount() >= 7) return;
+            spell.match.server.SummonToken(spell.match, spell.player.opponent, Card.Cardname.Mirror_Image_Token, spell.player.board.GetCount());
         }
         spell.match.midPhase = false;
     }
@@ -206,7 +206,7 @@ public partial class Server
                 Damage(opp.board[target.index - 1], damage, spell);
                 spell.match.server.AddAura(spell.match, opp.board[target.index - 1], new Aura(Aura.Type.Freeze));
             }
-            if (target.index < opp.board.Count() - 1)
+            if (target.index < opp.board.GetCount() - 1)
             {
                 Damage(opp.board[target.index + 1], damage, spell);
                 spell.match.server.AddAura(spell.match, opp.board[target.index + 1], new Aura(Aura.Type.Freeze));

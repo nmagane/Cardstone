@@ -10,13 +10,13 @@ public class TriggerEffects
     {
         int damage = 1;
         Player opponent = match.FindOpponent(minion);
-        int tar = Random.Range(-1, opponent.board.Count());
+        int tar = Random.Range(-1, opponent.board.GetCount());
 
         if (tar != -1)
         {
             while (opponent.board[tar].health <= 0 || opponent.board[tar].DEAD)
             {
-                tar = Random.Range(-1, opponent.board.Count());
+                tar = Random.Range(-1, opponent.board.GetCount());
                 if (tar == -1) break;
             }
         }
@@ -43,12 +43,12 @@ public class TriggerEffects
         Player p = match.FindOwner(minion);
 
         //Skip trigger if no targets available
-        if (p.board.Count() == 0) return;
-        if (p.board.Count() == 1 && p.board[0] == minion) return;
+        if (p.board.GetCount() == 0) return;
+        if (p.board.GetCount() == 1 && p.board[0] == minion) return;
 
-        Minion m = p.board[Random.Range(0, p.board.Count())];
+        Minion m = p.board[Random.Range(0, p.board.GetCount())];
         //Cant target self
-        while (m == minion) m = p.board[Random.Range(0, p.board.Count())];
+        while (m == minion) m = p.board[Random.Range(0, p.board.GetCount())];
 
         match.server.AddAura(match, m, new Aura(Aura.Type.Health, 1));
     }
@@ -57,12 +57,12 @@ public class TriggerEffects
         Player p = match.FindOwner(minion);
 
         //Skip trigger if no targets available
-        if (p.board.Count() == 0) return;
-        if (p.board.Count() == 1 && p.board[0] == minion) return;
+        if (p.board.GetCount() == 0) return;
+        if (p.board.GetCount() == 1 && p.board[0] == minion) return;
 
-        Minion m = p.board[Random.Range(0, p.board.Count())];
+        Minion m = p.board[Random.Range(0, p.board.GetCount())];
         //Cant target self
-        while (m == minion) m = p.board[Random.Range(0, p.board.Count())];
+        while (m == minion) m = p.board[Random.Range(0, p.board.GetCount())];
 
         match.server.AddAura(match, m, new Aura(Aura.Type.Damage, 1));
     }
@@ -126,7 +126,7 @@ public class TriggerEffects
     public static void Noble_Sacrifice(Match match, Trigger trigger, CastInfo spell)
     {
         Player owner = trigger.minion.player;
-        if (owner.board.Count() >= 7) return;
+        if (owner.board.GetCount() >= 7) return;
 
         match.server.TriggerSecret(trigger.secret);
 
@@ -172,18 +172,18 @@ public class TriggerEffects
         int damage = Random.Range(1, 5);
         Player opponent = trigger.minion.player.opponent;
 
-        int tar = Random.Range(-1, opponent.board.Count());
+        int tar = Random.Range(-1, opponent.board.GetCount());
 
         if (tar != -1)
         {
             while (opponent.board[tar].health <= 0 || opponent.board[tar].DEAD)
             {
-                tar = Random.Range(-1, opponent.board.Count());
+                tar = Random.Range(-1, opponent.board.GetCount());
                 if (tar == -1) break;
             }
         }
 
-        int ind = (trigger.player.board.Count() > trigger.minion.index) ? trigger.minion.index : -1;
+        int ind = (trigger.player.board.GetCount() > trigger.minion.index) ? trigger.minion.index : -1;
 
         if (tar == -1)
         {
@@ -355,7 +355,7 @@ public class TriggerEffects
     public static void Sylvanas_Windrunner(Match match, Trigger trigger)
     {
         Player enemy = trigger.player.opponent;
-        if (enemy.board.Count() == 0) return;
+        if (enemy.board.GetCount() == 0) return;
         Minion m = Board.RandElem(enemy.board.minions);
 
         match.server.StealMinion(match, trigger.player, m);
@@ -384,13 +384,13 @@ public class TriggerEffects
     {
         int damage = 8;
         Player opponent = match.FindOpponent(minion);
-        int tar = Random.Range(-1, opponent.board.Count());
+        int tar = Random.Range(-1, opponent.board.GetCount());
 
         if (tar != -1)
         {
             while (opponent.board[tar].health <= 0 || opponent.board[tar].DEAD)
             {
-                tar = Random.Range(-1, opponent.board.Count());
+                tar = Random.Range(-1, opponent.board.GetCount());
                 if (tar == -1) break;
             }
         }
@@ -476,13 +476,13 @@ public class TriggerEffects
         Minion minion = trigger.minion;
         int damage = 2;
         Player opponent = match.FindOpponent(minion);
-        int tar = Random.Range(-1, opponent.board.Count());
+        int tar = Random.Range(-1, opponent.board.GetCount());
 
         if (tar != -1)
         {
             while (opponent.board[tar].health <= 0 || opponent.board[tar].DEAD)
             {
-                tar = Random.Range(-1, opponent.board.Count());
+                tar = Random.Range(-1, opponent.board.GetCount());
                 if (tar == -1) break;
             }
         }
@@ -528,7 +528,7 @@ public class TriggerEffects
     public static void Echoing_Ooze(Match match, Trigger trigger)
     {
         match.server.RemoveTrigger(match, trigger.minion, trigger);
-        if (trigger.player.board.Count() >= 7) return;
+        if (trigger.player.board.GetCount() >= 7) return;
         Minion m = match.server.SummonToken(match, trigger.minion.player, Card.Cardname.Echoing_Ooze, trigger.minion.index+1);
         if (m == null) return;
         foreach (Aura a in trigger.minion.auras)

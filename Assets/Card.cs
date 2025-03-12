@@ -598,7 +598,7 @@ public class Card : MonoBehaviour
             EndPlay();
             return;
         }
-        if (card.MINION && board.currMinions.Count() >= 7)
+        if (card.MINION && board.currMinions.GetCount() >= 7)
         {
             EndPlay();
             return;
@@ -866,7 +866,7 @@ public class Card : MonoBehaviour
 
         if ((card.MINION) == true)
         {
-            if (board.currMinions.Count() >= 7)
+            if (board.currMinions.GetCount() >= 7)
             {
                 EndPlay();
                 //TODO: "too many minions" error

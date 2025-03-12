@@ -208,7 +208,7 @@ public partial class Server
     public void StealMinion(Match match, Player player, Minion minion, bool canAttack=false)
     {
         if (minion.player == player) return;
-        if (player.board.Count() >= 7)
+        if (player.board.GetCount() >= 7)
         {
             minion.DEAD = true;
             return;
@@ -216,7 +216,7 @@ public partial class Server
 
         if (minion.HasAura(Aura.Type.Charge))
             canAttack = true;
-        int newInd = player.board.Count();
+        int newInd = player.board.GetCount();
         StealMinionMessage(match, player, minion, newInd, canAttack);
         minion.player.board.Remove(minion);
         minion.canAttack = canAttack;

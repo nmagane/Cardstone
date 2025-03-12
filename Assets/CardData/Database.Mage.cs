@@ -295,7 +295,7 @@ public partial class Database
         CardInfo c = new();
 
         c.name = "Snowchugger";
-        c.text = "Freeze any character damaged by this minion";
+        c.text = "Freeze any character damaged by this minion.";
 
         c.manaCost = 2;
         c.damage = 2;
@@ -366,7 +366,7 @@ public partial class Database
         CardInfo c = new();
 
         c.name = "Mirror Image";
-        c.text = "Taunt";
+        c.text = "Taunt.";
 
         c.classType = Card.Class.Mage;
 

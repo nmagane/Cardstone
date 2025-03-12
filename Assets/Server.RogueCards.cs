@@ -81,7 +81,7 @@ public partial class Server
     private void Fan_of_Knives(CastInfo spell)
     {
         MinionBoard b = spell.player.opponent.board;
-        if (b.Count()>0)
+        if (b.GetCount()>0)
         {
             var anim = new AnimationInfo(Card.Cardname.Fan_of_Knives, spell.player);
         }
@@ -98,7 +98,7 @@ public partial class Server
     {
         bool hasWeapon = spell.player.weapon != null;
         bool combo = spell.combo;
-        bool hasMinions = spell.player.board.Count() > 0;
+        bool hasMinions = spell.player.board.GetCount() > 0;
 
         if (hasWeapon)
             spell.player.weapon.AddAura(new Aura(Aura.Type.Damage, 3));

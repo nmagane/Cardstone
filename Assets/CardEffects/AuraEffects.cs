@@ -133,7 +133,7 @@ public static class AuraEffects
         Player owner = match.FindOwner(card);
         if (owner == null) return;
 
-        int i = owner.board.Count() + owner.opponent.board.Count();
+        int i = owner.board.GetCount() + owner.opponent.board.GetCount();
 
         match.server.AddCardAura(match, card, new Aura(Aura.Type.Cost, -i, false, true, aura));
     }

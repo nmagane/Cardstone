@@ -236,8 +236,8 @@ public partial class Server
 
         MinionBoard pb = spell.player.board;
         MinionBoard ob = spell.player.opponent.board;
-        int p_count = pb.Count();
-        int o_count = ob.Count();
+        int p_count = pb.GetCount();
+        int o_count = ob.GetCount();
 
         if (p_count + o_count > 0)
         {

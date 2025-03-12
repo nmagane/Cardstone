@@ -764,7 +764,7 @@ public partial class Server : MonoBehaviour
         if (match.players[p].currMana < card.manaCost) return;
 
 
-        if (card.MINION && match.players[p].board.Count()>=7)
+        if (card.MINION && match.players[p].board.GetCount()>=7)
         {
             return;
         }
@@ -831,7 +831,7 @@ public partial class Server : MonoBehaviour
     }
     public Minion SummonMinion(Match match, Player player, Card.Cardname minion,MinionBoard.MinionSource source, int position=-1)
     {
-        if (player.board.Count() >= 7) return null;
+        if (player.board.GetCount() >= 7) return null;
 
         Player opponent = match.Opponent(player);
         Minion m = player.board.Add(minion, position,match.playOrder++,player);
@@ -869,8 +869,8 @@ public partial class Server : MonoBehaviour
         PlayerConnection enemy = match.enemyPlayer.connection;
         if (player.clientID != clientID || player.playerID != playerID) return;
 
-        if (attackerInd >= match.currPlayer.board.Count()) return;
-        if (targetInd >= match.enemyPlayer.board.Count()) return;
+        if (attackerInd >= match.currPlayer.board.GetCount()) return;
+        if (targetInd >= match.enemyPlayer.board.GetCount()) return;
 
         Minion attacker = match.currPlayer.board[attackerInd];
         Minion target = match.enemyPlayer.board[targetInd];
@@ -894,7 +894,7 @@ public partial class Server : MonoBehaviour
         PlayerConnection enemy = match.enemyPlayer.connection;
         if (player.clientID != clientID || player.playerID != playerID) return;
 
-        if (targetInd >= match.enemyPlayer.board.Count()) return;
+        if (targetInd >= match.enemyPlayer.board.GetCount()) return;
 
         Minion target = match.enemyPlayer.board[targetInd];
         if (ValidAttackMinion(match, -10, targetInd) == false) return;
@@ -1070,7 +1070,7 @@ public partial class Server : MonoBehaviour
         PlayerConnection enemy = match.enemyPlayer.connection;
         if (player.clientID != clientID || player.playerID != playerID) return;
 
-        if (attackerInd >= match.currPlayer.board.Count()) return;
+        if (attackerInd >= match.currPlayer.board.GetCount()) return;
         Minion attacker = match.currPlayer.board[attackerInd];
         
         if (ValidAttackFace(match,match.currPlayer,match.enemyPlayer,attackerInd) == false) return;

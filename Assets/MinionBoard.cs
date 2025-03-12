@@ -12,6 +12,7 @@ public class MinionBoard
 
     public Board board;
     public Dictionary<Minion, Creature> minionObjects = new Dictionary<Minion, Creature>();
+    public int Count => GetCount();
     public bool server = false;
     public Creature previewMinion = null;
     public Minion this[int index]
@@ -36,16 +37,16 @@ public class MinionBoard
         
         if (ind == -1)
         {
-            ind = Count();
+            ind = GetCount();
         }
-        if (Count() == 0)
+        if (GetCount() == 0)
         {
             newMinion = new Minion(c, 0, this, playOrder,player);
             minions.Add(newMinion);
         }
-        else if (Count() != 0 && ind >= Count())
+        else if (GetCount() != 0 && ind >= GetCount())
         {
-            newMinion = new Minion(c, Count(), this, playOrder,player);
+            newMinion = new Minion(c, GetCount(), this, playOrder,player);
             minions.Add(newMinion);
         }
         else
@@ -299,7 +300,7 @@ public class MinionBoard
 
     }
 
-    public int Count()
+    public int GetCount()
     {
         return minions.Count;
     }
