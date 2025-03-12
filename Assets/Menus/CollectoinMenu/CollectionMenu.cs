@@ -147,9 +147,9 @@ public class CollectionMenu : MonoBehaviour
             deckButtons[i].text.transform.localPosition = new Vector3(0, -1.6f);
 
             i++;
-            if (i > 7) break;
+            if (i > 14) break;
         }
-        for (int j = i; j < 8; j++)
+        for (int j = i; j < 15; j++)
         {
             deckButtons[j].icon.sprite = null;
             deckButtons[j].text.text = "NEW";
@@ -178,7 +178,7 @@ public class CollectionMenu : MonoBehaviour
     }
     public void NewDeck()
     {
-        if (board.saveData.decks.Count >= 8) return;
+        if (board.saveData.decks.Count >= 15) return;
         currDeckslot = board.saveData.decks.Count;
         SetState(state.NewSelect);
     }

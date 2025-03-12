@@ -37,9 +37,9 @@ public class Mainmenu : MonoBehaviour
             deckButtons[i].GetComponent<BoxCollider2D>().enabled = true;
 
             i++;
-            if (i > 7) break;
+            if (i > 14) break;
         }
-        for (int j=i; j<8; j++)
+        for (int j=i; j<15; j++)
         {
             deckButtons[j].icon.sprite = null;
             deckButtons[j].text.text = "";
