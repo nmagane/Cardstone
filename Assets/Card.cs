@@ -635,6 +635,8 @@ public class Card : MonoBehaviour
                 if (validTargetsExist)
                 {
                     Vector3 p = board.StartMinionPreview(this, position,false);
+                    board.targetMode = Board.TargetMode.None;
+                    board.CheckHighlights();
                     StartChoice(choiceList, board.currMinions.previewMinion);
                     HideCard(p);
                 }
@@ -784,6 +786,7 @@ public class Card : MonoBehaviour
 
         //board.choiceBlocker.transform.localScale = Vector3.zero;
         board.choiceBlocker.SetActive(false);
+        board.CheckHighlights();
     }
     private void Update()
     {

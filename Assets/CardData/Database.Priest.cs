@@ -132,7 +132,8 @@
 
         c.SPELL = true;
         c.TARGETED = true;
-        c.eligibleTargets = Board.EligibleTargets.AllCharacters;
+
+        c.eligibleTargets = Board.EligibleTargets.AllMinions;
 
         return c;
     }
@@ -189,7 +190,7 @@
 
         c.classType = Card.Class.Priest;
         c.name = "Divine Sprit";
-        c.text = "Double target minon's Health.";
+        c.text = "Double target minion's Health.";
 
         c.manaCost = 2;
 

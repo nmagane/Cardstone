@@ -95,7 +95,7 @@ public class LeaderboardsMenu : MonoBehaviour
 
         for (int i=1;i<player.classStats.Count;i++)
         {
-            if (player.classStats[i].className>Card.Class.Druid)
+            if (player.classStats[i].className>Card.Class.Priest)
             {
                 Debug.LogWarning("Remaining classes unimplemented.");
                 break;
@@ -120,7 +120,7 @@ public class LeaderboardsMenu : MonoBehaviour
 
         for (int i=1; i<currData.classStats[c].matchupWins.Count; i++)
         {
-            if (currData.classStats[i].className > Card.Class.Druid)
+            if (currData.classStats[i].className > Card.Class.Priest)
             {
                 Debug.LogWarning("Remaining classes unimplemented.");
                 break;

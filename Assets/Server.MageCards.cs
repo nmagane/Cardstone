@@ -124,7 +124,7 @@ public partial class Server
 
     void Arcane_Missiles(CastInfo spell)
     {
-        int damage = 3;
+        int damage = 3+spell.player.spellpower;
         Player opp = spell.match.Opponent(spell.player);
         List<Minion> minions = new List<Minion>();
 
@@ -149,12 +149,12 @@ public partial class Server
             if (m.PLAYER)
             {
                 var animFace = new AnimationInfo(Card.Cardname.Keeper_of_the_Grove,spell.player,spell.player.opponent);
-                Damage(m.player, 1, spell);
+                Damage(m.player, 1-spell.player.spellpower, spell);
             }
             else
             {
                 var anim = new AnimationInfo(Card.Cardname.Keeper_of_the_Grove, spell.player, m);
-                Damage(m, 1, spell);
+                Damage(m, 1-spell.player.spellpower, spell);
             }
             
             spell.match.ResolveTriggerQueue(ref spell);

@@ -84,13 +84,16 @@ public partial class Database
         Card.Cardname.SI7_Agent,
         Card.Cardname.SI7_Agent,
 
+        Card.Cardname.Earthen_Ring_Farseer,
+
         Card.Cardname.Edwin_VanCleef,
 
         Card.Cardname.Tinkers_Oil,
         Card.Cardname.Tinkers_Oil,
 
         Card.Cardname.Violet_Teacher,
-        Card.Cardname.Violet_Teacher,
+
+        Card.Cardname.Piloted_Shredder,
 
         Card.Cardname.Antique_Healbot,
 
@@ -102,7 +105,6 @@ public partial class Database
         Card.Cardname.Sprint,
         Card.Cardname.Sprint,
 
-        Card.Cardname.Dr_Boom,
     };
 
     public static List<Card.Cardname> Freeze_Mage = new List<Card.Cardname>()
@@ -274,7 +276,6 @@ public partial class Database
         Card.Cardname.Wrath,
 
         Card.Cardname.Druid_of_the_Flame,
-        Card.Cardname.Druid_of_the_Flame,
 
         Card.Cardname.Savage_Roar,
         Card.Cardname.Savage_Roar,
@@ -300,7 +301,8 @@ public partial class Database
 
         Card.Cardname.Big_Game_Hunter,
 
-        Card.Cardname.Chillwind_Yeti,
+        Card.Cardname.Piloted_Shredder,
+        Card.Cardname.Piloted_Shredder,
 
         Card.Cardname.Harrison_Jones,
 

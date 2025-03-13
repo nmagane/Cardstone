@@ -127,6 +127,7 @@ public class Trigger
         Mana_Wyrm,
         Ethereal_Arcanist,
         Lightwell,
+        Vitality_Totem,
     }
     public enum Side
     {
@@ -349,6 +350,9 @@ public class Trigger
                 break;
             case Ability.Pint_Sized_Summoner:
                 TriggerEffects.Pint_Sized_Summoner(match, minion);
+                break;
+            case Ability.Vitality_Totem:
+                TriggerEffects.Vitality_Totem(match, this);
                 break;
             default:
                 Debug.LogError("MISSING TRIGGER ABILITY");

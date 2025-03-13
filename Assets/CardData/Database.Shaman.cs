@@ -15,6 +15,8 @@
         c.MINION = true;
         c.tribe = Card.Tribe.Totem;
 
+        c.triggers.Add((Trigger.Type.EndTurn, Trigger.Side.Friendly, Trigger.Ability.Vitality_Totem));
+
         return c;
     }
     private static CardInfo Whirling_Zapomatic()
