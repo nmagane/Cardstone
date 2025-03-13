@@ -70,11 +70,11 @@ Priest List:
        Divine_Spirit,             -- DONE
        Resurrect,                 -- DONE
        Mind_Blast,                -- DONE
-       Dark_Cultist,              -- NO
-       Thoughtsteal,              -- NO
-       Shadow_of_Nothing,         -- NO
-       Velens_Chosen,             -- NO
-       Holy_Nova,                 -- NO
+       Dark_Cultist,              -- DONE
+       Thoughtsteal,              -- DONE
+       Shadow_of_Nothing,         -- DONE
+       Velens_Chosen,             -- DONE
+       Holy_Nova,                 -- DONE
        Auchenai_Soulpriest,       -- NO
        Cabal_Shadow_Priest,       -- NO
        Lightbomb,                 -- NO
@@ -126,11 +126,18 @@ Priest List:
        Echoing_Ooze,              -- DONE
        Nerubar_Weblord,           -- DONE
 
--MORE DECK SLOTS         -- NO
+	   Arcane Missiles            -- NO
+	   Mirror Image               -- NO
+	   Mana Wyrm                  -- NO
+	   Cone of Cold               -- NO
+	   Ethereal Arcanist          -- NO
+
 
 ===============================================
 =====================DONE======================
 ================================================ 
+more deck slots
+
 - simple play history, updated in visual que? confirm play/trigger/battlecry would have to include targets in message
 	- attacks in playhistory
 	
