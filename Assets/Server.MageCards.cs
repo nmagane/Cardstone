@@ -190,7 +190,7 @@ public partial class Server
     void Cone_of_Cold(CastInfo spell)
     {
         int damage = 1;
-        Player opp = spell.match.Opponent(spell.player);
+        MinionBoard board = spell.targetMinion.board;
 
         AnimationInfo anim = new AnimationInfo(Card.Cardname.Cone_of_Cold, spell.player, spell);
 
@@ -203,13 +203,13 @@ public partial class Server
 
             if (target.index > 0)
             {
-                Damage(opp.board[target.index - 1], damage, spell);
-                spell.match.server.AddAura(spell.match, opp.board[target.index - 1], new Aura(Aura.Type.Freeze));
+                Damage(board[target.index - 1], damage, spell);
+                spell.match.server.AddAura(spell.match, board[target.index - 1], new Aura(Aura.Type.Freeze));
             }
-            if (target.index < opp.board.GetCount() - 1)
+            if (target.index < board.GetCount() - 1)
             {
-                Damage(opp.board[target.index + 1], damage, spell);
-                spell.match.server.AddAura(spell.match, opp.board[target.index + 1], new Aura(Aura.Type.Freeze));
+                Damage(board[target.index + 1], damage, spell);
+                spell.match.server.AddAura(spell.match, board[target.index + 1], new Aura(Aura.Type.Freeze));
             }
         }
     }

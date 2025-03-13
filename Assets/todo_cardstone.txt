@@ -75,9 +75,9 @@ Priest List:
        Shadow_of_Nothing,         -- DONE
        Velens_Chosen,             -- DONE
        Holy_Nova,                 -- DONE
-       Auchenai_Soulpriest,       -- NO
-       Cabal_Shadow_Priest,       -- NO
-       Lightbomb,                 -- NO
+       Auchenai_Soulpriest,       -- DONE
+       Cabal_Shadow_Priest,       -- DONE
+       Lightbomb,                 -- DONE
        Piloted_Shredder,          -- DONE
        Annoy_o_Tron,              -- DONE
        Anodized_Robo_Cub,         -- DONE
@@ -90,10 +90,10 @@ Priest List:
        Puddlestomper,             -- DONE
        Queen_of_Pain,             -- DONE
        Recombobulator,            -- DONE
-       Shadowboxer,               -- NO
+       Shadowboxer,               -- DONE
        Shielded_Minibot,          -- DONE
        Ships_Cannon,              -- DONE
-       Shrinkmeister,             -- NO
+       Shrinkmeister,             -- DONE
        Snowchugger,               -- DONE
        Steamwheedle_Sniper,       -- DONE
        Stonesplinter_Trogg,       -- DONE
@@ -110,7 +110,7 @@ Priest List:
        Succubus,                  -- DONE
        Flametongue_Totem,         -- DONE
        Frostwolf_Grunt,           -- DONE
-       Lightwell,                 -- NO
+       Lightwell,                 -- DONE
        Lorewalker_Cho,            -- DONE
        Mad_Bomber,                -- DONE
        Mana_Addict,               -- DONE
@@ -126,11 +126,12 @@ Priest List:
        Echoing_Ooze,              -- DONE
        Nerubar_Weblord,           -- DONE
 
-	   Arcane Missiles            -- NO
-	   Mirror Image               -- NO
-	   Mana Wyrm                  -- NO
-	   Cone of Cold               -- NO
-	   Ethereal Arcanist          -- NO
+	   Arcane Missiles            -- DONE
+	   Mirror Image               -- DONE
+	   Mana Wyrm                  -- DONE
+	   Cone of Cold               -- DONE
+	   Ethereal Arcanist          -- DONE
+	   
 
 
 ===============================================

@@ -139,6 +139,7 @@ public class TriggerEffects
     {
         if (spell.minion.damage <= 3)
         {
+            match.ConfirmTriggerAnim(trigger);
             spell.match.server.AddAura(spell.match, spell.minion, new Aura(Aura.Type.Charge));
         }
     }
@@ -146,6 +147,7 @@ public class TriggerEffects
     {
         if (Database.GetCardData(spell.minion.card).tribe==Card.Tribe.Beast)
         {
+            match.ConfirmTriggerAnim(trigger);
             match.server.Draw(trigger.player);
         }
     }
@@ -407,6 +409,7 @@ public class TriggerEffects
 
     internal static void Dark_Cultist(Match match, Minion minion)
     {
+        if (minion.board.Count == 0) return;
         Minion m = Board.RandElem(minion.player.board.minions);
         while (m == minion) Board.RandElem(minion.player.board.minions);
         match.server.AddAura(match, m, new Aura(Aura.Type.Health, 3, cardname: Card.Cardname.Dark_Cultist));
@@ -459,8 +462,10 @@ public class TriggerEffects
         }
     }
 
-    internal static void One_Eyed_Cheat(Match match, Trigger trigger)
+    internal static void One_Eyed_Cheat(Match match, Trigger trigger, CastInfo spell)
     {
+        if (Database.GetCardData(spell.minion.card).tribe != Card.Tribe.Pirate) return;
+        match.ConfirmTriggerAnim(trigger);
         match.server.AddAura(match, trigger.minion, new Aura(Aura.Type.Stealth));
     }
     internal static void Vitality_Totem(Match match, Trigger trigger)
@@ -471,8 +476,10 @@ public class TriggerEffects
     {
         match.server.AddCard(match, spell.player.opponent, spell.card.card,trigger.minion);
     }
-    internal static void Ships_Cannon(Match match, Trigger trigger)
+    internal static void Ships_Cannon(Match match, Trigger trigger, CastInfo spell)
     {
+        if (Database.GetCardData(spell.minion.card).tribe != Card.Tribe.Pirate) return;
+        match.ConfirmTriggerAnim(trigger);
         Minion minion = trigger.minion;
         int damage = 2;
         Player opponent = match.FindOpponent(minion);
@@ -500,6 +507,7 @@ public class TriggerEffects
     {
         if (Board.RNG(50))
         {
+            match.ConfirmTriggerAnim(trigger);
             match.server.Draw(trigger.player);
         }
     }
@@ -544,7 +552,9 @@ public class TriggerEffects
 
     public static void Pint_Sized_Exhaust(Match m, Minion minion)
     {
-        m.server.RemoveAura(m,minion, minion.FindAura(Aura.Type.Pint_Sized_Summoner));
+        Aura a = minion.FindAura(Aura.Type.Pint_Sized_Summoner);
+        if (a == null) return;
+        m.server.RemoveAura(m,minion, a);
     }
     public static void Pint_Sized_Summoner(Match m, Minion minion)
     {

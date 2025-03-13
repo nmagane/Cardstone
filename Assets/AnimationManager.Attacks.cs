@@ -16,6 +16,7 @@ public partial class AnimationManager
     {
         c.isElevated = false;
         StartCoroutine(elevator(c, 1.025f, 0.4f, 10,true));
+        board.CheckHighlights();
     }
 
     public void LiftHero(Hero h)

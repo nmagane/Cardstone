@@ -463,13 +463,13 @@ public partial class Match
 
             Trigger t = triggerQueue[0];
             triggerQueue.Remove(t);
-            ConfirmTriggerAnim(t);
+            if (t.invisible==false) ConfirmTriggerAnim(t);
             t.ActivateTrigger(this, ref spell);
         }
 
         UpdateAuras(midPhase);
     }
-    void ConfirmTriggerAnim(Trigger t)
+    public void ConfirmTriggerAnim(Trigger t)
     {
         if (players[0].board.Contains(t.minion) || players[1].board.Contains(t.minion))
         {

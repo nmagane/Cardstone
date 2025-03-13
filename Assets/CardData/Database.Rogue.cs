@@ -290,6 +290,7 @@ public partial class Database
         c.damage = 4;
         c.health = 1;
 
+        c.classType = Card.Class.Rogue;
         c.tribe = Card.Tribe.Pirate;
         c.MINION = true;
         c.triggers.Add((Trigger.Type.OnPlayMinion, Trigger.Side.Friendly, Trigger.Ability.One_Eyed_Cheat));

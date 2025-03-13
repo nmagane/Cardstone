@@ -8,8 +8,8 @@ public partial class Server : MonoBehaviour
 {
     public NetworkHandler mirror;
 #if UNITY_EDITOR
-    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { Card.Cardname.Arcane_Missiles, Card.Cardname.Arcane_Explosion, Card.Cardname.Mana_Wyrm, Card.Cardname.Ethereal_Arcanist, Card.Cardname.Ice_Barrier, Card.Cardname.Mirror_Image};
-    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Faerie_Dragon, Card.Cardname.Frostbolt};
+    List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() {  Card.Cardname.Whirling_Zapomatic, Card.Cardname.Lightbomb, Card.Cardname.Cone_of_Cold};
+    List<Card.Cardname> TESTCARDS2 = new List<Card.Cardname>() { Card.Cardname.Piloted_Shredder, Card.Cardname.Piloted_Shredder, Card.Cardname.Piloted_Shredder};
 
 #else
     List<Card.Cardname> TESTCARDS = new List<Card.Cardname>() { };
@@ -1215,6 +1215,7 @@ public partial class Server : MonoBehaviour
     }
     public void RemoveAura(Match match, Minion minion, Aura aura)
     {
+        if (aura == null) return;
         AddAura(match, minion, aura, true);
     }
     public void AddAura(Match match, Minion minion, Aura aura, bool REMOVE=false)

@@ -125,7 +125,8 @@ public class Trigger
         Pint_Sized_Summoner,
         Pint_Sized_Exhaust,
         Mana_Wyrm,
-        Ethereal_Arcanist
+        Ethereal_Arcanist,
+        Lightwell,
     }
     public enum Side
     {
@@ -139,7 +140,7 @@ public class Trigger
     public Side side;
     public Minion minion;
     public Secret secret;
-    public bool conditional = false;
+    public bool invisible = false;
     public Player player => minion.player;
     public Match match => minion.player.match;
 
@@ -314,10 +315,10 @@ public class Trigger
                 TriggerEffects.Explosive_Sheep(match, this);
                 break;
             case Ability.One_Eyed_Cheat:
-                TriggerEffects.One_Eyed_Cheat(match, this);
+                TriggerEffects.One_Eyed_Cheat(match, this,spell);
                 break;
             case Ability.Ships_Cannon:
-                TriggerEffects.Ships_Cannon(match, this);
+                TriggerEffects.Ships_Cannon(match, this, spell);
                 break;
             case Ability.Master_Swordsmith:
                 TriggerEffects.Master_Swordsmith(match, minion);
@@ -340,6 +341,9 @@ public class Trigger
             case Ability.Echoing_Ooze:
                 TriggerEffects.Echoing_Ooze(match, this);
                 break;
+            case Ability.Lightwell:
+                TriggerEffects.Lightwell(match, this);
+                break;
             case Ability.Pint_Sized_Exhaust:
                 TriggerEffects.Pint_Sized_Exhaust(match, minion);
                 break;
@@ -360,5 +364,16 @@ public class Trigger
         ability = abil;
         minion = owner;
         playOrder = order;
+        switch (abil)
+        {
+            case Ability.Pint_Sized_Exhaust:
+            case Ability.Nat_Pagle:
+            case Ability.Starving_Buzzard:
+            case Ability.Ships_Cannon:
+            case Ability.One_Eyed_Cheat:
+            case Ability.Warsong_Commander:
+                invisible = true;
+                break;
+        }
     }
 }

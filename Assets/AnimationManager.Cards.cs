@@ -61,6 +61,9 @@ public partial class AnimationManager
         whiteBig,
 
         potionBrew,
+
+        boom_white,
+        boom_yellow,
     }
     public Sprite[] effectSprites;
     GameObject CreateEffect(Effect e)
@@ -273,7 +276,7 @@ public partial class AnimationManager
 
 
             case Card.Cardname.Keeper_of_the_Grove:
-                return StartCoroutine(Simple_Projectile(data, Effect.whiteSmall, 12, 5));
+                return StartCoroutine(Simple_Projectile(data, Effect.whiteSmall, 12, 10));
             case Card.Cardname.Starfall_Single:
             case Card.Cardname.Starfire:
                 return StartCoroutine(Simple_Projectile(data, Effect.whiteBig, 12, 12));
@@ -285,12 +288,43 @@ public partial class AnimationManager
             case Card.Cardname.Youthful_Brewmaster:
                 return StartCoroutine(PotionProjectile(data, Effect.potionBrew));
 
+            case Card.Cardname.Holy_Nova:
+                return StartCoroutine(Boom(data, Effect.boom_yellow));
+            case Card.Cardname.Circle_of_Healing:
+                return StartCoroutine(Boom(data, Effect.boom_white));
+            case Card.Cardname.Cone_of_Cold:
+                return StartCoroutine(ConeAnim(data));
+
+            case Card.Cardname.Lesser_Heal:
+                return StartCoroutine(HealEffect(data));
+
 
             default:
                 Debug.LogWarning("Animation Unimplemented: " + data.card);
                 return null;
         }
 
+    }
+    IEnumerator ConeAnim(AnimationData data)
+    {
+        Creature c = data.GetTarget().GetComponent<Creature>();
+        List<Creature> creatures = new List<Creature>() { c };
+        MinionBoard b = c.minion.board;
+        foreach (var cc in b.minionObjects.Values)
+        {
+            if (cc.minion.index == c.minion.index - 1 || cc.minion.index == c.minion.index + 1)
+                creatures.Add(cc);
+        }
+        List<GameObject> objs = new List<GameObject>();
+        foreach (var tar in creatures)
+        {
+            GameObject p = CreateEffect(Effect.frostSmall);
+            p.transform.localPosition = data.GetSourcePos();
+            LerpTo(p, tar.transform.localPosition, 12);
+            objs.Add(p);
+        }
+        yield return Wait(10);
+        foreach (var o in objs) Destroy(o.gameObject);
     }
 
     IEnumerator KnifeJugglerAnim(AnimationData data)
@@ -535,6 +569,15 @@ public partial class AnimationManager
         {
             CreateParticle(targetPos, effect);
         }
+    }
+
+    IEnumerator HealEffect(AnimationData data)
+    {
+        for (int i = 0; i < 15; i++)
+        {
+            CreateParticle(data.GetTargetPos(), Effect.fireballSmall, Board.GetColor("FEF3C0"));
+        }
+        yield return Wait(5);
     }
     IEnumerator PotionProjectileWeapon(AnimationData data, Effect effect, bool enemy=false)
     {

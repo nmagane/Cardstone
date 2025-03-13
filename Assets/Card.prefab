@@ -1339,9 +1339,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e648d86bcc19b0a439de18284c02f2da, type: 3}
   - {fileID: 21300000, guid: 478a44510c961644fb0835a6aa187e63, type: 3}
   - {fileID: 21300000, guid: 3518a2fe05f60504391139a334e43492, type: 3}
-  - {fileID: 21300000, guid: 036d55f16dcf47d4ea4830daa3a51520, type: 3}
-  - {fileID: 21300000, guid: 036d55f16dcf47d4ea4830daa3a51520, type: 3}
-  - {fileID: 21300000, guid: 036d55f16dcf47d4ea4830daa3a51520, type: 3}
+  - {fileID: 21300000, guid: 3d17b902e52986443847e2c623ce9cd6, type: 3}
+  - {fileID: 21300000, guid: 798ce812120e70c45a30b277a8015be7, type: 3}
+  - {fileID: 21300000, guid: c54e57089bcd93b4189d13058bc129ef, type: 3}
   spellCards:
   - {fileID: 21300000, guid: e32d87570ad5fb14f8886b2264aea62d, type: 3}
   - {fileID: 21300000, guid: 4684abf4edeb36f4b809dcec303f344d, type: 3}
@@ -1350,9 +1350,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: be568f6c7cdc9d34792a11fec87b2b81, type: 3}
   - {fileID: 21300000, guid: f6167b5106b52a8478387ec95e3345ff, type: 3}
   - {fileID: 21300000, guid: 61fd7822ad7810244a56de680b44f06f, type: 3}
-  - {fileID: 21300000, guid: 4684abf4edeb36f4b809dcec303f344d, type: 3}
-  - {fileID: 21300000, guid: 4684abf4edeb36f4b809dcec303f344d, type: 3}
-  - {fileID: 21300000, guid: 4684abf4edeb36f4b809dcec303f344d, type: 3}
+  - {fileID: 21300000, guid: 60fbf8c5702049442bbcb99031a97429, type: 3}
+  - {fileID: 21300000, guid: 9f7f2fde40ccfbf409f7f37966cb4a60, type: 3}
+  - {fileID: 21300000, guid: 62ddf47e4c4df094eb9b53f28e0d5f5a, type: 3}
   weaponCards:
   - {fileID: 21300000, guid: 31e2e8f38b2cc9a4ab732073dc32a9b4, type: 3}
   - {fileID: 21300000, guid: 1afc2f5da14d8894e9d60b4b76ddd799, type: 3}
@@ -1361,9 +1361,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2900ad8cbe38e734984ece5b938f6c58, type: 3}
   - {fileID: 21300000, guid: dccda40a991f6bf498784627789641e6, type: 3}
   - {fileID: 21300000, guid: fa48006ef64958549b845e26a3327716, type: 3}
-  - {fileID: 21300000, guid: 31e2e8f38b2cc9a4ab732073dc32a9b4, type: 3}
-  - {fileID: 21300000, guid: 31e2e8f38b2cc9a4ab732073dc32a9b4, type: 3}
-  - {fileID: 21300000, guid: 31e2e8f38b2cc9a4ab732073dc32a9b4, type: 3}
+  - {fileID: 21300000, guid: bfcca1de016dd08479e0d4f7f2d6cac2, type: 3}
+  - {fileID: 21300000, guid: deab949aabb9c8549a686b1152192409, type: 3}
+  - {fileID: 21300000, guid: 32f89e932a2b7d2448d54e42331a8ab9, type: 3}
   tribeSprites:
   - {fileID: 21300000, guid: b7dc9fcd0d97a5e489ff37d2b52874f3, type: 3}
   - {fileID: 21300000, guid: 32b1e4fbe39a132419a7650169e1fa86, type: 3}
@@ -1372,9 +1372,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: bf9bc80d1989ad847b8836e180945f22, type: 3}
   - {fileID: 21300000, guid: 05f765dc5a18eca44860ab37570ee248, type: 3}
   - {fileID: 21300000, guid: 5f62b721bf5ed0b4ca7677433a45918f, type: 3}
-  - {fileID: 21300000, guid: 32b1e4fbe39a132419a7650169e1fa86, type: 3}
-  - {fileID: 21300000, guid: 32b1e4fbe39a132419a7650169e1fa86, type: 3}
-  - {fileID: 21300000, guid: 32b1e4fbe39a132419a7650169e1fa86, type: 3}
+  - {fileID: 21300000, guid: 18ad1bd141aba094f91c42578d23cc2a, type: 3}
+  - {fileID: 21300000, guid: 54d281bb1d27159468b4b10e45e8ffde, type: 3}
+  - {fileID: 21300000, guid: 2f7563e0bd4aa77469a1fa6d9a267132, type: 3}
   hidden: 0
   handPos: {x: 0, y: 0, z: 0}
   handRot: {x: 0, y: 0, z: 0}

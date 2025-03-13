@@ -398,6 +398,7 @@
         c.classType = Card.Class.Priest;
 
         c.MINION = true;
+        c.triggers.Add((Trigger.Type.StartTurn, Trigger.Side.Friendly, Trigger.Ability.Lightwell));
 
         return c;
     }
