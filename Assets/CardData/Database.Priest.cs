@@ -304,7 +304,7 @@
 
         c.classType = Card.Class.Priest;
         c.name = "Lightbomb";
-        c.text = "Deal damage to all enemy minions equal to their Attack.";
+        c.text = "Deal damage to all minions equal to their Attack.";
 
         c.manaCost = 6;
 

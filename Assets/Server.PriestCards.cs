@@ -103,6 +103,11 @@ public partial class Server
             var anim = new AnimationInfo(Card.Cardname.Darkbomb, spell.player,m);
             Damage(m, m.damage, spell);
         }
+        foreach (Minion m in spell.player.board)
+        {
+            var anim = new AnimationInfo(Card.Cardname.Darkbomb, spell.player,m);
+            Damage(m, m.damage, spell);
+        }
     }
     public void Thoughtsteal(CastInfo spell)
     {

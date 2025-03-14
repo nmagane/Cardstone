@@ -3157,10 +3157,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mainmenu
       objectReference: {fileID: 0}
-    - target: {fileID: 2652833641551526380, guid: de7ed2021eae97b4ab2bd8b902c5cee7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 6.93
-      objectReference: {fileID: 0}
     - target: {fileID: 2652833641551526381, guid: de7ed2021eae97b4ab2bd8b902c5cee7, type: 3}
       propertyPath: m_Sprite
       value: 
